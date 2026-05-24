@@ -54,6 +54,18 @@ class SwiftForms_CPTs_Test extends WP_UnitTestCase {
         $this->assertFalse($settings['enableCaptcha']);
     }
 
+    public function test_register_form_settings_meta_exposes_rest_schema(): void {
+        $cpts = new SwiftForms_CPTs();
+
+        $cpts->register();
+
+        $meta_keys = get_registered_meta_keys('post', SwiftForms_CPTs::FORM_POST_TYPE);
+
+        $this->assertArrayHasKey(SwiftForms_CPTs::FORM_SETTINGS_META_KEY, $meta_keys);
+        $this->assertSame('object', $meta_keys[SwiftForms_CPTs::FORM_SETTINGS_META_KEY]['type']);
+        $this->assertIsArray($meta_keys[SwiftForms_CPTs::FORM_SETTINGS_META_KEY]['show_in_rest']);
+    }
+
     public function test_sanitize_form_settings_normalizes_form_level_values(): void {
         $settings = SwiftForms_CPTs::sanitize_form_settings(
             array(
@@ -70,6 +82,13 @@ class SwiftForms_CPTs_Test extends WP_UnitTestCase {
         $this->assertTrue($settings['enableCaptcha']);
         $this->assertSame('Send now', $settings['submitLabel']);
         $this->assertSame('Thanks for reaching out.', $settings['successMessage']);
+    }
+
+    public function test_sanitize_form_settings_meta_returns_defaults_for_invalid_values(): void {
+        $settings = SwiftForms_CPTs::sanitize_form_settings_meta('invalid');
+
+        $this->assertSame('Send message', $settings['submitLabel']);
+        $this->assertFalse($settings['enableCaptcha']);
     }
 
     public function test_filter_submission_columns_adds_form_and_email_columns(): void {

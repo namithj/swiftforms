@@ -44,10 +44,98 @@ class SwiftForms_CPTs {
             register_post_type(self::SUBMISSION_POST_TYPE, $this->get_submission_args());
         }
 
-        add_action('add_meta_boxes_' . self::FORM_POST_TYPE, array($this, 'register_form_settings_metabox'));
-        add_action('save_post_' . self::FORM_POST_TYPE, array($this, 'save_form_settings_metabox'));
+        $this->register_form_settings_meta();
+
+        add_action('enqueue_block_editor_assets', array($this, 'enqueue_form_settings_panel'));
         add_filter('manage_edit-' . self::SUBMISSION_POST_TYPE . '_columns', array($this, 'filter_submission_columns'));
         add_action('manage_' . self::SUBMISSION_POST_TYPE . '_posts_custom_column', array($this, 'render_submission_column'), 10, 2);
+    }
+
+    /**
+     * Registers form settings meta so the block editor sidebar can edit it directly.
+     */
+    public function register_form_settings_meta(): void {
+        register_post_meta(
+            self::FORM_POST_TYPE,
+            self::FORM_SETTINGS_META_KEY,
+            array(
+                'auth_callback' => static fn (): bool => current_user_can('edit_posts'),
+                'default' => self::get_default_form_settings(),
+                'sanitize_callback' => array(__CLASS__, 'sanitize_form_settings_meta'),
+                'show_in_rest' => array(
+                    'schema' => $this->get_form_settings_meta_schema(),
+                ),
+                'single' => true,
+                'type' => 'object',
+            )
+        );
+    }
+
+    /**
+     * Sanitizes REST meta values for the form settings object.
+     *
+     * @param mixed $value Raw meta value.
+     *
+     * @return array<string, string|bool>
+     */
+    public static function sanitize_form_settings_meta($value): array {
+        if (!is_array($value)) {
+            return self::get_default_form_settings();
+        }
+
+        return self::sanitize_form_settings($value);
+    }
+
+    /**
+     * Returns the REST schema for the form settings sidebar panel.
+     *
+     * @return array<string, mixed>
+     */
+    public function get_form_settings_meta_schema(): array {
+        return array(
+            'type' => 'object',
+            'properties' => array(
+                'adminRecipients' => array('type' => 'string'),
+                'adminSubject' => array('type' => 'string'),
+                'adminTemplate' => array('type' => 'string'),
+                'autoresponderSubject' => array('type' => 'string'),
+                'autoresponderTemplate' => array('type' => 'string'),
+                'enableCaptcha' => array('type' => 'boolean'),
+                'submitLabel' => array('type' => 'string'),
+                'successMessage' => array('type' => 'string'),
+            ),
+        );
+    }
+
+    /**
+     * Enqueues the form settings document panel for the form CPT block editor.
+     */
+    public function enqueue_form_settings_panel(): void {
+        if (!function_exists('get_current_screen')) {
+            return;
+        }
+
+        $screen = get_current_screen();
+        if (!$screen || self::FORM_POST_TYPE !== $screen->post_type) {
+            return;
+        }
+
+        $asset_path = SWIFTFORMS_PATH . 'dist/form/settings-panel.asset.php';
+        $script_path = SWIFTFORMS_PATH . 'dist/form/settings-panel.js';
+
+        if (!file_exists($asset_path) || !file_exists($script_path)) {
+            return;
+        }
+
+        $asset = require $asset_path;
+
+        wp_enqueue_script(
+            'swiftforms-form-settings-panel',
+            SWIFTFORMS_URL . 'dist/form/settings-panel.js',
+            $asset['dependencies'] ?? array(),
+            $asset['version'] ?? SWIFTFORMS_VERSION,
+            true
+        );
     }
 
     /**
@@ -107,95 +195,6 @@ class SwiftForms_CPTs {
                 ? sanitize_text_field((string) $settings['successMessage'])
                 : $defaults['successMessage'],
         );
-    }
-
-    /**
-     * Registers the form settings side metabox for the form CPT editor.
-     */
-    public function register_form_settings_metabox(): void {
-        add_meta_box(
-            'swiftforms-form-settings',
-            'Form Settings',
-            array($this, 'render_form_settings_metabox'),
-            self::FORM_POST_TYPE,
-            'side',
-            'default'
-        );
-    }
-
-    /**
-     * Renders the form settings metabox on the form CPT editor.
-     */
-    public function render_form_settings_metabox(WP_Post $post): void {
-        $settings = self::get_form_settings($post->ID);
-
-        wp_nonce_field('swiftforms_save_form_settings', 'swiftforms_form_settings_nonce');
-        ?>
-        <p>
-            <label for="swiftforms-submit-label"><strong>Submit label</strong></label>
-            <input class="widefat" id="swiftforms-submit-label" name="swiftforms_form_settings[submitLabel]" type="text" value="<?php echo esc_attr((string) $settings['submitLabel']); ?>" />
-        </p>
-        <p>
-            <label for="swiftforms-success-message"><strong>Success message</strong></label>
-            <textarea class="widefat" id="swiftforms-success-message" name="swiftforms_form_settings[successMessage]" rows="3"><?php echo esc_textarea((string) $settings['successMessage']); ?></textarea>
-        </p>
-        <p>
-            <label>
-                <input name="swiftforms_form_settings[enableCaptcha]" type="checkbox" value="1" <?php checked(!empty($settings['enableCaptcha'])); ?> />
-                Enable math captcha
-            </label>
-        </p>
-        <hr />
-        <p>
-            <label for="swiftforms-admin-recipients"><strong>Admin recipients</strong></label>
-            <textarea class="widefat" id="swiftforms-admin-recipients" name="swiftforms_form_settings[adminRecipients]" rows="3"><?php echo esc_textarea((string) $settings['adminRecipients']); ?></textarea>
-        </p>
-        <p>
-            <label for="swiftforms-admin-subject"><strong>Admin subject</strong></label>
-            <input class="widefat" id="swiftforms-admin-subject" name="swiftforms_form_settings[adminSubject]" type="text" value="<?php echo esc_attr((string) $settings['adminSubject']); ?>" />
-        </p>
-        <p>
-            <label for="swiftforms-admin-template"><strong>Admin template</strong></label>
-            <textarea class="widefat" id="swiftforms-admin-template" name="swiftforms_form_settings[adminTemplate]" rows="4"><?php echo esc_textarea((string) $settings['adminTemplate']); ?></textarea>
-        </p>
-        <p>
-            <label for="swiftforms-autoresponder-subject"><strong>Autoresponder subject</strong></label>
-            <input class="widefat" id="swiftforms-autoresponder-subject" name="swiftforms_form_settings[autoresponderSubject]" type="text" value="<?php echo esc_attr((string) $settings['autoresponderSubject']); ?>" />
-        </p>
-        <p>
-            <label for="swiftforms-autoresponder-template"><strong>Autoresponder template</strong></label>
-            <textarea class="widefat" id="swiftforms-autoresponder-template" name="swiftforms_form_settings[autoresponderTemplate]" rows="4"><?php echo esc_textarea((string) $settings['autoresponderTemplate']); ?></textarea>
-        </p>
-        <p><small>Supports {submission_id}, {form_id}, {fields}, and {field:slug} placeholders.</small></p>
-        <?php
-    }
-
-    /**
-     * Saves form settings from the metabox.
-     */
-    public function save_form_settings_metabox(int $post_id): void {
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return;
-        }
-
-        if (wp_is_post_revision($post_id)) {
-            return;
-        }
-
-        $nonce = isset($_POST['swiftforms_form_settings_nonce']) ? (string) $_POST['swiftforms_form_settings_nonce'] : '';
-        if ('' === $nonce || !wp_verify_nonce($nonce, 'swiftforms_save_form_settings')) {
-            return;
-        }
-
-        if (!current_user_can('edit_post', $post_id)) {
-            return;
-        }
-
-        $settings = isset($_POST['swiftforms_form_settings']) && is_array($_POST['swiftforms_form_settings'])
-            ? wp_unslash($_POST['swiftforms_form_settings'])
-            : array();
-
-        update_post_meta($post_id, self::FORM_SETTINGS_META_KEY, self::sanitize_form_settings($settings));
     }
 
     /**

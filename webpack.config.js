@@ -14,6 +14,7 @@ module.exports = {
         'fields/textarea/index': path.resolve(process.cwd(), 'includes/blocks/fields/textarea/index.js'),
         'fields/url/index': path.resolve(process.cwd(), 'includes/blocks/fields/url/index.js'),
         'form/index': path.resolve(process.cwd(), 'includes/blocks/form/index.js'),
+        'form/settings-panel': path.resolve(process.cwd(), 'includes/blocks/form/settings-panel.js'),
         'form/view': path.resolve(process.cwd(), 'includes/blocks/form/view.js'),
     },
     output: {
