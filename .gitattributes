@@ -1,2 +1,23 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Common binary assets
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.webp binary
+*.zip binary
+*.pdf binary
+
+# Keep distribution archives clean
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/bin export-ignore
+/node_modules export-ignore
+/tests export-ignore
+/vendor export-ignore
+/phpcs.xml.dist export-ignore
+/phpunit.xml.dist export-ignore
+/webpack.config.js export-ignore
+/SwiftForms_Plugin_Spec.md export-ignore

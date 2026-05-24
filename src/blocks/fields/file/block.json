@@ -1,0 +1,35 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "helpText": {
+            "default": "Allowed: pdf, png, jpg, txt",
+            "type": "string"
+        },
+        "label": {
+            "default": "Attachment",
+            "type": "string"
+        },
+        "required": {
+            "default": false,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "attachment",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/file-field",
+    "title": "File Field",
+    "category": "widgets",
+    "icon": "media-default",
+    "editorStyle": "file:../../../../dist/fields/file/index.css",
+    "editorScript": "file:../../../../dist/fields/file/index.js",
+    "parent": [
+        "swiftforms/form"
+    ],
+    "description": "File upload field block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

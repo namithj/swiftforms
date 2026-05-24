@@ -1,0 +1,16 @@
+.swiftforms-field--url {
+    border: 1px solid #d5d8e2;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fafbff;
+}
+
+.swiftforms-field--url .swiftforms-field__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.swiftforms-field--url input[disabled] {
+    width: 100%;
+}

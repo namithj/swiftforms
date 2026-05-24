@@ -1,0 +1,39 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "helpText": {
+            "default": "",
+            "type": "string"
+        },
+        "label": {
+            "default": "Message",
+            "type": "string"
+        },
+        "placeholder": {
+            "default": "Tell us more...",
+            "type": "string"
+        },
+        "required": {
+            "default": false,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "message",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/textarea-field",
+    "title": "Textarea Field",
+    "category": "widgets",
+    "icon": "editor-paragraph",
+    "editorStyle": "file:../../../../dist/fields/textarea/index.css",
+    "editorScript": "file:../../../../dist/fields/textarea/index.js",
+    "parent": [
+        "swiftforms/form"
+    ],
+    "description": "Textarea field block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "helpText": {
+            "default": "",
+            "type": "string"
+        },
+        "label": {
+            "default": "Website",
+            "type": "string"
+        },
+        "placeholder": {
+            "default": "https://example.com",
+            "type": "string"
+        },
+        "required": {
+            "default": false,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "website",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/url-field",
+    "title": "URL Field",
+    "category": "widgets",
+    "icon": "admin-links",
+    "editorStyle": "file:../../../../dist/fields/url/index.css",
+    "editorScript": "file:../../../../dist/fields/url/index.js",
+    "parent": [
+        "swiftforms/form"
+    ],
+    "description": "URL field block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

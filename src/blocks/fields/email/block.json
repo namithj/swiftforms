@@ -1,0 +1,39 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "helpText": {
+            "default": "",
+            "type": "string"
+        },
+        "label": {
+            "default": "Email field",
+            "type": "string"
+        },
+        "placeholder": {
+            "default": "",
+            "type": "string"
+        },
+        "required": {
+            "default": true,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "email",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/email-field",
+    "title": "Email Field",
+    "category": "widgets",
+    "icon": "email",
+    "editorStyle": "file:../../../../dist/fields/email/index.css",
+    "editorScript": "file:../../../../dist/fields/email/index.js",
+    "parent": [
+        "swiftforms/form"
+    ],
+    "description": "Email field block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

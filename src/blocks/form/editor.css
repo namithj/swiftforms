@@ -1,0 +1,21 @@
+.swiftforms-form-editor {
+    border: 1px solid #c9d2d8;
+    border-radius: 12px;
+    padding: 20px;
+    background: linear-gradient(180deg, #ffffff 0%, #f4f7f5 100%);
+}
+
+.swiftforms-form-editor__description {
+    margin: 0 0 16px;
+    color: #37515a;
+}
+
+.swiftforms-form-editor__fields {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.swiftforms-form-editor__submit {
+    min-width: 180px;
+}

@@ -1,0 +1,16 @@
+.swiftforms-field--email {
+    border: 1px solid #d8dce6;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fbfcff;
+}
+
+.swiftforms-field--email .swiftforms-field__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.swiftforms-field--email input[disabled] {
+    width: 100%;
+}

@@ -1,0 +1,25 @@
+# Dependencies
+/node_modules/
+/vendor/
+
+# Package manager artifacts
+/package-lock.json
+/composer.lock
+
+# Test and cache artifacts
+/.phpunit.result.cache
+/phpcs-report.xml
+/phpunit-report.xml
+/coverage/
+
+# Local environment overrides
+/wp-tests-config.php
+
+# OS and editor noise
+/.DS_Store
+/Thumbs.db
+/.idea/
+/.vscode/
+
+#build artifacts
+/dist/

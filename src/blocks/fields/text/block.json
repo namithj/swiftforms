@@ -1,0 +1,39 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "helpText": {
+            "default": "",
+            "type": "string"
+        },
+        "label": {
+            "default": "Text field",
+            "type": "string"
+        },
+        "placeholder": {
+            "default": "",
+            "type": "string"
+        },
+        "required": {
+            "default": false,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "text_field",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/text-field",
+    "title": "Text Field",
+    "category": "widgets",
+    "icon": "editor-textcolor",
+    "editorStyle": "file:../../../../dist/fields/text/index.css",
+    "editorScript": "file:../../../../dist/fields/text/index.js",
+    "parent": [
+        "swiftforms/form"
+    ],
+    "description": "Text field block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

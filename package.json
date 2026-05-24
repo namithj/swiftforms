@@ -1,0 +1,16 @@
+{
+    "name": "swiftforms",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Build tooling for the SwiftForms WordPress plugin.",
+    "scripts": {
+        "build": "wp-scripts build",
+        "format": "wp-scripts format",
+        "lint:js": "wp-scripts lint-js src/blocks --max-warnings=0",
+        "start": "wp-scripts start",
+        "test": "composer test"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^30.24.0"
+    }
+}

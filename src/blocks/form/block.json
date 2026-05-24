@@ -1,0 +1,57 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "description": {
+            "default": "",
+            "type": "string"
+        },
+        "adminRecipients": {
+            "default": "",
+            "type": "string"
+        },
+        "adminSubject": {
+            "default": "SwiftForms submission #{submission_id}",
+            "type": "string"
+        },
+        "adminTemplate": {
+            "default": "",
+            "type": "string"
+        },
+        "autoresponderSubject": {
+            "default": "We received your submission",
+            "type": "string"
+        },
+        "autoresponderTemplate": {
+            "default": "",
+            "type": "string"
+        },
+        "enableCaptcha": {
+            "default": false,
+            "type": "boolean"
+        },
+        "formId": {
+            "default": 0,
+            "type": "number"
+        },
+        "submitLabel": {
+            "default": "Send message",
+            "type": "string"
+        },
+        "successMessage": {
+            "default": "Form submitted successfully.",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/form",
+    "title": "SwiftForms Form",
+    "category": "widgets",
+    "icon": "feedback",
+    "description": "Container block for SwiftForms forms.",
+    "editorStyle": "file:../../../dist/form/index.css",
+    "editorScript": "file:../../../dist/form/index.js",
+    "textdomain": "swiftforms",
+    "viewScript": "file:../../../dist/form/view.js",
+    "supports": {
+        "html": false
+    }
+}
