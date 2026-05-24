@@ -6,11 +6,11 @@
             "type": "string"
         },
         "label": {
-            "default": "Message",
+            "default": "Select",
             "type": "string"
         },
-        "placeholder": {
-            "default": "Tell us more...",
+        "options": {
+            "default": "Option 1\nOption 2",
             "type": "string"
         },
         "required": {
@@ -18,17 +18,17 @@
             "type": "boolean"
         },
         "slug": {
-            "default": "message",
+            "default": "select_field",
             "type": "string"
         }
     },
-    "name": "swiftforms/textarea-field",
-    "title": "Textarea Field",
+    "name": "swiftforms/select-field",
+    "title": "Select Field",
     "category": "widgets",
-    "icon": "editor-paragraph",
-    "editorStyle": "file:../../../../dist/fields/textarea/index.css",
-    "editorScript": "file:../../../../dist/fields/textarea/index.js",
-    "description": "Textarea field block for SwiftForms.",
+    "icon": "list-view",
+    "editorStyle": "file:../../../../dist/fields/select/index.css",
+    "editorScript": "file:../../../../dist/fields/select/index.js",
+    "description": "Select field block for SwiftForms.",
     "textdomain": "swiftforms",
     "supports": {
         "html": false

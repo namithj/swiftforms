@@ -1,0 +1,16 @@
+.swiftforms-field--tel {
+    border: 1px solid #d5dde0;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fbfcfc;
+}
+
+.swiftforms-field--tel .swiftforms-field__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.swiftforms-field--tel input[disabled] {
+    width: 100%;
+}

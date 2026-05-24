@@ -28,9 +28,6 @@
     "icon": "editor-textcolor",
     "editorStyle": "file:../../../../dist/fields/text/index.css",
     "editorScript": "file:../../../../dist/fields/text/index.js",
-    "parent": [
-        "swiftforms/form"
-    ],
     "description": "Text field block for SwiftForms.",
     "textdomain": "swiftforms",
     "supports": {

@@ -24,9 +24,6 @@
     "icon": "media-default",
     "editorStyle": "file:../../../../dist/fields/file/index.css",
     "editorScript": "file:../../../../dist/fields/file/index.js",
-    "parent": [
-        "swiftforms/form"
-    ],
     "description": "File upload field block for SwiftForms.",
     "textdomain": "swiftforms",
     "supports": {

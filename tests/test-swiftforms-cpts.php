@@ -43,4 +43,32 @@ class SwiftForms_CPTs_Test extends WP_UnitTestCase {
         $this->assertFalse($post_type->publicly_queryable);
         $this->assertTrue($post_type->show_ui);
     }
+
+    public function test_get_form_settings_returns_defaults_when_meta_is_missing(): void {
+        $form_id = self::factory()->post->create(array('post_type' => SwiftForms_CPTs::FORM_POST_TYPE));
+
+        $settings = SwiftForms_CPTs::get_form_settings($form_id);
+
+        $this->assertSame('Send message', $settings['submitLabel']);
+        $this->assertSame('Form submitted successfully.', $settings['successMessage']);
+        $this->assertFalse($settings['enableCaptcha']);
+    }
+
+    public function test_sanitize_form_settings_normalizes_form_level_values(): void {
+        $settings = SwiftForms_CPTs::sanitize_form_settings(
+            array(
+                'adminRecipients' => " ops@example.org\nowner@example.org ",
+                'adminSubject' => '  New lead {submission_id}  ',
+                'enableCaptcha' => '1',
+                'submitLabel' => '  Send now  ',
+                'successMessage' => '  Thanks for reaching out.  ',
+            )
+        );
+
+        $this->assertSame("ops@example.org\nowner@example.org", $settings['adminRecipients']);
+        $this->assertSame('New lead {submission_id}', $settings['adminSubject']);
+        $this->assertTrue($settings['enableCaptcha']);
+        $this->assertSame('Send now', $settings['submitLabel']);
+        $this->assertSame('Thanks for reaching out.', $settings['successMessage']);
+    }
 }

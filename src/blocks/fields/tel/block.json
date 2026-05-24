@@ -6,11 +6,11 @@
             "type": "string"
         },
         "label": {
-            "default": "Message",
+            "default": "Phone",
             "type": "string"
         },
         "placeholder": {
-            "default": "Tell us more...",
+            "default": "+1 555 555 5555",
             "type": "string"
         },
         "required": {
@@ -18,17 +18,17 @@
             "type": "boolean"
         },
         "slug": {
-            "default": "message",
+            "default": "phone",
             "type": "string"
         }
     },
-    "name": "swiftforms/textarea-field",
-    "title": "Textarea Field",
+    "name": "swiftforms/tel-field",
+    "title": "Phone Field",
     "category": "widgets",
-    "icon": "editor-paragraph",
-    "editorStyle": "file:../../../../dist/fields/textarea/index.css",
-    "editorScript": "file:../../../../dist/fields/textarea/index.js",
-    "description": "Textarea field block for SwiftForms.",
+    "icon": "phone",
+    "editorStyle": "file:../../../../dist/fields/tel/index.css",
+    "editorScript": "file:../../../../dist/fields/tel/index.js",
+    "description": "Phone field block for SwiftForms.",
     "textdomain": "swiftforms",
     "supports": {
         "html": false

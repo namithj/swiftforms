@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 class SwiftForms_Submissions_Test extends WP_UnitTestCase {
     private SwiftForms_Submissions $submissions;
+    private array $original_post = array();
+    private array $original_files = array();
 
     /**
      * Tracks hook calls for submission lifecycle assertions.
@@ -32,6 +34,9 @@ class SwiftForms_Submissions_Test extends WP_UnitTestCase {
     public function set_up(): void {
         parent::set_up();
 
+        $this->original_post = $_POST;
+        $this->original_files = $_FILES;
+
         (new SwiftForms_CPTs())->register();
         $this->submissions = new SwiftForms_Submissions();
         $this->pre_submission_calls = array();
@@ -48,6 +53,8 @@ class SwiftForms_Submissions_Test extends WP_UnitTestCase {
         remove_action($this->get_post_submission_hook_name(), array($this, 'capture_post_submission'), 10);
         remove_filter('pre_wp_mail', array($this, 'capture_mail_call'), 10);
         remove_all_filters('swiftforms_email_content');
+        $_POST = $this->original_post;
+        $_FILES = $this->original_files;
 
         parent::tear_down();
     }
@@ -101,6 +108,67 @@ class SwiftForms_Submissions_Test extends WP_UnitTestCase {
 
         $this->assertWPError($result);
         $this->assertSame('invalid_email', $result->get_error_code());
+    }
+
+    public function test_validate_field_type_accepts_valid_number_with_constraints(): void {
+        $this->assertTrue(
+            $this->submissions->validate_field_type(
+                'number',
+                '4',
+                array(
+                    'max' => '10',
+                    'min' => '1',
+                    'step' => '1',
+                )
+            )
+        );
+    }
+
+    public function test_validate_field_type_rejects_number_outside_constraints(): void {
+        $result = $this->submissions->validate_field_type(
+            'number',
+            '12',
+            array(
+                'max' => '10',
+                'min' => '1',
+            )
+        );
+
+        $this->assertWPError($result);
+        $this->assertSame('invalid_number_max', $result->get_error_code());
+    }
+
+    public function test_validate_field_type_rejects_invalid_phone_number(): void {
+        $result = $this->submissions->validate_field_type('tel', 'call-me');
+
+        $this->assertWPError($result);
+        $this->assertSame('invalid_tel', $result->get_error_code());
+    }
+
+    public function test_validate_field_type_rejects_select_value_not_in_options(): void {
+        $result = $this->submissions->validate_field_type(
+            'select',
+            'Billing',
+            array(
+                'options' => array('Sales', 'Support'),
+            )
+        );
+
+        $this->assertWPError($result);
+        $this->assertSame('invalid_select', $result->get_error_code());
+    }
+
+    public function test_validate_field_type_rejects_required_checkbox_when_unchecked(): void {
+        $result = $this->submissions->validate_field_type(
+            'checkbox',
+            '',
+            array(
+                'required' => true,
+            )
+        );
+
+        $this->assertWPError($result);
+        $this->assertSame('required_checkbox', $result->get_error_code());
     }
 
     public function test_create_submission_post_creates_submission_type(): void {
@@ -226,6 +294,119 @@ class SwiftForms_Submissions_Test extends WP_UnitTestCase {
         $this->assertFileExists($saved_value);
     }
 
+    public function test_handle_submission_normalizes_new_field_values_before_persisting(): void {
+        $response = $this->submissions->handle_submission(
+            array(
+                'nonce' => wp_create_nonce('swiftforms_ajax'),
+                'honeypot' => '',
+                'fields' => array(
+                    array(
+                        'slug' => 'guests',
+                        'type' => 'number',
+                        'value' => ' 4 ',
+                        'min' => '1',
+                        'max' => '10',
+                        'step' => '1',
+                    ),
+                    array(
+                        'slug' => 'phone',
+                        'type' => 'tel',
+                        'value' => ' +1 555 0100 ',
+                    ),
+                    array(
+                        'slug' => 'department',
+                        'type' => 'select',
+                        'value' => ' Sales ',
+                        'options' => array('Sales', 'Support'),
+                    ),
+                    array(
+                        'slug' => 'consent',
+                        'type' => 'checkbox',
+                        'value' => ' yes ',
+                        'required' => true,
+                    ),
+                ),
+                'form_id' => 88,
+            )
+        );
+
+        $this->assertTrue($response['success']);
+        $this->assertSame('4', get_post_meta($response['submission_id'], '_sf_field_guests', true));
+        $this->assertSame('+1 555 0100', get_post_meta($response['submission_id'], '_sf_field_phone', true));
+        $this->assertSame('Sales', get_post_meta($response['submission_id'], '_sf_field_department', true));
+        $this->assertSame('yes', get_post_meta($response['submission_id'], '_sf_field_consent', true));
+    }
+
+    public function test_handle_submission_rejects_invalid_select_value(): void {
+        $response = $this->submissions->handle_submission(
+            array(
+                'nonce' => wp_create_nonce('swiftforms_ajax'),
+                'honeypot' => '',
+                'fields' => array(
+                    array(
+                        'slug' => 'department',
+                        'type' => 'select',
+                        'value' => 'Billing',
+                        'options' => array('Sales', 'Support'),
+                    ),
+                ),
+                'form_id' => 89,
+            )
+        );
+
+        $this->assertFalse($response['success']);
+        $this->assertSame('validation_failed', $response['code']);
+        $this->assertSame('Please select a valid option.', $response['errors']['department']);
+    }
+
+    public function test_handle_submission_merges_live_uploaded_files_from_superglobal_request(): void {
+        $tmp_file = wp_tempnam('swiftforms-live-upload.txt');
+        file_put_contents($tmp_file, 'swiftforms live upload payload');
+
+        $_POST = array(
+            'nonce' => wp_create_nonce('swiftforms_ajax'),
+            'honeypot' => '',
+            'fields' => array(
+                array(
+                    'slug' => 'attachment',
+                    'type' => 'file',
+                    'value' => array(),
+                ),
+            ),
+            'form_id' => 45,
+        );
+
+        $_FILES = array(
+            'swiftforms_files' => array(
+                'name' => array(
+                    0 => 'notes.txt',
+                ),
+                'type' => array(
+                    0 => 'text/plain',
+                ),
+                'tmp_name' => array(
+                    0 => $tmp_file,
+                ),
+                'error' => array(
+                    0 => 0,
+                ),
+                'size' => array(
+                    0 => filesize($tmp_file),
+                ),
+            ),
+        );
+
+        $response = $this->submissions->handle_submission();
+
+        $this->assertTrue($response['success']);
+
+        $saved_value = get_post_meta($response['submission_id'], '_sf_field_attachment', true);
+
+        $this->assertIsString($saved_value);
+        $this->assertStringContainsString('/swiftforms/', $saved_value);
+        $this->assertFileExists($saved_value);
+    }
+
     public function test_handle_file_upload_rejects_disallowed_type(): void {
         $tmp_file = wp_tempnam('swiftforms-upload.exe');
         file_put_contents($tmp_file, 'binary-ish');
@@ -336,6 +517,52 @@ class SwiftForms_Submissions_Test extends WP_UnitTestCase {
         $this->assertSame('Admin Taylor person@example.com', $this->mail_calls[0]['message']);
         $this->assertSame('Thanks Taylor', $this->mail_calls[1]['subject']);
         $this->assertSame('Received ' . $response['submission_id'], $this->mail_calls[1]['message']);
+    }
+
+    public function test_handle_submission_uses_form_level_notification_settings_when_request_overrides_are_missing(): void {
+        $form_id = self::factory()->post->create(array('post_type' => SwiftForms_CPTs::FORM_POST_TYPE));
+
+        update_post_meta(
+            $form_id,
+            SwiftForms_CPTs::FORM_SETTINGS_META_KEY,
+            SwiftForms_CPTs::sanitize_form_settings(
+                array(
+                    'adminRecipients' => "ops@example.org\nowner@example.org",
+                    'adminSubject' => 'Stored lead {submission_id}',
+                    'adminTemplate' => 'Stored admin {field:name}',
+                    'autoresponderSubject' => 'Stored thanks {field:name}',
+                    'autoresponderTemplate' => 'Stored autoresponder {submission_id}',
+                )
+            )
+        );
+
+        $response = $this->submissions->handle_submission(
+            array(
+                'nonce' => wp_create_nonce('swiftforms_ajax'),
+                'honeypot' => '',
+                'fields' => array(
+                    array(
+                        'slug' => 'name',
+                        'type' => 'text',
+                        'value' => 'Taylor',
+                    ),
+                    array(
+                        'slug' => 'email',
+                        'type' => 'email',
+                        'value' => 'person@example.com',
+                    ),
+                ),
+                'form_id' => $form_id,
+            )
+        );
+
+        $this->assertTrue($response['success']);
+        $this->assertCount(2, $this->mail_calls);
+        $this->assertSame(array('ops@example.org', 'owner@example.org'), (array) $this->mail_calls[0]['to']);
+        $this->assertSame('Stored lead ' . $response['submission_id'], $this->mail_calls[0]['subject']);
+        $this->assertSame('Stored admin Taylor', $this->mail_calls[0]['message']);
+        $this->assertSame('Stored thanks Taylor', $this->mail_calls[1]['subject']);
+        $this->assertSame('Stored autoresponder ' . $response['submission_id'], $this->mail_calls[1]['message']);
     }
 
     public function capture_pre_submission(array $request, SwiftForms_Submissions $submissions): void {

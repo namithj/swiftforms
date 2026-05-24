@@ -46,7 +46,7 @@
     "title": "SwiftForms Form",
     "category": "widgets",
     "icon": "feedback",
-    "description": "Container block for SwiftForms forms.",
+    "description": "Embed a saved SwiftForms form.",
     "editorStyle": "file:../../../dist/form/index.css",
     "editorScript": "file:../../../dist/form/index.js",
     "textdomain": "swiftforms",

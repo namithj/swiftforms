@@ -1,0 +1,18 @@
+.swiftforms-field--checkbox {
+    border: 1px solid #d8d9d2;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fdfdf8;
+}
+
+.swiftforms-field--checkbox .swiftforms-field__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.swiftforms-field--checkbox .swiftforms-field__choice {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}

@@ -13,6 +13,8 @@
 # Keep distribution archives clean
 /.gitignore export-ignore
 /.gitattributes export-ignore
+/.env.local export-ignore
+/.env.example export-ignore
 /bin export-ignore
 /node_modules export-ignore
 /tests export-ignore

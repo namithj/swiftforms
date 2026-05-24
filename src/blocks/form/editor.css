@@ -10,10 +10,14 @@
     color: #37515a;
 }
 
-.swiftforms-form-editor__fields {
+.swiftforms-form-editor__preview {
     display: grid;
     gap: 12px;
     margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 10px;
+    background: #f7faf8;
+    color: #37515a;
 }
 
 .swiftforms-form-editor__submit {

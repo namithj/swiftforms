@@ -28,9 +28,6 @@
     "icon": "admin-links",
     "editorStyle": "file:../../../../dist/fields/url/index.css",
     "editorScript": "file:../../../../dist/fields/url/index.js",
-    "parent": [
-        "swiftforms/form"
-    ],
     "description": "URL field block for SwiftForms.",
     "textdomain": "swiftforms",
     "supports": {

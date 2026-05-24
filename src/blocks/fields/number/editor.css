@@ -1,0 +1,16 @@
+.swiftforms-field--number {
+    border: 1px solid #d6d8d0;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fcfcfa;
+}
+
+.swiftforms-field--number .swiftforms-field__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.swiftforms-field--number input[disabled] {
+    width: 100%;
+}

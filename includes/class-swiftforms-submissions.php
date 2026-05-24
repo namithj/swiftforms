@@ -34,6 +34,8 @@ class SwiftForms_Submissions {
             $request = $this->merge_uploaded_files($request, $_FILES['swiftforms_files'] ?? array());
         }
 
+        $request = $this->normalize_request($request);
+
         $nonce = isset($request['nonce']) ? (string) $request['nonce'] : '';
         if (!$this->verify_nonce($nonce)) {
             $response = array(
@@ -168,11 +170,12 @@ class SwiftForms_Submissions {
      * Expected output:
      * - Supported field types return true for valid values or WP_Error for invalid input.
      *
-     * @param mixed $value Submitted value.
+     * @param mixed                $value Submitted value.
+     * @param array<string, mixed> $field Submitted field configuration.
      *
      * @return true|WP_Error
      */
-    public function validate_field_type(string $type, mixed $value) {
+    public function validate_field_type(string $type, mixed $value, array $field = array()) {
         if ('email' === $type) {
             if (!is_string($value) || !is_email($value)) {
                 return new WP_Error('invalid_email', 'Please enter a valid email address.');
@@ -184,6 +187,73 @@ class SwiftForms_Submissions {
         if ('url' === $type) {
             if (!is_string($value) || false === filter_var($value, FILTER_VALIDATE_URL)) {
                 return new WP_Error('invalid_url', 'Please enter a valid URL.');
+            }
+
+            return true;
+        }
+
+        if ('number' === $type) {
+            if (!is_scalar($value) || '' === trim((string) $value) || !is_numeric((string) $value)) {
+                return new WP_Error('invalid_number', 'Please enter a valid number.');
+            }
+
+            $numeric_value = (float) $value;
+
+            if (isset($field['min']) && '' !== (string) $field['min'] && $numeric_value < (float) $field['min']) {
+                return new WP_Error('invalid_number_min', 'Please enter a number above the minimum value.');
+            }
+
+            if (isset($field['max']) && '' !== (string) $field['max'] && $numeric_value > (float) $field['max']) {
+                return new WP_Error('invalid_number_max', 'Please enter a number below the maximum value.');
+            }
+
+            if (isset($field['step']) && '' !== (string) $field['step']) {
+                $step = (float) $field['step'];
+                if ($step > 0) {
+                    $minimum = isset($field['min']) && '' !== (string) $field['min'] ? (float) $field['min'] : 0.0;
+                    $offset = ($numeric_value - $minimum) / $step;
+
+                    if (abs($offset - round($offset)) > 0.00001) {
+                        return new WP_Error('invalid_number_step', 'Please enter a valid increment.');
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        if ('tel' === $type) {
+            if (!is_string($value) || '' === trim($value) || 1 !== preg_match('/^\+?[0-9\s().-]{6,20}$/', $value)) {
+                return new WP_Error('invalid_tel', 'Please enter a valid phone number.');
+            }
+
+            return true;
+        }
+
+        if ('select' === $type) {
+            $string_value = is_scalar($value) ? trim((string) $value) : '';
+            $options = $this->normalize_select_options($field['options'] ?? array());
+
+            if ('' === $string_value) {
+                if ($this->is_field_required($field)) {
+                    return new WP_Error('required_select', 'Please select an option.');
+                }
+
+                return true;
+            }
+
+            if (!empty($options) && !in_array($string_value, $options, true)) {
+                return new WP_Error('invalid_select', 'Please select a valid option.');
+            }
+
+            return true;
+        }
+
+        if ('checkbox' === $type) {
+            $string_value = is_scalar($value) ? trim((string) $value) : '';
+
+            if ($this->is_field_required($field) && '' === $string_value) {
+                return new WP_Error('required_checkbox', 'Please check this box to continue.');
             }
 
             return true;
@@ -340,24 +410,34 @@ class SwiftForms_Submissions {
      * @return array<string, array<int, string>|string>
      */
     public function resolve_notification_config(int $submission_id, array $request): array {
+        $form_id = isset($request['form_id']) ? (int) $request['form_id'] : 0;
+        $stored_settings = $form_id > 0 ? SwiftForms_CPTs::get_form_settings($form_id) : SwiftForms_CPTs::get_default_form_settings();
         $config = isset($request['notifications']) && is_array($request['notifications'])
             ? $request['notifications']
             : array();
 
-        $admin_recipients = $this->parse_notification_recipients($config['adminRecipients'] ?? get_option('admin_email'));
+        $admin_recipients = $this->parse_notification_recipients($config['adminRecipients'] ?? $stored_settings['adminRecipients'] ?? get_option('admin_email'));
         if (empty($admin_recipients)) {
             $admin_recipients = array((string) get_option('admin_email'));
         }
 
-        $admin_subject_template = isset($config['adminSubject']) ? (string) $config['adminSubject'] : 'SwiftForms submission #{submission_id}';
-        $autoresponder_subject_template = isset($config['autoresponderSubject']) ? (string) $config['autoresponderSubject'] : 'We received your submission';
+        $admin_subject_template = isset($config['adminSubject']) && '' !== trim((string) $config['adminSubject'])
+            ? (string) $config['adminSubject']
+            : (string) $stored_settings['adminSubject'];
+        $autoresponder_subject_template = isset($config['autoresponderSubject']) && '' !== trim((string) $config['autoresponderSubject'])
+            ? (string) $config['autoresponderSubject']
+            : (string) $stored_settings['autoresponderSubject'];
 
         return array(
             'adminRecipients' => $admin_recipients,
             'adminSubject' => $this->render_notification_template($admin_subject_template, $submission_id, $request),
-            'adminTemplate' => isset($config['adminTemplate']) ? (string) $config['adminTemplate'] : '',
+            'adminTemplate' => isset($config['adminTemplate']) && '' !== trim((string) $config['adminTemplate'])
+                ? (string) $config['adminTemplate']
+                : (string) $stored_settings['adminTemplate'],
             'autoresponderSubject' => $this->render_notification_template($autoresponder_subject_template, $submission_id, $request),
-            'autoresponderTemplate' => isset($config['autoresponderTemplate']) ? (string) $config['autoresponderTemplate'] : '',
+            'autoresponderTemplate' => isset($config['autoresponderTemplate']) && '' !== trim((string) $config['autoresponderTemplate'])
+                ? (string) $config['autoresponderTemplate']
+                : (string) $stored_settings['autoresponderTemplate'],
         );
     }
 
@@ -590,7 +670,7 @@ class SwiftForms_Submissions {
             $type = isset($field['type']) ? (string) $field['type'] : 'text';
             $value = $field['value'] ?? '';
 
-            $validation = $this->validate_field_type($type, $value);
+            $validation = $this->validate_field_type($type, $value, is_array($field) ? $field : array());
             if (is_wp_error($validation)) {
                 $errors[$slug ?: 'field'] = $validation->get_error_message();
             }
@@ -602,6 +682,12 @@ class SwiftForms_Submissions {
     /**
      * Merges uploaded files into the normalized request field payload.
      *
+        * Tests to create:
+        * - test_handle_submission_merges_live_uploaded_files_from_superglobal_request: Populate $_POST and $_FILES for a file field and expect the merged upload to persist like a normal file submission.
+        *
+        * Expected output:
+        * - Uploaded files posted via the live AJAX request are merged into the matching field rows before validation and persistence.
+        *
      * @param array<string, mixed> $request Submission payload.
      * @param mixed                $uploaded_files Raw uploaded file data.
      *
@@ -629,6 +715,125 @@ class SwiftForms_Submissions {
         $request['fields'] = $fields;
 
         return $request;
+    }
+
+    /**
+     * Normalizes scalar field values and request-level field configuration.
+     *
+     * @param array<string, mixed> $request Submission payload.
+     *
+     * @return array<string, mixed>
+     */
+    private function normalize_request(array $request): array {
+        $fields = $request['fields'] ?? array();
+
+        if (!is_array($fields)) {
+            return $request;
+        }
+
+        foreach ($fields as $index => $field) {
+            if (!is_array($field)) {
+                continue;
+            }
+
+            $type = isset($field['type']) ? (string) $field['type'] : 'text';
+            $value = $field['value'] ?? '';
+
+            if (isset($field['slug'])) {
+                $field['slug'] = sanitize_key((string) $field['slug']);
+            }
+
+            if (isset($field['required'])) {
+                $field['required'] = $this->is_truthy($field['required']);
+            }
+
+            if ('select' === $type && array_key_exists('options', $field)) {
+                $field['options'] = $this->normalize_select_options($field['options']);
+            }
+
+            if ('number' === $type) {
+                foreach (array('min', 'max', 'step') as $numeric_key) {
+                    if (isset($field[$numeric_key])) {
+                        $field[$numeric_key] = trim((string) $field[$numeric_key]);
+                    }
+                }
+            }
+
+            $field['value'] = $this->normalize_field_value($type, $value);
+            $fields[$index] = $field;
+        }
+
+        $request['fields'] = $fields;
+
+        return $request;
+    }
+
+    /**
+     * Normalizes a scalar field value for persistence and email rendering.
+     */
+    private function normalize_field_value(string $type, mixed $value): mixed {
+        if ('file' === $type || !is_scalar($value)) {
+            return $value;
+        }
+
+        $string_value = trim((string) $value);
+
+        if ('number' === $type && '' !== $string_value && is_numeric($string_value)) {
+            if (preg_match('/^-?\d+$/', $string_value)) {
+                return (string) (int) $string_value;
+            }
+
+            return rtrim(rtrim(sprintf('%.10F', (float) $string_value), '0'), '.');
+        }
+
+        return $string_value;
+    }
+
+    /**
+     * Normalizes select options into a trimmed list.
+     *
+     * @param mixed $options Raw option configuration.
+     *
+     * @return string[]
+     */
+    private function normalize_select_options(mixed $options): array {
+        if (is_array($options)) {
+            $candidate_options = $options;
+        } else {
+            $candidate_options = preg_split('/\r?\n/', (string) $options) ?: array();
+        }
+
+        $normalized_options = array();
+
+        foreach ($candidate_options as $option) {
+            $option = trim((string) $option);
+
+            if ('' !== $option) {
+                $normalized_options[] = $option;
+            }
+        }
+
+        return array_values(array_unique($normalized_options));
+    }
+
+    /**
+     * Returns whether a field is marked as required.
+     *
+     * @param array<string, mixed> $field Submitted field configuration.
+     */
+    private function is_field_required(array $field): bool {
+        return isset($field['required']) && $this->is_truthy($field['required']);
+    }
+
+    /**
+     * Normalizes common truthy request values.
+     */
+    private function is_truthy(mixed $value): bool {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        return in_array(strtolower(trim((string) $value)), array('1', 'true', 'on', 'yes'), true);
     }
 
     /**

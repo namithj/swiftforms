@@ -1,0 +1,16 @@
+.swiftforms-field--select {
+    border: 1px solid #d4ddd6;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fbfdf9;
+}
+
+.swiftforms-field--select .swiftforms-field__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.swiftforms-field--select select[disabled] {
+    width: 100%;
+}

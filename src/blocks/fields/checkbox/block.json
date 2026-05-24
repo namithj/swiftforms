@@ -1,0 +1,40 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "checkboxLabel": {
+            "default": "I agree to the terms.",
+            "type": "string"
+        },
+        "helpText": {
+            "default": "",
+            "type": "string"
+        },
+        "label": {
+            "default": "Consent",
+            "type": "string"
+        },
+        "required": {
+            "default": false,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "consent",
+            "type": "string"
+        },
+        "value": {
+            "default": "yes",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/checkbox-field",
+    "title": "Checkbox Field",
+    "category": "widgets",
+    "icon": "yes-alt",
+    "editorStyle": "file:../../../../dist/fields/checkbox/index.css",
+    "editorScript": "file:../../../../dist/fields/checkbox/index.js",
+    "description": "Checkbox field block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

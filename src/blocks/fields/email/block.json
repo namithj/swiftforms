@@ -28,9 +28,6 @@
     "icon": "email",
     "editorStyle": "file:../../../../dist/fields/email/index.css",
     "editorScript": "file:../../../../dist/fields/email/index.js",
-    "parent": [
-        "swiftforms/form"
-    ],
     "description": "Email field block for SwiftForms.",
     "textdomain": "swiftforms",
     "supports": {

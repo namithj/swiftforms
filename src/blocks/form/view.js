@@ -27,7 +27,12 @@ const collectFields = ( form ) => {
 
             return {
                 files: input instanceof HTMLInputElement && input.type === 'file' ? Array.from( input.files || [] ) : [],
+                max: input.getAttribute( 'max' ) || '',
+                min: input.getAttribute( 'min' ) || '',
+                options: input instanceof HTMLSelectElement ? Array.from( input.options ).map( ( option ) => option.value ).filter( Boolean ) : [],
+                required: input.required,
                 slug,
+                step: input.getAttribute( 'step' ) || '',
                 type,
                 value: getFieldValue( input ),
             };
@@ -66,6 +71,23 @@ const submitSwiftForm = async ( form ) => {
     fields.forEach( ( field, index ) => {
         formData.append( `fields[${ index }][slug]`, field.slug );
         formData.append( `fields[${ index }][type]`, field.type );
+        formData.append( `fields[${ index }][required]`, field.required ? '1' : '0' );
+
+        if ( field.min ) {
+            formData.append( `fields[${ index }][min]`, field.min );
+        }
+
+        if ( field.max ) {
+            formData.append( `fields[${ index }][max]`, field.max );
+        }
+
+        if ( field.step ) {
+            formData.append( `fields[${ index }][step]`, field.step );
+        }
+
+        if ( field.options.length ) {
+            formData.append( `fields[${ index }][options]`, field.options.join( '\n' ) );
+        }
 
         if ( field.type === 'file' && field.files.length ) {
             const file = field.files[ 0 ];

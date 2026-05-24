@@ -1,0 +1,48 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "helpText": {
+            "default": "",
+            "type": "string"
+        },
+        "label": {
+            "default": "Number",
+            "type": "string"
+        },
+        "max": {
+            "default": "",
+            "type": "string"
+        },
+        "min": {
+            "default": "",
+            "type": "string"
+        },
+        "placeholder": {
+            "default": "",
+            "type": "string"
+        },
+        "required": {
+            "default": false,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "number_field",
+            "type": "string"
+        },
+        "step": {
+            "default": "1",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/number-field",
+    "title": "Number Field",
+    "category": "widgets",
+    "icon": "plus-alt2",
+    "editorStyle": "file:../../../../dist/fields/number/index.css",
+    "editorScript": "file:../../../../dist/fields/number/index.js",
+    "description": "Number field block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}
