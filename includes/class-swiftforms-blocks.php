@@ -101,6 +101,8 @@ class SwiftForms_Blocks {
 
             if (self::FORM_BLOCK_NAME === $block_name) {
                 $block_args['render_callback'] = array($this, 'render_form_block');
+            } elseif (in_array($block_name, self::FIELD_BLOCK_NAMES, true)) {
+                $block_args['render_callback'] = array($this, 'render_field_block');
             }
 
             $block_type = register_block_type_from_metadata($metadata_path, $block_args);
@@ -236,6 +238,27 @@ class SwiftForms_Blocks {
     }
 
     /**
+     * Server-renders an individual field block and exposes its HTML to a type-specific filter.
+     *
+     * @param array<string, mixed> $attributes Field block attributes.
+     */
+    public function render_field_block(array $attributes, string $content, ?WP_Block $block = null): string {
+        $block_name = $block instanceof WP_Block ? $block->name : '';
+        $field_type = $this->get_field_type_from_block_name($block_name);
+
+        if ('' === $field_type) {
+            return $content;
+        }
+
+        return (string) apply_filters(
+            'swiftforms_field_html_' . $field_type,
+            $content,
+            $attributes,
+            $block_name
+        );
+    }
+
+    /**
      * Injects frontend runtime configuration before the form view script executes.
      *
      * Tests to create:
@@ -275,16 +298,16 @@ class SwiftForms_Blocks {
      */
     public function get_block_metadata_paths(): array {
         return array(
-            $this->plugin_path . 'src/blocks/fields/checkbox',
-            $this->plugin_path . 'src/blocks/form',
-            $this->plugin_path . 'src/blocks/fields/file',
-            $this->plugin_path . 'src/blocks/fields/number',
-            $this->plugin_path . 'src/blocks/fields/select',
-            $this->plugin_path . 'src/blocks/fields/tel',
-            $this->plugin_path . 'src/blocks/fields/text',
-            $this->plugin_path . 'src/blocks/fields/email',
-            $this->plugin_path . 'src/blocks/fields/textarea',
-            $this->plugin_path . 'src/blocks/fields/url',
+            $this->plugin_path . 'includes/blocks/fields/checkbox',
+            $this->plugin_path . 'includes/blocks/form',
+            $this->plugin_path . 'includes/blocks/fields/file',
+            $this->plugin_path . 'includes/blocks/fields/number',
+            $this->plugin_path . 'includes/blocks/fields/select',
+            $this->plugin_path . 'includes/blocks/fields/tel',
+            $this->plugin_path . 'includes/blocks/fields/text',
+            $this->plugin_path . 'includes/blocks/fields/email',
+            $this->plugin_path . 'includes/blocks/fields/textarea',
+            $this->plugin_path . 'includes/blocks/fields/url',
         );
     }
 
@@ -305,5 +328,23 @@ class SwiftForms_Blocks {
         }
 
         return array();
+    }
+
+    /**
+     * Maps a block name to the hook suffix used for field HTML filters.
+     */
+    private function get_field_type_from_block_name(string $block_name): string {
+        return match ($block_name) {
+            'swiftforms/checkbox-field' => 'checkbox',
+            'swiftforms/email-field' => 'email',
+            'swiftforms/file-field' => 'file',
+            'swiftforms/number-field' => 'number',
+            'swiftforms/select-field' => 'select',
+            'swiftforms/tel-field' => 'tel',
+            'swiftforms/text-field' => 'text',
+            'swiftforms/textarea-field' => 'textarea',
+            'swiftforms/url-field' => 'url',
+            default => '',
+        };
     }
 }

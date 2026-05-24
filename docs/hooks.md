@@ -42,6 +42,14 @@ Parameter:
 
 * `array $allowed_types`
 
-## Planned hook documentation
+### `swiftforms_field_html_{type}`
 
-The scaffold is ready for additional field-rendering and integration hooks as the plugin surface expands.
+Filters the rendered HTML for a specific field type before it is output inside the frontend form.
+
+Parameters:
+
+* `string $html`
+* `array $attributes`
+* `string $block_name`
+
+Examples of `{type}` include `text`, `email`, `textarea`, `select`, and `checkbox`.

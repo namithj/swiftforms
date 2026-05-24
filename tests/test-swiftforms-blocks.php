@@ -123,4 +123,30 @@ class SwiftForms_Blocks_Test extends WP_UnitTestCase {
         $this->assertStringContainsString('data-field-slug="your_name"', $markup);
         $this->assertStringContainsString('Send now', $markup);
     }
+
+    public function test_render_form_block_applies_field_html_filter_for_type(): void {
+        $blocks = new SwiftForms_Blocks(SWIFTFORMS_PATH);
+        $blocks->register_blocks();
+
+        $form_id = self::factory()->post->create(
+            array(
+                'post_content' => '<!-- wp:swiftforms/text-field {"label":"Your name","slug":"your_name"} --><div class="wp-block-swiftforms-text-field swiftforms-field swiftforms-field--text" data-field-slug="your_name" data-field-type="text" data-swiftforms-field="true"><label class="swiftforms-field__control"><span class="swiftforms-field__label">Your name</span><input name="your_name" type="text" /></label></div><!-- /wp:swiftforms/text-field -->',
+                'post_status' => 'publish',
+                'post_type' => SwiftForms_CPTs::FORM_POST_TYPE,
+            )
+        );
+
+        add_filter(
+            'swiftforms_field_html_text',
+            static function (string $html): string {
+                return str_replace('swiftforms-field--text', 'swiftforms-field--text filtered-text-field', $html);
+            }
+        );
+
+        $markup = $blocks->render_form_block(array('formId' => $form_id));
+
+        remove_all_filters('swiftforms_field_html_text');
+
+        $this->assertStringContainsString('filtered-text-field', $markup);
+    }
 }

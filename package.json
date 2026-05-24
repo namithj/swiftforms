@@ -6,7 +6,7 @@
     "scripts": {
         "build": "wp-scripts build",
         "format": "wp-scripts format",
-        "lint:js": "wp-scripts lint-js src/blocks --max-warnings=0",
+        "lint:js": "wp-scripts lint-js includes/blocks --max-warnings=0",
         "start": "wp-scripts start",
         "test": "composer test",
         "test:js": "wp-scripts test-unit-js"

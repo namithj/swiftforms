@@ -4,6 +4,49 @@ import { useSelect } from '@wordpress/data';
 import { Notice, PanelBody, SelectControl } from '@wordpress/components';
 import './editor.css';
 
+const LEGACY_ATTRIBUTES = {
+    adminRecipients: {
+        default: '',
+        type: 'string',
+    },
+    adminSubject: {
+        default: 'SwiftForms submission #{submission_id}',
+        type: 'string',
+    },
+    adminTemplate: {
+        default: '',
+        type: 'string',
+    },
+    autoresponderSubject: {
+        default: 'We received your submission',
+        type: 'string',
+    },
+    autoresponderTemplate: {
+        default: '',
+        type: 'string',
+    },
+    description: {
+        default: '',
+        type: 'string',
+    },
+    enableCaptcha: {
+        default: false,
+        type: 'boolean',
+    },
+    formId: {
+        default: 0,
+        type: 'number',
+    },
+    submitLabel: {
+        default: 'Send message',
+        type: 'string',
+    },
+    successMessage: {
+        default: 'Form submitted successfully.',
+        type: 'string',
+    },
+};
+
 const getFormLabel = ( form ) => {
     if ( form?.title?.raw ) {
         return form.title.raw;
@@ -134,6 +177,7 @@ registerBlockType( 'swiftforms/form', {
 
     deprecated: [
         {
+            attributes: LEGACY_ATTRIBUTES,
             save: legacySave,
         },
     ],

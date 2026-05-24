@@ -1,0 +1,21 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "formId": {
+            "default": 0,
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/form",
+    "title": "SwiftForms Form",
+    "category": "widgets",
+    "icon": "feedback",
+    "description": "Embed a saved SwiftForms form.",
+    "editorStyle": "file:../../../dist/form/index.css",
+    "editorScript": "file:../../../dist/form/index.js",
+    "textdomain": "swiftforms",
+    "viewScript": "file:../../../dist/form/view.js",
+    "supports": {
+        "html": false
+    }
+}

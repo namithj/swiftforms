@@ -46,6 +46,8 @@ class SwiftForms_CPTs {
 
         add_action('add_meta_boxes_' . self::FORM_POST_TYPE, array($this, 'register_form_settings_metabox'));
         add_action('save_post_' . self::FORM_POST_TYPE, array($this, 'save_form_settings_metabox'));
+        add_filter('manage_edit-' . self::SUBMISSION_POST_TYPE . '_columns', array($this, 'filter_submission_columns'));
+        add_action('manage_' . self::SUBMISSION_POST_TYPE . '_posts_custom_column', array($this, 'render_submission_column'), 10, 2);
     }
 
     /**
@@ -194,6 +196,58 @@ class SwiftForms_CPTs {
             : array();
 
         update_post_meta($post_id, self::FORM_SETTINGS_META_KEY, self::sanitize_form_settings($settings));
+    }
+
+    /**
+     * Adds useful submission columns in wp-admin.
+     *
+     * @param array<string, string> $columns Existing post list table columns.
+     *
+     * @return array<string, string>
+     */
+    public function filter_submission_columns(array $columns): array {
+        return array(
+            'cb' => $columns['cb'] ?? '<input type="checkbox" />',
+            'title' => $columns['title'] ?? 'Title',
+            'swiftforms_form' => 'Form',
+            'swiftforms_email' => 'Email',
+            'date' => $columns['date'] ?? 'Date',
+        );
+    }
+
+    /**
+     * Renders custom submission column values.
+     */
+    public function render_submission_column(string $column_name, int $post_id): void {
+        if ('swiftforms_form' === $column_name) {
+            $form_id = (int) get_post_meta($post_id, '_sf_form_id', true);
+
+            if ($form_id <= 0) {
+                echo '&mdash;';
+                return;
+            }
+
+            $form = get_post($form_id);
+
+            if (!$form instanceof WP_Post) {
+                echo esc_html(sprintf('Form #%d', $form_id));
+                return;
+            }
+
+            echo esc_html(get_the_title($form) ?: sprintf('Form #%d', $form_id));
+            return;
+        }
+
+        if ('swiftforms_email' === $column_name) {
+            $email = get_post_meta($post_id, '_sf_field_email', true);
+
+            if (!is_string($email) || '' === trim($email)) {
+                echo '&mdash;';
+                return;
+            }
+
+            echo esc_html($email);
+        }
     }
 
     /**

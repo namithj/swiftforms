@@ -62,11 +62,6 @@ const submitSwiftForm = async ( form ) => {
     formData.append( 'nonce', settings.nonce );
     formData.append( 'honeypot', honeypot ? honeypot.value : '' );
     formData.append( 'form_id', form.getAttribute( 'data-form-id' ) || '0' );
-    formData.append( 'notifications[adminRecipients]', form.getAttribute( 'data-admin-recipients' ) || '' );
-    formData.append( 'notifications[adminSubject]', form.getAttribute( 'data-admin-subject' ) || '' );
-    formData.append( 'notifications[adminTemplate]', form.getAttribute( 'data-admin-template' ) || '' );
-    formData.append( 'notifications[autoresponderSubject]', form.getAttribute( 'data-autoresponder-subject' ) || '' );
-    formData.append( 'notifications[autoresponderTemplate]', form.getAttribute( 'data-autoresponder-template' ) || '' );
 
     fields.forEach( ( field, index ) => {
         formData.append( `fields[${ index }][slug]`, field.slug );
