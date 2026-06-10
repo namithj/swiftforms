@@ -30,6 +30,7 @@ jobs:
         run: npm run build
 
       - name: Resolve release version
+        if: false
         id: version
         shell: bash
         run: |
@@ -42,6 +43,7 @@ jobs:
           echo "release_version=${release_version}" >> "$GITHUB_OUTPUT"
 
       - name: Validate version metadata
+        if: false
         shell: bash
         run: |
           release_version="${{ steps.version.outputs.release_version }}"
@@ -52,6 +54,18 @@ jobs:
           [[ "$plugin_version" == "$release_version" ]]
           [[ "$stable_tag" == "$release_version" ]]
           [[ "$package_version" == "$release_version" ]]
+
+      - name: Resolve active release version
+        id: version_active
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            release_version="${GITHUB_REF_NAME#v}"
+          else
+            release_version="$(node -p "require('./package.json').version")"
+          fi
+
+          echo "release_version=${release_version}" >> "$GITHUB_OUTPUT"
 
       - name: Stage release package
         shell: bash
@@ -67,17 +81,17 @@ jobs:
           cp -R dist/. "$package_root/dist/"
 
           cd "$release_root"
-          zip -r "$GITHUB_WORKSPACE/swiftforms-${{ steps.version.outputs.release_version }}.zip" swiftforms
+          zip -r "$GITHUB_WORKSPACE/swiftforms-${{ steps.version_active.outputs.release_version }}.zip" swiftforms
 
       - name: Upload release package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: swiftforms-${{ steps.version.outputs.release_version }}
-          path: swiftforms-${{ steps.version.outputs.release_version }}.zip
+          name: swiftforms-${{ steps.version_active.outputs.release_version }}
+          path: swiftforms-${{ steps.version_active.outputs.release_version }}.zip
 
       - name: Publish GitHub release
         if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v2
         with:
-          files: swiftforms-${{ steps.version.outputs.release_version }}.zip
+          files: swiftforms-${{ steps.version_active.outputs.release_version }}.zip
           generate_release_notes: true
