@@ -158,13 +158,13 @@ registerBlockType( 'swiftforms/form', {
 
                 <p className="swiftforms-form-editor__description">
                     { selectedForm
-                        ? `Embedding ${ getFormLabel( selectedForm ) }. Manage fields and allowed content in the Forms post type.`
+                        ? `Embedding ${ getFormLabel( selectedForm ) }.`
                         : 'Select a saved form to embed on this page.' }
                 </p>
 
                 <div className="swiftforms-form-editor__preview">
                     { selectedForm
-                        ? 'This block renders the selected form post on the frontend. Edit fields, notifications, captcha, and submit messaging on the form itself.'
+                        ? 'This block renders the selected form post on the frontend. Edit fields in the canvas and adjust form settings from the document sidebar.'
                         : 'No form selected yet.' }
                 </div>
             </div>

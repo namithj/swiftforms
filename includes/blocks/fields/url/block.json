@@ -26,7 +26,10 @@
     "title": "URL Field",
     "category": "widgets",
     "icon": "admin-links",
-    "editorStyle": "file:../../../../dist/fields/url/index.css",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/url/index.css"
+    ],
     "editorScript": "file:../../../../dist/fields/url/index.js",
     "description": "URL field block for SwiftForms.",
     "textdomain": "swiftforms",

@@ -26,7 +26,10 @@
     "title": "Email Field",
     "category": "widgets",
     "icon": "email",
-    "editorStyle": "file:../../../../dist/fields/email/index.css",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/email/index.css"
+    ],
     "editorScript": "file:../../../../dist/fields/email/index.js",
     "description": "Email field block for SwiftForms.",
     "textdomain": "swiftforms",

@@ -149,4 +149,22 @@ class SwiftForms_Blocks_Test extends WP_UnitTestCase {
 
         $this->assertStringContainsString('filtered-text-field', $markup);
     }
+
+    public function test_render_form_block_returns_legacy_content_when_form_id_is_missing(): void {
+        $blocks = new SwiftForms_Blocks(SWIFTFORMS_PATH);
+        $legacy_markup = '<form class="swiftforms-form"><p>Legacy form output</p></form>';
+
+        $markup = $blocks->render_form_block(array(), $legacy_markup);
+
+        $this->assertSame($legacy_markup, $markup);
+    }
+
+    public function test_render_form_block_returns_legacy_content_when_form_id_is_invalid(): void {
+        $blocks = new SwiftForms_Blocks(SWIFTFORMS_PATH);
+        $legacy_markup = '<form class="swiftforms-form"><p>Legacy form output</p></form>';
+
+        $markup = $blocks->render_form_block(array('formId' => 999999), $legacy_markup);
+
+        $this->assertSame($legacy_markup, $markup);
+    }
 }

@@ -26,7 +26,10 @@
     "title": "Text Field",
     "category": "widgets",
     "icon": "editor-textcolor",
-    "editorStyle": "file:../../../../dist/fields/text/index.css",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/text/index.css"
+    ],
     "editorScript": "file:../../../../dist/fields/text/index.js",
     "description": "Text field block for SwiftForms.",
     "textdomain": "swiftforms",

@@ -26,7 +26,10 @@
     "title": "Select Field",
     "category": "widgets",
     "icon": "list-view",
-    "editorStyle": "file:../../../../dist/fields/select/index.css",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/select/index.css"
+    ],
     "editorScript": "file:../../../../dist/fields/select/index.js",
     "description": "Select field block for SwiftForms.",
     "textdomain": "swiftforms",

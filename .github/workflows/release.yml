@@ -1,0 +1,83 @@
+name: Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Build plugin assets
+        run: npm run build
+
+      - name: Resolve release version
+        id: version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            release_version="${GITHUB_REF_NAME#v}"
+          else
+            release_version="$(node -p "require('./package.json').version")"
+          fi
+
+          echo "release_version=${release_version}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate version metadata
+        shell: bash
+        run: |
+          release_version="${{ steps.version.outputs.release_version }}"
+          plugin_version="$(grep -Po "(?<=^ \* Version: ).*" swiftforms.php)"
+          stable_tag="$(grep -Po "(?<=^Stable tag: ).*" readme.txt)"
+          package_version="$(node -p "require('./package.json').version")"
+
+          [[ "$plugin_version" == "$release_version" ]]
+          [[ "$stable_tag" == "$release_version" ]]
+          [[ "$package_version" == "$release_version" ]]
+
+      - name: Stage release package
+        shell: bash
+        run: |
+          release_root="$RUNNER_TEMP/swiftforms-release"
+          package_root="$release_root/swiftforms"
+
+          rm -rf "$release_root"
+          mkdir -p "$package_root"
+
+          git archive --worktree-attributes --format=tar HEAD | tar -xf - -C "$package_root"
+          mkdir -p "$package_root/dist"
+          cp -R dist/. "$package_root/dist/"
+
+          cd "$release_root"
+          zip -r "$GITHUB_WORKSPACE/swiftforms-${{ steps.version.outputs.release_version }}.zip" swiftforms
+
+      - name: Upload release package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: swiftforms-${{ steps.version.outputs.release_version }}
+          path: swiftforms-${{ steps.version.outputs.release_version }}.zip
+
+      - name: Publish GitHub release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: swiftforms-${{ steps.version.outputs.release_version }}.zip
+          generate_release_notes: true

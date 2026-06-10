@@ -30,7 +30,10 @@
     "title": "Checkbox Field",
     "category": "widgets",
     "icon": "yes-alt",
-    "editorStyle": "file:../../../../dist/fields/checkbox/index.css",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/checkbox/index.css"
+    ],
     "editorScript": "file:../../../../dist/fields/checkbox/index.js",
     "description": "Checkbox field block for SwiftForms.",
     "textdomain": "swiftforms",

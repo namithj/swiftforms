@@ -46,7 +46,7 @@ class SwiftForms_CPTs {
 
         $this->register_form_settings_meta();
 
-        add_action('enqueue_block_editor_assets', array($this, 'enqueue_form_settings_panel'));
+        add_action('enqueue_block_editor_assets', array($this, 'enqueue_form_editor_assets'));
         add_filter('manage_edit-' . self::SUBMISSION_POST_TYPE . '_columns', array($this, 'filter_submission_columns'));
         add_action('manage_' . self::SUBMISSION_POST_TYPE . '_posts_custom_column', array($this, 'render_submission_column'), 10, 2);
     }
@@ -108,9 +108,9 @@ class SwiftForms_CPTs {
     }
 
     /**
-     * Enqueues the form settings document panel for the form CPT block editor.
+     * Enqueues shared form editor assets for the form CPT block editor.
      */
-    public function enqueue_form_settings_panel(): void {
+    public function enqueue_form_editor_assets(): void {
         if (!function_exists('get_current_screen')) {
             return;
         }
@@ -122,6 +122,7 @@ class SwiftForms_CPTs {
 
         $asset_path = SWIFTFORMS_PATH . 'dist/form/settings-panel.asset.php';
         $script_path = SWIFTFORMS_PATH . 'dist/form/settings-panel.js';
+        $style_path = SWIFTFORMS_PATH . 'dist/form/settings-panel.css';
 
         if (!file_exists($asset_path) || !file_exists($script_path)) {
             return;
@@ -136,6 +137,17 @@ class SwiftForms_CPTs {
             $asset['version'] ?? SWIFTFORMS_VERSION,
             true
         );
+
+        if (file_exists($style_path)) {
+            wp_enqueue_style(
+                'swiftforms-form-settings-panel',
+                SWIFTFORMS_URL . 'dist/form/settings-panel.css',
+                array('wp-components'),
+                $asset['version'] ?? SWIFTFORMS_VERSION
+            );
+
+            wp_style_add_data('swiftforms-form-settings-panel', 'rtl', 'replace');
+        }
     }
 
     /**

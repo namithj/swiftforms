@@ -38,7 +38,10 @@
     "title": "Number Field",
     "category": "widgets",
     "icon": "plus-alt2",
-    "editorStyle": "file:../../../../dist/fields/number/index.css",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/number/index.css"
+    ],
     "editorScript": "file:../../../../dist/fields/number/index.js",
     "description": "Number field block for SwiftForms.",
     "textdomain": "swiftforms",

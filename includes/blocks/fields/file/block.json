@@ -22,7 +22,10 @@
     "title": "File Field",
     "category": "widgets",
     "icon": "media-default",
-    "editorStyle": "file:../../../../dist/fields/file/index.css",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/file/index.css"
+    ],
     "editorScript": "file:../../../../dist/fields/file/index.js",
     "description": "File upload field block for SwiftForms.",
     "textdomain": "swiftforms",

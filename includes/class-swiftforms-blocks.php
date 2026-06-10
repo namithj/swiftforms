@@ -58,6 +58,13 @@ class SwiftForms_Blocks {
     private array $frontend_script_handles = array();
 
     /**
+     * Registered frontend style handles.
+     *
+     * @var string[]
+     */
+    private array $frontend_style_handles = array();
+
+    /**
      * Stores the plugin path used to locate block metadata.
      *
      * Tests to create:
@@ -114,9 +121,17 @@ class SwiftForms_Blocks {
                     )
                 );
             }
+
+            if ($block_type instanceof WP_Block_Type && !empty($block_type->style_handles)) {
+                $this->frontend_style_handles = array_values(
+                    array_unique(
+                        array_merge($this->frontend_style_handles, $block_type->style_handles)
+                    )
+                );
+            }
         }
 
-        if (!empty($this->frontend_script_handles)) {
+        if (!empty($this->frontend_script_handles) || !empty($this->frontend_style_handles)) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_settings'));
         }
     }
@@ -161,16 +176,17 @@ class SwiftForms_Blocks {
      * - The embed block outputs the selected form post content inside the frontend form wrapper.
      *
      * @param array<string, mixed> $attributes Embed block attributes.
+     * @param string               $content    Saved block content for legacy fallback.
      */
-    public function render_form_block(array $attributes): string {
+    public function render_form_block(array $attributes, string $content = ''): string {
         $form_id = isset($attributes['formId']) ? (int) $attributes['formId'] : 0;
         if ($form_id <= 0) {
-            return '';
+            return $content;
         }
 
         $form_post = get_post($form_id);
         if (!$form_post instanceof WP_Post || SwiftForms_CPTs::FORM_POST_TYPE !== $form_post->post_type) {
-            return '';
+            return $content;
         }
 
         $fields_markup = do_blocks((string) $form_post->post_content);
@@ -268,6 +284,17 @@ class SwiftForms_Blocks {
      * - The frontend script receives admin-ajax.php, the AJAX action, and a nonce.
      */
     public function enqueue_frontend_settings(): void {
+        wp_enqueue_style(
+            'swiftforms-form-default-style',
+            SWIFTFORMS_URL . 'includes/blocks/form/style.css',
+            array(),
+            SWIFTFORMS_VERSION
+        );
+
+        foreach ($this->frontend_style_handles as $handle) {
+            wp_enqueue_style($handle);
+        }
+
         $config = wp_json_encode(
             array(
                 'action' => 'swiftforms_submit',

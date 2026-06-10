@@ -26,7 +26,10 @@
     "title": "Phone Field",
     "category": "widgets",
     "icon": "phone",
-    "editorStyle": "file:../../../../dist/fields/tel/index.css",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/tel/index.css"
+    ],
     "editorScript": "file:../../../../dist/fields/tel/index.js",
     "description": "Phone field block for SwiftForms.",
     "textdomain": "swiftforms",

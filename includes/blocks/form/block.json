@@ -3,7 +3,7 @@
     "attributes": {
         "formId": {
             "default": 0,
-            "type": "string"
+            "type": "number"
         }
     },
     "name": "swiftforms/form",
@@ -11,6 +11,7 @@
     "category": "widgets",
     "icon": "feedback",
     "description": "Embed a saved SwiftForms form.",
+    "style": "file:../../../dist/form/style-index.css",
     "editorStyle": "file:../../../dist/form/index.css",
     "editorScript": "file:../../../dist/form/index.js",
     "textdomain": "swiftforms",
