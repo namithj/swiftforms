@@ -2,10 +2,6 @@
 /node_modules/
 /vendor/
 
-# Package manager artifacts
-/package-lock.json
-/composer.lock
-
 # Test and cache artifacts
 /.phpunit.result.cache
 /phpcs-report.xml
