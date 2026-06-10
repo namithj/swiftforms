@@ -20,9 +20,7 @@
 /.env.example export-ignore
 /bin export-ignore
 /docs export-ignore
-/node_modules export-ignore
 /tests export-ignore
-/vendor export-ignore
 /composer.json export-ignore
 /composer.lock export-ignore
 /package.json export-ignore
