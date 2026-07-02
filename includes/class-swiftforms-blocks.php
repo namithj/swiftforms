@@ -246,11 +246,52 @@ class SwiftForms_Blocks {
                 tabindex="-1"
                 type="text"
             />
+            <?php if ($enable_captcha) : ?>
+                <?php $captcha = $this->build_captcha(); ?>
+                <div class="swiftforms-form__captcha" data-swiftforms-captcha>
+                    <label class="swiftforms-form__captcha-label">
+                        <span class="swiftforms-form__captcha-question"><?php echo esc_html(sprintf('%d + %d = ?', $captcha['a'], $captcha['b'])); ?></span>
+                        <input
+                            class="swiftforms-form__captcha-input"
+                            data-swiftforms-captcha-answer
+                            inputmode="numeric"
+                            name="captcha_answer"
+                            required
+                            type="number"
+                        />
+                    </label>
+                    <input
+                        data-swiftforms-captcha-token
+                        name="captcha_token"
+                        type="hidden"
+                        value="<?php echo esc_attr($captcha['token']); ?>"
+                    />
+                </div>
+            <?php endif; ?>
             <button type="submit" class="swiftforms-form__submit"><?php echo esc_html($submit_label); ?></button>
         </form>
         <?php
 
         return (string) ob_get_clean();
+    }
+
+    /**
+     * Builds a fresh math captcha challenge for the current render.
+     *
+     * The expected sum never reaches the browser; only its HMAC token does. The
+     * matching verification lives in SwiftForms_Submissions::validate_captcha().
+     *
+     * @return array{a:int,b:int,token:string}
+     */
+    private function build_captcha(): array {
+        $a = wp_rand(1, 9);
+        $b = wp_rand(1, 9);
+
+        return array(
+            'a' => $a,
+            'b' => $b,
+            'token' => SwiftForms_Submissions::hash_captcha_answer($a + $b),
+        );
     }
 
     /**

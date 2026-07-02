@@ -49,6 +49,9 @@ class SwiftForms_CPTs {
         add_action('enqueue_block_editor_assets', array($this, 'enqueue_form_editor_assets'));
         add_filter('manage_edit-' . self::SUBMISSION_POST_TYPE . '_columns', array($this, 'filter_submission_columns'));
         add_action('manage_' . self::SUBMISSION_POST_TYPE . '_posts_custom_column', array($this, 'render_submission_column'), 10, 2);
+        add_action('add_meta_boxes_' . self::SUBMISSION_POST_TYPE, array($this, 'add_submission_metabox'));
+        add_filter('bulk_actions-edit-' . self::SUBMISSION_POST_TYPE, array($this, 'filter_submission_bulk_actions'));
+        add_filter('handle_bulk_actions-edit-' . self::SUBMISSION_POST_TYPE, array($this, 'handle_submission_bulk_actions'), 10, 3);
     }
 
     /**
@@ -262,6 +265,217 @@ class SwiftForms_CPTs {
     }
 
     /**
+     * Registers the read-only submission details metabox.
+     */
+    public function add_submission_metabox(): void {
+        add_meta_box(
+            'swiftforms-submission-details',
+            'Submission Details',
+            array($this, 'render_submission_metabox'),
+            self::SUBMISSION_POST_TYPE,
+            'normal',
+            'high'
+        );
+    }
+
+    /**
+     * Renders every stored field value for a submission as a read-only table.
+     */
+    public function render_submission_metabox(WP_Post $post): void {
+        $fields = $this->get_submission_field_values($post->ID);
+        $form_id = (int) get_post_meta($post->ID, '_sf_form_id', true);
+
+        echo '<table class="widefat striped"><tbody>';
+
+        if ($form_id > 0) {
+            $form_link = get_edit_post_link($form_id);
+            $form_title = get_the_title($form_id) ?: sprintf('Form #%d', $form_id);
+
+            echo '<tr><th scope="row">Form</th><td>';
+            if ($form_link) {
+                echo '<a href="' . esc_url($form_link) . '">' . esc_html($form_title) . '</a>';
+            } else {
+                echo esc_html($form_title);
+            }
+            echo '</td></tr>';
+        }
+
+        if (empty($fields)) {
+            echo '<tr><td colspan="2">No field data was stored for this submission.</td></tr>';
+        }
+
+        foreach ($fields as $slug => $value) {
+            $file_url = $this->resolve_uploaded_file_url((string) $value);
+
+            echo '<tr><th scope="row">' . esc_html($this->format_field_label($slug)) . '</th><td>';
+            if ('' !== $file_url) {
+                echo '<a href="' . esc_url($file_url) . '" rel="noopener" target="_blank">' . esc_html(basename((string) $value)) . '</a>';
+            } else {
+                echo nl2br(esc_html((string) $value));
+            }
+            echo '</td></tr>';
+        }
+
+        echo '</tbody></table>';
+    }
+
+    /**
+     * Adds the CSV export bulk action to the submissions list table.
+     *
+     * @param array<string, string> $actions Existing bulk actions.
+     *
+     * @return array<string, string>
+     */
+    public function filter_submission_bulk_actions(array $actions): array {
+        $actions['swiftforms_export_csv'] = 'Export to CSV';
+
+        return $actions;
+    }
+
+    /**
+     * Streams selected submissions as a CSV download.
+     *
+     * @param string $redirect_to Default redirect URL.
+     * @param string $action      Bulk action being performed.
+     * @param int[]  $post_ids    Selected submission IDs.
+     */
+    public function handle_submission_bulk_actions(string $redirect_to, string $action, array $post_ids): string {
+        if ('swiftforms_export_csv' !== $action) {
+            return $redirect_to;
+        }
+
+        if (!current_user_can('edit_posts') || empty($post_ids)) {
+            return $redirect_to;
+        }
+
+        $rows = $this->build_export_rows($post_ids);
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="swiftforms-submissions.csv"');
+
+        $handle = fopen('php://output', 'w');
+        foreach ($rows as $row) {
+            fputcsv($handle, $row);
+        }
+        fclose($handle);
+
+        exit;
+    }
+
+    /**
+     * Builds the CSV matrix (header row plus one row per submission).
+     *
+     * Kept separate from the streaming handler so the column logic is unit testable.
+     *
+     * @param int[] $post_ids Submission IDs to export.
+     *
+     * @return array<int, array<int, string>>
+     */
+    public function build_export_rows(array $post_ids): array {
+        $field_keys = $this->collect_field_keys($post_ids);
+        $labels = array_map(array($this, 'format_field_label'), $field_keys);
+
+        $rows = array(array_merge(array('ID', 'Title', 'Date'), $labels));
+
+        foreach ($post_ids as $post_id) {
+            $post_id = (int) $post_id;
+            $post = get_post($post_id);
+
+            if (!$post instanceof WP_Post || self::SUBMISSION_POST_TYPE !== $post->post_type) {
+                continue;
+            }
+
+            $values = $this->get_submission_field_values($post_id);
+            $row = array(
+                (string) $post_id,
+                get_the_title($post) ?: '',
+                get_the_date('Y-m-d H:i:s', $post) ?: '',
+            );
+
+            foreach ($field_keys as $slug) {
+                $value = isset($values[$slug]) ? (string) $values[$slug] : '';
+                $file_url = $this->resolve_uploaded_file_url($value);
+                $row[] = '' !== $file_url ? $file_url : $value;
+            }
+
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Collects the union of field slugs across the given submissions.
+     *
+     * @param int[] $post_ids Submission IDs.
+     *
+     * @return string[]
+     */
+    private function collect_field_keys(array $post_ids): array {
+        $keys = array();
+
+        foreach ($post_ids as $post_id) {
+            foreach (array_keys($this->get_submission_field_values((int) $post_id)) as $slug) {
+                $keys[$slug] = true;
+            }
+        }
+
+        return array_keys($keys);
+    }
+
+    /**
+     * Returns the `_sf_field_*` meta for a submission keyed by field slug.
+     *
+     * @param int $post_id Submission ID.
+     *
+     * @return array<string, string>
+     */
+    private function get_submission_field_values(int $post_id): array {
+        $meta = get_post_meta($post_id);
+        $fields = array();
+
+        if (!is_array($meta)) {
+            return $fields;
+        }
+
+        foreach ($meta as $key => $value) {
+            if (0 !== strpos((string) $key, '_sf_field_')) {
+                continue;
+            }
+
+            $slug = substr((string) $key, strlen('_sf_field_'));
+            $fields[$slug] = is_array($value) ? (string) reset($value) : (string) $value;
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Converts a stored uploaded-file path into a public URL, or '' if not a file.
+     */
+    private function resolve_uploaded_file_url(string $value): string {
+        if ('' === $value) {
+            return '';
+        }
+
+        $uploads = wp_upload_dir();
+        $basedir = trailingslashit($uploads['basedir']) . 'swiftforms/';
+
+        if (0 !== strpos($value, $basedir)) {
+            return '';
+        }
+
+        return $uploads['baseurl'] . '/swiftforms/' . ltrim(substr($value, strlen($basedir)), '/');
+    }
+
+    /**
+     * Turns a field slug into a human-readable label.
+     */
+    private function format_field_label(string $slug): string {
+        return ucwords(str_replace(array('_', '-'), ' ', $slug));
+    }
+
+    /**
      * Returns registration arguments for the form builder post type.
      *
      * Tests to create:
@@ -281,7 +495,11 @@ class SwiftForms_CPTs {
             'show_in_menu' => true,
             'show_in_rest' => true,
             'menu_icon' => 'dashicons-feedback',
-            'supports' => array('title', 'editor', 'thumbnail'),
+            // 'custom-fields' is required for WordPress's REST API to expose
+            // and accept the `meta` field at all; without it, _sf_settings
+            // (the Form Experience / Notifications sidebar panel) can never
+            // be read or saved through the block editor.
+            'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
             'map_meta_cap' => true,
         );
     }

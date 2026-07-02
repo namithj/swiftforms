@@ -82,6 +82,19 @@
     line-height: 1.35;
 }
 
+.swiftforms-form__captcha-label {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.swiftforms-form__captcha-input {
+    max-width: 120px;
+}
+
 .swiftforms-form__submit {
     justify-self: start;
     min-height: 34px;

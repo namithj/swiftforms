@@ -104,8 +104,13 @@ class SwiftForms_Core {
     public function register_ajax_actions(): void {
         $handler = array($this->get_submissions(), 'handle_submission');
 
-        add_action('wp_ajax_swiftforms_submit', $handler);
-        add_action('wp_ajax_nopriv_swiftforms_submit', $handler);
+        // accepted_args=0: admin-ajax.php triggers this hook with no extra
+        // arguments, and WordPress core's do_action() otherwise pads that to a
+        // single empty-string argument, which fails handle_submission()'s
+        // ?array type hint. Zero accepted args means WP invokes the callback
+        // with nothing at all, so its own `$request = null` default applies.
+        add_action('wp_ajax_swiftforms_submit', $handler, 10, 0);
+        add_action('wp_ajax_nopriv_swiftforms_submit', $handler, 10, 0);
     }
 
     /**

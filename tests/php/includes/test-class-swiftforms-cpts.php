@@ -33,6 +33,18 @@ class SwiftForms_CPTs_Test extends WP_UnitTestCase {
         $this->assertFalse(post_type_supports(SwiftForms_CPTs::FORM_POST_TYPE, 'revisions'));
     }
 
+    public function test_form_type_supports_custom_fields_for_rest_meta(): void {
+        // Without 'custom-fields' support, WordPress's REST API never exposes
+        // or accepts the `meta` field for this post type, so _sf_settings
+        // (the Form Experience / Notifications sidebar panel) could never be
+        // read or saved through the block editor.
+        $cpts = new SwiftForms_CPTs();
+
+        $cpts->register();
+
+        $this->assertTrue(post_type_supports(SwiftForms_CPTs::FORM_POST_TYPE, 'custom-fields'));
+    }
+
     public function test_submission_post_type_is_private(): void {
         $cpts = new SwiftForms_CPTs();
 
@@ -133,5 +145,28 @@ class SwiftForms_CPTs_Test extends WP_UnitTestCase {
 
         $this->assertSame('Contact Form', $form_output);
         $this->assertSame('person@example.com', $email_output);
+    }
+
+    public function test_build_export_rows_unions_field_columns_across_submissions(): void {
+        $cpts = new SwiftForms_CPTs();
+        $cpts->register();
+
+        $first = self::factory()->post->create(array('post_type' => SwiftForms_CPTs::SUBMISSION_POST_TYPE));
+        update_post_meta($first, '_sf_field_email', 'a@example.com');
+
+        $second = self::factory()->post->create(array('post_type' => SwiftForms_CPTs::SUBMISSION_POST_TYPE));
+        update_post_meta($second, '_sf_field_email', 'b@example.com');
+        update_post_meta($second, '_sf_field_full_name', 'Second Person');
+
+        $rows = $cpts->build_export_rows(array($first, $second));
+
+        $header = $rows[0];
+        $this->assertSame(array('ID', 'Title', 'Date'), array_slice($header, 0, 3));
+        $this->assertContains('Email', $header);
+        $this->assertContains('Full Name', $header);
+
+        $full_name_index = array_search('Full Name', $header, true);
+        $this->assertSame('', $rows[1][$full_name_index]);
+        $this->assertSame('Second Person', $rows[2][$full_name_index]);
     }
 }

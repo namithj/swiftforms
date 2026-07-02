@@ -7,6 +7,9 @@
 /phpcs-report.xml
 /phpunit-report.xml
 /coverage/
+/artifacts/
+/test-results/
+/playwright-report/
 
 # Local environment overrides
 /wp-tests-config.php

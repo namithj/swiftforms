@@ -31,9 +31,12 @@ if (!$tests_dir || !file_exists($tests_dir . '/includes/functions.php')) {
     exit(1);
 }
 
-$tests_config_file = $tests_dir . '/wp-tests-config.php';
+// Prefer the plugin's own env-driven wp-tests-config.php over the wp-phpunit
+// sample so `composer test` works with the SWIFTFORMS_TEST_DB_* environment
+// variables without copying files around.
+$tests_config_file = $plugin_dir . '/wp-tests-config.php';
 if (!file_exists($tests_config_file)) {
-    $tests_config_file = $plugin_dir . '/wp-tests-config.php';
+    $tests_config_file = $tests_dir . '/wp-tests-config.php';
 }
 
 if (file_exists($tests_config_file)) {

@@ -58,10 +58,18 @@ const submitSwiftForm = async ( form ) => {
     const honeypot = form.querySelector( '[data-swiftforms-honeypot]' );
     const submitButton = form.querySelector( '[type="submit"]' );
 
+    const captchaAnswer = form.querySelector( '[data-swiftforms-captcha-answer]' );
+    const captchaToken = form.querySelector( '[data-swiftforms-captcha-token]' );
+
     formData.append( 'action', settings.action );
     formData.append( 'nonce', settings.nonce );
     formData.append( 'honeypot', honeypot ? honeypot.value : '' );
     formData.append( 'form_id', form.getAttribute( 'data-form-id' ) || '0' );
+
+    if ( captchaToken ) {
+        formData.append( 'captcha_token', captchaToken.value );
+        formData.append( 'captcha_answer', captchaAnswer ? captchaAnswer.value : '' );
+    }
 
     fields.forEach( ( field, index ) => {
         formData.append( `fields[${ index }][slug]`, field.slug );

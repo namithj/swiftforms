@@ -9,9 +9,19 @@
         "lint:js": "wp-scripts lint-js includes/blocks --max-warnings=0",
         "start": "wp-scripts start",
         "test": "composer test",
-        "test:js": "wp-scripts test-unit-js"
+        "test:php": "composer test",
+        "test:js": "wp-scripts test-unit-js",
+        "wp-env": "cross-env NODE_OPTIONS=--no-network-family-autoselection wp-env",
+        "env:start": "cross-env NODE_OPTIONS=--no-network-family-autoselection wp-env start",
+        "env:stop": "wp-env stop",
+        "env:destroy": "wp-env destroy",
+        "pretest:e2e": "wp-scripts build",
+        "test:e2e": "wp-scripts test-playwright --config playwright.config.js",
+        "test:e2e:headed": "wp-scripts test-playwright --config playwright.config.js --headed"
     },
     "devDependencies": {
-        "@wordpress/scripts": "^30.24.0"
+        "@wordpress/env": "^10.39.0",
+        "@wordpress/scripts": "^30.24.0",
+        "cross-env": "^7.0.3"
     }
 }

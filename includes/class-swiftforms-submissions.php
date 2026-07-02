@@ -135,28 +135,46 @@ class SwiftForms_Submissions {
     }
 
     /**
-     * Validates the optional math captcha values in the request.
+     * Validates the optional math captcha answer against its signed token.
+     *
+     * The expected answer never travels to the browser. Instead the form ships an
+     * HMAC of the correct sum (see SwiftForms_Blocks::build_captcha()) which the
+     * client echoes back alongside the visitor's answer. A submission passes only
+     * when the HMAC of the submitted answer matches the token, so a bot must solve
+     * the challenge rather than replay a plaintext expected value.
      *
      * Tests to create:
-     * - test_validate_captcha_passes_when_no_challenge_exists: Call validate_captcha() without captcha keys and expect true.
-     * - test_validate_captcha_accepts_correct_answer: Pass matching captcha answer and sum and expect true.
+     * - test_validate_captcha_passes_when_no_challenge_exists: Call validate_captcha() without a captcha token and expect true.
+     * - test_validate_captcha_accepts_correct_answer: Pass an answer whose HMAC matches the token and expect true.
      * - test_validate_captcha_rejects_wrong_answer: Pass a mismatched answer and expect false.
      *
      * Expected output:
      * - Missing captcha configuration is treated as disabled.
-     * - Matching answers pass and mismatches fail.
+     * - Answers whose HMAC matches the token pass and mismatches fail.
      *
      * @param array<string, mixed> $request Submission payload.
      */
     public function validate_captcha(array $request): bool {
-        if (!isset($request['captcha_expected'])) {
+        $token = isset($request['captcha_token']) ? (string) $request['captcha_token'] : '';
+        if ('' === $token) {
             return true;
         }
 
-        $expected = (int) $request['captcha_expected'];
         $answer = isset($request['captcha_answer']) ? (int) $request['captcha_answer'] : PHP_INT_MIN;
 
-        return $expected === $answer;
+        return hash_equals($token, self::hash_captcha_answer($answer));
+    }
+
+    /**
+     * Computes the HMAC token for a captcha answer.
+     *
+     * Shared by the form renderer (to build the token) and the validator (to
+     * verify it) so the signing scheme stays in one place.
+     *
+     * @param int $answer Expected or submitted answer.
+     */
+    public static function hash_captcha_answer(int $answer): string {
+        return hash_hmac('sha256', (string) $answer, wp_salt('auth'));
     }
 
     /**
@@ -669,14 +687,44 @@ class SwiftForms_Submissions {
             $slug = isset($field['slug']) ? sanitize_key((string) $field['slug']) : '';
             $type = isset($field['type']) ? (string) $field['type'] : 'text';
             $value = $field['value'] ?? '';
+            $field_config = is_array($field) ? $field : array();
 
-            $validation = $this->validate_field_type($type, $value, is_array($field) ? $field : array());
+            if ($this->is_field_required($field_config) && $this->is_empty_value($value)) {
+                $errors[$slug ?: 'field'] = 'This field is required.';
+
+                continue;
+            }
+
+            $validation = $this->validate_field_type($type, $value, $field_config);
             if (is_wp_error($validation)) {
                 $errors[$slug ?: 'field'] = $validation->get_error_message();
             }
         }
 
         return $errors;
+    }
+
+    /**
+     * Determines whether a submitted field value counts as empty.
+     *
+     * Scalars are empty when they trim to an empty string. File fields arrive as
+     * arrays and are empty when no upload name or size is present.
+     *
+     * @param mixed $value Submitted field value.
+     */
+    private function is_empty_value(mixed $value): bool {
+        if (is_array($value)) {
+            $name = isset($value['name']) ? trim((string) $value['name']) : '';
+            $size = isset($value['size']) ? (int) $value['size'] : 0;
+
+            return '' === $name && $size <= 0;
+        }
+
+        if (is_scalar($value)) {
+            return '' === trim((string) $value);
+        }
+
+        return true;
     }
 
     /**

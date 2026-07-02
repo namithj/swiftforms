@@ -77,12 +77,16 @@ class SwiftForms_Submissions_Test extends WP_UnitTestCase {
         $this->assertFalse($this->submissions->validate_honeypot('bot-data'));
     }
 
+    public function test_validate_captcha_passes_when_no_challenge_exists(): void {
+        $this->assertTrue($this->submissions->validate_captcha(array()));
+    }
+
     public function test_validate_captcha_accepts_correct_answer(): void {
         $this->assertTrue(
             $this->submissions->validate_captcha(
                 array(
                     'captcha_answer' => 4,
-                    'captcha_expected' => 4,
+                    'captcha_token' => SwiftForms_Submissions::hash_captcha_answer(4),
                 )
             )
         );
@@ -93,7 +97,7 @@ class SwiftForms_Submissions_Test extends WP_UnitTestCase {
             $this->submissions->validate_captcha(
                 array(
                     'captcha_answer' => 5,
-                    'captcha_expected' => 4,
+                    'captcha_token' => SwiftForms_Submissions::hash_captcha_answer(4),
                 )
             )
         );
@@ -357,6 +361,28 @@ class SwiftForms_Submissions_Test extends WP_UnitTestCase {
         $this->assertFalse($response['success']);
         $this->assertSame('validation_failed', $response['code']);
         $this->assertSame('Please select a valid option.', $response['errors']['department']);
+    }
+
+    public function test_handle_submission_rejects_empty_required_text(): void {
+        $response = $this->submissions->handle_submission(
+            array(
+                'nonce' => wp_create_nonce('swiftforms_ajax'),
+                'honeypot' => '',
+                'fields' => array(
+                    array(
+                        'slug' => 'full_name',
+                        'type' => 'text',
+                        'value' => '   ',
+                        'required' => '1',
+                    ),
+                ),
+                'form_id' => 90,
+            )
+        );
+
+        $this->assertFalse($response['success']);
+        $this->assertSame('validation_failed', $response['code']);
+        $this->assertSame('This field is required.', $response['errors']['full_name']);
     }
 
     public function test_handle_submission_merges_live_uploaded_files_from_superglobal_request(): void {
