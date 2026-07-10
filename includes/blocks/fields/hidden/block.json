@@ -1,0 +1,27 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "slug": {
+            "default": "hidden_field",
+            "type": "string"
+        },
+        "value": {
+            "default": "",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/hidden-field",
+    "title": "Hidden Field",
+    "category": "widgets",
+    "icon": "hidden",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/hidden/index.css"
+    ],
+    "editorScript": "file:../../../../dist/fields/hidden/index.js",
+    "description": "Hidden input block for SwiftForms. The value is visible in the page source and can be edited by visitors.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

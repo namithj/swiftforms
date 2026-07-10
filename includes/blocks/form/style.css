@@ -112,3 +112,70 @@
 .swiftforms-form__submit:hover {
     background: #11526f;
 }
+
+.swiftforms-form__submit[aria-busy="true"] {
+    cursor: progress;
+    opacity: 0.65;
+}
+
+/* Required indicator, derived from the input's own required attribute so no
+   saved block markup has to change. */
+.swiftforms-form .swiftforms-field:has(input[required], textarea[required], select[required]) .swiftforms-field__label::after {
+    content: " *";
+    color: #b32d2e;
+}
+
+.swiftforms-form .swiftforms-field__error {
+    margin: 4px 0 0;
+    color: #b32d2e;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.swiftforms-form .swiftforms-field [aria-invalid="true"] {
+    border-color: #b32d2e;
+}
+
+.swiftforms-form__status {
+    min-height: 0;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.swiftforms-form__status[data-state="error"] {
+    color: #b32d2e;
+}
+
+.swiftforms-form__status[data-state="success"] {
+    color: #1d7a36;
+}
+
+/* Multi-step forms: inactive steps are hidden (inputs stay enabled so their
+   values submit); condition-hidden fields are hidden AND disabled. */
+.swiftforms-form .swiftforms-step[hidden],
+.swiftforms-form .swiftforms-field[hidden] {
+    display: none;
+}
+
+.swiftforms-form .swiftforms-field--radio .swiftforms-field__choice {
+    display: block;
+    margin: 2px 0;
+}
+
+.swiftforms-form .swiftforms-field--radio .swiftforms-field__fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.swiftforms-form .swiftforms-step-progress {
+    font-size: 12px;
+    color: #50575e;
+    margin: 8px 0 4px;
+}
+
+.swiftforms-form .swiftforms-step-nav {
+    display: flex;
+    gap: 8px;
+    margin: 4px 0 8px;
+}

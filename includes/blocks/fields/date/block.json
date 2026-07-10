@@ -1,0 +1,47 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "conditions": {
+            "default": {},
+            "type": "object"
+        },
+        "helpText": {
+            "default": "",
+            "type": "string"
+        },
+        "label": {
+            "default": "Date",
+            "type": "string"
+        },
+        "max": {
+            "default": "",
+            "type": "string"
+        },
+        "min": {
+            "default": "",
+            "type": "string"
+        },
+        "required": {
+            "default": false,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "date_field",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/date-field",
+    "title": "Date Field",
+    "category": "widgets",
+    "icon": "calendar-alt",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/date/index.css"
+    ],
+    "editorScript": "file:../../../../dist/fields/date/index.js",
+    "description": "Date picker field block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

@@ -3,6 +3,7 @@
     <description>WordPress coding standards for SwiftForms.</description>
 
     <file>swiftforms.php</file>
+    <file>uninstall.php</file>
     <file>includes</file>
     <file>tests</file>
 
@@ -18,7 +19,33 @@
     <config name="testVersion" value="8.1-"/>
 
     <rule ref="WordPress-Core"/>
-    <rule ref="WordPress-Docs"/>
+    <rule ref="WordPress-Docs">
+        <!-- Test method names are self-documenting; docblocks are only enforced for shipped code. -->
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
     <rule ref="WordPress-Extra"/>
     <rule ref="PHPCompatibilityWP"/>
+
+    <!-- Test files follow the test-class-*.php convention, not class-*.php. -->
+    <rule ref="WordPress.Files.FileName">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
+    <!-- Test-harness patterns: PHPMailer camelCase properties, simulated requests,
+         direct filesystem fixtures, and test doubles sharing a file. -->
+    <rule ref="WordPress.NamingConventions.ValidVariableName">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+    <rule ref="WordPress.Security.NonceVerification">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+    <rule ref="WordPress.WP.AlternativeFunctions">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Files.OneObjectStructurePerFile">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.PHP.CommentedOutCode">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
 </ruleset>

@@ -1,0 +1,10 @@
+.swiftforms-field--hidden .swiftforms-field__hidden-chip {
+    background: #f0f0f1;
+    border: 1px dashed #949494;
+    border-radius: 2px;
+    color: #50575e;
+    display: inline-block;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 4px 8px;
+}

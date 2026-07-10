@@ -51,12 +51,27 @@ test.describe( 'SwiftForms frontend submission', () => {
 		const formPage = await createFormPage( requestUtils, formId );
 
 		await page.goto( formPage.link );
-		// The form renders with `novalidate`, so submission reaches the server.
+		// The form renders with `novalidate`; client-side pre-validation
+		// catches the empty required field with the same message the server
+		// would produce.
 		await page.click( '.swiftforms-form__submit' );
 
 		const status = page.locator( '[data-swiftforms-status]' );
 		await expect( status ).toHaveText( 'This field is required.' );
 		await expect( status ).toHaveAttribute( 'data-state', 'error' );
+
+		// The error is also rendered inline against the field with a11y wiring.
+		const fieldError = page.locator( '.swiftforms-field__error' );
+		await expect( fieldError ).toHaveText( 'This field is required.' );
+		const input = page.locator( 'input[name="name"]' );
+		await expect( input ).toHaveAttribute( 'aria-invalid', 'true' );
+		await expect( input ).toBeFocused();
+
+		// Fixing the field clears the error on the next submit.
+		await page.fill( 'input[name="name"]', 'Ada Lovelace' );
+		await page.click( '.swiftforms-form__submit' );
+		await expect( status ).toHaveAttribute( 'data-state', 'success' );
+		await expect( page.locator( '.swiftforms-field__error' ) ).toHaveCount( 0 );
 	} );
 
 	test( 'enforces the math captcha challenge', async ( { page, requestUtils } ) => {

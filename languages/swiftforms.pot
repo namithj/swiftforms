@@ -1,0 +1,1209 @@
+# Copyright (C) 2026 Smartlogix
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: SwiftForms 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/swiftforms\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-10T17:03:48+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: swiftforms\n"
+
+#. Plugin Name of the plugin
+#: swiftforms.php
+#: includes/class-swiftforms-templates.php:33
+msgid "SwiftForms"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: swiftforms.php
+msgid "https://github.com/smartlogix/swiftforms"
+msgstr ""
+
+#. Description of the plugin
+#: swiftforms.php
+msgid "High-performance Gutenberg-native forms with conditional logic, multi-step layouts, and layered spam protection."
+msgstr ""
+
+#. Author of the plugin
+#: swiftforms.php
+msgid "Smartlogix"
+msgstr ""
+
+#. Author URI of the plugin
+#: swiftforms.php
+msgid "https://smartlogix.co.in"
+msgstr ""
+
+#: includes/class-swiftforms-blocks.php:356
+msgid "Submission failed."
+msgstr ""
+
+#: includes/class-swiftforms-blocks.php:357
+#: includes/class-swiftforms-submissions.php:1148
+msgid "This field is required."
+msgstr ""
+
+#: includes/class-swiftforms-blocks.php:358
+msgid "Next"
+msgstr ""
+
+#: includes/class-swiftforms-blocks.php:359
+msgid "Back"
+msgstr ""
+
+#. translators: 1: current step number, 2: total step count.
+#: includes/class-swiftforms-blocks.php:361
+#, php-format
+msgid "Step %1$s of %2$s"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:290
+msgid "SwiftForms submission #{submission_id}"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:293
+msgid "We received your submission"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:300
+msgid "Send message"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:301
+#: includes/class-swiftforms-submissions.php:211
+msgid "Form submitted successfully."
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:367
+msgid "Title"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:368
+#: includes/class-swiftforms-cpts.php:482
+msgid "Form"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:369
+msgid "Email"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:370
+msgid "Date"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:385
+msgid "Spam"
+msgstr ""
+
+#. translators: %d: form post ID.
+#: includes/class-swiftforms-cpts.php:397
+#: includes/class-swiftforms-cpts.php:403
+#: includes/class-swiftforms-cpts.php:480
+#: includes/class-swiftforms-cpts.php:748
+#: includes/blocks/form/index.js:61
+#, php-format,js-format
+msgid "Form #%d"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:457
+msgid "Submission Details"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:492
+msgid "No field data was stored for this submission."
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:518
+msgid "Export to CSV"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:519
+msgid "Mark as spam"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:520
+msgid "Not spam"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:743
+msgid "All forms"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:763
+msgid "Spam and non-spam"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:764
+msgid "Spam only"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:765
+msgid "Hide spam"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:1012
+#: includes/blocks/form/settings-panel.js:109
+msgid "Entries"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:1077
+msgid "Duplicate"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:1091
+msgid "You are not allowed to duplicate this form."
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:1117
+msgid "The form to duplicate could not be found."
+msgstr ""
+
+#. translators: %s: original form title.
+#: includes/class-swiftforms-cpts.php:1123
+#, php-format
+msgid "%s (Copy)"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:1150
+msgid "Forms"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:1151
+msgid "SwiftForms builders."
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:1173
+#: includes/class-swiftforms-settings.php:303
+msgid "Submissions"
+msgstr ""
+
+#: includes/class-swiftforms-cpts.php:1174
+msgid "SwiftForms submission records."
+msgstr ""
+
+#: includes/class-swiftforms-privacy.php:47
+#: includes/class-swiftforms-privacy.php:63
+msgid "SwiftForms Submissions"
+msgstr ""
+
+#: includes/class-swiftforms-privacy.php:85
+msgid "Submission ID"
+msgstr ""
+
+#: includes/class-swiftforms-privacy.php:89
+msgid "Submitted"
+msgstr ""
+
+#: includes/class-swiftforms-privacy.php:104
+msgid "Form Submissions"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:255
+#: includes/class-swiftforms-settings.php:365
+msgid "SwiftForms Settings"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:256
+msgid "Settings"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:278
+msgid "Email delivery (SMTP)"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:283
+msgid "Send via SMTP"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:284
+msgid "SMTP host"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:285
+msgid "Port"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:286
+msgid "Encryption"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:287
+msgid "Username"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:288
+msgid "Password"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:289
+msgid "From email"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:290
+msgid "From name"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:294
+#: includes/blocks/form/settings-panel.js:137
+msgid "Notifications"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:299
+msgid "Default admin recipients"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:308
+#: includes/blocks/form/settings-panel.js:113
+msgid "Save entries"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:309
+msgid "Rate limit"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:313
+#: includes/blocks/form/settings-panel.js:90
+msgid "Spam protection"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:318
+msgid "Minimum submit time"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:319
+msgid "Turnstile site key"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:320
+msgid "Turnstile secret key"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:321
+msgid "Akismet"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:325
+msgid "Advanced"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:330
+msgid "Uninstall"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:361
+msgid "Settings saved."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:372
+msgid "Send test email"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:373
+msgid "Sends a test message to your account email using the settings saved above."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:381
+msgid "Route SwiftForms (and all other WordPress) email through an SMTP server instead of PHP mail. Save your changes before sending a test email."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:390
+msgid "Use the SMTP server below for outgoing email"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:407
+msgid "Common ports: 587 (TLS), 465 (SSL), 25 (none)."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:416
+msgid "TLS (recommended)"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:417
+msgid "SSL"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:418
+msgid "None"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:434
+msgid "Leave empty if the server does not require authentication."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:443
+msgid "Defined by the SWIFTFORMS_SMTP_PASSWORD constant in wp-config.php."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:452
+msgid "Leave blank to keep the saved password. For extra security define SWIFTFORMS_SMTP_PASSWORD in wp-config.php instead."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:461
+msgid "Optional. Overrides the sender address on outgoing email."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:478
+msgid "Used when a form has no admin recipients of its own. One address per line (or comma separated). Falls back to the site admin email when empty."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:487
+msgid "Store submissions as entries by default"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:488
+msgid "Each form can override this under its Form Experience settings. Notifications are sent either way."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:497
+msgid "submissions per"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:499
+msgid "seconds, per visitor IP."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:506
+msgid "These protections layer on top of the built-in honeypot, math captcha, and rate limiting. No single layer has to catch everything."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:515
+msgid "seconds. Submissions faster than this are silently discarded as bot traffic. 0 disables the check."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:524
+msgid "Free keys at dash.cloudflare.com. Forms opt in individually under their Form Experience settings."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:536
+msgid "Leave blank to keep the saved secret."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:547
+msgid "Check submissions against Akismet and file matches as spam instead of rejecting them"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:550
+msgid "Requires the Akismet plugin to be installed, activated, and configured with an API key."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:560
+msgid "Delete all SwiftForms data when the plugin is uninstalled"
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:561
+msgid "Permanently removes every form, all stored submissions, uploaded files, and plugin settings. This cannot be undone."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:571
+msgid "You are not allowed to send a test email."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:577
+msgid "SwiftForms test email"
+msgstr ""
+
+#. translators: %s: site URL.
+#: includes/class-swiftforms-settings.php:580
+#, php-format
+msgid ""
+"This is a test email from SwiftForms on %s.\n"
+"\n"
+"If you're reading this, your email delivery settings work."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:609
+msgid "Test email sent. Check your inbox (and spam folder)."
+msgstr ""
+
+#: includes/class-swiftforms-settings.php:613
+msgid "The test email could not be sent. Double-check the SMTP settings."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:61
+msgid "Too many submissions. Please try again in a minute."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:73
+msgid "The form session has expired."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:88
+#: includes/class-swiftforms-submissions.php:100
+msgid "Submission ignored."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:133
+#: includes/class-swiftforms-submissions.php:154
+msgid "The captcha answer is incorrect."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:143
+msgid "The anti-spam check failed. Please try again."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:250
+msgid "This form is no longer available."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:556
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:564
+msgid "Please enter a valid URL."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:572
+msgid "Please enter a valid number."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:578
+msgid "Please enter a number above the minimum value."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:582
+msgid "Please enter a number below the maximum value."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:592
+msgid "Please enter a valid increment."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:602
+msgid "Please enter a valid phone number."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:610
+msgid "Please enter a valid date."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:615
+msgid "Please choose a later date."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:619
+msgid "Please choose an earlier date."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:631
+msgid "Please select an option."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:638
+msgid "Please select a valid option."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:648
+msgid "Please check this box to continue."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:656
+msgid "The uploaded file is invalid."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:661
+msgid "File too large."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:1060
+msgid "The uploaded file could not be found."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:1082
+msgid "File type not allowed."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:1097
+msgid "The uploaded file could not be stored."
+msgstr ""
+
+#: includes/class-swiftforms-submissions.php:1138
+msgid "Submitted fields are invalid."
+msgstr ""
+
+#: includes/class-swiftforms-templates.php:62
+msgid "Contact form"
+msgstr ""
+
+#: includes/class-swiftforms-templates.php:63
+msgid "Name, email, and message — the classic contact form."
+msgstr ""
+
+#: includes/class-swiftforms-templates.php:67
+msgid "Quote request"
+msgstr ""
+
+#: includes/class-swiftforms-templates.php:68
+msgid "Qualify leads with project type, budget, and timeline fields."
+msgstr ""
+
+#: includes/class-swiftforms-templates.php:72
+msgid "Feedback survey"
+msgstr ""
+
+#: includes/class-swiftforms-templates.php:73
+msgid "A short satisfaction survey with a follow-up field that appears for unhappy answers."
+msgstr ""
+
+#: includes/class-swiftforms-templates.php:77
+msgid "Event registration"
+msgstr ""
+
+#: includes/class-swiftforms-templates.php:78
+msgid "Two-step registration with attendee details, date, and meal choice."
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:25
+msgid "Checkbox Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:26
+#: includes/blocks/fields/date/index.js:26
+#: includes/blocks/fields/email/index.js:26
+#: includes/blocks/fields/file/index.js:26
+#: includes/blocks/fields/number/index.js:26
+#: includes/blocks/fields/radio/index.js:27
+#: includes/blocks/fields/select/index.js:29
+#: includes/blocks/fields/tel/index.js:26
+#: includes/blocks/fields/text/index.js:26
+#: includes/blocks/fields/textarea/index.js:26
+#: includes/blocks/fields/url/index.js:26
+msgid "Label"
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:27
+#: includes/blocks/fields/checkbox/index.js:40
+msgid "Checkbox label"
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:28
+#: includes/blocks/fields/date/index.js:27
+#: includes/blocks/fields/email/index.js:27
+#: includes/blocks/fields/file/index.js:27
+#: includes/blocks/fields/hidden/index.js:19
+#: includes/blocks/fields/number/index.js:27
+#: includes/blocks/fields/radio/index.js:28
+#: includes/blocks/fields/select/index.js:30
+#: includes/blocks/fields/tel/index.js:27
+#: includes/blocks/fields/text/index.js:27
+#: includes/blocks/fields/textarea/index.js:27
+#: includes/blocks/fields/url/index.js:27
+msgid "Slug"
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:31
+#: includes/blocks/fields/date/index.js:30
+#: includes/blocks/fields/email/index.js:30
+#: includes/blocks/fields/file/index.js:30
+#: includes/blocks/fields/hidden/index.js:22
+#: includes/blocks/fields/number/index.js:30
+#: includes/blocks/fields/radio/index.js:31
+#: includes/blocks/fields/select/index.js:33
+#: includes/blocks/fields/tel/index.js:30
+#: includes/blocks/fields/text/index.js:30
+#: includes/blocks/fields/textarea/index.js:30
+#: includes/blocks/fields/url/index.js:30
+msgid "Another field in this form uses this slug; their values will overwrite each other."
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:34
+msgid "Checked value"
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:35
+#: includes/blocks/fields/date/index.js:35
+#: includes/blocks/fields/email/index.js:34
+#: includes/blocks/fields/file/index.js:33
+#: includes/blocks/fields/number/index.js:37
+#: includes/blocks/fields/radio/index.js:35
+#: includes/blocks/fields/select/index.js:28
+#: includes/blocks/fields/tel/index.js:34
+#: includes/blocks/fields/text/index.js:34
+#: includes/blocks/fields/textarea/index.js:34
+#: includes/blocks/fields/url/index.js:34
+msgid "Help text"
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:36
+#: includes/blocks/fields/date/index.js:36
+#: includes/blocks/fields/email/index.js:35
+#: includes/blocks/fields/file/index.js:34
+#: includes/blocks/fields/number/index.js:38
+#: includes/blocks/fields/radio/index.js:36
+#: includes/blocks/fields/select/index.js:36
+#: includes/blocks/fields/tel/index.js:35
+#: includes/blocks/fields/text/index.js:35
+#: includes/blocks/fields/textarea/index.js:35
+#: includes/blocks/fields/url/index.js:35
+msgid "Required"
+msgstr ""
+
+#: includes/blocks/fields/checkbox/index.js:43
+msgid "I agree to the terms."
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:6
+msgid "is"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:7
+msgid "is not"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:8
+msgid "contains"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:9
+msgid "is empty"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:10
+msgid "is not empty"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:92
+msgid "Select a field…"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:97
+msgid "Conditional Logic"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:99
+msgid "Enable conditional logic"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:108
+msgid "Action when rules match"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:111
+msgid "Show this field"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:112
+msgid "Hide this field"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:118
+msgid "— or —"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:122
+msgid "Field"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:128
+msgid "Condition"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:135
+#: includes/blocks/fields/hidden/index.js:26
+msgid "Value"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:145
+msgid "Remove rule"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:150
+msgid "Add rule (and)"
+msgstr ""
+
+#: includes/blocks/fields/conditions-panel.js:156
+msgid "Add \"or\" group"
+msgstr ""
+
+#: includes/blocks/fields/date/index.js:25
+msgid "Date Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/date/index.js:33
+msgid "Earliest date (YYYY-MM-DD)"
+msgstr ""
+
+#: includes/blocks/fields/date/index.js:34
+msgid "Latest date (YYYY-MM-DD)"
+msgstr ""
+
+#: includes/blocks/fields/date/index.js:45
+msgid "Date label"
+msgstr ""
+
+#: includes/blocks/fields/email/index.js:25
+msgid "Email Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/email/index.js:33
+#: includes/blocks/fields/number/index.js:33
+#: includes/blocks/fields/tel/index.js:33
+#: includes/blocks/fields/text/index.js:33
+#: includes/blocks/fields/textarea/index.js:33
+#: includes/blocks/fields/url/index.js:33
+msgid "Placeholder"
+msgstr ""
+
+#: includes/blocks/fields/email/index.js:45
+msgid "Email label"
+msgstr ""
+
+#: includes/blocks/fields/file/index.js:25
+msgid "File Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/file/index.js:38
+msgid "File label"
+msgstr ""
+
+#: includes/blocks/fields/hidden/index.js:18
+msgid "Hidden Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/hidden/index.js:27
+msgid "Stored with each submission. Visible in the page source and editable by visitors — do not put secrets here."
+msgstr ""
+
+#: includes/blocks/fields/hidden/index.js:34
+msgid "Hidden field:"
+msgstr ""
+
+#: includes/blocks/fields/number/index.js:25
+msgid "Number Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/number/index.js:34
+msgid "Minimum"
+msgstr ""
+
+#: includes/blocks/fields/number/index.js:35
+msgid "Maximum"
+msgstr ""
+
+#: includes/blocks/fields/number/index.js:36
+#: includes/blocks/step/index.js:24
+msgid "Step"
+msgstr ""
+
+#: includes/blocks/fields/number/index.js:42
+msgid "Number label"
+msgstr ""
+
+#: includes/blocks/fields/radio/index.js:26
+msgid "Radio Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/radio/index.js:34
+#: includes/blocks/fields/select/index.js:27
+msgid "Options"
+msgstr ""
+
+#: includes/blocks/fields/radio/index.js:34
+#: includes/blocks/fields/select/index.js:27
+msgid "One option per line. Use Label|value to store a different value."
+msgstr ""
+
+#: includes/blocks/fields/radio/index.js:40
+msgid "Radio label"
+msgstr ""
+
+#: includes/blocks/fields/select/index.js:26
+msgid "Select Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/select/index.js:40
+msgid "Select label"
+msgstr ""
+
+#: includes/blocks/fields/tel/index.js:25
+msgid "Phone Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/tel/index.js:39
+msgid "Phone label"
+msgstr ""
+
+#: includes/blocks/fields/text/index.js:25
+msgid "Text Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/text/index.js:45
+msgid "Field label"
+msgstr ""
+
+#: includes/blocks/fields/text/index.js:47
+msgid "Text response"
+msgstr ""
+
+#: includes/blocks/fields/textarea/index.js:25
+msgid "Textarea Settings"
+msgstr ""
+
+#: includes/blocks/fields/textarea/index.js:39
+msgid "Textarea label"
+msgstr ""
+
+#: includes/blocks/fields/textarea/index.js:40
+msgid "Tell us more..."
+msgstr ""
+
+#: includes/blocks/fields/url/index.js:25
+msgid "URL Field Settings"
+msgstr ""
+
+#: includes/blocks/fields/url/index.js:39
+msgid "URL label"
+msgstr ""
+
+#: includes/blocks/form/index.js:61
+msgid "Untitled form"
+msgstr ""
+
+#: includes/blocks/form/index.js:134
+msgid "Select a saved form"
+msgstr ""
+
+#: includes/blocks/form/index.js:145
+msgid "Form Source"
+msgstr ""
+
+#: includes/blocks/form/index.js:147
+msgid "Saved form"
+msgstr ""
+
+#: includes/blocks/form/index.js:157
+msgid "Create a form in SwiftForms first, then select it here."
+msgstr ""
+
+#. translators: %s: form title.
+#: includes/blocks/form/index.js:164
+#, js-format
+msgid "Embedding %s."
+msgstr ""
+
+#: includes/blocks/form/index.js:165
+msgid "Select a saved form to embed on this page."
+msgstr ""
+
+#: includes/blocks/form/index.js:170
+msgid "This block renders the selected form post on the frontend. Edit fields in the canvas and adjust form settings from the document sidebar."
+msgstr ""
+
+#: includes/blocks/form/index.js:171
+msgid "No form selected yet."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:58
+msgid "Form Experience"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:63
+msgid "Submission"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:64
+msgid "Configure the button text and confirmation message shown after a successful submission."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:67
+msgid "Submit button label"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:68
+msgid "Appears on the frontend submit button."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:73
+msgid "Success message"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:74
+msgid "Shown after a successful submission."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:80
+msgid "Redirect URL"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:81
+msgid "Optional. Send visitors to this URL after a successful submission instead of showing the success message."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:91
+msgid "Enable lightweight submission checks without adding unnecessary UI noise to the form builder."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:94
+msgid "Enable math captcha"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:97
+msgid "Adds a lightweight captcha challenge to submissions."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:100
+msgid "Enable Cloudflare Turnstile"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:103
+msgid "Requires Turnstile keys under Forms → Settings → Spam protection. Ignored while no site key is saved."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:110
+msgid "Control whether submissions are stored as entries and how long they are kept."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:114
+msgid "Notifications are sent either way. The site default lives under Forms → Settings."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:117
+msgid "Site default"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:118
+msgid "Always save"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:119
+msgid "Never save"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:124
+msgid "Delete submissions after (days)"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:125
+msgid "Set to 0 to keep submissions forever."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:142
+msgid "Admin notification"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:143
+msgid "These emails are sent to your team when a visitor submits the form."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:146
+msgid "Admin recipients"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:147
+msgid "Use commas or new lines for multiple email addresses."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:153
+msgid "Admin subject"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:154
+msgid "Placeholders: {submission_id}, {form_id}, {fields}, {field:slug}."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:159
+msgid "Admin template"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:160
+#: includes/blocks/form/settings-panel.js:185
+msgid "Optional. Leave empty to use the default generated message."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:169
+msgid "Autoresponder"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:170
+msgid "Optional email sent back to the submitting visitor."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:173
+msgid "Recipient field slug"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:174
+msgid "Optional. Slug of the field holding the visitor’s email. Defaults to the first email field."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:179
+msgid "Autoresponder subject"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:184
+msgid "Autoresponder template"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:194
+msgid "Webhook"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:195
+msgid "POST each submission as JSON to an external service (Zapier, Make, n8n, or your own endpoint)."
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:198
+msgid "Webhook URL"
+msgstr ""
+
+#: includes/blocks/form/settings-panel.js:199
+msgid "Optional. Leave empty to disable."
+msgstr ""
+
+#: includes/blocks/step/index.js:15
+msgid "Step Settings"
+msgstr ""
+
+#: includes/blocks/step/index.js:17
+msgid "Step title"
+msgstr ""
+
+#: includes/blocks/step/index.js:18
+msgid "Announced in the progress indicator on the frontend."
+msgstr ""
+
+#: includes/blocks/fields/checkbox/block.json
+msgctxt "block title"
+msgid "Checkbox Field"
+msgstr ""
+
+#: includes/blocks/fields/checkbox/block.json
+msgctxt "block description"
+msgid "Checkbox field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/date/block.json
+msgctxt "block title"
+msgid "Date Field"
+msgstr ""
+
+#: includes/blocks/fields/date/block.json
+msgctxt "block description"
+msgid "Date picker field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/email/block.json
+msgctxt "block title"
+msgid "Email Field"
+msgstr ""
+
+#: includes/blocks/fields/email/block.json
+msgctxt "block description"
+msgid "Email field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/file/block.json
+msgctxt "block title"
+msgid "File Field"
+msgstr ""
+
+#: includes/blocks/fields/file/block.json
+msgctxt "block description"
+msgid "File upload field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/hidden/block.json
+msgctxt "block title"
+msgid "Hidden Field"
+msgstr ""
+
+#: includes/blocks/fields/hidden/block.json
+msgctxt "block description"
+msgid "Hidden input block for SwiftForms. The value is visible in the page source and can be edited by visitors."
+msgstr ""
+
+#: includes/blocks/fields/number/block.json
+msgctxt "block title"
+msgid "Number Field"
+msgstr ""
+
+#: includes/blocks/fields/number/block.json
+msgctxt "block description"
+msgid "Number field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/radio/block.json
+msgctxt "block title"
+msgid "Radio Field"
+msgstr ""
+
+#: includes/blocks/fields/radio/block.json
+msgctxt "block description"
+msgid "Radio button group block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/select/block.json
+msgctxt "block title"
+msgid "Select Field"
+msgstr ""
+
+#: includes/blocks/fields/select/block.json
+msgctxt "block description"
+msgid "Select field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/tel/block.json
+msgctxt "block title"
+msgid "Phone Field"
+msgstr ""
+
+#: includes/blocks/fields/tel/block.json
+msgctxt "block description"
+msgid "Phone field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/text/block.json
+msgctxt "block title"
+msgid "Text Field"
+msgstr ""
+
+#: includes/blocks/fields/text/block.json
+msgctxt "block description"
+msgid "Text field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/textarea/block.json
+msgctxt "block title"
+msgid "Textarea Field"
+msgstr ""
+
+#: includes/blocks/fields/textarea/block.json
+msgctxt "block description"
+msgid "Textarea field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/fields/url/block.json
+msgctxt "block title"
+msgid "URL Field"
+msgstr ""
+
+#: includes/blocks/fields/url/block.json
+msgctxt "block description"
+msgid "URL field block for SwiftForms."
+msgstr ""
+
+#: includes/blocks/form/block.json
+msgctxt "block title"
+msgid "SwiftForms Form"
+msgstr ""
+
+#: includes/blocks/form/block.json
+msgctxt "block description"
+msgid "Embed a saved SwiftForms form."
+msgstr ""
+
+#: includes/blocks/step/block.json
+msgctxt "block title"
+msgid "Form Step"
+msgstr ""
+
+#: includes/blocks/step/block.json
+msgctxt "block description"
+msgid "Groups fields into one page of a multi-step SwiftForms form."
+msgstr ""

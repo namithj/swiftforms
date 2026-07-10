@@ -1,0 +1,43 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "conditions": {
+            "default": {},
+            "type": "object"
+        },
+        "helpText": {
+            "default": "",
+            "type": "string"
+        },
+        "label": {
+            "default": "Radio",
+            "type": "string"
+        },
+        "options": {
+            "default": "Option one\nOption two",
+            "type": "string"
+        },
+        "required": {
+            "default": false,
+            "type": "boolean"
+        },
+        "slug": {
+            "default": "radio_field",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/radio-field",
+    "title": "Radio Field",
+    "category": "widgets",
+    "icon": "marker",
+    "editorStyle": [
+        "file:../editor-shared.css",
+        "file:../../../../dist/fields/radio/index.css"
+    ],
+    "editorScript": "file:../../../../dist/fields/radio/index.js",
+    "description": "Radio button group block for SwiftForms.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

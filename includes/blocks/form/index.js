@@ -2,6 +2,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { InspectorControls, InnerBlocks, RichText, useBlockProps } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { Notice, PanelBody, SelectControl } from '@wordpress/components';
+import { __, sprintf } from '@wordpress/i18n';
 import './editor.css';
 
 const LEGACY_ATTRIBUTES = {
@@ -56,7 +57,8 @@ const getFormLabel = ( form ) => {
         return form.title.rendered.replace( /<[^>]+>/g, '' );
     }
 
-    return form?.id ? `Form #${ form.id }` : 'Untitled form';
+    /* translators: %d: form post ID. */
+    return form?.id ? sprintf( __( 'Form #%d', 'swiftforms' ), form.id ) : __( 'Untitled form', 'swiftforms' );
 };
 
 const legacySave = ( { attributes } ) => {
@@ -129,7 +131,7 @@ registerBlockType( 'swiftforms/form', {
             []
         );
         const formOptions = [
-            { label: 'Select a saved form', value: 0 },
+            { label: __( 'Select a saved form', 'swiftforms' ), value: 0 },
             ...( forms || [] ).map( ( form ) => ( {
                 label: getFormLabel( form ),
                 value: form.id,
@@ -140,9 +142,9 @@ registerBlockType( 'swiftforms/form', {
         return (
             <div { ...blockProps }>
                 <InspectorControls>
-                    <PanelBody title="Form Source" initialOpen={ true }>
+                    <PanelBody title={ __( 'Form Source', 'swiftforms' ) } initialOpen={ true }>
                         <SelectControl
-                            label="Saved form"
+                            label={ __( 'Saved form', 'swiftforms' ) }
                             value={ formId }
                             options={ formOptions }
                             onChange={ ( value ) => setAttributes( { formId: Number( value ) || 0 } ) }
@@ -152,20 +154,21 @@ registerBlockType( 'swiftforms/form', {
 
                 { ! forms?.length ? (
                     <Notice status="warning" isDismissible={ false }>
-                        Create a form in SwiftForms first, then select it here.
+                        { __( 'Create a form in SwiftForms first, then select it here.', 'swiftforms' ) }
                     </Notice>
                 ) : null }
 
                 <p className="swiftforms-form-editor__description">
                     { selectedForm
-                        ? `Embedding ${ getFormLabel( selectedForm ) }.`
-                        : 'Select a saved form to embed on this page.' }
+                        ? /* translators: %s: form title. */
+                          sprintf( __( 'Embedding %s.', 'swiftforms' ), getFormLabel( selectedForm ) )
+                        : __( 'Select a saved form to embed on this page.', 'swiftforms' ) }
                 </p>
 
                 <div className="swiftforms-form-editor__preview">
                     { selectedForm
-                        ? 'This block renders the selected form post on the frontend. Edit fields in the canvas and adjust form settings from the document sidebar.'
-                        : 'No form selected yet.' }
+                        ? __( 'This block renders the selected form post on the frontend. Edit fields in the canvas and adjust form settings from the document sidebar.', 'swiftforms' )
+                        : __( 'No form selected yet.', 'swiftforms' ) }
                 </div>
             </div>
         );

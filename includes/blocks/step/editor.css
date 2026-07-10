@@ -1,0 +1,15 @@
+.swiftforms-step {
+    border: 1px dashed #949494;
+    border-radius: 2px;
+    margin-bottom: 12px;
+    padding: 12px;
+}
+
+.swiftforms-step__editor-header {
+    color: #50575e;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}

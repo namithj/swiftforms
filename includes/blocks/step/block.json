@@ -1,0 +1,20 @@
+{
+    "apiVersion": 3,
+    "attributes": {
+        "title": {
+            "default": "Step",
+            "type": "string"
+        }
+    },
+    "name": "swiftforms/step",
+    "title": "Form Step",
+    "category": "widgets",
+    "icon": "excerpt-view",
+    "editorStyle": "file:../../../dist/step/index.css",
+    "editorScript": "file:../../../dist/step/index.js",
+    "description": "Groups fields into one page of a multi-step SwiftForms form.",
+    "textdomain": "swiftforms",
+    "supports": {
+        "html": false
+    }
+}

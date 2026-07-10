@@ -5,6 +5,9 @@ module.exports = {
     ...defaultConfig,
     entry: {
         'fields/checkbox/index': path.resolve(process.cwd(), 'includes/blocks/fields/checkbox/index.js'),
+        'fields/date/index': path.resolve(process.cwd(), 'includes/blocks/fields/date/index.js'),
+        'fields/hidden/index': path.resolve(process.cwd(), 'includes/blocks/fields/hidden/index.js'),
+        'fields/radio/index': path.resolve(process.cwd(), 'includes/blocks/fields/radio/index.js'),
         'fields/email/index': path.resolve(process.cwd(), 'includes/blocks/fields/email/index.js'),
         'fields/file/index': path.resolve(process.cwd(), 'includes/blocks/fields/file/index.js'),
         'fields/number/index': path.resolve(process.cwd(), 'includes/blocks/fields/number/index.js'),
@@ -16,6 +19,7 @@ module.exports = {
         'form/index': path.resolve(process.cwd(), 'includes/blocks/form/index.js'),
         'form/settings-panel': path.resolve(process.cwd(), 'includes/blocks/form/settings-panel.js'),
         'form/view': path.resolve(process.cwd(), 'includes/blocks/form/view.js'),
+        'step/index': path.resolve(process.cwd(), 'includes/blocks/step/index.js'),
     },
     output: {
         ...defaultConfig.output,

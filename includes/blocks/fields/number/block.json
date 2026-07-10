@@ -1,6 +1,10 @@
 {
     "apiVersion": 3,
     "attributes": {
+        "conditions": {
+            "default": {},
+            "type": "object"
+        },
         "helpText": {
             "default": "",
             "type": "string"

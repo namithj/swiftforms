@@ -5,6 +5,10 @@
             "default": "I agree to the terms.",
             "type": "string"
         },
+        "conditions": {
+            "default": {},
+            "type": "object"
+        },
         "helpText": {
             "default": "",
             "type": "string"
