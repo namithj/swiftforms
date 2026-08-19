@@ -140,8 +140,9 @@ final class FormRenderer {
 			);
 		}
 
-		if ( $settings['enableTurnstile'] ) {
-			// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- external CDN script; Cloudflare manages its own versioning.
+		if ( $settings['enableTurnstile'] && '' !== (string) GlobalSettings::instance()->get( 'turnstileSiteKey', '' ) ) {
+			// phpcs:ignore PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- opt-in, documented Cloudflare Turnstile service.
+			// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- external service manages its own versioning.
 			wp_enqueue_script( 'swf-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js', array(), null, array( 'strategy' => 'defer' ) );
 		}
 	}

@@ -29,3 +29,7 @@
 /phpunit.xml.dist export-ignore
 /webpack.config.js export-ignore
 /wp-tests-config.php export-ignore
+/.wp-env.json export-ignore
+/includes/autoload.php export-ignore
+/includes/class-swiftforms-*.php export-ignore
+/includes/templates export-ignore

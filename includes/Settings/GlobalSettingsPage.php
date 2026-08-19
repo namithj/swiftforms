@@ -254,10 +254,11 @@ final class GlobalSettingsPage implements Registrable {
 					),
 					Schema::heading( 'swf_turnstile_heading', __( 'Cloudflare Turnstile', 'swiftforms' ) ),
 					array(
-						'name'    => 'turnstileSiteKey',
-						'type'    => 'text',
-						'label'   => __( 'Site key', 'swiftforms' ),
-						'default' => '',
+						'name'        => 'turnstileSiteKey',
+						'type'        => 'text',
+						'label'       => __( 'Site key', 'swiftforms' ),
+						'default'     => '',
+						'description' => __( 'Enabling Turnstile loads Cloudflare resources on pages using it; include this third-party service in your privacy notice.', 'swiftforms' ),
 					),
 					array(
 						'name'        => 'turnstileSecretKey',

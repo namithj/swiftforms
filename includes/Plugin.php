@@ -99,6 +99,7 @@ final class Plugin {
 		$c->set( 'patterns', static fn() => new Patterns() );
 
 		$c->set( 'entry_repository', static fn() => new Entries\EntryRepository() );
+		$c->set( 'entry_download_controller', static fn() => new Entries\EntryDownloadController() );
 
 		$c->set( 'mailer', static fn() => new Notifications\Mailer() );
 		$c->set( 'template_renderer', static fn() => new Notifications\TemplateRenderer() );
@@ -157,6 +158,7 @@ final class Plugin {
 			'privacy',
 			'patterns',
 			'entry_repository',
+			'entry_download_controller',
 			'submit_controller',
 			'mailer',
 			'global_settings_page',

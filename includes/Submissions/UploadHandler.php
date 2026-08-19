@@ -111,6 +111,7 @@ final class UploadHandler {
 	 */
 	private function move( string $tmp_name, string $target ): bool {
 		if ( is_uploaded_file( $tmp_name ) ) {
+			// phpcs:ignore Generic.PHP.ForbiddenFunctions.Found -- WordPress has no private-upload wrapper; this preserves PHP's upload safety check.
 			return move_uploaded_file( $tmp_name, $target );
 		}
 

@@ -92,4 +92,23 @@ final class PostTypesTest extends TestCase {
 		$this->assertTrue( $settings['enableCaptcha'] );
 		$this->assertSame( 'default', $settings['saveEntries'] );
 	}
+	public function test_only_administrators_receive_entry_capabilities_by_default(): void {
+		$entry_capability = get_post_type_object( PostTypes::ENTRY_POST_TYPE )->cap->edit_posts;
+		$entry_id         = self::factory()->post->create(
+			array(
+				'post_type'   => PostTypes::ENTRY_POST_TYPE,
+				'post_status' => 'private',
+			)
+		);
+
+		foreach ( array( 'subscriber', 'contributor', 'author', 'editor' ) as $role ) {
+			wp_set_current_user( self::factory()->user->create( array( 'role' => $role ) ) );
+			$this->assertFalse( current_user_can( $entry_capability ) );
+			$this->assertFalse( current_user_can( 'edit_post', $entry_id ) );
+		}
+
+		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
+		$this->assertTrue( current_user_can( $entry_capability ) );
+		$this->assertTrue( current_user_can( 'edit_post', $entry_id ) );
+	}
 }

@@ -2,15 +2,13 @@
 Contributors: smartlogix
 Tags: forms, contact form, gutenberg, blocks, conditional logic
 Requires at least: 6.6
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 8.2
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A streamlined, block-based form builder for WordPress with a native
-Settings meta box, a dedicated Entries screen, layered spam protection,
-conditional logic, and a themeable design system.
+Block-based WordPress forms with entries, conditional logic, spam protection, and themeable design.
 
 == Description ==
 
@@ -40,6 +38,14 @@ validation rules.
 `swf_field_types` filter for registering custom field types in pure PHP,
 and an extensible Settings schema addons can add tabs/fields to without
 writing any JavaScript.
+
+**Third-party service notice** — enabling Cloudflare Turnstile loads
+Cloudflare resources on pages containing a protected form and sends the
+visitor's Turnstile response to Cloudflare for verification. Turnstile is
+optional and must be configured by the site administrator. Site owners must
+disclose that use in their privacy notice and review Cloudflare's
+[Terms of Service](https://www.cloudflare.com/website-terms/) and
+[Privacy Policy](https://www.cloudflare.com/privacypolicy/).
 
 == Installation ==
 
