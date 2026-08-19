@@ -134,6 +134,12 @@ final class EntryRepositoryTest extends TestCase {
 				),
 			)
 		);
+		update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_email', 'failed' );
+		update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_email_attempts', 1 );
+		update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_email_error', 'mail_failed' );
+		update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_webhook', 'retrying' );
+		update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_webhook_attempts', 2 );
+		update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_webhook_payload', array( 'private_marker' => 'stored-only' ) );
 
 		ob_start();
 		$repository->render_entry_metabox( get_post( $entry_id ) );
@@ -143,6 +149,11 @@ final class EntryRepositoryTest extends TestCase {
 		$this->assertStringContainsString( '&lt;script&gt;', $html );
 		$this->assertStringNotContainsString( '_smartlogix_swiftforms_field_schema', $html );
 		$this->assertStringContainsString( 'smartlogix_swiftforms_export_entry', $html );
+		$this->assertStringContainsString( 'Delivery status', $html );
+		$this->assertStringContainsString( 'mail_failed', $html );
+		$this->assertStringContainsString( 'retrying', $html );
+		$this->assertStringContainsString( 'Retry webhook', $html );
+		$this->assertStringNotContainsString( 'stored-only', $html );
 	}
 
 	public function test_entry_search_targets_only_submitted_field_meta(): void {

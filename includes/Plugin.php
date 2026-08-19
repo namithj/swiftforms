@@ -171,6 +171,7 @@ final class Plugin {
 			'entry_download_controller',
 			'submit_controller',
 			'mailer',
+			'webhooks',
 			'global_settings_page',
 			'form_settings_metabox',
 			'admin_menu',

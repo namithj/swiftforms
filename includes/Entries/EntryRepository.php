@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace SwiftForms\Entries;
 
+use SwiftForms\Notifications\Webhooks;
 use SwiftForms\PostTypes;
 use SwiftForms\Registrable;
 use SwiftForms\Submissions\UploadHandler;
@@ -250,6 +251,34 @@ final class EntryRepository implements Registrable {
 			echo '<tr><th scope="row">' . esc_html( $field['label'] ) . '</th><td>' . wp_kses_post( $this->format_value( $post->ID, $field ) ) . '</td></tr>';
 		}
 		echo '</tbody></table><p><a class="button" href="' . esc_url( $this->export_url( $post->ID ) ) . '">' . esc_html__( 'Export this entry as CSV', 'swiftforms' ) . '</a></p>';
+
+		$email_status     = sanitize_key( (string) get_post_meta( $post->ID, '_smartlogix_swiftforms_delivery_email', true ) );
+		$email_status     = '' !== $email_status ? $email_status : 'not_attempted';
+		$email_attempts   = absint( get_post_meta( $post->ID, '_smartlogix_swiftforms_delivery_email_attempts', true ) );
+		$email_error      = sanitize_key( (string) get_post_meta( $post->ID, '_smartlogix_swiftforms_delivery_email_error', true ) );
+		$webhook_status   = sanitize_key( (string) get_post_meta( $post->ID, '_smartlogix_swiftforms_delivery_webhook', true ) );
+		$webhook_status   = '' !== $webhook_status ? $webhook_status : 'not_attempted';
+		$webhook_attempts = absint( get_post_meta( $post->ID, '_smartlogix_swiftforms_delivery_webhook_attempts', true ) );
+		$webhook_error    = sanitize_key( (string) get_post_meta( $post->ID, '_smartlogix_swiftforms_delivery_webhook_error', true ) );
+
+		echo '<h3>' . esc_html__( 'Delivery status', 'swiftforms' ) . '</h3><table class="widefat striped"><tbody>';
+		echo '<tr><th scope="row">' . esc_html__( 'Email', 'swiftforms' ) . '</th><td>' . esc_html( $email_status );
+		/* translators: %d: number of delivery attempts. */
+		echo ' — ' . esc_html( sprintf( _n( '%d attempt', '%d attempts', $email_attempts, 'swiftforms' ), $email_attempts ) );
+		if ( '' !== $email_error ) {
+			echo ' (' . esc_html( $email_error ) . ')';
+		}
+		echo '</td></tr><tr><th scope="row">' . esc_html__( 'Webhook', 'swiftforms' ) . '</th><td>' . esc_html( $webhook_status );
+		/* translators: %d: number of delivery attempts. */
+		echo ' — ' . esc_html( sprintf( _n( '%d attempt', '%d attempts', $webhook_attempts, 'swiftforms' ), $webhook_attempts ) );
+		if ( '' !== $webhook_error ) {
+			echo ' (' . esc_html( $webhook_error ) . ')';
+		}
+		$retry_url = Webhooks::retry_url( $post->ID );
+		if ( '' !== $retry_url && is_array( get_post_meta( $post->ID, '_smartlogix_swiftforms_delivery_webhook_payload', true ) ) ) {
+			echo ' <a class="button button-small" href="' . esc_url( $retry_url ) . '">' . esc_html__( 'Retry webhook', 'swiftforms' ) . '</a>';
+		}
+		echo '</td></tr></tbody></table>';
 	}
 
 	public function mark_entry_read_on_view(): void {

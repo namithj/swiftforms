@@ -121,6 +121,19 @@ Before enabling an integration, document the fields collected, purpose, recipien
 
 SMTP, Turnstile, and webhook secrets are never rendered back into settings screens. Blank saves preserve existing values; use the explicit clear control to remove one, or enter its replacement to rotate it. Database values are plaintext WordPress options/post meta and may appear in database backups—SwiftForms does not claim application-level encryption. For environment-managed read-only secrets, define `SMARTLOGIX_SWIFTFORMS_SMTP_PASSWORD`, `SMARTLOGIX_SWIFTFORMS_TURNSTILE_SITE_KEY`, `SMARTLOGIX_SWIFTFORMS_TURNSTILE_SECRET_KEY`, or `SMARTLOGIX_SWIFTFORMS_WEBHOOK_SECRET` in `wp-config.php`. Rotate at the provider/receiver first, update the constant or saved value, test delivery, then revoke the old credential.
 
+### Webhook delivery and verification
+
+Saved entries queue webhook delivery through WP-Cron so submission responses do not wait for the external service. Network failures, HTTP 408/429, and 5xx responses retry with bounded backoff for at most four attempts; other HTTP errors are terminal. Administrators can inspect email/webhook status and redacted error codes on the entry, then manually retry a stored webhook delivery. Forms with entry storage disabled still make one non-blocking attempt and cannot provide durable status or retries.
+
+Each request includes:
+
+- `X-SwiftForms-Timestamp`: Unix timestamp used for replay checks.
+- `X-SwiftForms-Signature`: `v1=` followed by the lowercase hexadecimal HMAC-SHA256 of `{timestamp}.{raw JSON body}` using the form's webhook secret.
+- `X-SwiftForms-Idempotency-Key`: stable `entry-{entry ID}` value shared by every automatic and manual attempt for that stored delivery.
+- `X-SwiftForms-Delivery-Attempt`: the current attempt number.
+
+Receivers should reject stale timestamps, compare the signature with a timing-safe function, and store the idempotency key so a repeated successful delivery is not processed twice.
+
 ## Installation
 
 1. Upload the `swiftforms` folder to `wp-content/plugins/`.

@@ -66,7 +66,8 @@ Filters an outgoing notification body. `$context` is `admin` or
 `autoresponder`.
 
 ### `smartlogix_swiftforms_webhook_payload( array $payload, int $entry_id )`
-Filters the JSON payload sent to a form's webhook URL.
+Filters the immutable JSON payload before it is stored and queued for a
+form's webhook URL. See README.md for the signature and retry contract.
 
 ### `smartlogix_swiftforms_allowed_upload_types( array $types )`
 Extends the allowed file upload extension => MIME map (default: jpg/jpeg,

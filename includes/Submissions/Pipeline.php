@@ -156,9 +156,12 @@ final class Pipeline {
 			$delivery = $this->notifier->dispatch( $entry_id, $form_id, $fields, $form_settings );
 			if ( $entry_id > 0 ) {
 				update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_email', in_array( false, $delivery, true ) ? 'failed' : 'sent' );
-				update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_webhook', ! empty( $form_settings['webhookUrl'] ) ? 'queued' : 'not_configured' );
+				update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_email_attempts', 1 );
+				if ( in_array( false, $delivery, true ) ) {
+					update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_email_error', 'mail_failed' );
+				}
 			}
-			$this->webhooks->send( $entry_id, $form_id, $fields, $form_settings );
+			$this->webhooks->queue( $entry_id, $form_id, $fields, $form_settings );
 		}
 
 		/**
