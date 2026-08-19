@@ -38,26 +38,6 @@ final class SchemaEnforcerTest extends TestCase {
 		$this->assertSame( 'invalid_form', $result->get_error_code() );
 	}
 
-	public function test_rejects_an_unpublished_form(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name"} /-->' );
-
-		wp_update_post(
-			array(
-				'ID'          => $form_id,
-				'post_status' => 'draft',
-			)
-		);
-
-		$result = $this->enforcer->enforce(
-			array(
-				'form_id' => $form_id,
-				'fields'  => array(),
-			)
-		);
-
-		$this->assertSame( 'invalid_form', $result->get_error_code() );
-	}
-
 	public function test_drops_slugs_not_present_in_the_stored_form(): void {
 		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
 

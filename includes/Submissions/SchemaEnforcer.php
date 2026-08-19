@@ -34,7 +34,7 @@ final class SchemaEnforcer {
 	public function enforce( array $request ) {
 		$form_id = (int) ( $request['form_id'] ?? 0 );
 
-		if ( $form_id <= 0 || PostTypes::FORM_POST_TYPE !== get_post_type( $form_id ) ) {
+		if ( $form_id <= 0 || PostTypes::FORM_POST_TYPE !== get_post_type( $form_id ) || 'publish' !== get_post_status( $form_id ) ) {
 			return new WP_Error( 'invalid_form', __( 'This form no longer exists.', 'swiftforms' ), array( 'status' => 400 ) );
 		}
 
