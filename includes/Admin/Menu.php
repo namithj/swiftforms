@@ -34,7 +34,7 @@ final class Menu implements Registrable {
 		add_menu_page(
 			__( 'SwiftForms', 'swiftforms' ),
 			__( 'SwiftForms', 'swiftforms' ),
-			'edit_posts',
+			'edit_swf_forms', // phpcs:ignore WordPress.WP.Capabilities.Unknown -- registered for administrators in Activation.
 			$form_edit_slug,
 			'',
 			'dashicons-feedback',
@@ -45,7 +45,7 @@ final class Menu implements Registrable {
 			$form_edit_slug,
 			__( 'All Forms', 'swiftforms' ),
 			__( 'All Forms', 'swiftforms' ),
-			'edit_posts',
+			'edit_swf_forms', // phpcs:ignore WordPress.WP.Capabilities.Unknown -- registered for administrators in Activation.
 			$form_edit_slug
 		);
 
@@ -53,7 +53,7 @@ final class Menu implements Registrable {
 			$form_edit_slug,
 			__( 'Add New', 'swiftforms' ),
 			__( 'Add New', 'swiftforms' ),
-			'edit_posts',
+			'edit_swf_forms', // phpcs:ignore WordPress.WP.Capabilities.Unknown -- registered for administrators in Activation.
 			'post-new.php?post_type=' . PostTypes::FORM_POST_TYPE
 		);
 

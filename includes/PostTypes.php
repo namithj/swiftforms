@@ -63,6 +63,8 @@ final class PostTypes implements Registrable {
 				),
 			)
 		);
+
+		Activation::grant_administrator_capabilities();
 	}
 
 	/**
@@ -96,7 +98,7 @@ final class PostTypes implements Registrable {
 			'menu_icon'       => 'dashicons-feedback',
 			'supports'        => array( 'title', 'editor', 'custom-fields' ),
 			'map_meta_cap'    => true,
-			'capability_type' => 'post',
+			'capability_type' => array( 'swf_form', 'swf_forms' ),
 			'has_archive'     => false,
 			'rewrite'         => false,
 			'query_var'       => false,
@@ -131,7 +133,7 @@ final class PostTypes implements Registrable {
 			'show_in_rest'       => false,
 			'supports'           => array( 'title', 'custom-fields' ),
 			'map_meta_cap'       => true,
-			'capability_type'    => 'post',
+			'capability_type'    => array( 'swf_entry', 'swf_entries' ),
 			'has_archive'        => false,
 			'rewrite'            => false,
 			'query_var'          => false,
