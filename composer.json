@@ -1,33 +1,46 @@
 {
-    "name": "smartlogix/swiftforms",
-    "description": "SwiftForms WordPress plugin.",
-    "type": "wordpress-plugin",
-    "license": "GPL-2.0-or-later",
-    "require": {
-        "php": ">=8.1"
-    },
-    "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "^1.1",
-        "phpcompatibility/phpcompatibility-wp": "^2.1",
-        "phpunit/phpunit": "^9.6",
-        "squizlabs/php_codesniffer": "^3.10",
-        "wp-coding-standards/wpcs": "^3.1",
-        "wp-phpunit/wp-phpunit": "^6.8",
-        "yoast/phpunit-polyfills": "^1.1"
-    },
-    "scripts": {
-        "lint": "phpcs",
-        "test": "phpunit --configuration phpunit.xml.dist",
-        "test:unit": "phpunit --configuration phpunit.xml.dist",
-        "validate": [
-            "@lint",
-            "@test"
-        ]
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        },
-        "sort-packages": true
-    }
+	"name": "smartlogix/swiftforms",
+	"description": "SwiftForms WordPress plugin.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=8.2",
+		"pedalcms/cassette-cmf": "^0.0.9"
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.1",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"phpunit/phpunit": "^9.6",
+		"squizlabs/php_codesniffer": "^3.10",
+		"wp-coding-standards/wpcs": "^3.1",
+		"wp-phpunit/wp-phpunit": "^6.8",
+		"yoast/phpunit-polyfills": "^1.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"SwiftForms\\": "includes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"SwiftForms\\Tests\\": "tests/php/"
+		}
+	},
+	"scripts": {
+		"lint": "phpcs",
+		"lint:fix": "phpcbf",
+		"test:db": "mysql -h \"${SWF_TEST_DB_HOST:-db}\" -u root -proot -e \"CREATE DATABASE IF NOT EXISTS ${SWF_TEST_DB_NAME:-wordpress_test} DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL PRIVILEGES ON ${SWF_TEST_DB_NAME:-wordpress_test}.* TO '${SWF_TEST_DB_USER:-db}'@'%';\"",
+		"test": "phpunit --configuration phpunit.xml.dist",
+		"test:unit": "phpunit --configuration phpunit.xml.dist",
+		"check": [
+			"@lint",
+			"@test"
+		]
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"sort-packages": true
+	}
 }

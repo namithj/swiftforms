@@ -1,12 +1,12 @@
 {
 	"name": "swiftforms",
-	"version": "0.1.0",
+	"version": "1.0.0-dev",
 	"private": true,
 	"description": "Build tooling for the SwiftForms WordPress plugin.",
 	"scripts": {
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
-		"lint:js": "wp-scripts lint-js includes/blocks --max-warnings=0",
+		"lint:js": "wp-scripts lint-js src --max-warnings=0",
 		"start": "wp-scripts start",
 		"test": "composer test",
 		"test:php": "composer test",
@@ -15,14 +15,14 @@
 		"env:start": "cross-env NODE_OPTIONS=--no-network-family-autoselection wp-env start",
 		"env:stop": "wp-env stop",
 		"env:destroy": "wp-env destroy",
-		"pretest:e2e": "wp-scripts build",
-		"test:e2e": "wp-scripts test-playwright --config playwright.config.js",
-		"test:e2e:headed": "wp-scripts test-playwright --config playwright.config.js --headed",
-		"makepot": "npm run wp-env -- run cli --env-cwd=wp-content/plugins/swiftforms wp i18n make-pot . languages/swiftforms.pot --exclude=vendor,node_modules,tests,artifacts,bin,dist"
+		"makepot": "npm run wp-env -- run cli --env-cwd=wp-content/plugins/swiftforms wp i18n make-pot . languages/swiftforms.pot --exclude=vendor,node_modules,tests,artifacts,bin,build"
 	},
 	"devDependencies": {
 		"@wordpress/env": "^10.39.0",
 		"@wordpress/scripts": "^30.24.0",
 		"cross-env": "^7.0.3"
+	},
+	"overrides": {
+		"typescript": "5.7.3"
 	}
 }

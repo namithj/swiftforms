@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/field-select",
+	"title": "Select",
+	"category": "swf-fields",
+	"description": "Dropdown of options.",
+	"icon": "menu",
+	"textdomain": "swiftforms",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/field-date",
+	"title": "Date",
+	"category": "swf-fields",
+	"description": "Date picker input.",
+	"icon": "calendar-alt",
+	"textdomain": "swiftforms",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

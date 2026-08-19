@@ -1,0 +1,12 @@
+.swf-form.is-style-rounded {
+	--swf-radius: 999px;
+
+	.swf-field__control {
+		padding-left: 1.1em;
+		padding-right: 1.1em;
+	}
+
+	textarea.swf-field__control {
+		border-radius: 18px;
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/field-consent",
+	"title": "Consent",
+	"category": "swf-fields",
+	"description": "GDPR-style consent checkbox with a fixed statement.",
+	"icon": "privacy",
+	"textdomain": "swiftforms",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

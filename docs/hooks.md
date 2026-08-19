@@ -1,163 +1,106 @@
-# SwiftForms Hook Reference
+# SwiftForms — Developer Hooks Reference
+
+All hooks are prefixed `swf_`. Field-type, endpoint, and design internals are
+built on the same hooks documented here — there is no separate "internal"
+API.
 
 ## Actions
 
-### `swiftforms_pre_submission`
+### `swf_pre_submission( array $fields, int $form_id )`
+Fires after validation passes, before the entry is saved. `$fields` is the
+schema-enforced, validated field list (`[{slug, type, value, attributes}]`).
 
-Runs immediately before a validated submission is persisted.
+### `swf_post_submission( int $entry_id, int $form_id, array $fields )`
+Fires after storage, notifications, and webhooks have run. `$entry_id` is
+`0` when the form's `saveEntries` setting is disabled.
 
-Parameters:
-
-* `array $request`
-* `SwiftForms_Submissions $submissions`
-
-### `swiftforms_post_submission`
-
-Runs after a submission has been stored and notifications have been sent.
-
-Parameters:
-
-* `int $submission_id`
-* `array $request`
-* `SwiftForms_Submissions $submissions`
+### `swf_entry_saved( int $entry_id, int $form_id )`
+Fires the moment an entry post and its field meta are written.
 
 ## Filters
 
-### `swiftforms_email_content`
+### `swf_field_types( array $types )`
+The complete field-type registry (`Fields\FieldType` instances, keyed by
+type). Add a custom field type in pure PHP:
 
-Filters the admin and autoresponder email body.
-
-Parameters:
-
-* `string $message`
-* `string $context`
-* `int $submission_id`
-* `array $request`
-
-### `swiftforms_allowed_upload_types`
-
-Filters the allowed file upload MIME type map.
-
-Parameter:
-
-* `array $allowed_types`
-
-### `swiftforms_field_html_{type}`
-
-Filters the rendered HTML for a specific field type before it is output inside the frontend form.
-
-Parameters:
-
-* `string $html`
-* `array $attributes`
-* `string $block_name`
-
-Examples of `{type}` include `text`, `email`, `textarea`, `select`, and `checkbox`.
-
-### `swiftforms_webhook_payload`
-
-Filters the JSON payload POSTed to a form's configured webhook URL.
-
-Parameters:
-
-* `array $payload` — `fields` (slug => value), `form_id`, `submission_id`, `submitted_at`
-* `int $submission_id`
-* `array $request`
-
-### `swiftforms_rate_limit_max_requests`
-
-Filters the maximum live submissions accepted per IP within the rate limit window. Default `5`.
-
-The value saved on the Forms → Settings page is applied through this filter at priority `5`, so an explicit `add_filter()` at the default priority still overrides it.
-
-### `swiftforms_rate_limit_window_seconds`
-
-Filters the rate limit window size in seconds. Default `60`. Same priority-5 settings-page behavior as above.
-
-### `swiftforms_min_submit_seconds`
-
-Filters the time trap's minimum form age in seconds (default `3`, also configurable under **Forms → Settings → Spam protection**; the stored option feeds this filter at priority 5). Submissions faster than this are silently absorbed like honeypot hits. `0` disables the check. Only a minimum is enforced — cached pages serving old render timestamps still submit fine.
-
-### `swiftforms_turnstile_verify_response`
-
-Filters the decoded Cloudflare Turnstile siteverify response body (array) before its `success` key is checked. Receives the submission request as the second argument. Lets tests stub verification without HTTP.
-
-### `swiftforms_akismet_result`
-
-Filters the boolean Akismet spam verdict for a submission (second argument: the request array). Spam submissions are stored with `_sf_spam` meta, skipped for notifications/webhooks, and answered with a normal success response.
-
-### `swiftforms_search_results_limit`
-
-Filters the maximum number of submissions the admin field-value search matches (default `500`).
-
-### `swiftforms_client_ip`
-
-Filters the IP address used for rate limiting. Defaults to `REMOTE_ADDR`; sites behind a proxy or CDN can substitute a trusted forwarded-for header.
-
-### `swiftforms_export_capability`
-
-Filters the capability required to run the CSV export bulk action. Default `manage_options`.
-
-### `swiftforms_uninstall_delete_data`
-
-Return `true` (e.g. from a must-use plugin) to make plugin uninstall delete all forms, submissions, and uploaded files. Default `false` — data is preserved.
-
-## Global settings
-
-Site-wide options live in the `swiftforms_settings` option, editable under
-**Forms → Settings** (`manage_options`): SMTP delivery (host, port,
-encryption, credentials, from address — routed through `phpmailer_init`),
-default admin notification recipients, the per-IP rate limit, the global
-default for storing submissions as entries, spam protection (minimum submit
-time, Cloudflare Turnstile keys, Akismet), and the uninstall data-deletion
-opt-in. The SMTP password can be hardcoded via the `SWIFTFORMS_SMTP_PASSWORD`
-constant in `wp-config.php`, which takes precedence over the stored value.
-Secrets (SMTP password, Turnstile secret key) are never echoed back into the
-settings form; submitting the field blank keeps the stored value.
-
-Each form can override entry storage with its `saveEntries` setting
-(`default` / `enabled` / `disabled`) in the editor sidebar. When storage is
-off, notifications and webhooks still fire with `submission_id = 0`. Forms
-opt into Cloudflare Turnstile individually with the `enableTurnstile` sidebar
-toggle (ignored until a site key is saved globally).
-
-## Conditional logic
-
-Every field block carries a `conditions` attribute:
-
-```json
-{ "enabled": true, "action": "show",
-  "groups": [ [ { "field": "topic", "operator": "equals", "value": "support" } ] ] }
+```php
+add_filter( 'swf_field_types', function ( array $types ) {
+    $types['rating_10'] = new SwiftForms\Fields\FieldType(
+        type: 'rating_10',
+        label: __( '1-10 Rating', 'my-plugin' ),
+        attributes: [],
+        validate: fn( $value, $attrs ) => null,
+    );
+    return $types;
+} );
 ```
+A matching `swf/field-rating_10` block and its editor UI still need to be
+registered on the JS side (see `src/field-factory/`).
 
-Rules inside a group are AND-ed, groups are OR-ed; `action` is `show` or
-`hide`. Operators: `equals`, `not_equals` (case-sensitive, trimmed),
-`contains` (case-insensitive), `empty`, `not_empty`. The rules render onto
-the field wrapper as `data-sf-conditions` for the frontend engine and are
-re-evaluated server-side during submission: values submitted for hidden
-fields are discarded and hidden required fields are not required. Chained
-rules resolve by fixed-point iteration capped at 10 passes on both sides
-(`SwiftForms_Conditions::MAX_PASSES`).
+### `swf_field_html_{type}( string $html, array $attributes, string $block_name )`
+Filters one field's rendered HTML. `{type}` is the field type key, e.g.
+`swf_field_html_email`.
 
-## Multi-step forms
+### `swf_settings_schema( array $tabs )`
+Adds tabs/fields to the global Settings screen. See
+`includes/Settings/GlobalSettingsPage.php` for the shape — tab id => `{
+label, fields: [ field config, … ] }`, where each field config is a
+Cassette-CMF field array (`name`, `type`, `label`, `default`, …; see that
+library's field types: `text`, `textarea`, `select`, `checkbox`, `radio`,
+`number`, `email`, `url`, `date`, `password`, `color`, and the container
+types `tabs`/`metabox`/`group`/`repeater`).
 
-Wrap fields in `swiftforms/step` blocks (two or more) and the frontend
-paginates them with Back/Next navigation, per-step validation, and an
-aria-live progress line. Inputs on inactive steps stay enabled so their
-values submit from the last step; the schema parser sees fields inside steps
-transparently.
+### `swf_form_settings_schema( array $tabs )`
+Same shape, for the per-form Settings meta box on the form's post-edit
+screen. See `includes/Settings/FormSettingsMetabox.php` — every field
+`name` must be run through `FormSettingsMetabox::meta_key( $key )` so it's
+stored under the right `_swf_setting_{key}` post meta and
+`FormSettings::get()` can find it again. Unlike the old REST-backed popup,
+Cassette-CMF builds this field tree once on `init`, before any specific
+form is being edited, so there's no `$form_id` to filter on.
+
+### `swf_email_content( string $body, string $context, int $entry_id )`
+Filters an outgoing notification body. `$context` is `admin` or
+`autoresponder`.
+
+### `swf_webhook_payload( array $payload, int $entry_id )`
+Filters the JSON payload sent to a form's webhook URL.
+
+### `swf_allowed_upload_types( array $types )`
+Extends the allowed file upload extension => MIME map (default: jpg/jpeg,
+png, pdf, txt).
+
+### `swf_rate_limit_max_requests( int $max )` / `swf_rate_limit_window_seconds( int $seconds )`
+Override the submission rate limit (defaults come from global settings).
+
+### `swf_min_submit_seconds( int $seconds )`
+Minimum time that must elapse between a form rendering and being submitted
+(the time-trap spam check).
+
+### `swf_client_ip( string $ip )`
+Override how the client IP is resolved (e.g. behind a proxy/load balancer).
+
+### `swf_turnstile_verify_response( array $decoded, array $request )`
+Filters the decoded Cloudflare Turnstile verification response.
+
+### `swf_akismet_result( bool $is_spam, array $request )`
+Filters the final Akismet spam determination.
+
+### `swf_uninstall_delete_data( bool $delete )`
+Whether forms, entries, and uploaded files are deleted when the plugin is
+uninstalled (default: the site's "Delete all data on uninstall" setting).
 
 ## REST API
 
-### `POST /wp-json/swiftforms/v1/submit`
+`POST /wp-json/swf/v1/submit` is the only route SwiftForms registers. It is
+public — the pipeline's own nonce/rate-limit/spam checks are the gate, not a
+capability. A stale-nonce rejection returns a fresh nonce in its response
+body so a cached page can retry once.
 
-Public submission endpoint mirroring the `admin-ajax.php` handler. Accepts the
-same multipart form fields the frontend script sends (`nonce`, `form_id`,
-`honeypot`, `fields[n][...]`, optional `captcha_token`/`captcha_answer`,
-optional `swiftforms_files[n]` uploads) and returns the submission response
-JSON with a matching HTTP status (`200`, `400`, `429`, or `500`).
+Global and per-form settings have no REST route either: both save through
+Cassette-CMF's own postback/`save_post` handlers.
 
-Live submissions on both endpoints are validated against the stored form's
-field schema: unknown field slugs are dropped, and each field's type,
-required flag, number constraints, and select options come from the saved
-form post — never from the client.
+Entries have no REST route or dedicated admin screen — they're a plain
+`swf_entry` custom post type (see `includes/PostTypes.php`), managed through
+WordPress's own list table and Custom Fields metabox, with a `swf_entry_form`
+taxonomy for filtering by source form.

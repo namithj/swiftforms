@@ -9,30 +9,38 @@
 
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>
-    <exclude-pattern>*/dist/*</exclude-pattern>
+    <exclude-pattern>*/build/*</exclude-pattern>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="4"/>
 
-    <config name="testVersion" value="8.1-"/>
+    <config name="testVersion" value="8.2-"/>
 
+    <!-- WordPress-Docs is intentionally not used: this codebase follows a
+         no-comments-unless-non-obvious style, so docblocks are only added
+         where they carry information a signature doesn't already give. -->
     <rule ref="WordPress-Core"/>
-    <rule ref="WordPress-Docs">
-        <!-- Test method names are self-documenting; docblocks are only enforced for shipped code. -->
-        <exclude-pattern>*/tests/*</exclude-pattern>
-    </rule>
     <rule ref="WordPress-Extra"/>
     <rule ref="PHPCompatibilityWP"/>
 
-    <!-- Test files follow the test-class-*.php convention, not class-*.php. -->
+    <!-- WordPress.NamingConventions.PrefixAllGlobals requires a >=4 char
+         prefix; "swf" (3 chars) is a deliberate, verified-unique choice for
+         this codebase (a verified-unique prefix for this codebase),
+         so the sniff is disabled rather than adopting a padded prefix. -->
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Namespaced PSR-4 classes: filenames match class names (PascalCase),
+         not the procedural class-foo-bar.php convention this sniff expects. -->
     <rule ref="WordPress.Files.FileName">
+        <exclude-pattern>*/includes/*</exclude-pattern>
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
 
-    <!-- Test-harness patterns: PHPMailer camelCase properties, simulated requests,
-         direct filesystem fixtures, and test doubles sharing a file. -->
+    <!-- Test-harness patterns: simulated requests, direct filesystem fixtures, test doubles sharing a file. -->
     <rule ref="WordPress.NamingConventions.ValidVariableName">
         <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>

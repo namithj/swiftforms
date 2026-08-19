@@ -1,0 +1,10 @@
+.swf-form.is-style-outlined {
+	--swf-field-bg: transparent;
+	--swf-field-border-width: 2px;
+
+	.swf-form__submit {
+		background: transparent;
+		color: var(--swf-accent);
+		border: 2px solid var(--swf-accent);
+	}
+}

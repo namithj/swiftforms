@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/field-url",
+	"title": "Website",
+	"category": "swf-fields",
+	"description": "Collects a website URL.",
+	"icon": "admin-links",
+	"textdomain": "swiftforms",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

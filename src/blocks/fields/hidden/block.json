@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/field-hidden",
+	"title": "Hidden Field",
+	"category": "swf-fields",
+	"description": "Carries a fixed value, never shown to visitors.",
+	"icon": "hidden",
+	"textdomain": "swiftforms",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

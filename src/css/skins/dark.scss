@@ -1,0 +1,21 @@
+.swf-form.is-style-dark {
+	color-scheme: dark;
+	--swf-text: #e2e8f0;
+	--swf-label-color: #e2e8f0;
+	--swf-help-color: #94a3b8;
+	--swf-field-bg: #1e293b;
+	--swf-field-text: #f1f5f9;
+	--swf-field-border-color: #334155;
+	--swf-accent: #60a5fa;
+	--swf-accent-contrast: #0f172a;
+
+	.swf-form__status.is-success {
+		background: #064e3b;
+		color: #d1fae5;
+	}
+
+	.swf-form__status.is-error {
+		background: #4c0519;
+		color: #fecaca;
+	}
+}

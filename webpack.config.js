@@ -1,29 +1,29 @@
-const defaultConfig = require('@wordpress/scripts/config/webpack.config');
-const path = require('path');
+const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+const path = require( 'path' );
 
+/**
+ * The default @wordpress/scripts webpack config's `entry` is itself a
+ * *function* (webpack's dynamic-entry feature) that scans every
+ * `block.json` under `src/**` and derives entries from its
+ * editorScript/script/viewScript/render.php references — so field blocks
+ * never need a hand-maintained entry list. Spreading it as a plain object
+ * (`{ ...defaultConfig.entry }`) silently discards that function and its
+ * scan, so it must be called and merged with instead.
+ */
 module.exports = {
-    ...defaultConfig,
-    entry: {
-        'fields/checkbox/index': path.resolve(process.cwd(), 'includes/blocks/fields/checkbox/index.js'),
-        'fields/date/index': path.resolve(process.cwd(), 'includes/blocks/fields/date/index.js'),
-        'fields/hidden/index': path.resolve(process.cwd(), 'includes/blocks/fields/hidden/index.js'),
-        'fields/radio/index': path.resolve(process.cwd(), 'includes/blocks/fields/radio/index.js'),
-        'fields/email/index': path.resolve(process.cwd(), 'includes/blocks/fields/email/index.js'),
-        'fields/file/index': path.resolve(process.cwd(), 'includes/blocks/fields/file/index.js'),
-        'fields/number/index': path.resolve(process.cwd(), 'includes/blocks/fields/number/index.js'),
-        'fields/select/index': path.resolve(process.cwd(), 'includes/blocks/fields/select/index.js'),
-        'fields/tel/index': path.resolve(process.cwd(), 'includes/blocks/fields/tel/index.js'),
-        'fields/text/index': path.resolve(process.cwd(), 'includes/blocks/fields/text/index.js'),
-        'fields/textarea/index': path.resolve(process.cwd(), 'includes/blocks/fields/textarea/index.js'),
-        'fields/url/index': path.resolve(process.cwd(), 'includes/blocks/fields/url/index.js'),
-        'form/index': path.resolve(process.cwd(), 'includes/blocks/form/index.js'),
-        'form/settings-panel': path.resolve(process.cwd(), 'includes/blocks/form/settings-panel.js'),
-        'form/view': path.resolve(process.cwd(), 'includes/blocks/form/view.js'),
-        'step/index': path.resolve(process.cwd(), 'includes/blocks/step/index.js'),
-    },
-    output: {
-        ...defaultConfig.output,
-        filename: '[name].js',
-        path: path.resolve(process.cwd(), 'dist'),
-    },
+	...defaultConfig,
+	entry: async () => {
+		const blockEntries =
+			typeof defaultConfig.entry === 'function'
+				? await defaultConfig.entry()
+				: defaultConfig.entry;
+
+		return {
+			...blockEntries,
+			'editor/index': path.resolve(
+				process.cwd(),
+				'src/editor/index.js'
+			),
+		};
+	},
 };

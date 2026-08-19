@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/field-textarea",
+	"title": "Textarea",
+	"category": "swf-fields",
+	"description": "Multi-line text for longer answers.",
+	"icon": "editor-alignleft",
+	"textdomain": "swiftforms",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

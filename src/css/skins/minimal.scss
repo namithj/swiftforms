@@ -1,0 +1,16 @@
+.swf-form.is-style-minimal {
+	--swf-field-bg: transparent;
+	--swf-field-border-width: 0;
+	--swf-radius: 0;
+
+	.swf-field__control {
+		border-bottom: 2px solid var(--swf-field-border-color);
+		border-radius: 0;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.swf-form__submit {
+		border-radius: 999px;
+	}
+}

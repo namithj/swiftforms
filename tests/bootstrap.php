@@ -32,7 +32,7 @@ if ( ! $tests_dir || ! file_exists( $tests_dir . '/includes/functions.php' ) ) {
 }
 
 // Prefer the plugin's own env-driven wp-tests-config.php over the wp-phpunit
-// sample so `composer test` works with the SWIFTFORMS_TEST_DB_* environment
+// sample so `composer test` works with the SWF_TEST_DB_* environment
 // variables without copying files around.
 $tests_config_file = $plugin_dir . '/wp-tests-config.php';
 if ( ! file_exists( $tests_config_file ) ) {
@@ -56,9 +56,11 @@ require_once $tests_dir . '/includes/functions.php';
 /**
  * Loads the SwiftForms plugin under test.
  */
-function swiftforms_manually_load_plugin(): void {
+function swf_tests_manually_load_plugin(): void {
 	require dirname( __DIR__ ) . '/swiftforms.php';
 }
-tests_add_filter( 'muplugins_loaded', 'swiftforms_manually_load_plugin' );
+tests_add_filter( 'muplugins_loaded', 'swf_tests_manually_load_plugin' );
 
 require $tests_dir . '/includes/bootstrap.php';
+
+require_once __DIR__ . '/php/TestCase.php';

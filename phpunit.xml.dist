@@ -12,7 +12,7 @@
 >
     <testsuites>
         <testsuite name="SwiftForms Test Suite">
-            <directory suffix=".php">tests/php</directory>
+            <directory suffix="Test.php">tests/php</directory>
         </testsuite>
     </testsuites>
 

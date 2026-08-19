@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/form",
+	"title": "Form",
+	"category": "swf",
+	"description": "Embeds a SwiftForms form.",
+	"icon": "feedback",
+	"textdomain": "swiftforms",
+	"attributes": {
+		"formId": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"viewScript": "file:./view.js",
+	"style": "file:./style-index.css"
+}

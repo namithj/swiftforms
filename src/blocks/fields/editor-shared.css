@@ -1,0 +1,48 @@
+/**
+ * Shared editor-canvas chrome for every swf/field-* block. Referenced
+ * directly (not compiled) from each field's block.json so 14 field bundles
+ * don't each duplicate the same rules.
+ */
+
+.swf-editor-field {
+	border: 1px solid #dbe3e9;
+	border-radius: 6px;
+	padding: 12px 14px;
+	background: #fff;
+}
+
+.swf-editor-field__label-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 6px;
+}
+
+.swf-editor-field__type-badge {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #6b7280;
+	background: #f1f5f9;
+	border-radius: 3px;
+	padding: 2px 6px;
+}
+
+.swf-editor-field__required {
+	color: #dc2626;
+}
+
+.swf-editor-field__preview {
+	pointer-events: none;
+	opacity: 0.9;
+}
+
+.swf-editor-field__help {
+	margin-top: 6px;
+	font-size: 12px;
+	color: #64748b;
+}
+
+.swf-editor-field__duplicate-notice {
+	margin-bottom: 8px;
+}

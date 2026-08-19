@@ -1,0 +1,332 @@
+{
+	"isFieldVisible": [
+		{
+			"name": "disabled conditions are always visible",
+			"conditions": { "enabled": false, "action": "show", "groups": [] },
+			"values": {},
+			"expected": true
+		},
+		{
+			"name": "enabled but empty groups falls back to visible",
+			"conditions": { "enabled": true, "action": "show", "groups": [] },
+			"values": {},
+			"expected": true
+		},
+		{
+			"name": "equals matches, show action reveals",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "country",
+							"operator": "equals",
+							"value": "us"
+						}
+					]
+				]
+			},
+			"values": { "country": "us" },
+			"expected": true
+		},
+		{
+			"name": "equals does not match, show action hides",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "country",
+							"operator": "equals",
+							"value": "us"
+						}
+					]
+				]
+			},
+			"values": { "country": "ca" },
+			"expected": false
+		},
+		{
+			"name": "not_equals matches when different",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "country",
+							"operator": "not_equals",
+							"value": "us"
+						}
+					]
+				]
+			},
+			"values": { "country": "ca" },
+			"expected": true
+		},
+		{
+			"name": "contains is case-insensitive substring match",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "message",
+							"operator": "contains",
+							"value": "urgent"
+						}
+					]
+				]
+			},
+			"values": { "message": "This is URGENT please help" },
+			"expected": true
+		},
+		{
+			"name": "empty operator matches blank/whitespace value",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "referral",
+							"operator": "empty",
+							"value": ""
+						}
+					]
+				]
+			},
+			"values": { "referral": "   " },
+			"expected": true
+		},
+		{
+			"name": "not_empty operator matches non-blank value",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "referral",
+							"operator": "not_empty",
+							"value": ""
+						}
+					]
+				]
+			},
+			"values": { "referral": "google" },
+			"expected": true
+		},
+		{
+			"name": "AND within a group requires every rule to pass",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "country",
+							"operator": "equals",
+							"value": "us"
+						},
+						{
+							"field": "state",
+							"operator": "equals",
+							"value": "ny"
+						}
+					]
+				]
+			},
+			"values": { "country": "us", "state": "ca" },
+			"expected": false
+		},
+		{
+			"name": "AND within a group passes when every rule passes",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "country",
+							"operator": "equals",
+							"value": "us"
+						},
+						{
+							"field": "state",
+							"operator": "equals",
+							"value": "ny"
+						}
+					]
+				]
+			},
+			"values": { "country": "us", "state": "ny" },
+			"expected": true
+		},
+		{
+			"name": "OR across groups passes if any group passes",
+			"conditions": {
+				"enabled": true,
+				"action": "show",
+				"groups": [
+					[
+						{
+							"field": "plan",
+							"operator": "equals",
+							"value": "pro"
+						}
+					],
+					[
+						{
+							"field": "plan",
+							"operator": "equals",
+							"value": "enterprise"
+						}
+					]
+				]
+			},
+			"values": { "plan": "enterprise" },
+			"expected": true
+		},
+		{
+			"name": "hide action inverts a matching group",
+			"conditions": {
+				"enabled": true,
+				"action": "hide",
+				"groups": [
+					[
+						{
+							"field": "country",
+							"operator": "equals",
+							"value": "us"
+						}
+					]
+				]
+			},
+			"values": { "country": "us" },
+			"expected": false
+		},
+		{
+			"name": "hide action inverts a non-matching group (stays visible)",
+			"conditions": {
+				"enabled": true,
+				"action": "hide",
+				"groups": [
+					[
+						{
+							"field": "country",
+							"operator": "equals",
+							"value": "us"
+						}
+					]
+				]
+			},
+			"values": { "country": "ca" },
+			"expected": true
+		}
+	],
+	"resolveVisibility": [
+		{
+			"name": "chained conditions: hidden field's value does not count for the next field",
+			"fields": {
+				"show_details": {
+					"conditions": {
+						"enabled": false,
+						"action": "show",
+						"groups": []
+					}
+				},
+				"details": {
+					"conditions": {
+						"enabled": true,
+						"action": "show",
+						"groups": [
+							[
+								{
+									"field": "show_details",
+									"operator": "equals",
+									"value": "yes"
+								}
+							]
+						]
+					}
+				},
+				"details_confirm": {
+					"conditions": {
+						"enabled": true,
+						"action": "show",
+						"groups": [
+							[
+								{
+									"field": "details",
+									"operator": "not_empty",
+									"value": ""
+								}
+							]
+						]
+					}
+				}
+			},
+			"values": {
+				"show_details": "no",
+				"details": "some text typed before toggling off"
+			},
+			"expected": {
+				"show_details": true,
+				"details": false,
+				"details_confirm": false
+			}
+		},
+		{
+			"name": "chained conditions all satisfied cascade to visible",
+			"fields": {
+				"show_details": {
+					"conditions": {
+						"enabled": false,
+						"action": "show",
+						"groups": []
+					}
+				},
+				"details": {
+					"conditions": {
+						"enabled": true,
+						"action": "show",
+						"groups": [
+							[
+								{
+									"field": "show_details",
+									"operator": "equals",
+									"value": "yes"
+								}
+							]
+						]
+					}
+				},
+				"details_confirm": {
+					"conditions": {
+						"enabled": true,
+						"action": "show",
+						"groups": [
+							[
+								{
+									"field": "details",
+									"operator": "not_empty",
+									"value": ""
+								}
+							]
+						]
+					}
+				}
+			},
+			"values": { "show_details": "yes", "details": "hello" },
+			"expected": {
+				"show_details": true,
+				"details": true,
+				"details_confirm": true
+			}
+		}
+	]
+}

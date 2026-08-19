@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/field-checkbox",
+	"title": "Checkbox",
+	"category": "swf-fields",
+	"description": "A single yes/no checkbox.",
+	"icon": "yes-alt",
+	"textdomain": "swiftforms",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

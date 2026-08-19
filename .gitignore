@@ -24,5 +24,5 @@
 /.idea/
 /.vscode/
 
-#build artifacts
-/dist/
+# Build artifacts
+/build/

@@ -1,0 +1,14 @@
+/**
+ * The only frontend stylesheet SwiftForms ships. Compiled to
+ * build/blocks/form/style-index.css and explicitly registered/enqueued as
+ * the `swf-form-style` handle by Blocks\FormRenderer (not auto-registered
+ * from block.json, so the design system classes below stay in full
+ * control of the handle name Design\CssVariables and Design\Skins target).
+ */
+
+@import '../../css/variables';
+@import '../../css/skins/minimal';
+@import '../../css/skins/outlined';
+@import '../../css/skins/filled';
+@import '../../css/skins/rounded';
+@import '../../css/skins/dark';

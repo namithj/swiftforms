@@ -1,0 +1,249 @@
+/**
+ * Design system custom properties and base structural rules for every
+ * SwiftForms form. Skins (src/css/skins/*.scss) and per-form/global
+ * overrides (Design\CssVariables, PHP) only ever touch the custom
+ * properties below — never these selectors directly — so the cascade
+ * always resolves as: these defaults → global design → skin → per-form
+ * inline vars → theme CSS.
+ */
+
+.swf-form {
+	--swf-accent: #2563eb;
+	--swf-accent-contrast: #ffffff;
+	--swf-text: inherit;
+	--swf-label-color: inherit;
+	--swf-label-weight: 600;
+	--swf-label-gap: 0.35rem;
+	--swf-help-color: #64748b;
+	--swf-error-color: #dc2626;
+	--swf-field-bg: #ffffff;
+	--swf-field-text: inherit;
+	--swf-field-border-color: #cbd5e1;
+	--swf-field-border-width: 1px;
+	--swf-radius: 6px;
+	--swf-gap: 1.25rem;
+	--swf-field-padding-y: 0.55em;
+	--swf-field-padding-x: 0.75em;
+	--swf-font-size: 1rem;
+	--swf-button-bg: var(--swf-accent);
+	--swf-button-text: var(--swf-accent-contrast);
+	--swf-focus-ring: rgba(37, 99, 235, 0.35);
+
+	color: var(--swf-text);
+	font-size: var(--swf-font-size);
+}
+
+@supports (color: color-mix(in srgb, red, blue)) {
+	.swf-form {
+		--swf-focus-ring: color-mix(in srgb, var(--swf-accent) 35%, transparent);
+	}
+}
+
+.swf-form__status {
+	margin: 0 0 var(--swf-gap);
+	padding: 0.75em 1em;
+	border-radius: var(--swf-radius);
+	display: none;
+}
+
+.swf-form__status.is-success {
+	display: block;
+	background: #ecfdf5;
+	color: #065f46;
+}
+
+.swf-form__status.is-error {
+	display: block;
+	background: #fef2f2;
+	color: #991b1b;
+}
+
+.swf-form__fields {
+	display: flex;
+	flex-direction: column;
+	gap: var(--swf-gap);
+}
+
+.swf-field[hidden] {
+	display: none;
+}
+
+.swf-field__label {
+	display: block;
+	color: var(--swf-label-color);
+	font-weight: var(--swf-label-weight);
+	margin-bottom: var(--swf-label-gap);
+}
+
+.swf-form[data-swf-labels="left"] .swf-field {
+	display: grid;
+	grid-template-columns: minmax(120px, 30%) 1fr;
+	align-items: start;
+	gap: 0 1rem;
+}
+
+.swf-form[data-swf-labels="left"] .swf-field__label {
+	margin-bottom: 0;
+	padding-top: calc(var(--swf-field-padding-y) + 2px);
+}
+
+.swf-form[data-swf-labels="hidden"] .swf-field__label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+.swf-field__required {
+	color: var(--swf-error-color);
+}
+
+.swf-field__control {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	font-size: inherit;
+	font-family: inherit;
+	color: var(--swf-field-text);
+	background: var(--swf-field-bg);
+	border: var(--swf-field-border-width) solid var(--swf-field-border-color);
+	border-radius: var(--swf-radius);
+	padding: var(--swf-field-padding-y) var(--swf-field-padding-x);
+}
+
+.swf-field__control:focus-visible {
+	outline: none;
+	border-color: var(--swf-accent);
+	box-shadow: 0 0 0 3px var(--swf-focus-ring);
+}
+
+.swf-field__control[aria-invalid="true"] {
+	border-color: var(--swf-error-color);
+}
+
+textarea.swf-field__control {
+	min-height: 6em;
+	resize: vertical;
+}
+
+.swf-field__help {
+	margin: 0.35em 0 0;
+	font-size: 0.875em;
+	color: var(--swf-help-color);
+}
+
+.swf-field__error {
+	margin: 0.35em 0 0;
+	font-size: 0.875em;
+	color: var(--swf-error-color);
+}
+
+.swf-field__error:empty {
+	display: none;
+}
+
+.swf-field__checkbox-label,
+.swf-field__option {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.swf-field__options {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+
+.swf-field__rating {
+	display: inline-flex;
+	gap: 0.15em;
+}
+
+.swf-field__star input {
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+}
+
+.swf-field__star span[aria-hidden] {
+	font-size: 1.5em;
+	color: var(--swf-field-border-color);
+	cursor: pointer;
+}
+
+.swf-field__star input:checked ~ span[aria-hidden],
+.swf-field__rating:hover .swf-field__star:hover span[aria-hidden] {
+	color: var(--swf-accent);
+}
+
+.swf-form__honeypot {
+	position: absolute !important;
+	left: -9999px !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.swf-form__actions {
+	margin-top: var(--swf-gap);
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
+
+.swf-form__submit {
+	background: var(--swf-button-bg);
+	color: var(--swf-button-text);
+	border: none;
+	border-radius: var(--swf-radius);
+	padding: var(--swf-field-padding-y) 1.5em;
+	font-size: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.swf-form__submit[aria-busy="true"] {
+	opacity: 0.7;
+	cursor: progress;
+}
+
+.swf-form__submit:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.swf-step {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.swf-step__legend {
+	font-weight: 600;
+	margin-bottom: var(--swf-gap);
+	padding: 0;
+}
+
+.swf-step[hidden] {
+	display: none;
+}
+
+.swf-step-progress {
+	margin: 0 0 var(--swf-gap);
+	font-size: 0.875em;
+	color: var(--swf-help-color);
+}
+
+.swf-step-nav__button {
+	background: transparent;
+	border: var(--swf-field-border-width) solid var(--swf-field-border-color);
+	border-radius: var(--swf-radius);
+	padding: var(--swf-field-padding-y) 1.25em;
+	cursor: pointer;
+}

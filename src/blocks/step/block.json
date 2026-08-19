@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swf/step",
+	"title": "Step",
+	"category": "swf",
+	"description": "One step of a multi-step form.",
+	"icon": "editor-ol",
+	"textdomain": "swiftforms",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Step"
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}
