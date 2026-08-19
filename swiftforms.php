@@ -3,7 +3,7 @@
  * Plugin Name: SwiftForms
  * Plugin URI: https://github.com/smartlogix/swiftforms
  * Description: A streamlined, block-based form builder for WordPress with per-form Settings/Entries screens, layered spam protection, conditional logic, and a themeable design system.
- * Version: 1.0.0-dev
+ * Version: 1.0.0
  * Author: Smartlogix
  * Author URI: https://smartlogix.co.in
  * License: GPLv2 or later
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SWF_VERSION', '1.0.0-dev' );
+define( 'SWF_VERSION', '1.0.0' );
 define( 'SWF_PLUGIN_FILE', __FILE__ );
 define( 'SWF_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SWF_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

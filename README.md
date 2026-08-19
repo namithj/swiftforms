@@ -142,4 +142,4 @@ It can. If the submission includes an email field, SwiftForms can send an autore
 
 ## Current version
 
-Version: 0.1.0
+Version: 1.0.0

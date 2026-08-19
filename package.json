@@ -1,6 +1,6 @@
 {
 	"name": "swiftforms",
-	"version": "1.0.0-dev",
+	"version": "1.0.0",
 	"private": true,
 	"description": "Build tooling for the SwiftForms WordPress plugin.",
 	"scripts": {
