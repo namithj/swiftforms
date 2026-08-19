@@ -68,13 +68,13 @@ final class Renderer {
 			: $this->render_input( $type, $attributes, $field_id );
 
 		$label_html = '';
-		if ( 'checkbox' !== $type && 'consent' !== $type ) {
-			$label_html = sprintf(
-				'<label class="swf-field__label" for="%1$s">%2$s%3$s</label>',
-				esc_attr( $field_id ),
+		if ( in_array( $type, array( 'radio', 'rating' ), true ) ) {
+			$label_html = sprintf( '<span class="swf-field__label" id="%1$s-label">%2$s%3$s</span>', esc_attr( $field_id ),
 				esc_html( $label ),
 				$required ? ' <span class="swf-field__required" aria-hidden="true">*</span>' : ''
 			);
+		} elseif ( 'checkbox' !== $type && 'consent' !== $type ) {
+			$label_html = sprintf( '<label class="swf-field__label" for="%1$s">%2$s%3$s</label>', esc_attr( $field_id ), esc_html( $label ), $required ? ' <span class="swf-field__required" aria-hidden="true">*</span>' : '' );
 		}
 
 		$help_html = $help ? sprintf( '<p class="swf-field__help" id="%1$s-help">%2$s</p>', esc_attr( $field_id ), esc_html( $help ) ) : '';
@@ -237,7 +237,8 @@ final class Renderer {
 	 * @param array<string, mixed> $attributes Block attributes.
 	 */
 	private function render_option_group( string $input_type, string $slug, array $attributes, string $field_id ): string {
-		$html = '<div class="swf-field__options" role="group">';
+		$described_by = ! empty( $attributes['helpText'] ) ? sprintf( ' aria-describedby="%s-help"', esc_attr( $field_id ) ) : '';
+		$html = sprintf( '<div class="swf-field__options" role="radiogroup" aria-labelledby="%1$s-label"%2$s%3$s>', esc_attr( $field_id ), $described_by, ! empty( $attributes['required'] ) ? ' aria-required="true"' : '' );
 
 		foreach ( OptionParser::parse( (string) ( $attributes['options'] ?? '' ) ) as $index => $option ) {
 			$option_id = sprintf( '%s-%d', $field_id, $index );
@@ -261,7 +262,8 @@ final class Renderer {
 	 */
 	private function render_rating( string $slug, array $attributes, string $field_id ): string {
 		$max  = max( 1, (int) ( $attributes['maxRating'] ?? 5 ) );
-		$html = '<div class="swf-field__rating" role="radiogroup">';
+		$described_by = ! empty( $attributes['helpText'] ) ? sprintf( ' aria-describedby="%s-help"', esc_attr( $field_id ) ) : '';
+		$html = sprintf( '<div class="swf-field__rating" role="radiogroup" aria-labelledby="%1$s-label"%2$s%3$s>', esc_attr( $field_id ), $described_by, ! empty( $attributes['required'] ) ? ' aria-required="true"' : '' );
 
 		for ( $i = 1; $i <= $max; $i++ ) {
 			$option_id = sprintf( '%s-%d', $field_id, $i );

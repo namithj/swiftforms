@@ -247,3 +247,12 @@ textarea.swf-field__control {
 	padding: var(--swf-field-padding-y) 1.25em;
 	cursor: pointer;
 }
+
+.swf-field__star input:focus-visible + span[aria-hidden] {
+	outline: 3px solid var(--swf-focus-ring);
+	outline-offset: 2px;
+}
+
+.swf-field__star input:checked + span[aria-hidden] {
+	color: var(--swf-accent);
+}

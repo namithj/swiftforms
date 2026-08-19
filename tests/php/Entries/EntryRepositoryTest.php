@@ -102,4 +102,15 @@ final class EntryRepositoryTest extends TestCase {
 		$this->assertSame( 'spam', get_post_meta( $entry_id, '_swf_spam_status', true ) );
 		$this->assertSame( 'akismet', get_post_meta( $entry_id, '_swf_spam_reason', true ) );
 	}
+	public function test_spam_bulk_actions_update_only_editable_entries(): void {
+		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
+		$entry_id = ( new EntryRepository() )->create( $this->create_form(), array() );
+		$repository = new EntryRepository();
+
+		$this->assertArrayHasKey( 'swf_mark_spam', $repository->bulk_actions( array() ) );
+		$repository->handle_bulk_actions( 'https://example.test/', 'swf_mark_spam', array( $entry_id ) );
+		$this->assertSame( 'spam', get_post_meta( $entry_id, '_swf_spam_status', true ) );
+		$repository->handle_bulk_actions( 'https://example.test/', 'swf_mark_ham', array( $entry_id ) );
+		$this->assertSame( 'ham', get_post_meta( $entry_id, '_swf_spam_status', true ) );
+	}
 }

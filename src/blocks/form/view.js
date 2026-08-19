@@ -204,7 +204,18 @@ function showFieldError( field, message ) {
 		errorEl.textContent = message;
 		errorEl.id = errorEl.id || `swf-error-${ field.slug }`;
 		field.input.setAttribute( 'aria-invalid', 'true' );
-		field.input.setAttribute( 'aria-describedby', errorEl.id );
+		const descriptions = (
+			field.input.getAttribute( 'aria-describedby' ) || ''
+		)
+			.split( /\s+/ )
+			.filter( Boolean );
+		if ( ! descriptions.includes( errorEl.id ) ) {
+			descriptions.push( errorEl.id );
+		}
+		field.input.setAttribute(
+			'aria-describedby',
+			descriptions.join( ' ' )
+		);
 	}
 }
 
@@ -214,6 +225,14 @@ function clearFieldErrors( form ) {
 	} );
 	form.querySelectorAll( '[aria-invalid="true"]' ).forEach( ( el ) => {
 		el.removeAttribute( 'aria-invalid' );
+		const descriptions = ( el.getAttribute( 'aria-describedby' ) || '' )
+			.split( /\s+/ )
+			.filter( ( id ) => ! id.endsWith( '-error' ) );
+		if ( descriptions.length ) {
+			el.setAttribute( 'aria-describedby', descriptions.join( ' ' ) );
+		} else {
+			el.removeAttribute( 'aria-describedby' );
+		}
 	} );
 }
 
