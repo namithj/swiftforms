@@ -43,6 +43,10 @@ final class Pipeline {
 	 * @return array{status_code: int, body: array<string, mixed>}
 	 */
 	public function handle( array $request, array $files = array() ): array {
+		if ( $this->rate_limiter->is_limited() ) {
+			return $this->error( 429, 'rate_limited', __( 'Too many submissions. Please wait a moment and try again.', 'swiftforms' ) );
+		}
+
 		if ( ! $this->nonce_guard->verify( (string) ( $request['nonce'] ?? '' ) ) ) {
 			return $this->error(
 				403,
@@ -65,10 +69,6 @@ final class Pipeline {
 		$form_id       = $enforced['form_id'];
 		$fields        = $enforced['fields'];
 		$form_settings = FormSettings::get( $form_id );
-
-		if ( $this->rate_limiter->is_limited( $form_id ) ) {
-			return $this->error( 429, 'rate_limited', __( 'Too many submissions. Please wait a moment and try again.', 'swiftforms' ) );
-		}
 
 		$spam_verdict = $this->spam_guard->evaluate( $normalized, $form_settings );
 

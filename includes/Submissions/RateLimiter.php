@@ -21,10 +21,10 @@ final class RateLimiter {
 	 * Whether the current client has exceeded the allowed submission rate.
 	 * Increments the counter as a side effect when not limited.
 	 */
-	public function is_limited(): bool {
-		$max    = (int) apply_filters( 'swf_rate_limit_max_requests', GlobalSettings::instance()->get( 'rateLimitMaxRequests', 5 ) );
-		$window = (int) apply_filters( 'swf_rate_limit_window_seconds', GlobalSettings::instance()->get( 'rateLimitWindowSeconds', 60 ) );
-		$key    = 'swf_rl_' . md5( $this->client_ip() );
+	public function is_limited( int $form_id ): bool {
+		$max    = max( 1, (int) apply_filters( 'swf_rate_limit_max_requests', GlobalSettings::instance()->get( 'rateLimitMaxRequests', 5 ) ) );
+		$window = max( 1, (int) apply_filters( 'swf_rate_limit_window_seconds', GlobalSettings::instance()->get( 'rateLimitWindowSeconds', 60 ) ) );
+		$key    = 'swf_rl_' . md5( $form_id . '|' . $this->client_ip() );
 
 		$count = (int) get_transient( $key );
 

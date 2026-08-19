@@ -19,9 +19,9 @@ final class RateLimiterTest extends TestCase {
 
 		$limiter = new RateLimiter();
 
-		$this->assertFalse( $limiter->is_limited() );
-		$this->assertFalse( $limiter->is_limited() );
-		$this->assertTrue( $limiter->is_limited() );
+		$this->assertFalse( $limiter->is_limited( 1 ) );
+		$this->assertFalse( $limiter->is_limited( 1 ) );
+		$this->assertTrue( $limiter->is_limited( 1 ) );
 	}
 
 	public function test_client_ip_filter_can_override_the_bucketing_key(): void {
@@ -30,7 +30,7 @@ final class RateLimiterTest extends TestCase {
 
 		$limiter = new RateLimiter();
 
-		$this->assertFalse( $limiter->is_limited() );
-		$this->assertTrue( $limiter->is_limited() );
+		$this->assertFalse( $limiter->is_limited( 1 ) );
+		$this->assertTrue( $limiter->is_limited( 1 ) );
 	}
 }
