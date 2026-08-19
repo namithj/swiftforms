@@ -48,8 +48,6 @@ final class FormSettings {
 			$values[ $key ] = self::coerce( FormSettingsMetabox::field_type( $key ), $raw );
 		}
 
-		$values['redirectUrl'] = wp_validate_redirect( (string) $values['redirectUrl'], '' );
-
 		return $values;
 	}
 

@@ -1,0 +1,29 @@
+<?php
+/**
+ * Tests for SwiftForms\Submissions\SpamGuard.
+ *
+ * @package SwiftForms
+ */
+
+declare(strict_types=1);
+
+namespace SwiftForms\Tests\Submissions;
+
+use SwiftForms\Submissions\SpamGuard;
+use SwiftForms\Tests\TestCase;
+
+final class SpamGuardTest extends TestCase {
+
+	public function test_turnstile_fails_closed_without_global_keys(): void {
+		$verdict = ( new SpamGuard() )->evaluate(
+			array(
+				'honeypot' => '',
+				'render_ts' => '',
+			),
+			array( 'enableTurnstile' => true )
+		);
+
+		$this->assertSame( 'hard_reject', $verdict['status'] );
+		$this->assertSame( 'invalid_captcha', $verdict['code'] );
+	}
+}

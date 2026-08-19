@@ -76,4 +76,17 @@ final class FormSettingsMetaboxTest extends TestCase {
 		$this->assertInstanceOf( Textarea_Field::class, $field );
 		$this->assertSame( "Line one\nLine two", $field->sanitize( "Line one\nLine two" ) );
 	}
+
+	public function test_redirect_url_is_limited_to_the_current_site(): void {
+		$form_id = $this->create_form(
+			'',
+			array( 'redirectUrl' => 'https://attacker.example/thanks' )
+		);
+
+		$this->assertSame( '', \SwiftForms\Settings\FormSettings::get( $form_id )['redirectUrl'] );
+
+		update_post_meta( $form_id, FormSettingsMetabox::meta_key( 'redirectUrl' ), home_url( '/thanks' ) );
+
+		$this->assertSame( home_url( '/thanks' ), \SwiftForms\Settings\FormSettings::get( $form_id )['redirectUrl'] );
+	}
 }

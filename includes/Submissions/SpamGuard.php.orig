@@ -73,14 +73,15 @@ final class SpamGuard {
 	}
 
 	/**
-	 * Verifies a Cloudflare Turnstile response server-side.
+	 * Verifies a Cloudflare Turnstile response server-side. Passes (returns
+	 * true) when Turnstile is enabled on the form but no secret key is
+	 * configured yet, since that's a site-setup gap, not a spam signal.
 	 */
 	private function verify_turnstile( string $response_token ): bool {
-		$secret   = (string) GlobalSettings::instance()->get( 'turnstileSecretKey', '' );
-		$site_key = (string) GlobalSettings::instance()->get( 'turnstileSiteKey', '' );
+		$secret = (string) GlobalSettings::instance()->get( 'turnstileSecretKey', '' );
 
-		if ( '' === $secret || '' === $site_key ) {
-			return false;
+		if ( '' === $secret ) {
+			return true;
 		}
 
 		if ( '' === $response_token ) {

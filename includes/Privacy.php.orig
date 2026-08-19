@@ -92,8 +92,8 @@ final class Privacy implements Registrable {
 	/**
 	 * @return array{items_removed: bool, items_retained: bool, messages: array<int, string>, done: bool}
 	 */
-	public function erase_personal_data( string $email, int $page = 1 ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- deleting a batch shifts the remaining entries to page one.
-		$entries = $this->find_entries_by_email( $email, 1 );
+	public function erase_personal_data( string $email, int $page = 1 ): array {
+		$entries = $this->find_entries_by_email( $email, $page );
 
 		foreach ( $entries as $entry_id ) {
 			wp_delete_post( $entry_id, true );
