@@ -15,8 +15,7 @@
 		"env:start": "cross-env NODE_OPTIONS=--no-network-family-autoselection wp-env start",
 		"env:stop": "wp-env stop",
 		"env:destroy": "wp-env destroy",
-		"makepot": "npm run wp-env -- run cli --env-cwd=wp-content/plugins/swiftforms wp i18n make-pot . languages/swiftforms.pot --exclude=vendor,node_modules,tests,artifacts,bin,build",
-		"package:release": "bin/package-release.sh"
+		"makepot": "npm run wp-env -- run cli --env-cwd=wp-content/plugins/swiftforms wp i18n make-pot . languages/swiftforms.pot --exclude=vendor,node_modules,tests,artifacts,bin,build"
 	},
 	"devDependencies": {
 		"@wordpress/env": "^10.39.0",
