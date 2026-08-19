@@ -59,7 +59,7 @@ final class Renderer {
 		$label    = (string) ( $attributes['label'] ?? '' );
 		$help     = (string) ( $attributes['helpText'] ?? '' );
 		$required = ! empty( $attributes['required'] );
-		$field_id = 'swf-field-' . $slug;
+		$field_id = wp_unique_id( 'swf-field-' . $slug . '-' );
 
 		$conditions_attr = $this->conditions_attribute( $attributes );
 
@@ -80,14 +80,15 @@ final class Renderer {
 		$help_html = $help ? sprintf( '<p class="swf-field__help" id="%1$s-help">%2$s</p>', esc_attr( $field_id ), esc_html( $help ) ) : '';
 
 		return sprintf(
-			'<div class="swf-field swf-field--%1$s" data-swf-field data-field-slug="%2$s" data-field-type="%1$s" data-field-required="%3$s"%4$s>%5$s%6$s%7$s<div class="swf-field__error" data-swf-field-error aria-live="polite"></div></div>',
+			'<div class="swf-field swf-field--%1$s" data-swf-field data-field-slug="%2$s" data-field-type="%1$s" data-field-required="%3$s"%4$s>%5$s%6$s%7$s<div class="swf-field__error" id="%8$s-error" data-swf-field-error aria-live="polite"></div></div>',
 			esc_attr( $type ),
 			esc_attr( $slug ),
 			$required ? '1' : '0',
 			$conditions_attr,
 			$label_html,
 			$input,
-			$help_html
+			$help_html,
+			esc_attr( $field_id )
 		);
 	}
 

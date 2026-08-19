@@ -33,7 +33,7 @@ final class EntryRepository implements Registrable {
 	 * @param array<int, array{slug: string, type: string, value: mixed, attributes: array<string, mixed>}> $fields  Validated, schema-enforced fields.
 	 * @return int The new entry post id, or 0 on failure.
 	 */
-	public function create( int $form_id, array $fields ): int {
+	public function create( int $form_id, array $fields, bool $is_spam = false ): int {
 		$entry_id = wp_insert_post(
 			array(
 				'post_type'   => PostTypes::ENTRY_POST_TYPE,
@@ -48,6 +48,10 @@ final class EntryRepository implements Registrable {
 		}
 
 		wp_set_object_terms( $entry_id, PostTypes::entry_term_for_form( $form_id ), PostTypes::ENTRY_FORM_TAXONOMY );
+		update_post_meta( $entry_id, '_swf_spam_status', $is_spam ? 'spam' : 'ham' );
+		if ( $is_spam ) {
+			update_post_meta( $entry_id, '_swf_spam_reason', 'akismet' );
+		}
 
 		foreach ( $fields as $field ) {
 			$this->save_field_meta( $entry_id, $field );

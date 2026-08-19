@@ -96,4 +96,10 @@ final class EntryRepositoryTest extends TestCase {
 
 		wp_delete_file( $outside );
 	}
+	public function test_create_persists_protected_akismet_spam_state(): void {
+		$entry_id = ( new EntryRepository() )->create( $this->create_form(), array(), true );
+
+		$this->assertSame( 'spam', get_post_meta( $entry_id, '_swf_spam_status', true ) );
+		$this->assertSame( 'akismet', get_post_meta( $entry_id, '_swf_spam_reason', true ) );
+	}
 }

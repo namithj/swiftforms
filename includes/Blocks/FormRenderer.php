@@ -56,6 +56,11 @@ final class FormRenderer {
 
 		$settings = FormSettings::get( $form_id );
 		$design   = CssVariables::get( $form_id );
+		$skin     = CssVariables::resolve_skin(
+			(string) ( $attributes['className'] ?? '' ),
+			(string) $design['skin'],
+			(string) GlobalSettings::instance()->get( 'designSkin', 'default' )
+		);
 
 		$this->enqueue_frontend_assets( $settings );
 
@@ -64,7 +69,7 @@ final class FormRenderer {
 		$style = $this->css_variables->form_inline_style( $design );
 
 		$wrapper_attrs = array(
-			'class'                => 'swf-form',
+			'class'                => 'swf-form is-style-' . $skin,
 			'novalidate'           => 'novalidate',
 			'data-swf-form'        => '',
 			'data-form-id'         => (string) $form_id,
@@ -168,11 +173,13 @@ final class FormRenderer {
 	 */
 	private function captcha(): string {
 		$challenge = Captcha::build();
+		$field_id  = wp_unique_id( 'swf-captcha-answer-' );
 
 		return sprintf(
-			'<div class="swf-form__captcha"><label class="swf-field__label" for="swf-captcha-answer">%1$s</label> '
-				. '<input type="text" inputmode="numeric" id="swf-captcha-answer" name="captcha_answer" class="swf-field__control" required>'
-				. '<input type="hidden" name="captcha_token" value="%2$s"></div>',
+			'<div class="swf-form__captcha"><label class="swf-field__label" for="%1$s">%2$s</label> '
+				. '<input type="text" inputmode="numeric" id="%1$s" name="captcha_answer" class="swf-field__control" required>'
+				. '<input type="hidden" name="captcha_token" value="%3$s"></div>',
+			esc_attr( $field_id ),
 			/* translators: 1: first number, 2: second number. */
 			esc_html( sprintf( __( 'What is %1$d + %2$d?', 'swiftforms' ), $challenge['a'], $challenge['b'] ) ),
 			esc_attr( $challenge['token'] )

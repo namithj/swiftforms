@@ -21,6 +21,8 @@ use SwiftForms\Settings\GlobalSettings;
  */
 final class CssVariables {
 
+	private const SKINS = array( 'default', 'minimal', 'outlined', 'filled', 'rounded', 'dark' );
+
 	/** Values used verbatim; radius/gap are unit-suffixed separately below. */
 	private const VARS = array(
 		'accent'  => '--swf-accent',
@@ -97,6 +99,20 @@ final class CssVariables {
 		}
 
 		return $design;
+	}
+
+	/**
+	 * Resolves the one skin class a rendered form receives. A block style is
+	 * the most specific choice, followed by the per-form override and site default.
+	 */
+	public static function resolve_skin( string $block_classes, string $form_skin, string $site_skin ): string {
+		foreach ( preg_split( '/\\s+/', $block_classes ) ?: array() as $class ) {
+			if ( str_starts_with( $class, 'is-style-' ) && in_array( substr( $class, 9 ), self::SKINS, true ) ) {
+				return substr( $class, 9 );
+			}
+		}
+
+		return in_array( $form_skin, self::SKINS, true ) ? $form_skin : ( in_array( $site_skin, self::SKINS, true ) ? $site_skin : 'default' );
 	}
 
 	/**

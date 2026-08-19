@@ -49,4 +49,13 @@ final class CssVariablesTest extends TestCase {
 
 		$this->assertSame( '', $css_variables->form_inline_style( CssVariables::defaults() ) );
 	}
+	public function test_skin_precedence_and_validation(): void {
+		foreach ( array( 'default', 'minimal', 'outlined', 'filled', 'rounded', 'dark' ) as $skin ) {
+			$this->assertSame( $skin, CssVariables::resolve_skin( '', '', $skin ) );
+		}
+
+		$this->assertSame( 'dark', CssVariables::resolve_skin( 'is-style-dark', 'minimal', 'outlined' ) );
+		$this->assertSame( 'minimal', CssVariables::resolve_skin( '', 'minimal', 'outlined' ) );
+		$this->assertSame( 'default', CssVariables::resolve_skin( 'is-style-invalid', 'bad', 'also-bad' ) );
+	}
 }

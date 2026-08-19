@@ -119,7 +119,7 @@ final class SpamGuard {
 	 * Whether the Akismet plugin is active and configured.
 	 */
 	private function is_akismet_active(): bool {
-		return class_exists( '\Akismet' ) && '' !== (string) get_option( 'wordpress_api_key' );
+		return (bool) apply_filters( 'swf_akismet_active', class_exists( '\Akismet' ) && '' !== (string) get_option( 'wordpress_api_key' ) );
 	}
 
 	/**
@@ -135,6 +135,10 @@ final class SpamGuard {
 		$content = array();
 
 		foreach ( $fields as $field ) {
+			if ( ! is_array( $field ) || 'hidden' === ( $field['type'] ?? '' ) ) {
+				continue;
+			}
+
 			$value = is_array( $field['value'] ?? null ) ? '' : (string) ( $field['value'] ?? '' );
 
 			if ( '' === $author && 'text' === ( $field['type'] ?? '' ) ) {
@@ -155,7 +159,7 @@ final class SpamGuard {
 			'comment_author'       => $author,
 			'comment_author_email' => $email,
 			'comment_content'      => implode( "\n\n", $content ),
-			'user_ip'              => isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
+			'user_ip'              => RateLimiter::client_ip(),
 			'user_agent'           => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
 		);
 

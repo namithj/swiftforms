@@ -31,7 +31,7 @@ final class RateLimiter {
 	public function is_limited( int $form_id ): bool {
 		$max    = max( 1, (int) apply_filters( 'swf_rate_limit_max_requests', GlobalSettings::instance()->get( 'rateLimitMaxRequests', 5 ) ) );
 		$window = max( 1, (int) apply_filters( 'swf_rate_limit_window_seconds', GlobalSettings::instance()->get( 'rateLimitWindowSeconds', 60 ) ) );
-		$client = $this->client_ip();
+		$client = self::client_ip();
 
 		// Without an identifier, every visitor would otherwise share one bucket.
 		// Hosts behind proxies can supply a trusted identifier with swf_client_ip.
@@ -93,7 +93,7 @@ final class RateLimiter {
 	 * The requesting client's IP address, filterable for hosts behind a
 	 * proxy/load balancer that need to trust a forwarded-for header.
 	 */
-	private function client_ip(): string {
+	public static function client_ip(): string {
 		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 
 		return trim( (string) apply_filters( 'swf_client_ip', $ip ) );

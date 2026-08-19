@@ -79,7 +79,9 @@ final class Pipeline {
 			return $this->error( 429, 'rate_limited', __( 'Too many submissions. Please wait a moment and try again.', 'swiftforms' ) );
 		}
 
-		$spam_verdict = $this->spam_guard->evaluate( $normalized, $form_settings );
+		// Akismet must see only the schema-enforced, visible fields (including
+		// their authoritative types), never arbitrary client rows.
+		$spam_verdict = $this->spam_guard->evaluate( array_merge( $normalized, array( 'fields' => $fields ) ), $form_settings );
 
 		if ( 'silent_reject' === $spam_verdict['status'] ) {
 			return $this->success( 0, $form_settings );
@@ -142,7 +144,7 @@ final class Pipeline {
 		 */
 		do_action( 'swf_pre_submission', $fields, $form_id );
 
-		$entry_id = $save_entries ? $this->entry_repository->create( $form_id, $fields ) : 0;
+		$entry_id = $save_entries ? $this->entry_repository->create( $form_id, $fields, $is_spam ) : 0;
 
 		if ( $save_entries && 0 === $entry_id ) {
 			$this->delete_uploaded_files( $uploaded_files );

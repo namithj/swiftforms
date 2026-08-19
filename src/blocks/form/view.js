@@ -408,7 +408,14 @@ function initSteps( form ) {
 
 	form.dataset.swfStepsInit = '1';
 
-	let current = 0;
+	const state = { current: 0 };
+	form._swfSteps = {
+		reset: () => {
+			state.current = 0;
+			clearFieldErrors( form );
+			render();
+		},
+	};
 
 	const actions = form.querySelector( '.swf-form__actions' );
 	const submitButton = form.querySelector( '.swf-form__submit' );
@@ -436,35 +443,35 @@ function initSteps( form ) {
 
 	function render() {
 		steps.forEach( ( step, index ) => {
-			step.hidden = index !== current;
+			step.hidden = index !== state.current;
 		} );
 
-		prevButton.hidden = 0 === current;
-		nextButton.hidden = current === steps.length - 1;
+		prevButton.hidden = 0 === state.current;
+		nextButton.hidden = state.current === steps.length - 1;
 		if ( submitButton ) {
-			submitButton.hidden = current !== steps.length - 1;
+			submitButton.hidden = state.current !== steps.length - 1;
 		}
 
 		progress.textContent = settings.i18n.stepProgress
-			.replace( '%1$d', String( current + 1 ) )
+			.replace( '%1$d', String( state.current + 1 ) )
 			.replace( '%2$d', String( steps.length ) );
 	}
 
 	prevButton.addEventListener( 'click', () => {
-		current = Math.max( 0, current - 1 );
+		state.current = Math.max( 0, state.current - 1 );
 		render();
 	} );
 
 	nextButton.addEventListener( 'click', () => {
 		const stepFields = collectFields( form ).filter( ( field ) =>
-			steps[ current ].contains( field.wrapper )
+			steps[ state.current ].contains( field.wrapper )
 		);
 
 		if ( ! validateClientSide( form, stepFields ) ) {
 			return;
 		}
 
-		current = Math.min( steps.length - 1, current + 1 );
+		state.current = Math.min( steps.length - 1, state.current + 1 );
 		render();
 	} );
 
@@ -472,34 +479,8 @@ function initSteps( form ) {
 }
 
 function resetToFirstStep( form ) {
-	const steps = form.querySelectorAll( '[data-swf-step]' );
-	if ( ! steps.length ) {
-		return;
-	}
-
-	steps.forEach( ( step, index ) => {
-		step.hidden = index !== 0;
-	} );
-
-	const prev = form.querySelector( '.swf-step-nav__previous' );
-	const next = form.querySelector( '.swf-step-nav__next' );
-	const submitButton = form.querySelector( '.swf-form__submit' );
-
-	if ( prev ) {
-		prev.hidden = true;
-	}
-	if ( next ) {
-		next.hidden = steps.length < 2;
-	}
-	if ( submitButton ) {
-		submitButton.hidden = steps.length >= 2;
-	}
-
-	const progress = form.querySelector( '.swf-step-progress' );
-	if ( progress ) {
-		progress.textContent = settings.i18n.stepProgress
-			.replace( '%1$d', '1' )
-			.replace( '%2$d', String( steps.length ) );
+	if ( form._swfSteps ) {
+		form._swfSteps.reset();
 	}
 }
 
