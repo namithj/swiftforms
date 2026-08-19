@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/step",
+	"name": "smartlogix-swiftforms/step",
 	"title": "Step",
-	"category": "swf",
+	"category": "smartlogix-swiftforms",
 	"description": "One step of a multi-step form.",
 	"icon": "editor-ol",
 	"textdomain": "swiftforms",

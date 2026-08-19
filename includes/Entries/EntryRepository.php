@@ -1,6 +1,6 @@
 <?php
 /**
- * Storage for `swf_entry` posts.
+ * Storage for `smartlogix_swf_entry` posts.
  *
  * @package SwiftForms
  */
@@ -15,10 +15,9 @@ use SwiftForms\Submissions\UploadHandler;
 
 /**
  * One post per entry, tagged with its source form via the
- * `swf_entry_form` taxonomy, plus one `swf_field_{slug}` meta row per
- * submitted field — deliberately unprefixed with `_` so WordPress's own
- * Custom Fields metabox displays them on the entry's edit screen, with no
- * bespoke viewer needed.
+ * `smartlogix_swf_entry_form` taxonomy, plus one `smartlogix_swiftforms_field_{slug}` meta row per
+ * submitted field. Entry data is displayed through a read-only metabox;
+ * protected metadata and filesystem paths never reach the normal editor UI.
  */
 final class EntryRepository implements Registrable {
 
@@ -30,19 +29,37 @@ final class EntryRepository implements Registrable {
 		add_filter( 'bulk_actions-edit-' . PostTypes::ENTRY_POST_TYPE, array( $this, 'bulk_actions' ) );
 		add_filter( 'handle_bulk_actions-edit-' . PostTypes::ENTRY_POST_TYPE, array( $this, 'handle_bulk_actions' ), 10, 3 );
 		add_action( 'manage_' . PostTypes::ENTRY_POST_TYPE . '_posts_custom_column', array( $this, 'render_entry_column' ), 10, 2 );
+		add_action( 'add_meta_boxes_' . PostTypes::ENTRY_POST_TYPE, array( $this, 'add_entry_metabox' ) );
+		add_action( 'load-post.php', array( $this, 'mark_entry_read_on_view' ) );
+		add_action( 'admin_post_smartlogix_swiftforms_export_entry', array( $this, 'export_entry' ) );
 	}
 
 
 	/** @param array<string, string> $columns @return array<string, string> */
 	public function entry_columns( array $columns ): array {
-		$columns['swf_spam'] = __( 'Spam', 'swiftforms' );
+		$columns['smartlogix_swiftforms_read']    = __( 'Status', 'swiftforms' );
+		$columns['smartlogix_swiftforms_summary'] = __( 'Summary', 'swiftforms' );
+		$columns['smartlogix_swiftforms_spam']    = __( 'Spam', 'swiftforms' );
 
 		return $columns;
 	}
 
 	public function render_entry_column( string $column, int $entry_id ): void {
-		if ( 'swf_spam' === $column ) {
-			echo 'spam' === get_post_meta( $entry_id, '_swf_spam_status', true ) ? esc_html__( 'Spam', 'swiftforms' ) : esc_html__( 'Not spam', 'swiftforms' );
+		if ( 'smartlogix_swiftforms_read' === $column ) {
+			echo 'read' === get_post_meta( $entry_id, '_smartlogix_swiftforms_read_status', true ) ? esc_html__( 'Read', 'swiftforms' ) : '<strong>' . esc_html__( 'Unread', 'swiftforms' ) . '</strong>';
+		}
+
+		if ( 'smartlogix_swiftforms_summary' === $column ) {
+			foreach ( $this->fields( $entry_id ) as $field ) {
+				if ( ! is_array( $field['value'] ) && '' !== trim( (string) $field['value'] ) ) {
+					echo esc_html( wp_trim_words( (string) $field['value'], 12 ) );
+					break;
+				}
+			}
+		}
+
+		if ( 'smartlogix_swiftforms_spam' === $column ) {
+			echo 'spam' === get_post_meta( $entry_id, '_smartlogix_swiftforms_spam_status', true ) ? esc_html__( 'Spam', 'swiftforms' ) : esc_html__( 'Not spam', 'swiftforms' );
 		}
 	}
 
@@ -54,11 +71,18 @@ final class EntryRepository implements Registrable {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list-table filter, as in core.
-		$selected = isset( $_GET['swf_spam'] ) ? sanitize_key( wp_unslash( (string) $_GET['swf_spam'] ) ) : '';
+		$selected = isset( $_GET['smartlogix_swiftforms_spam'] ) ? sanitize_key( wp_unslash( (string) $_GET['smartlogix_swiftforms_spam'] ) ) : '';
 		echo '<label class="screen-reader-text" for="swf-spam">' . esc_html__( 'Filter by spam status', 'swiftforms' ) . '</label>';
-		echo '<select name="swf_spam" id="swf-spam"><option value="">' . esc_html__( 'All entries', 'swiftforms' ) . '</option>';
+		echo '<select name="smartlogix_swiftforms_spam" id="swf-spam"><option value="">' . esc_html__( 'All entries', 'swiftforms' ) . '</option>';
 		echo '<option value="spam"' . selected( $selected, 'spam', false ) . '>' . esc_html__( 'Spam only', 'swiftforms' ) . '</option>';
 		echo '<option value="ham"' . selected( $selected, 'ham', false ) . '>' . esc_html__( 'Not spam', 'swiftforms' ) . '</option></select>';
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list-table filter.
+		$read = isset( $_GET['smartlogix_swiftforms_read'] ) ? sanitize_key( wp_unslash( (string) $_GET['smartlogix_swiftforms_read'] ) ) : '';
+		echo '<label class="screen-reader-text" for="swf-read">' . esc_html__( 'Filter by read status', 'swiftforms' ) . '</label>';
+		echo '<select name="smartlogix_swiftforms_read" id="swf-read"><option value="">' . esc_html__( 'All read states', 'swiftforms' ) . '</option>';
+		echo '<option value="unread"' . selected( $read, 'unread', false ) . '>' . esc_html__( 'Unread', 'swiftforms' ) . '</option>';
+		echo '<option value="read"' . selected( $read, 'read', false ) . '>' . esc_html__( 'Read', 'swiftforms' ) . '</option></select>';
 	}
 
 	public function filter_entries_by_spam( \WP_Query $query ): void {
@@ -67,31 +91,66 @@ final class EntryRepository implements Registrable {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list-table filter, as in core.
-		$status = isset( $_GET['swf_spam'] ) ? sanitize_key( wp_unslash( (string) $_GET['swf_spam'] ) ) : '';
+		$status = isset( $_GET['smartlogix_swiftforms_spam'] ) ? sanitize_key( wp_unslash( (string) $_GET['smartlogix_swiftforms_spam'] ) ) : '';
 		if ( in_array( $status, array( 'spam', 'ham' ), true ) ) {
-			$query->set( 'meta_key', '_swf_spam_status' );
-			$query->set( 'meta_value', $status );
+			$query->set(
+				'meta_query',
+				array(
+					array(
+						'key'   => '_smartlogix_swiftforms_spam_status',
+						'value' => $status,
+					),
+				)
+			);
 		}
+
+		$meta_query = array_filter( (array) $query->get( 'meta_query' ), 'is_array' );
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list-table filter.
+		$read = isset( $_GET['smartlogix_swiftforms_read'] ) ? sanitize_key( wp_unslash( (string) $_GET['smartlogix_swiftforms_read'] ) ) : '';
+		if ( in_array( $read, array( 'read', 'unread' ), true ) ) {
+			$meta_query[] = array(
+				'key'   => '_smartlogix_swiftforms_read_status',
+				'value' => $read,
+			);
+		}
+
+		$search = trim( (string) $query->get( 's' ) );
+		if ( '' !== $search ) {
+			$query->set( 's', '' );
+			$meta_query[] = array(
+				'key'         => 'smartlogix_swiftforms_field_',
+				'compare_key' => 'LIKE',
+				'value'       => $search,
+				'compare'     => 'LIKE',
+			);
+		}
+		$query->set( 'meta_query', $meta_query );
 	}
 
 	/** @param array<string, string> $actions @return array<string, string> */
 	public function bulk_actions( array $actions ): array {
-		$actions['swf_mark_spam'] = __( 'Mark as spam', 'swiftforms' );
-		$actions['swf_mark_ham']  = __( 'Mark as not spam', 'swiftforms' );
+		$actions['smartlogix_swiftforms_mark_spam']   = __( 'Mark as spam', 'swiftforms' );
+		$actions['smartlogix_swiftforms_mark_ham']    = __( 'Mark as not spam', 'swiftforms' );
+		$actions['smartlogix_swiftforms_mark_read']   = __( 'Mark as read', 'swiftforms' );
+		$actions['smartlogix_swiftforms_mark_unread'] = __( 'Mark as unread', 'swiftforms' );
 
 		return $actions;
 	}
 
 	/** @param int[] $entry_ids */
 	public function handle_bulk_actions( string $redirect, string $action, array $entry_ids ): string {
-		if ( ! in_array( $action, array( 'swf_mark_spam', 'swf_mark_ham' ), true ) ) {
+		if ( ! in_array( $action, array( 'smartlogix_swiftforms_mark_spam', 'smartlogix_swiftforms_mark_ham', 'smartlogix_swiftforms_mark_read', 'smartlogix_swiftforms_mark_unread' ), true ) ) {
 			return $redirect;
 		}
 
 		foreach ( $entry_ids as $entry_id ) {
 			$entry_id = (int) $entry_id;
 			if ( PostTypes::ENTRY_POST_TYPE === get_post_type( $entry_id ) && current_user_can( 'edit_post', $entry_id ) ) {
-				update_post_meta( $entry_id, '_swf_spam_status', 'swf_mark_spam' === $action ? 'spam' : 'ham' );
+				if ( str_contains( $action, 'mark_spam' ) || str_contains( $action, 'mark_ham' ) ) {
+					update_post_meta( $entry_id, '_smartlogix_swiftforms_spam_status', str_contains( $action, 'mark_spam' ) ? 'spam' : 'ham' );
+				} else {
+					update_post_meta( $entry_id, '_smartlogix_swiftforms_read_status', str_contains( $action, 'mark_unread' ) ? 'unread' : 'read' );
+				}
 			}
 		}
 
@@ -119,14 +178,31 @@ final class EntryRepository implements Registrable {
 		}
 
 		wp_set_object_terms( $entry_id, PostTypes::entry_term_for_form( $form_id ), PostTypes::ENTRY_FORM_TAXONOMY );
-		update_post_meta( $entry_id, '_swf_spam_status', $is_spam ? 'spam' : 'ham' );
+		update_post_meta( $entry_id, '_smartlogix_swiftforms_spam_status', $is_spam ? 'spam' : 'ham' );
+		update_post_meta( $entry_id, '_smartlogix_swiftforms_read_status', 'unread' );
 		if ( $is_spam ) {
-			update_post_meta( $entry_id, '_swf_spam_reason', 'akismet' );
+			update_post_meta( $entry_id, '_smartlogix_swiftforms_spam_reason', 'akismet' );
 		}
 
 		foreach ( $fields as $field ) {
 			$this->save_field_meta( $entry_id, $field );
 		}
+		update_post_meta(
+			$entry_id,
+			'_smartlogix_swiftforms_field_schema',
+			array_column(
+				array_map(
+					static fn ( array $field ): array => array(
+						'label' => (string) ( $field['attributes']['label'] ?? $field['slug'] ),
+						'type'  => $field['type'],
+						'slug'  => $field['slug'],
+					),
+					$fields
+				),
+				null,
+				'slug'
+			)
+		);
 
 		wp_update_post(
 			array(
@@ -142,7 +218,7 @@ final class EntryRepository implements Registrable {
 		 * @param int $entry_id Entry post id.
 		 * @param int $form_id  Source form post id.
 		 */
-		do_action( 'swf_entry_saved', $entry_id, $form_id );
+		do_action( 'smartlogix_swiftforms_entry_saved', $entry_id, $form_id );
 
 		return $entry_id;
 	}
@@ -154,7 +230,7 @@ final class EntryRepository implements Registrable {
 	 * @param array{slug: string, type: string, value: mixed, attributes: array<string, mixed>} $field One field.
 	 */
 	private function save_field_meta( int $entry_id, array $field ): void {
-		$key = 'swf_field_' . $field['slug'];
+		$key = 'smartlogix_swiftforms_field_' . $field['slug'];
 
 		update_post_meta( $entry_id, $key, $field['value'] );
 
@@ -162,6 +238,85 @@ final class EntryRepository implements Registrable {
 			update_post_meta( $entry_id, $key . '_statement', (string) ( $field['attributes']['statementText'] ?? '' ) );
 			update_post_meta( $entry_id, $key . '_accepted_at', current_time( 'mysql' ) );
 		}
+	}
+
+	public function add_entry_metabox(): void {
+		add_meta_box( 'smartlogix-swiftforms-entry', __( 'Submission details', 'swiftforms' ), array( $this, 'render_entry_metabox' ), PostTypes::ENTRY_POST_TYPE, 'normal', 'high' );
+	}
+
+	public function render_entry_metabox( \WP_Post $post ): void {
+		echo '<table class="widefat striped"><tbody>';
+		foreach ( $this->fields( $post->ID ) as $field ) {
+			echo '<tr><th scope="row">' . esc_html( $field['label'] ) . '</th><td>' . wp_kses_post( $this->format_value( $post->ID, $field ) ) . '</td></tr>';
+		}
+		echo '</tbody></table><p><a class="button" href="' . esc_url( $this->export_url( $post->ID ) ) . '">' . esc_html__( 'Export this entry as CSV', 'swiftforms' ) . '</a></p>';
+	}
+
+	public function mark_entry_read_on_view(): void {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Loading an authorized edit screen only changes presentation state.
+		$entry_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
+		if ( $entry_id && PostTypes::ENTRY_POST_TYPE === get_post_type( $entry_id ) && current_user_can( 'edit_post', $entry_id ) ) {
+			update_post_meta( $entry_id, '_smartlogix_swiftforms_read_status', 'read' );
+		}
+	}
+
+	public function export_url( int $entry_id ): string {
+		if ( ! current_user_can( 'edit_post', $entry_id ) ) {
+			return '';
+		}
+
+		return wp_nonce_url(
+			add_query_arg(
+				array(
+					'action'   => 'smartlogix_swiftforms_export_entry',
+					'entry_id' => $entry_id,
+				),
+				admin_url( 'admin-post.php' )
+			),
+			'smartlogix_swiftforms_export_entry_' . $entry_id
+		);
+	}
+
+	public function export_entry(): void {
+		$entry_id = isset( $_GET['entry_id'] ) ? absint( $_GET['entry_id'] ) : 0;
+		if ( ! $entry_id || ! current_user_can( 'edit_post', $entry_id ) ) {
+			wp_die( esc_html__( 'You are not allowed to export this entry.', 'swiftforms' ), 403 );
+		}
+		check_admin_referer( 'smartlogix_swiftforms_export_entry_' . $entry_id );
+		nocache_headers();
+		header( 'Content-Type: text/csv; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename="swiftforms-entry-' . $entry_id . '.csv"' );
+		$stream = fopen( 'php://output', 'w' );
+		foreach ( $this->fields( $entry_id ) as $field ) {
+			fputcsv( $stream, array( $field['label'], is_array( $field['value'] ) ? (string) ( $field['value']['name'] ?? '' ) : (string) $field['value'] ) );
+		}
+		fclose( $stream ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- php://output is a response stream, not a filesystem path.
+		exit;
+	}
+
+	/** @return array<int, array{slug:string,label:string,type:string,value:mixed}> */
+	private function fields( int $entry_id ): array {
+		$schema = (array) get_post_meta( $entry_id, '_smartlogix_swiftforms_field_schema', true );
+		$fields = array();
+		foreach ( $schema as $slug => $definition ) {
+			$fields[] = array(
+				'slug'  => sanitize_key( (string) $slug ),
+				'label' => (string) ( $definition['label'] ?? $slug ),
+				'type'  => (string) ( $definition['type'] ?? 'text' ),
+				'value' => get_post_meta( $entry_id, 'smartlogix_swiftforms_field_' . sanitize_key( (string) $slug ), true ),
+			);
+		}
+		return $fields;
+	}
+
+	/** @param array{slug:string,label:string,type:string,value:mixed} $field */
+	private function format_value( int $entry_id, array $field ): string {
+		if ( is_array( $field['value'] ) ) {
+			$url = ( new EntryDownloadController() )->url( $entry_id, $field['slug'] );
+			return $url ? '<a href="' . esc_url( $url ) . '">' . esc_html( (string) ( $field['value']['name'] ?? __( 'Download attachment', 'swiftforms' ) ) ) . '</a>' : esc_html__( 'Attachment unavailable', 'swiftforms' );
+		}
+
+		return nl2br( esc_html( (string) $field['value'] ) );
 	}
 
 	/**
@@ -173,7 +328,7 @@ final class EntryRepository implements Registrable {
 		}
 
 		foreach ( get_post_meta( $post_id ) as $key => $meta_values ) {
-			if ( ! str_starts_with( $key, 'swf_field_' ) ) {
+			if ( ! str_starts_with( $key, 'smartlogix_swiftforms_field_' ) ) {
 				continue;
 			}
 

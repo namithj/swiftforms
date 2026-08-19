@@ -18,7 +18,7 @@ abstract class TestCase extends WP_UnitTestCase {
 
 	/**
 	 * WP_UnitTestCase::set_up() calls unregister_all_meta_keys() before
-	 * every test to keep tests isolated, which also wipes the `_swf_*`
+	 * every test to keep tests isolated, which also wipes the `_smartlogix_swiftforms_*`
 	 * meta our plugin registers once on `init` (fired only once for the
 	 * whole PHPUnit process). Re-running just the (idempotent) post
 	 * type/meta registration here, rather than re-firing all of `init`,
@@ -44,8 +44,8 @@ abstract class TestCase extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Creates a `swf_form` post with the given block content and settings.
-	 * Settings overrides are written directly to their `_swf_setting_*` post
+	 * Creates a `smartlogix_swf_form` post with the given block content and settings.
+	 * Settings overrides are written directly to their `_smartlogix_swiftforms_setting_*` post
 	 * meta (bypassing Cassette-CMF's own save_post flow, which needs a real
 	 * $_POST/nonce/current-user — see PostTypesTest for a test that exercises
 	 * that flow directly), so tests can seed a form's settings in one call.
@@ -54,7 +54,10 @@ abstract class TestCase extends WP_UnitTestCase {
 	 * @param array<string, mixed> $settings Optional per-field overrides, unprefixed key => value.
 	 */
 	protected function create_form( string $content = '', array $settings = array() ): int {
-		$form_id = self::factory()->post->create(
+		$retention_key             = \SwiftForms\Settings\FormSettingsMetabox::meta_key( 'retentionConfirmed' );
+		$previous_retention_choice = $_POST[ $retention_key ] ?? null;
+		$_POST[ $retention_key ]   = '1';
+		$form_id                   = self::factory()->post->create(
 			array(
 				'post_type'    => \SwiftForms\PostTypes::FORM_POST_TYPE,
 				'post_title'   => 'Test Form',
@@ -62,6 +65,12 @@ abstract class TestCase extends WP_UnitTestCase {
 				'post_content' => $content,
 			)
 		);
+		if ( null === $previous_retention_choice ) {
+			unset( $_POST[ $retention_key ] );
+		} else {
+			$_POST[ $retention_key ] = $previous_retention_choice;
+		}
+		update_post_meta( $form_id, $retention_key, '1' );
 
 		foreach ( $settings as $key => $value ) {
 			if ( is_bool( $value ) ) {

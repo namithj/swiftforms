@@ -1,6 +1,6 @@
 /**
  * Shared conditional-visibility editor, used by every field block except
- * `swf/field-hidden` (a hidden field is never conditionally shown/hidden —
+ * `smartlogix-swiftforms/field-hidden` (a hidden field is never conditionally shown/hidden —
  * it just always submits its fixed value).
  */
 
@@ -15,6 +15,7 @@ import {
 	CardBody,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { parseOptionPairs } from '../../shared/options';
 
 const OPERATORS = [
 	{ label: __( 'equals', 'swiftforms' ), value: 'equals' },
@@ -45,13 +46,20 @@ export function useSiblingFields( clientId ) {
 			return flatten( getBlocks() )
 				.filter(
 					( block ) =>
-						block.name.startsWith( 'swf/field-' ) &&
-						block.name !== 'swf/field-hidden' &&
+						block.name.startsWith(
+							'smartlogix-swiftforms/field-'
+						) &&
+						block.name !== 'smartlogix-swiftforms/field-hidden' &&
 						block.clientId !== clientId
 				)
 				.map( ( block ) => ( {
 					slug: block.attributes.slug,
 					label: block.attributes.label || block.attributes.slug,
+					type: block.name.replace(
+						'smartlogix-swiftforms/field-',
+						''
+					),
+					options: parseOptionPairs( block.attributes.options ),
 				} ) )
 				.filter( ( field ) => field.slug );
 		},
@@ -62,6 +70,8 @@ export function useSiblingFields( clientId ) {
 export default function ConditionsPanel( { conditions, onChange, clientId } ) {
 	const value = { ...EMPTY_CONDITIONS, ...conditions };
 	const siblings = useSiblingFields( clientId );
+	const sourceFor = ( slug ) =>
+		siblings.find( ( field ) => field.slug === slug );
 
 	const updateGroups = ( groups ) => onChange( { ...value, groups } );
 
@@ -228,27 +238,56 @@ export default function ConditionsPanel( { conditions, onChange, clientId } ) {
 										/>
 										{ ! [ 'empty', 'not_empty' ].includes(
 											rule.operator
-										) && (
-											<input
-												type="text"
-												className="components-text-control__input"
-												placeholder={ __(
-													'Value',
-													'swiftforms'
-												) }
-												value={ rule.value }
-												onChange={ ( event ) =>
-													updateRule(
-														groupIndex,
-														ruleIndex,
-														{
-															value: event.target
-																.value,
-														}
-													)
-												}
-											/>
-										) }
+										) &&
+											( [ 'select', 'radio' ].includes(
+												sourceFor( rule.field )?.type
+											) ? (
+												<SelectControl
+													label={ __(
+														'Value',
+														'swiftforms'
+													) }
+													value={ rule.value }
+													options={ sourceFor(
+														rule.field
+													).options.map(
+														( option ) => ( {
+															label: option.label,
+															value: option.value,
+														} )
+													) }
+													onChange={ ( nextValue ) =>
+														updateRule(
+															groupIndex,
+															ruleIndex,
+															{
+																value: nextValue,
+															}
+														)
+													}
+												/>
+											) : (
+												<input
+													type="text"
+													className="components-text-control__input"
+													placeholder={ __(
+														'Value',
+														'swiftforms'
+													) }
+													value={ rule.value }
+													onChange={ ( event ) =>
+														updateRule(
+															groupIndex,
+															ruleIndex,
+															{
+																value: event
+																	.target
+																	.value,
+															}
+														)
+													}
+												/>
+											) ) }
 										<Button
 											variant="link"
 											isDestructive

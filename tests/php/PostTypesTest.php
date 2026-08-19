@@ -23,7 +23,7 @@ final class PostTypesTest extends TestCase {
 		$this->assertTrue( $object->show_ui );
 		$this->assertFalse( $object->show_in_menu );
 		$this->assertTrue( $object->show_in_rest );
-		$this->assertSame( 'edit_swf_forms', $object->cap->edit_posts );
+		$this->assertSame( 'edit_smartlogix_swf_forms', $object->cap->edit_posts );
 		$this->assertArrayHasKey( 'editor', get_all_post_type_supports( PostTypes::FORM_POST_TYPE ) );
 	}
 
@@ -35,8 +35,8 @@ final class PostTypesTest extends TestCase {
 		$this->assertTrue( $object->show_ui );
 		$this->assertSame( 'edit.php?post_type=' . PostTypes::FORM_POST_TYPE, $object->show_in_menu );
 		$this->assertFalse( $object->show_in_rest );
-		$this->assertSame( 'edit_swf_entries', $object->cap->edit_posts );
-		$this->assertArrayHasKey( 'custom-fields', get_all_post_type_supports( PostTypes::ENTRY_POST_TYPE ) );
+		$this->assertSame( 'edit_smartlogix_swiftforms_entries', $object->cap->edit_posts );
+		$this->assertArrayNotHasKey( 'custom-fields', get_all_post_type_supports( PostTypes::ENTRY_POST_TYPE ) );
 	}
 
 	public function test_entry_form_taxonomy_is_registered_with_admin_column(): void {
@@ -76,7 +76,7 @@ final class PostTypesTest extends TestCase {
 		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
 
 		$_POST = array(
-			'swf_form_fields_nonce'                        => wp_create_nonce( 'save_swf_form_fields' ),
+			'smartlogix_swf_form_fields_nonce'             => wp_create_nonce( 'save_smartlogix_swf_form_fields' ),
 			FormSettingsMetabox::meta_key( 'submitLabel' ) => "Send\nit",
 			FormSettingsMetabox::meta_key( 'enableCaptcha' ) => 'yes',
 			FormSettingsMetabox::meta_key( 'saveEntries' ) => 'not-a-real-option',

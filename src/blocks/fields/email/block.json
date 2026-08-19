@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-email",
+	"name": "smartlogix-swiftforms/field-email",
 	"title": "Email",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "Collects and validates an email address.",
 	"icon": "email",
 	"textdomain": "swiftforms",

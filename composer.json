@@ -29,7 +29,7 @@
 	"scripts": {
 		"lint": "phpcs",
 		"lint:fix": "phpcbf",
-		"test:db": "mysql -h \"${SWF_TEST_DB_HOST:-db}\" -u root -proot -e \"CREATE DATABASE IF NOT EXISTS ${SWF_TEST_DB_NAME:-wordpress_test} DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL PRIVILEGES ON ${SWF_TEST_DB_NAME:-wordpress_test}.* TO '${SWF_TEST_DB_USER:-db}'@'%';\"",
+		"test:db": "mysql -h \"${SMARTLOGIX_SWIFTFORMS_TEST_DB_HOST:-db}\" -u root -proot -e \"CREATE DATABASE IF NOT EXISTS ${SMARTLOGIX_SWIFTFORMS_TEST_DB_NAME:-wordpress_test} DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL PRIVILEGES ON ${SMARTLOGIX_SWIFTFORMS_TEST_DB_NAME:-wordpress_test}.* TO '${SMARTLOGIX_SWIFTFORMS_TEST_DB_USER:-db}'@'%';\"",
 		"test": "phpunit --configuration phpunit.xml.dist",
 		"test:unit": "phpunit --configuration phpunit.xml.dist",
 		"check": [

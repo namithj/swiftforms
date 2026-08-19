@@ -13,7 +13,7 @@ use SwiftForms\Registrable;
 
 /**
  * Every field type SwiftForms knows about — built-ins plus anything an
- * addon registers via the `swf_field_types` filter — lives here. Blocks,
+ * addon registers via the `smartlogix_swiftforms_field_types` filter — lives here. Blocks,
  * server-side validation, and the JS field-block factory all read from this
  * one registry, so a new field type is one FieldType definition away from
  * being fully wired everywhere.
@@ -28,7 +28,7 @@ final class FieldRegistry implements Registrable {
 	private bool $loaded = false;
 
 	public function register(): void {
-		// Priority 5: builtin types + the swf_field_types filter are ready
+		// Priority 5: builtin types + the smartlogix_swiftforms_field_types filter are ready
 		// before Blocks\Registrar reads them on the default init priority.
 		add_action( 'init', array( $this, 'load_types' ), 5 );
 	}
@@ -53,7 +53,7 @@ final class FieldRegistry implements Registrable {
 		 *
 		 * @param array<string, FieldType> $types Type key => FieldType.
 		 */
-		$this->types = (array) apply_filters( 'swf_field_types', $this->types );
+		$this->types = (array) apply_filters( 'smartlogix_swiftforms_field_types', $this->types );
 	}
 
 	/**
@@ -87,7 +87,7 @@ final class FieldRegistry implements Registrable {
 	}
 
 	/**
-	 * Serializes the registry for `window.swfFieldConfig`, consumed by the
+	 * Serializes the registry for `window.smartlogixSwiftFormsFieldConfig`, consumed by the
 	 * JS field-block factory so PHP stays authoritative over the attribute
 	 * schema without a separate generation step. Only what the factory
 	 * actually reads is exported — the block's icon/title/category come from

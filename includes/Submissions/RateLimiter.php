@@ -29,17 +29,17 @@ final class RateLimiter {
 	 * Increments the counter as a side effect when not limited.
 	 */
 	public function is_limited( int $form_id ): bool {
-		$max    = max( 1, (int) apply_filters( 'swf_rate_limit_max_requests', GlobalSettings::instance()->get( 'rateLimitMaxRequests', 5 ) ) );
-		$window = max( 1, (int) apply_filters( 'swf_rate_limit_window_seconds', GlobalSettings::instance()->get( 'rateLimitWindowSeconds', 60 ) ) );
+		$max    = max( 1, (int) apply_filters( 'smartlogix_swiftforms_rate_limit_max_requests', GlobalSettings::instance()->get( 'rateLimitMaxRequests', 5 ) ) );
+		$window = max( 1, (int) apply_filters( 'smartlogix_swiftforms_rate_limit_window_seconds', GlobalSettings::instance()->get( 'rateLimitWindowSeconds', 60 ) ) );
 		$client = self::client_ip();
 
 		// Without an identifier, every visitor would otherwise share one bucket.
-		// Hosts behind proxies can supply a trusted identifier with swf_client_ip.
+		// Hosts behind proxies can supply a trusted identifier with smartlogix_swiftforms_client_ip.
 		if ( '' === $client ) {
 			return false;
 		}
 
-		$key = 'swf_rl_' . md5( $form_id . '|' . $client );
+		$key = 'smartlogix_swiftforms_rl_' . md5( $form_id . '|' . $client );
 
 		if ( wp_using_ext_object_cache() ) {
 			$count = $this->increment_cached( $key, $window );
@@ -96,6 +96,6 @@ final class RateLimiter {
 	public static function client_ip(): string {
 		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 
-		return trim( (string) apply_filters( 'swf_client_ip', $ip ) );
+		return trim( (string) apply_filters( 'smartlogix_swiftforms_client_ip', $ip ) );
 	}
 }

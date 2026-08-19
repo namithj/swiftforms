@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-checkbox",
+	"name": "smartlogix-swiftforms/field-checkbox",
 	"title": "Checkbox",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "A single yes/no checkbox.",
 	"icon": "yes-alt",
 	"textdomain": "swiftforms",

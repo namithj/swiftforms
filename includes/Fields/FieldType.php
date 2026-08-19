@@ -18,7 +18,7 @@ namespace SwiftForms\Fields;
 final class FieldType {
 
 	/**
-	 * @param string               $type       Type key (matches the `swf/field-{type}` block suffix).
+	 * @param string               $type       Type key (matches the `smartlogix-swiftforms/field-{type}` block suffix).
 	 * @param string               $label      Human-readable label shown in the inserter.
 	 * @param array<string, mixed> $attributes Extra block attributes beyond the shared set (name => {type, default}).
 	 * @param callable             $validate   ( mixed $value, array $attributes ): string|null — returns an error message, or null when valid.

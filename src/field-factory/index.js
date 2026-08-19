@@ -1,12 +1,12 @@
 /**
- * Field-block factory: registers one `swf/field-*` block from a small
+ * Field-block factory: registers one `smartlogix-swiftforms/field-*` block from a small
  * per-type config module. See edit-factory.js for the shared editor UI.
  */
 
 import { registerBlockType } from '@wordpress/blocks';
 import { createFieldEdit } from './edit-factory';
 
-const fieldConfig = window.swfFieldConfig || {};
+const fieldConfig = window.smartlogixSwiftFormsFieldConfig || {};
 
 /**
  * @param {Object}   options

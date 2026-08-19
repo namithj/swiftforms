@@ -50,8 +50,8 @@ final class PipelineTest extends TestCase {
 			new Webhooks()
 		);
 
-		add_filter( 'swf_rate_limit_max_requests', fn() => 1000 );
-		add_filter( 'swf_min_submit_seconds', fn() => 0 );
+		add_filter( 'smartlogix_swiftforms_rate_limit_max_requests', fn() => 1000 );
+		add_filter( 'smartlogix_swiftforms_min_submit_seconds', fn() => 0 );
 	}
 
 	private function valid_render_ts(): string {
@@ -73,7 +73,7 @@ final class PipelineTest extends TestCase {
 	}
 
 	public function test_invalid_nonce_is_rejected_with_a_fresh_one_returned(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->' );
 
 		$result = $this->pipeline->handle(
 			array(
@@ -84,12 +84,12 @@ final class PipelineTest extends TestCase {
 		);
 
 		$this->assertSame( 403, $result['status_code'] );
-		$this->assertSame( 'swf_invalid_nonce', $result['body']['code'] );
+		$this->assertSame( 'smartlogix_swiftforms_invalid_nonce', $result['body']['code'] );
 		$this->assertNotEmpty( $result['body']['nonce'] );
 	}
 
 	public function test_honeypot_triggers_a_silent_success(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->' );
 
 		$request             = $this->base_request(
 			$form_id,
@@ -110,9 +110,9 @@ final class PipelineTest extends TestCase {
 	}
 
 	public function test_time_trap_triggers_a_silent_success(): void {
-		remove_all_filters( 'swf_min_submit_seconds' );
+		remove_all_filters( 'smartlogix_swiftforms_min_submit_seconds' );
 
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->' );
 
 		$request              = $this->base_request(
 			$form_id,
@@ -133,7 +133,7 @@ final class PipelineTest extends TestCase {
 	}
 
 	public function test_missing_required_field_fails_validation(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-email {"slug":"email","label":"Email","required":true} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-email {"slug":"email","label":"Email","required":true} /-->' );
 
 		$result = $this->pipeline->handle(
 			$this->base_request(
@@ -153,9 +153,9 @@ final class PipelineTest extends TestCase {
 	}
 
 	public function test_rejects_too_many_submitted_fields(): void {
-		add_filter( 'swf_submission_max_fields', static fn() => 1 );
+		add_filter( 'smartlogix_swiftforms_submission_max_fields', static fn() => 1 );
 
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->' );
 		$result  = $this->pipeline->handle(
 			$this->base_request(
 				$form_id,
@@ -177,9 +177,9 @@ final class PipelineTest extends TestCase {
 	}
 
 	public function test_rejects_an_overlong_scalar_field_value(): void {
-		add_filter( 'swf_submission_max_field_value_bytes', static fn() => 4 );
+		add_filter( 'smartlogix_swiftforms_submission_max_field_value_bytes', static fn() => 4 );
 
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->' );
 		$result  = $this->pipeline->handle(
 			$this->base_request(
 				$form_id,
@@ -197,7 +197,7 @@ final class PipelineTest extends TestCase {
 	}
 
 	public function test_invalid_email_fails_validation(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-email {"slug":"email","label":"Email"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-email {"slug":"email","label":"Email"} /-->' );
 
 		$result = $this->pipeline->handle(
 			$this->base_request(
@@ -216,7 +216,7 @@ final class PipelineTest extends TestCase {
 	}
 
 	public function test_valid_submission_succeeds_and_creates_an_entry(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name","required":true} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name","required":true} /-->' );
 
 		$result = $this->pipeline->handle(
 			$this->base_request(
@@ -235,8 +235,8 @@ final class PipelineTest extends TestCase {
 		$this->assertArrayHasKey( 'entry_id', $result['body'] );
 
 		$entry_id = $result['body']['entry_id'];
-		$this->assertSame( 'swf_entry', get_post_type( $entry_id ) );
-		$this->assertSame( 'Alice', get_post_meta( $entry_id, 'swf_field_name', true ) );
+		$this->assertSame( 'smartlogix_swf_entry', get_post_type( $entry_id ) );
+		$this->assertSame( 'Alice', get_post_meta( $entry_id, 'smartlogix_swiftforms_field_name', true ) );
 
 		$terms = wp_get_object_terms( $entry_id, \SwiftForms\PostTypes::ENTRY_FORM_TAXONOMY, array( 'fields' => 'slugs' ) );
 		$this->assertSame( array( \SwiftForms\PostTypes::entry_term_slug( $form_id ) ), $terms );
@@ -244,7 +244,7 @@ final class PipelineTest extends TestCase {
 
 	public function test_disabled_entries_still_returns_success_but_saves_nothing(): void {
 		$form_id = $this->create_form(
-			'<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->',
+			'<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->',
 			array( 'saveEntries' => 'disabled' )
 		);
 
@@ -266,7 +266,7 @@ final class PipelineTest extends TestCase {
 	}
 
 	public function test_required_file_upload_is_validated_then_saved(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-file {"slug":"attachment","label":"Attachment","required":true} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-file {"slug":"attachment","label":"Attachment","required":true} /-->' );
 		$path    = wp_tempnam( 'swf-pipeline-upload-test' );
 
 		file_put_contents( $path, "Hello, this is a plain text attachment.\n" );
@@ -294,7 +294,7 @@ final class PipelineTest extends TestCase {
 		$this->assertSame( 200, $result['status_code'] );
 		$this->assertTrue( $result['body']['success'] );
 
-		$upload = get_post_meta( $result['body']['entry_id'], 'swf_field_attachment', true );
+		$upload = get_post_meta( $result['body']['entry_id'], 'smartlogix_swiftforms_field_attachment', true );
 		$this->assertIsArray( $upload );
 		$this->assertFileExists( $upload['path'] );
 
@@ -303,7 +303,7 @@ final class PipelineTest extends TestCase {
 
 	public function test_missing_captcha_token_when_required_is_rejected(): void {
 		$form_id = $this->create_form(
-			'<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->',
+			'<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->',
 			array( 'enableCaptcha' => true )
 		);
 
@@ -336,7 +336,7 @@ final class PipelineTest extends TestCase {
 		);
 
 		$form_id = $this->create_form(
-			'<!-- wp:swf/field-email {"slug":"email","label":"Email"} /-->',
+			'<!-- wp:smartlogix-swiftforms/field-email {"slug":"email","label":"Email"} /-->',
 			array( 'adminRecipients' => 'owner@example.com' )
 		);
 

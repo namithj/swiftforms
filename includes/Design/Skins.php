@@ -1,6 +1,6 @@
 <?php
 /**
- * The 6 preset form skins, as block styles on `swf/form`.
+ * The 6 preset form skins, as block styles on `smartlogix-swiftforms/form`.
  *
  * @package SwiftForms
  */
@@ -14,23 +14,23 @@ use SwiftForms\Registrable;
 /**
  * Each skin is a `.is-style-{name}` ruleset that only overrides CSS custom
  * properties (see src/css/skins/*.scss, all bundled into the form block's
- * single `swf-form-style` stylesheet) — selectable natively via the
+ * single `smartlogix-swiftforms-form-style` stylesheet) — selectable natively via the
  * block's Styles panel, with WordPress's own hover previews.
  */
 final class Skins implements Registrable {
 
 	public function register(): void {
-		// Priority 21: after Blocks\Registrar has registered `swf/form` (priority 20).
+		// Priority 21: after Blocks\Registrar has registered `smartlogix-swiftforms/form` (priority 20).
 		add_action( 'init', array( $this, 'register_block_styles' ), 21 );
 	}
 
 	public function register_block_styles(): void {
-		if ( ! \WP_Block_Type_Registry::get_instance()->is_registered( 'swf/form' ) ) {
+		if ( ! \WP_Block_Type_Registry::get_instance()->is_registered( 'smartlogix-swiftforms/form' ) ) {
 			return;
 		}
 
 		foreach ( $this->skins() as $skin ) {
-			register_block_style( 'swf/form', $skin );
+			register_block_style( 'smartlogix-swiftforms/form', $skin );
 		}
 	}
 

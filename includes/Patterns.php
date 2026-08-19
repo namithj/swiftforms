@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace SwiftForms;
 
 /**
- * Registers a `swf-forms` pattern category and one starter pattern per
- * file in `patterns/`, scoped to the `swf_form` post type so they only
+ * Registers a `smartlogix-swiftforms-forms` pattern category and one starter pattern per
+ * file in `patterns/`, scoped to the `smartlogix_swf_form` post type so they only
  * show up in the form builder's pattern inserter.
  */
 final class Patterns implements Registrable {
 
-	public const CATEGORY = 'swf-forms';
+	public const CATEGORY = 'smartlogix-swiftforms-forms';
 
 	public function register(): void {
 		add_action( 'init', array( $this, 'register_patterns' ) );
@@ -29,14 +29,14 @@ final class Patterns implements Registrable {
 		);
 
 		foreach ( $this->patterns() as $slug => $definition ) {
-			$file = SWF_PLUGIN_PATH . 'patterns/' . $definition['file'];
+			$file = SMARTLOGIX_SWIFTFORMS_PLUGIN_PATH . 'patterns/' . $definition['file'];
 
 			if ( ! file_exists( $file ) ) {
 				continue;
 			}
 
 			register_block_pattern(
-				'swf/' . $slug,
+				'smartlogix-swiftforms/' . $slug,
 				array(
 					'title'       => $definition['title'],
 					'description' => $definition['description'],

@@ -16,7 +16,7 @@ use WP_Error;
 /**
  * When SMTP is enabled in global settings, configures PHPMailer directly on
  * `phpmailer_init` (the same hook every SMTP plugin uses). The stored
- * password can be overridden by defining `SWF_SMTP_PASSWORD` in
+ * password can be overridden by defining `SMARTLOGIX_SWIFTFORMS_SMTP_PASSWORD` in
  * `wp-config.php`, which always wins and is never echoed back to the UI.
  */
 final class Mailer implements Registrable {
@@ -48,7 +48,7 @@ final class Mailer implements Registrable {
 		if ( '' !== $username ) {
 			$phpmailer->SMTPAuth = true;
 			$phpmailer->Username = $username;
-			$phpmailer->Password = $this->smtp_password();
+			$phpmailer->Password = (string) $settings->get( 'smtpPassword', '' );
 		}
 
 		$from_email = (string) $settings->get( 'smtpFromEmail', '' );
@@ -86,16 +86,5 @@ final class Mailer implements Registrable {
 		);
 
 		return $sent ? true : new WP_Error( 'test_email_failed', __( 'The test email could not be sent. Check your SMTP settings.', 'swiftforms' ) );
-	}
-
-	/**
-	 * The SMTP password: `SWF_SMTP_PASSWORD` in wp-config.php always wins.
-	 */
-	private function smtp_password(): string {
-		if ( defined( 'SWF_SMTP_PASSWORD' ) && '' !== SWF_SMTP_PASSWORD ) {
-			return SWF_SMTP_PASSWORD;
-		}
-
-		return (string) GlobalSettings::instance()->get( 'smtpPassword', '' );
 	}
 }

@@ -14,26 +14,27 @@ use SwiftForms\PostTypes;
 use SwiftForms\Registrable;
 
 /**
- * Registers a "Form Settings" meta box on the `swf_form` post-edit screen
+ * Registers a "Form Settings" meta box on the `smartlogix_swf_form` post-edit screen
  * with Cassette-CMF — mirrors GlobalSettingsPage, but for a CPT meta box
  * instead of a settings page: one metabox (required so the nested tabs
  * container is valid) holding a tabbed field list, filterable via
- * `swf_form_settings_schema` so addons can contribute fields.
+ * `smartlogix_swiftforms_form_settings_schema` so addons can contribute fields.
  *
  * Cassette-CMF renders the box, verifies the nonce, checks `edit_post`, and
- * saves each field as its own `_swf_setting_{key}` post meta on `save_post`
+ * saves each field as its own `_smartlogix_swiftforms_setting_{key}` post meta on `save_post`
  * — none of that is reimplemented here. FormSettings::get() reads those
  * meta keys back for the rest of the plugin. The otherwise-empty "design"
  * tab is filled in by Design\DesignSystem::inject_form_design_tab(), same
  * pattern as the global Settings page's own "design" tab.
  */
 final class FormSettingsMetabox implements Registrable {
+	private bool $retention_blocked = false;
 
-	public const METABOX_ID = 'swf-form-settings';
+	public const METABOX_ID = 'smartlogix-swiftforms-form-settings';
 
-	private const META_PREFIX = '_swf_setting_';
+	private const META_PREFIX = '_smartlogix_swiftforms_setting_';
 
-	private const DESIGN_META_PREFIX = '_swf_design_';
+	private const DESIGN_META_PREFIX = '_smartlogix_swiftforms_design_';
 
 	public function register(): void {
 		// Deferred to `init` (default priority, after Plugin::load_textdomain()
@@ -42,6 +43,38 @@ final class FormSettingsMetabox implements Registrable {
 		// during `plugins_loaded`, tripping WordPress 6.7+'s "translation
 		// loaded too early" notice.
 		add_action( 'init', array( $this, 'register_cassette_fields' ) );
+		add_filter( 'wp_insert_post_data', array( $this, 'require_retention_decision' ), 10, 4 );
+		add_filter( 'redirect_post_location', array( $this, 'retention_redirect_notice' ) );
+		add_action( 'admin_notices', array( $this, 'retention_notice' ) );
+	}
+
+	/** @param array<string,mixed> $data @param array<string,mixed> $postarr */
+	public function require_retention_decision( array $data, array $postarr ): array {
+		if ( PostTypes::FORM_POST_TYPE !== ( $data['post_type'] ?? '' ) || 'publish' !== ( $data['post_status'] ?? '' ) ) {
+			return $data;
+		}
+
+		$post_id = (int) ( $postarr['ID'] ?? 0 );
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Core and Cassette-CMF verify the post save; this filter only prevents publishing.
+		$confirmed = ! empty( $_POST[ self::meta_key( 'retentionConfirmed' ) ] ) || (bool) get_post_meta( $post_id, self::meta_key( 'retentionConfirmed' ), true );
+		if ( ! $confirmed ) {
+			$data['post_status']     = 'draft';
+			$this->retention_blocked = true;
+		}
+
+		return $data;
+	}
+
+	public function retention_redirect_notice( string $location ): string {
+		return $this->retention_blocked ? add_query_arg( 'smartlogix_swiftforms_retention_required', '1', $location ) : $location;
+	}
+
+	public function retention_notice(): void {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Presentation-only notice flag.
+		if ( empty( $_GET['smartlogix_swiftforms_retention_required'] ) ) {
+			return;
+		}
+		echo '<div class="notice notice-error"><p>' . esc_html__( 'The form remains a draft. Review the entry retention period and confirm that decision before publishing.', 'swiftforms' ) . '</p></div>';
 	}
 
 	/**
@@ -60,14 +93,23 @@ final class FormSettingsMetabox implements Registrable {
 				add_filter( 'cassette_cmf_before_save_field_' . $name, array( Schema::class, 'preserve_blank_secret' ) );
 			}
 		}
+		add_filter( 'cassette_cmf_before_save_field_' . self::meta_key( 'webhookSecret' ), array( $this, 'preserve_or_clear_webhook_secret' ) );
 
 		add_filter( 'cassette_cmf_before_save_field_' . self::meta_key( 'adminRecipients' ), array( Schema::class, 'sanitize_email_list' ) );
+	}
+
+	public function preserve_or_clear_webhook_secret( $value ) {
+		if ( defined( 'SMARTLOGIX_SWIFTFORMS_WEBHOOK_SECRET' ) ) {
+			return null;
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Cassette-CMF verifies the enclosing post save.
+		return ! empty( $_POST[ self::meta_key( 'clearWebhookSecret' ) ] ) ? '' : Schema::preserve_blank_secret( $value );
 	}
 
 	/**
 	 * The postmeta key a logical settings key (e.g. `submitLabel`) is stored
 	 * under. Prefixed so it stays out of the "Custom Fields" metabox
-	 * (`swf_form` supports it) and never collides with another plugin's meta.
+	 * (`smartlogix_swf_form` supports it) and never collides with another plugin's meta.
 	 */
 	public static function meta_key( string $key ): string {
 		return self::META_PREFIX . $key;
@@ -134,7 +176,7 @@ final class FormSettingsMetabox implements Registrable {
 	 */
 	private function page_fields(): array {
 		return Schema::metabox(
-			'swf_form_settings',
+			'smartlogix_swf_form_settings',
 			self::METABOX_ID,
 			__( 'Form Settings', 'swiftforms' ),
 			self::tabs_config(),
@@ -148,7 +190,7 @@ final class FormSettingsMetabox implements Registrable {
 	/**
 	 * Tab id => { label, fields[] }, each field a Cassette-CMF field config
 	 * (name, type, label, default, …) with `name` namespaced through
-	 * meta_key(). Filterable via `swf_form_settings_schema` so addons can
+	 * meta_key(). Filterable via `smartlogix_swiftforms_form_settings_schema` so addons can
 	 * contribute fields — the filter only ever sees the plugin's own
 	 * defaults; there's no per-form context here, since Cassette-CMF builds
 	 * this field tree once on `init`, well before any specific form is being
@@ -189,13 +231,13 @@ final class FormSettingsMetabox implements Registrable {
 			'notifications' => array(
 				'label'  => __( 'Notifications', 'swiftforms' ),
 				'fields' => array(
-					Schema::heading( 'swf_admin_notification_heading', __( 'Admin notification', 'swiftforms' ) ),
+					Schema::heading( 'smartlogix_swiftforms_admin_notification_heading', __( 'Admin notification', 'swiftforms' ) ),
 					array(
 						'name'        => self::meta_key( 'adminRecipients' ),
 						'type'        => 'text',
 						'label'       => __( 'Recipients', 'swiftforms' ),
 						'default'     => '',
-						'description' => __( 'Comma separated. Leave blank to use the site default.', 'swiftforms' ),
+						'description' => __( 'Submission data is sent to these recipients through your email or SMTP provider. Leave blank to use the site default.', 'swiftforms' ),
 					),
 					array(
 						'name'    => self::meta_key( 'adminSubject' ),
@@ -210,13 +252,13 @@ final class FormSettingsMetabox implements Registrable {
 						'default'     => '',
 						'description' => __( 'Placeholders: {entry_id}, {form_id}, {fields}, {field:slug}.', 'swiftforms' ),
 					),
-					Schema::heading( 'swf_autoresponder_heading', __( 'Autoresponder', 'swiftforms' ) ),
+					Schema::heading( 'smartlogix_swiftforms_autoresponder_heading', __( 'Autoresponder', 'swiftforms' ) ),
 					array(
 						'name'        => self::meta_key( 'autoresponderField' ),
 						'type'        => 'text',
 						'label'       => __( 'Recipient field', 'swiftforms' ),
 						'default'     => '',
-						'description' => __( 'Slug of the email field to reply to. Leave blank to use the first email field.', 'swiftforms' ),
+						'description' => __( 'This sends submission data through your email or SMTP provider. Leave blank to use the first email field.', 'swiftforms' ),
 					),
 					array(
 						'name'    => self::meta_key( 'autoresponderSubject' ),
@@ -272,6 +314,13 @@ final class FormSettingsMetabox implements Registrable {
 						'min'         => 0,
 						'description' => __( '0 = keep forever.', 'swiftforms' ),
 					),
+					array(
+						'name'        => self::meta_key( 'retentionConfirmed' ),
+						'type'        => 'checkbox',
+						'label'       => __( 'I reviewed this retention period', 'swiftforms' ),
+						'default'     => '0',
+						'description' => __( 'Required before publishing. Choose a period appropriate for the form purpose and your legal obligations; 0 keeps entries indefinitely.', 'swiftforms' ),
+					),
 				),
 			),
 			'integrations'  => array(
@@ -282,7 +331,23 @@ final class FormSettingsMetabox implements Registrable {
 						'type'        => 'text',
 						'label'       => __( 'Webhook URL', 'swiftforms' ),
 						'default'     => '',
-						'description' => __( 'Receives a JSON POST for every new entry.', 'swiftforms' ),
+						'description' => __( 'Sends submitted fields to this third-party destination. Disclose its provider, purpose, location, and retention.', 'swiftforms' ),
+					),
+					array(
+						'name'        => self::meta_key( 'webhookSecret' ),
+						'type'        => 'password',
+						'label'       => __( 'Webhook signing secret', 'swiftforms' ),
+						'default'     => '',
+						'disabled'    => defined( 'SMARTLOGIX_SWIFTFORMS_WEBHOOK_SECRET' ),
+						'description' => __( 'Leave blank to preserve it. Enter a replacement to rotate it. Values are never displayed; wp-config.php overrides are read-only.', 'swiftforms' ),
+					),
+					array(
+						'name'        => self::meta_key( 'clearWebhookSecret' ),
+						'type'        => 'checkbox',
+						'label'       => __( 'Clear the saved webhook secret', 'swiftforms' ),
+						'default'     => '0',
+						'disabled'    => defined( 'SMARTLOGIX_SWIFTFORMS_WEBHOOK_SECRET' ),
+						'description' => __( 'Explicitly removes the database value on save. Configure a new secret before enabling signed delivery.', 'swiftforms' ),
 					),
 				),
 			),
@@ -298,6 +363,6 @@ final class FormSettingsMetabox implements Registrable {
 		 *
 		 * @param array<string, array<string, mixed>> $tabs Tab definitions.
 		 */
-		return (array) apply_filters( 'swf_form_settings_schema', $tabs );
+		return (array) apply_filters( 'smartlogix_swiftforms_form_settings_schema', $tabs );
 	}
 }

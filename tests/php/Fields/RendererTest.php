@@ -58,6 +58,43 @@ final class RendererTest extends TestCase {
 		$this->assertStringContainsString( 'swf-field__required', $html );
 	}
 
+	public function test_required_radio_group_has_a_name_help_and_native_required_state(): void {
+		$html = $this->renderer->render(
+			'radio',
+			array(
+				'slug'     => 'contact_method',
+				'label'    => 'Preferred contact method',
+				'helpText' => 'Choose one option.',
+				'options'  => "Email|email\nPhone|phone",
+				'required' => true,
+			)
+		);
+
+		$this->assertMatchesRegularExpression( '/role="radiogroup" aria-labelledby="([^"]+)-label" aria-describedby="\\1-help" aria-required="true"/', $html );
+		$this->assertSame( 2, substr_count( $html, ' required' ) );
+		$this->assertStringNotContainsString( 'data-swf-field-error aria-live', $html );
+	}
+
+	public function test_rating_group_has_distinct_label_help_and_error_ids(): void {
+		$html = $this->renderer->render(
+			'rating',
+			array(
+				'slug'      => 'score',
+				'label'     => 'Score',
+				'helpText'  => 'Choose a score.',
+				'maxRating' => 3,
+				'required'  => true,
+			)
+		);
+
+		preg_match( '/id="([^"]+)-label"/', $html, $matches );
+		$this->assertNotEmpty( $matches[1] );
+		$this->assertStringContainsString( 'aria-labelledby="' . $matches[1] . '-label"', $html );
+		$this->assertStringContainsString( 'aria-describedby="' . $matches[1] . '-help"', $html );
+		$this->assertStringContainsString( 'id="' . $matches[1] . '-error"', $html );
+		$this->assertSame( 3, substr_count( $html, ' required' ) );
+	}
+
 	public function test_select_field_renders_options_from_label_value_pairs(): void {
 		$html = $this->renderer->render(
 			'select',
@@ -127,7 +164,7 @@ final class RendererTest extends TestCase {
 
 	public function test_field_html_type_filter_can_modify_output(): void {
 		add_filter(
-			'swf_field_html_text',
+			'smartlogix_swiftforms_field_html_text',
 			static fn( string $html ) => $html . '<!-- injected -->'
 		);
 
@@ -141,7 +178,7 @@ final class RendererTest extends TestCase {
 
 		$this->assertStringContainsString( '<!-- injected -->', $html );
 
-		remove_all_filters( 'swf_field_html_text' );
+		remove_all_filters( 'smartlogix_swiftforms_field_html_text' );
 	}
 
 	public function test_unknown_type_renders_nothing(): void {

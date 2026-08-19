@@ -15,8 +15,8 @@ use SwiftForms\Tests\TestCase;
 final class FormSchemaTest extends TestCase {
 
 	public function test_collects_fields_in_document_order(): void {
-		$content = '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->'
-			. '<!-- wp:swf/field-email {"slug":"email","label":"Email"} /-->';
+		$content = '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->'
+			. '<!-- wp:smartlogix-swiftforms/field-email {"slug":"email","label":"Email"} /-->';
 
 		$form_id = $this->create_form( $content );
 
@@ -28,9 +28,9 @@ final class FormSchemaTest extends TestCase {
 	}
 
 	public function test_collects_fields_nested_inside_a_step(): void {
-		$content = '<!-- wp:swf/step {"title":"Step 1"} -->'
-			. '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->'
-			. '<!-- /wp:swf/step -->';
+		$content = '<!-- wp:smartlogix-swiftforms/step {"title":"Step 1"} -->'
+			. '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->'
+			. '<!-- /wp:smartlogix-swiftforms/step -->';
 
 		$form_id = $this->create_form( $content );
 
@@ -42,7 +42,7 @@ final class FormSchemaTest extends TestCase {
 	public function test_collects_fields_nested_inside_groups_and_columns(): void {
 		$content = '<!-- wp:core/columns -->'
 			. '<!-- wp:core/column -->'
-			. '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->'
+			. '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->'
 			. '<!-- /wp:core/column -->'
 			. '<!-- /wp:core/columns -->';
 
@@ -54,8 +54,8 @@ final class FormSchemaTest extends TestCase {
 	}
 
 	public function test_duplicate_slug_last_one_wins(): void {
-		$content = '<!-- wp:swf/field-text {"slug":"x","label":"First"} /-->'
-			. '<!-- wp:swf/field-email {"slug":"x","label":"Second"} /-->';
+		$content = '<!-- wp:smartlogix-swiftforms/field-text {"slug":"x","label":"First"} /-->'
+			. '<!-- wp:smartlogix-swiftforms/field-email {"slug":"x","label":"Second"} /-->';
 
 		$form_id = $this->create_form( $content );
 

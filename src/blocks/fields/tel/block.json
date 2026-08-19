@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-tel",
+	"name": "smartlogix-swiftforms/field-tel",
 	"title": "Phone",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "Collects a phone number.",
 	"icon": "phone",
 	"textdomain": "swiftforms",

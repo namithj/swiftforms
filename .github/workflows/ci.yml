@@ -32,7 +32,9 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: ['8.2', '8.3']
+                php: ['8.2', '8.3', '8.4']
+                wordpress: ['6.6', 'latest']
+                multisite: ['0', '1']
         services:
             mysql:
                 image: mysql:8.0
@@ -54,10 +56,17 @@ jobs:
                   tools: composer
             - run: composer install --no-progress --prefer-dist
             - name: Install WP test suite
-              run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:3306 latest
+              env:
+                  WP_INSTALL_TESTS_SKIP_UPDATE_CHECK: 'true'
+              run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:3306 ${{ matrix.wordpress }} true
             - name: Run PHPUnit
               env:
                   WP_TESTS_DIR: /tmp/wordpress-tests-lib
+                  WP_MULTISITE: ${{ matrix.multisite }}
+                  SMARTLOGIX_SWIFTFORMS_TEST_DB_NAME: wordpress_test
+                  SMARTLOGIX_SWIFTFORMS_TEST_DB_USER: root
+                  SMARTLOGIX_SWIFTFORMS_TEST_DB_PASSWORD: ''
+                  SMARTLOGIX_SWIFTFORMS_TEST_DB_HOST: 127.0.0.1:3306
               run: composer test
 
     test-js:
@@ -86,3 +95,30 @@ jobs:
                   name: build
                   path: build/
 
+    release-artifact:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.2'
+                  tools: composer
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: npm
+            - run: composer install --no-progress --prefer-dist
+            - run: npm ci
+            - run: npm run package:release
+            - name: Verify production inventory and PHP syntax
+              run: |
+                  unzip -q artifacts/swiftforms-1.0.0.zip -d /tmp/swiftforms-release
+                  test -f /tmp/swiftforms-release/swiftforms/vendor/autoload.php
+                  test ! -d /tmp/swiftforms-release/swiftforms/tests
+                  find /tmp/swiftforms-release/swiftforms -name '*.php' -print0 | xargs -0 -n1 php -l
+            - name: Activate packaged plugin
+              run: |
+                  npm run env:start
+                  npm run wp-env -- run cli wp plugin deactivate swiftforms || true
+                  npm run wp-env -- run cli wp plugin install /var/www/html/wp-content/plugins/swiftforms/artifacts/swiftforms-1.0.0.zip --force --activate
+                  npm run wp-env -- run cli wp plugin status swiftforms | grep 'Status: Active'

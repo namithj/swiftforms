@@ -55,7 +55,7 @@ final class SchemaTest extends TestCase {
 	}
 
 	public function test_metabox_wraps_tabs_in_one_container(): void {
-		$fields = Schema::metabox( 'swf_x', 'swf-x', 'X', array( 'general' => array( 'label' => 'General' ) ) );
+		$fields = Schema::metabox( 'smartlogix_swiftforms_x', 'swf-x', 'X', array( 'general' => array( 'label' => 'General' ) ) );
 
 		$this->assertSame( 'metabox', $fields[0]['type'] );
 		$this->assertSame( 'swf-x', $fields[0]['metabox_id'] );

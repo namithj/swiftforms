@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-number",
+	"name": "smartlogix-swiftforms/field-number",
 	"title": "Number",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "Numeric input with optional min, max, and step.",
 	"icon": "calculator",
 	"textdomain": "swiftforms",

@@ -22,8 +22,8 @@ final class GlobalSettingsPageTest extends TestCase {
 
 		// The plugin is already booted (see tests/bootstrap.php), so this
 		// is the real, already-registered instance — same one Cassette-CMF
-		// and Design\DesignSystem's `swf_settings_schema` filter feed into.
-		$this->page = swf()->container()->get( 'global_settings_page' );
+		// and Design\DesignSystem's `smartlogix_swiftforms_settings_schema` filter feed into.
+		$this->page = smartlogix_swiftforms()->container()->get( 'global_settings_page' );
 	}
 
 	public function tear_down(): void {
@@ -37,25 +37,25 @@ final class GlobalSettingsPageTest extends TestCase {
 	public function test_seed_defaults_populates_every_field_with_its_schema_default(): void {
 		$this->page->seed_defaults();
 
-		$this->assertSame( '1', get_option( 'swf_settings_saveEntriesDefault' ) );
-		$this->assertSame( 587, get_option( 'swf_settings_smtpPort' ) );
-		$this->assertSame( 'tls', get_option( 'swf_settings_smtpEncryption' ) );
-		$this->assertSame( 5, get_option( 'swf_settings_rateLimitMaxRequests' ) );
+		$this->assertSame( '1', get_option( 'smartlogix_swiftforms_settings_saveEntriesDefault' ) );
+		$this->assertSame( 587, get_option( 'smartlogix_swiftforms_settings_smtpPort' ) );
+		$this->assertSame( 'tls', get_option( 'smartlogix_swiftforms_settings_smtpEncryption' ) );
+		$this->assertSame( 5, get_option( 'smartlogix_swiftforms_settings_rateLimitMaxRequests' ) );
 	}
 
 	public function test_seed_defaults_includes_design_tab_fields_contributed_via_the_filter(): void {
 		$this->page->seed_defaults();
 
-		$this->assertSame( 'default', get_option( 'swf_settings_designSkin' ) );
-		$this->assertSame( '#2563eb', get_option( 'swf_settings_designAccent' ) );
+		$this->assertSame( 'default', get_option( 'smartlogix_swiftforms_settings_designSkin' ) );
+		$this->assertSame( '#2563eb', get_option( 'smartlogix_swiftforms_settings_designAccent' ) );
 	}
 
 	public function test_seed_defaults_does_not_overwrite_an_existing_value(): void {
-		update_option( 'swf_settings_smtpPort', 2525 );
+		update_option( 'smartlogix_swiftforms_settings_smtpPort', 2525 );
 
 		$this->page->seed_defaults();
 
-		$this->assertSame( 2525, get_option( 'swf_settings_smtpPort' ) );
+		$this->assertSame( 2525, get_option( 'smartlogix_swiftforms_settings_smtpPort' ) );
 	}
 
 	public function test_global_settings_get_reads_the_seeded_value_back(): void {
@@ -68,33 +68,43 @@ final class GlobalSettingsPageTest extends TestCase {
 		$this->assertSame( 'fallback', GlobalSettings::instance()->get( 'not_a_real_setting', 'fallback' ) );
 	}
 
+	public function test_secret_constant_names_use_the_full_plugin_prefix(): void {
+		$this->assertSame( 'SMARTLOGIX_SWIFTFORMS_SMTP_PASSWORD', GlobalSettings::constant_for( 'smtpPassword' ) );
+		$this->assertSame( 'SMARTLOGIX_SWIFTFORMS_TURNSTILE_SECRET_KEY', GlobalSettings::constant_for( 'turnstileSecretKey' ) );
+	}
+
+	public function test_secret_source_reports_configuration_without_returning_the_value(): void {
+		update_option( 'smartlogix_swiftforms_settings_smtpPassword', 'do-not-render' );
+		$this->assertSame( 'database', GlobalSettings::instance()->secret_source( 'smtpPassword' ) );
+	}
+
 	/**
 	 * @return string[]
 	 */
 	private function seedable_option_names(): array {
 		return array(
-			'swf_settings_saveEntriesDefault',
-			'swf_settings_defaultAdminRecipients',
-			'swf_settings_smtpEnabled',
-			'swf_settings_smtpHost',
-			'swf_settings_smtpPort',
-			'swf_settings_smtpEncryption',
-			'swf_settings_smtpUsername',
-			'swf_settings_smtpPassword',
-			'swf_settings_smtpFromEmail',
-			'swf_settings_smtpFromName',
-			'swf_settings_rateLimitMaxRequests',
-			'swf_settings_rateLimitWindowSeconds',
-			'swf_settings_minSubmitSeconds',
-			'swf_settings_akismetEnabled',
-			'swf_settings_turnstileSiteKey',
-			'swf_settings_turnstileSecretKey',
-			'swf_settings_designSkin',
-			'swf_settings_designAccent',
-			'swf_settings_designFieldBg',
-			'swf_settings_designRadius',
-			'swf_settings_designLabelPosition',
-			'swf_settings_uninstallDeleteData',
+			'smartlogix_swiftforms_settings_saveEntriesDefault',
+			'smartlogix_swiftforms_settings_defaultAdminRecipients',
+			'smartlogix_swiftforms_settings_smtpEnabled',
+			'smartlogix_swiftforms_settings_smtpHost',
+			'smartlogix_swiftforms_settings_smtpPort',
+			'smartlogix_swiftforms_settings_smtpEncryption',
+			'smartlogix_swiftforms_settings_smtpUsername',
+			'smartlogix_swiftforms_settings_smtpPassword',
+			'smartlogix_swiftforms_settings_smtpFromEmail',
+			'smartlogix_swiftforms_settings_smtpFromName',
+			'smartlogix_swiftforms_settings_rateLimitMaxRequests',
+			'smartlogix_swiftforms_settings_rateLimitWindowSeconds',
+			'smartlogix_swiftforms_settings_minSubmitSeconds',
+			'smartlogix_swiftforms_settings_akismetEnabled',
+			'smartlogix_swiftforms_settings_turnstileSiteKey',
+			'smartlogix_swiftforms_settings_turnstileSecretKey',
+			'smartlogix_swiftforms_settings_designSkin',
+			'smartlogix_swiftforms_settings_designAccent',
+			'smartlogix_swiftforms_settings_designFieldBg',
+			'smartlogix_swiftforms_settings_designRadius',
+			'smartlogix_swiftforms_settings_designLabelPosition',
+			'smartlogix_swiftforms_settings_uninstallDeleteData',
 		);
 	}
 }

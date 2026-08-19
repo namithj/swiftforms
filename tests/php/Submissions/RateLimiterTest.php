@@ -15,7 +15,7 @@ use SwiftForms\Tests\TestCase;
 final class RateLimiterTest extends TestCase {
 
 	public function test_allows_requests_up_to_the_configured_maximum(): void {
-		add_filter( 'swf_rate_limit_max_requests', fn() => 2 );
+		add_filter( 'smartlogix_swiftforms_rate_limit_max_requests', fn() => 2 );
 
 		$limiter = new RateLimiter();
 
@@ -25,10 +25,10 @@ final class RateLimiterTest extends TestCase {
 	}
 
 	public function test_client_ip_filter_can_override_the_bucketing_key(): void {
-		add_filter( 'swf_rate_limit_max_requests', fn() => 1 );
+		add_filter( 'smartlogix_swiftforms_rate_limit_max_requests', fn() => 1 );
 		$client = 'first-proxy-client';
 		add_filter(
-			'swf_client_ip',
+			'smartlogix_swiftforms_client_ip',
 			static function () use ( &$client ): string {
 				return $client;
 			}
@@ -45,8 +45,8 @@ final class RateLimiterTest extends TestCase {
 	}
 
 	public function test_each_form_has_an_independent_counter(): void {
-		add_filter( 'swf_rate_limit_max_requests', fn() => 1 );
-		add_filter( 'swf_client_ip', fn() => 'shared-client' );
+		add_filter( 'smartlogix_swiftforms_rate_limit_max_requests', fn() => 1 );
+		add_filter( 'smartlogix_swiftforms_client_ip', fn() => 'shared-client' );
 
 		$limiter = new RateLimiter();
 
@@ -56,8 +56,8 @@ final class RateLimiterTest extends TestCase {
 	}
 
 	public function test_empty_client_identifier_does_not_create_a_shared_bucket(): void {
-		add_filter( 'swf_rate_limit_max_requests', fn() => 1 );
-		add_filter( 'swf_client_ip', fn() => '' );
+		add_filter( 'smartlogix_swiftforms_rate_limit_max_requests', fn() => 1 );
+		add_filter( 'smartlogix_swiftforms_client_ip', fn() => '' );
 
 		$limiter = new RateLimiter();
 

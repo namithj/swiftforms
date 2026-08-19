@@ -1,5 +1,5 @@
 /**
- * Builds the `edit` component shared by every `swf/field-*` block.
+ * Builds the `edit` component shared by every `smartlogix-swiftforms/field-*` block.
  *
  * A field block's index.js is ~10 lines: import its block.json, describe
  * what makes it different (a type label, default slug, a canvas preview,
@@ -49,7 +49,7 @@ function useIsDuplicateSlug( clientId, slug ) {
 			return flatten( getBlocks() ).some(
 				( block ) =>
 					block.clientId !== clientId &&
-					block.name.startsWith( 'swf/field-' ) &&
+					block.name.startsWith( 'smartlogix-swiftforms/field-' ) &&
 					block.attributes.slug === slug
 			);
 		},

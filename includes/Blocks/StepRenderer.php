@@ -1,6 +1,6 @@
 <?php
 /**
- * Server-side render for the `swf/step` block.
+ * Server-side render for the `smartlogix-swiftforms/step` block.
  *
  * @package SwiftForms
  */

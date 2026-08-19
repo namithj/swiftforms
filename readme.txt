@@ -35,7 +35,7 @@ client request — are always the source of truth for field types and
 validation rules.
 
 **Built for developers** — a documented hook map (`docs/hooks.md`), a
-`swf_field_types` filter for registering custom field types in pure PHP,
+`smartlogix_swiftforms_field_types` filter for registering custom field types in pure PHP,
 and an extensible Settings schema addons can add tabs/fields to without
 writing any JavaScript.
 
@@ -62,7 +62,7 @@ Yes — SwiftForms → Settings → Email.
 
 = Can I add my own field types? =
 
-Yes, in PHP via the `swf_field_types` filter — see `docs/hooks.md`.
+Yes, in PHP via the `smartlogix_swiftforms_field_types` filter — see `docs/hooks.md`.
 
 == Changelog ==
 

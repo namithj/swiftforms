@@ -24,11 +24,11 @@ final class FormSettingsMetaboxTest extends TestCase {
 		// The plugin is already booted (see tests/bootstrap.php), so this is
 		// the real, already-registered instance — the one Cassette-CMF's
 		// `cassette_cmf_before_save_field_*` filters are actually wired to.
-		$this->metabox = swf()->container()->get( 'form_settings_metabox' );
+		$this->metabox = smartlogix_swiftforms()->container()->get( 'form_settings_metabox' );
 	}
 
 	public function test_meta_key_prefixes_the_logical_key(): void {
-		$this->assertSame( '_swf_setting_submitLabel', FormSettingsMetabox::meta_key( 'submitLabel' ) );
+		$this->assertSame( '_smartlogix_swiftforms_setting_submitLabel', FormSettingsMetabox::meta_key( 'submitLabel' ) );
 	}
 
 	public function test_defaults_include_every_known_field(): void {
@@ -37,11 +37,31 @@ final class FormSettingsMetaboxTest extends TestCase {
 		$this->assertSame( 'default', $defaults['saveEntries'] );
 		$this->assertSame( 0, $defaults['retentionDays'] );
 		$this->assertSame( '0', $defaults['enableCaptcha'] );
+		$this->assertSame( '0', $defaults['retentionConfirmed'] );
+	}
+
+	public function test_publish_requires_an_explicit_retention_decision(): void {
+		$data = array(
+			'post_type'   => \SwiftForms\PostTypes::FORM_POST_TYPE,
+			'post_status' => 'publish',
+		);
+		$this->assertSame( 'draft', $this->metabox->require_retention_decision( $data, array() )['post_status'] );
+
+		$_POST[ FormSettingsMetabox::meta_key( 'retentionConfirmed' ) ] = '1';
+		$this->assertSame( 'publish', $this->metabox->require_retention_decision( $data, array() )['post_status'] );
+		unset( $_POST[ FormSettingsMetabox::meta_key( 'retentionConfirmed' ) ] );
+	}
+
+	public function test_webhook_secret_blank_preserves_and_explicit_clear_removes(): void {
+		$this->assertNull( $this->metabox->preserve_or_clear_webhook_secret( '' ) );
+		$_POST[ FormSettingsMetabox::meta_key( 'clearWebhookSecret' ) ] = '1';
+		$this->assertSame( '', $this->metabox->preserve_or_clear_webhook_secret( 'replacement' ) );
+		unset( $_POST[ FormSettingsMetabox::meta_key( 'clearWebhookSecret' ) ] );
 	}
 
 	/**
 	 * The "design" tab's fields (Design\DesignSystem::inject_form_design_tab())
-	 * share the same meta box and the same `swf_form_settings_schema`
+	 * share the same meta box and the same `smartlogix_swiftforms_form_settings_schema`
 	 * filter, but are Design\CssVariables' concern, under a different meta
 	 * prefix — they must not leak into FormSettings::get()'s output.
 	 */
@@ -51,7 +71,7 @@ final class FormSettingsMetaboxTest extends TestCase {
 	}
 
 	public function test_design_meta_key_uses_its_own_prefix(): void {
-		$this->assertSame( '_swf_design_accent', FormSettingsMetabox::design_meta_key( 'accent' ) );
+		$this->assertSame( '_smartlogix_swiftforms_design_accent', FormSettingsMetabox::design_meta_key( 'accent' ) );
 	}
 
 	public function test_field_type_reports_the_declared_cassette_cmf_type(): void {

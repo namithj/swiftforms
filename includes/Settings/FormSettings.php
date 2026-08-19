@@ -13,11 +13,11 @@ use Pedalcms\CassetteCmf\CassetteCmf;
 
 /**
  * Every field in the Form Settings meta box is stored by Cassette-CMF as
- * its own `_swf_setting_{key}` post meta (see FormSettingsMetabox). This is
+ * its own `_smartlogix_swiftforms_setting_{key}` post meta (see FormSettingsMetabox). This is
  * a thin read-only facade over that so the rest of the plugin (Pipeline,
  * Notifier, Webhooks, SpamGuard, Privacy, FormRenderer, …) keeps calling
  * `FormSettings::get( $form_id )` and getting back one flat, typed array —
- * unchanged from before this moved off a single `_swf_settings` blob.
+ * unchanged from before this moved off a single `_smartlogix_swiftforms_settings` blob.
  */
 final class FormSettings {
 
@@ -49,6 +49,9 @@ final class FormSettings {
 		}
 
 		$values['redirectUrl'] = wp_validate_redirect( (string) $values['redirectUrl'], '' );
+		if ( defined( 'SMARTLOGIX_SWIFTFORMS_WEBHOOK_SECRET' ) ) {
+			$values['webhookSecret'] = (string) SMARTLOGIX_SWIFTFORMS_WEBHOOK_SECRET;
+		}
 
 		return $values;
 	}

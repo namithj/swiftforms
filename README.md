@@ -109,7 +109,17 @@ SwiftForms includes two anti-spam measures:
 - a hidden honeypot field that helps catch simple bots,
 - an optional math captcha you can enable per form.
 
-The captcha is intentionally lightweight. It is useful for reducing basic spam, but it is not meant to replace a dedicated third-party anti-spam service for high-risk sites.
+The captcha is intentionally lightweight. It uses short-lived, single-use challenges that refresh after submission attempts, but it is only useful for reducing basic automated spam. It is not a substitute for correctly configured Turnstile or Akismet on higher-risk forms. Cached pages can refresh stale nonces and challenges without counting the failed refresh as a submission attempt.
+
+## Privacy and retention
+
+Every form requires an explicit retention decision before it can be published. Choose the shortest period appropriate for the form; setting retention to `0` deliberately keeps entries indefinitely. Files follow their entry lifecycle. WordPress’s privacy exporter and eraser locate entries by submitted email address, but copies already delivered to email/SMTP, Akismet, Cloudflare Turnstile, or webhook providers must be handled separately with those recipients.
+
+Before enabling an integration, document the fields collected, purpose, recipients, provider locations, retention, and legal basis in the site privacy policy. SwiftForms adds starter text to WordPress’s Privacy Policy Guide, but the site owner must adapt it to the actual form and providers.
+
+### Secret storage and rotation
+
+SMTP, Turnstile, and webhook secrets are never rendered back into settings screens. Blank saves preserve existing values; use the explicit clear control to remove one, or enter its replacement to rotate it. Database values are plaintext WordPress options/post meta and may appear in database backups—SwiftForms does not claim application-level encryption. For environment-managed read-only secrets, define `SMARTLOGIX_SWIFTFORMS_SMTP_PASSWORD`, `SMARTLOGIX_SWIFTFORMS_TURNSTILE_SITE_KEY`, `SMARTLOGIX_SWIFTFORMS_TURNSTILE_SECRET_KEY`, or `SMARTLOGIX_SWIFTFORMS_WEBHOOK_SECRET` in `wp-config.php`. Rotate at the provider/receiver first, update the constant or saved value, test delivery, then revoke the old credential.
 
 ## Installation
 

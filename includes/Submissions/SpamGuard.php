@@ -26,7 +26,7 @@ final class SpamGuard {
 
 	/**
 	 * @param array<string, mixed> $request      Normalized submission payload.
-	 * @param array<string, mixed> $form_settings Resolved `_swf_settings` for this form.
+	 * @param array<string, mixed> $form_settings Resolved `_smartlogix_swiftforms_settings` for this form.
 	 * @return array{status: string, code?: string, message?: string}
 	 */
 	public function evaluate( array $request, array $form_settings ): array {
@@ -34,7 +34,7 @@ final class SpamGuard {
 			return array( 'status' => 'silent_reject' );
 		}
 
-		$min_seconds = (int) apply_filters( 'swf_min_submit_seconds', GlobalSettings::instance()->get( 'minSubmitSeconds', 3 ) );
+		$min_seconds = (int) apply_filters( 'smartlogix_swiftforms_min_submit_seconds', GlobalSettings::instance()->get( 'minSubmitSeconds', 3 ) );
 
 		if ( ! TimeTrap::verify( (string) ( $request['render_ts'] ?? '' ), $min_seconds ) ) {
 			return array( 'status' => 'silent_reject' );
@@ -110,7 +110,7 @@ final class SpamGuard {
 		 * @param array<string, mixed> $body    Decoded JSON body.
 		 * @param array<string, mixed> $request Unused here; kept for parity with other spam filters.
 		 */
-		$body = apply_filters( 'swf_turnstile_verify_response', is_array( $body ) ? $body : array(), array() );
+		$body = apply_filters( 'smartlogix_swiftforms_turnstile_verify_response', is_array( $body ) ? $body : array(), array() );
 
 		return ! empty( $body['success'] );
 	}
@@ -119,7 +119,7 @@ final class SpamGuard {
 	 * Whether the Akismet plugin is active and configured.
 	 */
 	private function is_akismet_active(): bool {
-		return (bool) apply_filters( 'swf_akismet_active', class_exists( '\Akismet' ) && '' !== (string) get_option( 'wordpress_api_key' ) );
+		return (bool) apply_filters( 'smartlogix_swiftforms_akismet_active', class_exists( '\Akismet' ) && '' !== (string) get_option( 'wordpress_api_key' ) );
 	}
 
 	/**
@@ -176,6 +176,6 @@ final class SpamGuard {
 		 * @param bool                  $is_spam Whether Akismet flagged this as spam.
 		 * @param array<string, mixed>  $request Normalized submission payload.
 		 */
-		return (bool) apply_filters( 'swf_akismet_result', $is_spam, $request );
+		return (bool) apply_filters( 'smartlogix_swiftforms_akismet_result', $is_spam, $request );
 	}
 }

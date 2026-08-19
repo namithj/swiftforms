@@ -30,7 +30,7 @@ final class EntryDownloadControllerTest extends TestCase {
 		);
 		update_post_meta(
 			$entry_id,
-			'swf_field_attachment',
+			'smartlogix_swiftforms_field_attachment',
 			array(
 				'name' => 'entry-download-test.txt',
 				'path' => $path,
@@ -41,7 +41,7 @@ final class EntryDownloadControllerTest extends TestCase {
 		wp_set_current_user( $administrator );
 
 		$url = ( new EntryDownloadController() )->url( $entry_id, 'attachment' );
-		$this->assertStringContainsString( 'action=swf_download_entry_upload', $url );
+		$this->assertStringContainsString( 'action=smartlogix_swiftforms_download_entry_upload', $url );
 		$this->assertStringContainsString( 'entry_id=' . $entry_id, $url );
 
 		$subscriber = self::factory()->user->create( array( 'role' => 'subscriber' ) );
@@ -51,7 +51,7 @@ final class EntryDownloadControllerTest extends TestCase {
 		wp_set_current_user( $administrator );
 		update_post_meta(
 			$entry_id,
-			'swf_field_forged',
+			'smartlogix_swiftforms_field_forged',
 			array(
 				'name' => 'forged.txt',
 				'path' => wp_tempnam( 'swf-forged' ),

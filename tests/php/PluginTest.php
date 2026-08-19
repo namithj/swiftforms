@@ -15,10 +15,10 @@ use SwiftForms\PostTypes;
 final class PluginTest extends TestCase {
 
 	public function test_constants_are_defined(): void {
-		$this->assertTrue( defined( 'SWF_VERSION' ) );
-		$this->assertTrue( defined( 'SWF_PLUGIN_FILE' ) );
-		$this->assertTrue( defined( 'SWF_PLUGIN_PATH' ) );
-		$this->assertTrue( defined( 'SWF_PLUGIN_URL' ) );
+		$this->assertTrue( defined( 'SMARTLOGIX_SWIFTFORMS_VERSION' ) );
+		$this->assertTrue( defined( 'SMARTLOGIX_SWIFTFORMS_PLUGIN_FILE' ) );
+		$this->assertTrue( defined( 'SMARTLOGIX_SWIFTFORMS_PLUGIN_PATH' ) );
+		$this->assertTrue( defined( 'SMARTLOGIX_SWIFTFORMS_PLUGIN_URL' ) );
 	}
 
 	public function test_instance_is_a_singleton(): void {
@@ -39,7 +39,7 @@ final class PluginTest extends TestCase {
 		// access, registering every controller's routes.
 		$routes = rest_get_server()->get_routes();
 
-		$this->assertArrayHasKey( '/swf/v1/submit', $routes );
+		$this->assertArrayHasKey( '/smartlogix-swiftforms/v1/submit', $routes );
 	}
 
 	public function test_boot_is_idempotent(): void {

@@ -18,7 +18,7 @@ namespace SwiftForms\Submissions;
  */
 final class Captcha {
 
-	private const TTL_SECONDS = 1800;
+	private const TTL_SECONDS = 300;
 
 	/**
 	 * Builds a new challenge.
@@ -50,11 +50,19 @@ final class Captcha {
 		$issued_at_raw = explode( '.', $token, 2 )[0];
 		$issued_at     = (int) $issued_at_raw;
 
+		if ( get_transient( 'smartlogix_swiftforms_captcha_' . md5( $token ) ) ) {
+			return false;
+		}
 		if ( $issued_at <= 0 || ( time() - $issued_at ) > self::TTL_SECONDS ) {
 			return false;
 		}
 
-		return hash_equals( self::token_for( (int) $answer, $issued_at ), $token );
+		$valid = hash_equals( self::token_for( (int) $answer, $issued_at ), $token );
+		if ( $valid ) {
+			set_transient( 'smartlogix_swiftforms_captcha_' . md5( $token ), 1, self::TTL_SECONDS );
+		}
+
+		return $valid;
 	}
 
 	/**

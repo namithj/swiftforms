@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-select",
+	"name": "smartlogix-swiftforms/field-select",
 	"title": "Select",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "Dropdown of options.",
 	"icon": "menu",
 	"textdomain": "swiftforms",

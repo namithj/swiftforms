@@ -24,14 +24,14 @@ tests/
 ## PHP tests (PHPUnit + wp-phpunit)
 
 The suite runs against a throwaway WordPress test database. Point the bundled
-`wp-tests-config.php` at your MySQL server with the `SWIFTFORMS_TEST_DB_*`
+`wp-tests-config.php` at your MySQL server with the `SMARTLOGIX_SWIFTFORMS_TEST_DB_*`
 environment variables and run:
 
 ```bash
-export SWIFTFORMS_TEST_DB_NAME=swiftforms_tests
-export SWIFTFORMS_TEST_DB_USER=root
-export SWIFTFORMS_TEST_DB_PASSWORD=root
-export SWIFTFORMS_TEST_DB_HOST=127.0.0.1:3306   # or "localhost:/path/to/mysqld.sock"
+export SMARTLOGIX_SWIFTFORMS_TEST_DB_NAME=swiftforms_tests
+export SMARTLOGIX_SWIFTFORMS_TEST_DB_USER=root
+export SMARTLOGIX_SWIFTFORMS_TEST_DB_PASSWORD=root
+export SMARTLOGIX_SWIFTFORMS_TEST_DB_HOST=127.0.0.1:3306   # or "localhost:/path/to/mysqld.sock"
 
 composer test          # or: npm run test:php
 ```
@@ -46,6 +46,12 @@ To use a manually installed test library instead, set `WP_TESTS_DIR`:
 ```bash
 WP_TESTS_DIR=/tmp/wordpress-tests-lib composer test
 ```
+
+## Supported platform matrix
+
+SwiftForms 1.0 supports WordPress 6.6 through the latest stable release on PHP 8.2, 8.3, and 8.4. CI runs every combination in both single-site and multisite mode. A release job builds the production ZIP, checks its inventory and PHP syntax, and activates that ZIP in WordPress.
+
+PHP 8.2 is a deliberate product minimum for the typed codebase. WordPress or PHP versions below the declared minimum are rejected before runtime classes load and receive a clear requirements message; older PHP support is not claimed for 1.0.
 
 ## End-to-end tests (Playwright + wp-env)
 

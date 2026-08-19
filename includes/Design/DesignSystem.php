@@ -26,8 +26,8 @@ final class DesignSystem implements Registrable {
 	}
 
 	public function register(): void {
-		add_filter( 'swf_settings_schema', array( $this, 'inject_design_tab' ) );
-		add_filter( 'swf_form_settings_schema', array( $this, 'inject_form_design_tab' ) );
+		add_filter( 'smartlogix_swiftforms_settings_schema', array( $this, 'inject_design_tab' ) );
+		add_filter( 'smartlogix_swiftforms_form_settings_schema', array( $this, 'inject_form_design_tab' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_global_css' ), 20 );
 	}
 
@@ -173,14 +173,14 @@ final class DesignSystem implements Registrable {
 	}
 
 	/**
-	 * Attaches the site-wide design CSS to the `swf-form-style` handle,
+	 * Attaches the site-wide design CSS to the `smartlogix-swiftforms-form-style` handle,
 	 * right before it's printed, whenever a form is on the page.
 	 */
 	public function enqueue_global_css(): void {
-		if ( ! wp_style_is( 'swf-form-style', 'enqueued' ) && ! wp_style_is( 'swf-form-style', 'registered' ) ) {
+		if ( ! wp_style_is( 'smartlogix-swiftforms-form-style', 'enqueued' ) && ! wp_style_is( 'smartlogix-swiftforms-form-style', 'registered' ) ) {
 			return;
 		}
 
-		wp_add_inline_style( 'swf-form-style', $this->css_variables->global_css() );
+		wp_add_inline_style( 'smartlogix-swiftforms-form-style', $this->css_variables->global_css() );
 	}
 }

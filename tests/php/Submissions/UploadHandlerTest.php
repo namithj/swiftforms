@@ -95,7 +95,7 @@ final class UploadHandlerTest extends TestCase {
 	}
 
 	public function test_the_allowed_types_filter_can_restrict_further(): void {
-		add_filter( 'swf_allowed_upload_types', fn() => array( 'pdf' => 'application/pdf' ) );
+		add_filter( 'smartlogix_swiftforms_allowed_upload_types', fn() => array( 'pdf' => 'application/pdf' ) );
 
 		$path = $this->temp_file( "Hello, this is a plain text attachment.\n" );
 

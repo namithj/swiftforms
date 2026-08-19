@@ -18,7 +18,7 @@ namespace SwiftForms\Fields;
  */
 final class FormSchema {
 
-	private const FIELD_PREFIX = 'swf/field-';
+	private const FIELD_PREFIX = 'smartlogix-swiftforms/field-';
 
 	/**
 	 * Slug => { type, attributes } for every field block in a form, in

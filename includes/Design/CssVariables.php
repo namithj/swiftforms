@@ -83,7 +83,7 @@ final class CssVariables {
 	/**
 	 * Resolves one form's design overrides: every field the "Design" tab of
 	 * the Settings meta box exposes (Design\DesignSystem::inject_form_design_tab()),
-	 * read back from its own `_swf_design_{key}` post meta, plus `gap` —
+	 * read back from its own `_smartlogix_swiftforms_design_{key}` post meta, plus `gap` —
 	 * not exposed as an editable field, so it always stays at its default.
 	 *
 	 * @param int $form_id Form post id.
@@ -106,7 +106,8 @@ final class CssVariables {
 	 * the most specific choice, followed by the per-form override and site default.
 	 */
 	public static function resolve_skin( string $block_classes, string $form_skin, string $site_skin ): string {
-		foreach ( preg_split( '/\\s+/', $block_classes ) ?: array() as $class ) {
+		$classes = preg_split( '/\\s+/', $block_classes );
+		foreach ( false === $classes ? array() : $classes as $class ) {
 			if ( str_starts_with( $class, 'is-style-' ) && in_array( substr( $class, 9 ), self::SKINS, true ) ) {
 				return substr( $class, 9 );
 			}

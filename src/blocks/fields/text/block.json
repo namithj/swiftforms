@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-text",
+	"name": "smartlogix-swiftforms/field-text",
 	"title": "Text",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "Text field for short answers.",
 	"icon": "editor-textcolor",
 	"textdomain": "swiftforms",

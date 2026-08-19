@@ -1,6 +1,6 @@
 <?php
 /**
- * Server-side render for the `swf/form` embed block.
+ * Server-side render for the `smartlogix-swiftforms/form` embed block.
  *
  * @package SwiftForms
  */
@@ -19,7 +19,7 @@ use SwiftForms\Submissions\TimeTrap;
 use WP_Block;
 
 /**
- * Renders a saved `swf_form` post's field blocks (via `do_blocks()`, so the
+ * Renders a saved `smartlogix_swf_form` post's field blocks (via `do_blocks()`, so the
  * form post itself is the single source of truth for both editor and
  * frontend) wrapped in the `<form>` element the security pipeline and
  * view.js expect: honeypot, time-trap, optional CAPTCHA/Turnstile, nonce.
@@ -86,6 +86,7 @@ final class FormRenderer {
 		}
 
 		$html  = '<form ' . get_block_wrapper_attributes( $wrapper_attrs ) . '>';
+		$html .= '<p class="swf-form__status is-error" data-swf-script-required>' . esc_html__( 'JavaScript is required to submit this form. Please enable it and try again.', 'swiftforms' ) . '</p>';
 		$html .= '<div class="swf-form__status" data-swf-status aria-live="polite"></div>';
 		$html .= '<div class="swf-form__fields">' . $fields_html . '</div>';
 		$html .= $this->honeypot();
@@ -102,7 +103,7 @@ final class FormRenderer {
 
 		$html .= '<div class="swf-form__actions">';
 		$html .= sprintf(
-			'<button type="submit" class="swf-form__submit">%s</button>',
+			'<button type="submit" class="swf-form__submit" disabled>%s</button>',
 			esc_html( $settings['submitLabel'] )
 		);
 		$html .= '</div>';
@@ -113,7 +114,7 @@ final class FormRenderer {
 
 	/**
 	 * Attaches the localized submit config to the form block's auto-enqueued
-	 * `viewScript` (WP core enqueues `swf-form-style`/`swf-form-view-script`
+	 * `viewScript` (WP core enqueues `smartlogix-swiftforms-form-style`/`smartlogix-swiftforms-form-view-script`
 	 * itself, driven by block.json, right after this render callback
 	 * returns — see WP_Block::render()). Only attached once, even with
 	 * multiple forms on one page.
@@ -127,11 +128,12 @@ final class FormRenderer {
 			$localized = true;
 
 			wp_add_inline_script(
-				'swf-form-view-script',
-				'window.swfFormSettings = ' . wp_json_encode(
+				'smartlogix-swiftforms-form-view-script',
+				'window.smartlogixSwiftFormsFormSettings = ' . wp_json_encode(
 					array(
-						'restUrl' => esc_url_raw( rest_url( 'swf/v1/submit' ) ),
-						'i18n'    => array(
+						'restUrl'      => esc_url_raw( rest_url( 'smartlogix-swiftforms/v1/submit' ) ),
+						'challengeUrl' => esc_url_raw( rest_url( 'smartlogix-swiftforms/v1/challenge' ) ),
+						'i18n'         => array(
 							'genericError' => __( 'Something went wrong. Please try again.', 'swiftforms' ),
 							'required'     => __( 'This field is required.', 'swiftforms' ),
 							'next'         => __( 'Next', 'swiftforms' ),
@@ -148,7 +150,7 @@ final class FormRenderer {
 		if ( $settings['enableTurnstile'] && '' !== (string) GlobalSettings::instance()->get( 'turnstileSiteKey', '' ) ) {
 			// phpcs:ignore PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- opt-in, documented Cloudflare Turnstile service.
 			// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- external service manages its own versioning.
-			wp_enqueue_script( 'swf-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js', array(), null, array( 'strategy' => 'defer' ) );
+			wp_enqueue_script( 'smartlogix-swiftforms-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js', array(), null, array( 'strategy' => 'defer' ) );
 		}
 	}
 
@@ -157,7 +159,7 @@ final class FormRenderer {
 	 */
 	private function honeypot(): string {
 		return '<div class="swf-form__honeypot" aria-hidden="true">'
-			. '<input type="text" name="swf_hp" tabindex="-1" autocomplete="off" data-swf-honeypot>'
+			. '<input type="text" name="smartlogix_swiftforms_hp" tabindex="-1" autocomplete="off" data-swf-honeypot>'
 			. '</div>';
 	}
 
@@ -176,7 +178,7 @@ final class FormRenderer {
 		$field_id  = wp_unique_id( 'swf-captcha-answer-' );
 
 		return sprintf(
-			'<div class="swf-form__captcha"><label class="swf-field__label" for="%1$s">%2$s</label> '
+			'<div class="swf-form__captcha"><label class="swf-field__label" for="%1$s" data-swf-captcha-label>%2$s</label> '
 				. '<input type="text" inputmode="numeric" id="%1$s" name="captcha_answer" class="swf-field__control" required>'
 				. '<input type="hidden" name="captcha_token" value="%3$s"></div>',
 			esc_attr( $field_id ),

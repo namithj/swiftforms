@@ -12,9 +12,9 @@ namespace SwiftForms;
 use Pedalcms\CassetteCmf\Core\Manager;
 
 /**
- * Registers the two post types SwiftForms is built on — `swf_form` (the
- * block-editor form builder) and `swf_entry` (one post per submission) —
- * plus the `swf_entry_form` taxonomy that links each entry back to its
+ * Registers the two post types SwiftForms is built on — `smartlogix_swf_form` (the
+ * block-editor form builder) and `smartlogix_swf_entry` (one post per submission) —
+ * plus the `smartlogix_swf_entry_form` taxonomy that links each entry back to its
  * source form, all through Cassette-CMF. Per-form meta (settings, design
  * overrides) is registered field-by-field by Cassette-CMF itself — see
  * Settings\FormSettingsMetabox — not here. The taxonomy's admin column and
@@ -25,9 +25,9 @@ use Pedalcms\CassetteCmf\Core\Manager;
  */
 final class PostTypes implements Registrable {
 
-	public const FORM_POST_TYPE      = 'swf_form';
-	public const ENTRY_POST_TYPE     = 'swf_entry';
-	public const ENTRY_FORM_TAXONOMY = 'swf_entry_form';
+	public const FORM_POST_TYPE      = 'smartlogix_swf_form';
+	public const ENTRY_POST_TYPE     = 'smartlogix_swf_entry';
+	public const ENTRY_FORM_TAXONOMY = 'smartlogix_swf_entry_form';
 
 	public function register(): void {
 		add_action( 'init', array( $this, 'register_post_types' ) );
@@ -68,7 +68,7 @@ final class PostTypes implements Registrable {
 	}
 
 	/**
-	 * Args for the `swf_form` post type (the block-editor form builder).
+	 * Args for the `smartlogix_swf_form` post type (the block-editor form builder).
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -94,11 +94,11 @@ final class PostTypes implements Registrable {
 			'show_ui'         => true,
 			'show_in_menu'    => false, // Admin\Menu builds a custom top-level menu.
 			'show_in_rest'    => true,
-			'rest_base'       => 'swf-forms',
+			'rest_base'       => 'smartlogix-swiftforms-forms',
 			'menu_icon'       => 'dashicons-feedback',
 			'supports'        => array( 'title', 'editor', 'custom-fields' ),
 			'map_meta_cap'    => true,
-			'capability_type' => array( 'swf_form', 'swf_forms' ),
+			'capability_type' => array( 'smartlogix_swf_form', 'smartlogix_swf_forms' ),
 			'has_archive'     => false,
 			'rewrite'         => false,
 			'query_var'       => false,
@@ -106,10 +106,9 @@ final class PostTypes implements Registrable {
 	}
 
 	/**
-	 * Args for the `swf_entry` post type — a plain CPT with its own list
+	 * Args for the `smartlogix_swf_entry` post type — a plain CPT with its own list
 	 * table (nested under the SwiftForms menu via `show_in_menu`) and the
-	 * built-in Custom Fields metabox for viewing a submission's field
-	 * values; no dedicated admin screen or REST controller.
+	 * read-only submission metabox; no REST controller.
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -131,9 +130,9 @@ final class PostTypes implements Registrable {
 			'show_ui'            => true,
 			'show_in_menu'       => 'edit.php?post_type=' . self::FORM_POST_TYPE,
 			'show_in_rest'       => false,
-			'supports'           => array( 'title', 'custom-fields' ),
+			'supports'           => array( 'title' ),
 			'map_meta_cap'       => true,
-			'capability_type'    => array( 'swf_entry', 'swf_entries' ),
+			'capability_type'    => array( 'smartlogix_swf_entry', 'smartlogix_swiftforms_entries' ),
 			'has_archive'        => false,
 			'rewrite'            => false,
 			'query_var'          => false,
@@ -141,7 +140,7 @@ final class PostTypes implements Registrable {
 	}
 
 	/**
-	 * Args for the `swf_entry_form` taxonomy: no term-management UI of its
+	 * Args for the `smartlogix_swf_entry_form` taxonomy: no term-management UI of its
 	 * own (terms are created/assigned programmatically — see
 	 * entry_term_for_form()), but `show_admin_column` gives the Entries list
 	 * a "Form" column, and render_entry_form_filter() adds the matching
@@ -166,7 +165,7 @@ final class PostTypes implements Registrable {
 	}
 
 	/**
-	 * Keeps the `swf_entry_form` term name in sync with its form's title
+	 * Keeps the `smartlogix_swf_entry_form` term name in sync with its form's title
 	 * whenever the form is saved with one, so the Entries filter dropdown
 	 * never shows a stale label.
 	 */
@@ -189,17 +188,17 @@ final class PostTypes implements Registrable {
 	}
 
 	/**
-	 * The deterministic `swf_entry_form` term slug for a given form — stable
+	 * The deterministic `smartlogix_swf_entry_form` term slug for a given form — stable
 	 * and computable without a DB lookup, so links (EditorIntegration, the
 	 * block editor "Entries" link) can point straight at a filtered Entries
 	 * list without needing the term to already exist.
 	 */
 	public static function entry_term_slug( int $form_id ): string {
-		return 'swf-form-' . $form_id;
+		return 'smartlogix-swiftforms-form-' . $form_id;
 	}
 
 	/**
-	 * Gets (or lazily creates) the `swf_entry_form` term for a form, used to
+	 * Gets (or lazily creates) the `smartlogix_swf_entry_form` term for a form, used to
 	 * tag every entry saved for it. Falls back to a generic name if the form
 	 * has no title yet.
 	 */

@@ -26,9 +26,9 @@ final class Notifier {
 	 * @param int                                                            $entry_id      New entry post id (0 if entries aren't being saved).
 	 * @param int                                                            $form_id       Source form post id.
 	 * @param array<int, array{slug: string, type: string, value: mixed, attributes: array<string, mixed>}> $fields Schema-enforced fields.
-	 * @param array<string, mixed>                                          $form_settings Resolved `_swf_settings`.
+	 * @param array<string, mixed>                                          $form_settings Resolved `_smartlogix_swiftforms_settings`.
 	 */
-	public function dispatch( int $entry_id, int $form_id, array $fields, array $form_settings ): void {
+	public function dispatch( int $entry_id, int $form_id, array $fields, array $form_settings ): array {
 		$form_title = get_the_title( $form_id );
 		$context    = array(
 			'entry_id'   => $entry_id,
@@ -37,8 +37,10 @@ final class Notifier {
 			'fields'     => $this->context_fields( $fields ),
 		);
 
-		$this->send_admin_notification( $context, $form_settings );
-		$this->send_autoresponder( $context, $fields, $form_settings );
+		return array(
+			'admin'         => $this->send_admin_notification( $context, $form_settings ),
+			'autoresponder' => $this->send_autoresponder( $context, $fields, $form_settings ),
+		);
 	}
 
 	/**
@@ -58,13 +60,13 @@ final class Notifier {
 
 	/**
 	 * @param array{entry_id: int, form_id: int, form_title: string, fields: array<int, array{slug: string, label: string, value: mixed}>} $context Template context.
-	 * @param array<string, mixed> $form_settings Resolved `_swf_settings`.
+	 * @param array<string, mixed> $form_settings Resolved `_smartlogix_swiftforms_settings`.
 	 */
-	private function send_admin_notification( array $context, array $form_settings ): void {
+	private function send_admin_notification( array $context, array $form_settings ): bool {
 		$recipients = $this->resolve_admin_recipients( $form_settings );
 
 		if ( ! $recipients ) {
-			return;
+			return true;
 		}
 
 		$subject = $this->template_renderer->render( (string) $form_settings['adminSubject'], $context );
@@ -81,7 +83,7 @@ final class Notifier {
 		 * @param string $context One of 'admin', 'autoresponder'.
 		 * @param int    $entry_id Entry post id.
 		 */
-		$body = (string) apply_filters( 'swf_email_content', $body, 'admin', $context['entry_id'] );
+		$body = (string) apply_filters( 'smartlogix_swiftforms_email_content', $body, 'admin', $context['entry_id'] );
 
 		$headers  = array();
 		$reply_to = $this->first_email_value( $context['fields'] );
@@ -89,19 +91,19 @@ final class Notifier {
 			$headers[] = 'Reply-To: ' . $reply_to;
 		}
 
-		$this->mailer->send( $recipients, $subject, $body, $headers );
+		return $this->mailer->send( $recipients, $subject, $body, $headers );
 	}
 
 	/**
 	 * @param array{entry_id: int, form_id: int, form_title: string, fields: array<int, array{slug: string, label: string, value: mixed}>} $context Template context.
 	 * @param array<int, array{slug: string, type: string, value: mixed, attributes: array<string, mixed>}> $fields Schema-enforced fields.
-	 * @param array<string, mixed> $form_settings Resolved `_swf_settings`.
+	 * @param array<string, mixed> $form_settings Resolved `_smartlogix_swiftforms_settings`.
 	 */
-	private function send_autoresponder( array $context, array $fields, array $form_settings ): void {
+	private function send_autoresponder( array $context, array $fields, array $form_settings ): bool {
 		$recipient = $this->resolve_autoresponder_recipient( $fields, $form_settings );
 
 		if ( ! $recipient ) {
-			return;
+			return true;
 		}
 
 		$subject = sanitize_text_field( $this->template_renderer->render( (string) $form_settings['autoresponderSubject'], $context ) );
@@ -109,13 +111,13 @@ final class Notifier {
 			? $this->template_renderer->render( (string) $form_settings['autoresponderTemplate'], $context )
 			: $subject;
 
-		$body = (string) apply_filters( 'swf_email_content', $body, 'autoresponder', $context['entry_id'] );
+		$body = (string) apply_filters( 'smartlogix_swiftforms_email_content', $body, 'autoresponder', $context['entry_id'] );
 
-		$this->mailer->send( $recipient, $subject, $body );
+		return $this->mailer->send( $recipient, $subject, $body );
 	}
 
 	/**
-	 * @param array<string, mixed> $form_settings Resolved `_swf_settings`.
+	 * @param array<string, mixed> $form_settings Resolved `_smartlogix_swiftforms_settings`.
 	 */
 	private function resolve_admin_recipients( array $form_settings ): string {
 		$configured = trim( (string) $form_settings['adminRecipients'] );
@@ -131,7 +133,7 @@ final class Notifier {
 
 	/**
 	 * @param array<int, array{slug: string, type: string, value: mixed, attributes: array<string, mixed>}> $fields Schema-enforced fields.
-	 * @param array<string, mixed> $form_settings Resolved `_swf_settings`.
+	 * @param array<string, mixed> $form_settings Resolved `_smartlogix_swiftforms_settings`.
 	 */
 	private function resolve_autoresponder_recipient( array $fields, array $form_settings ): string {
 		$configured_slug = (string) $form_settings['autoresponderField'];

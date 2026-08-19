@@ -55,9 +55,9 @@ final class FieldRegistryTest extends TestCase {
 		$this->assertArrayHasKey( 'options', $config['select']['attributes'] );
 	}
 
-	public function test_swf_field_types_filter_can_add_a_custom_type(): void {
+	public function test_smartlogix_swiftforms_field_types_filter_can_add_a_custom_type(): void {
 		add_filter(
-			'swf_field_types',
+			'smartlogix_swiftforms_field_types',
 			static function ( array $types ): array {
 				$types['rainbow'] = new FieldType(
 					type: 'rainbow',
@@ -75,7 +75,7 @@ final class FieldRegistryTest extends TestCase {
 
 		$this->assertTrue( $registry->has( 'rainbow' ) );
 
-		remove_all_filters( 'swf_field_types' );
+		remove_all_filters( 'smartlogix_swiftforms_field_types' );
 	}
 
 	public function test_load_types_is_idempotent(): void {

@@ -20,7 +20,7 @@ final class Webhooks {
 	 * @param int                                                            $entry_id      New entry post id.
 	 * @param int                                                            $form_id       Source form post id.
 	 * @param array<int, array{slug: string, type: string, value: mixed, attributes: array<string, mixed>}> $fields Schema-enforced fields.
-	 * @param array<string, mixed>                                          $form_settings Resolved `_swf_settings`.
+	 * @param array<string, mixed>                                          $form_settings Resolved `_smartlogix_swiftforms_settings`.
 	 */
 	public function send( int $entry_id, int $form_id, array $fields, array $form_settings ): void {
 		$url = trim( (string) ( $form_settings['webhookUrl'] ?? '' ) );
@@ -50,7 +50,7 @@ final class Webhooks {
 		 * @param array<string, mixed> $payload  Payload about to be sent.
 		 * @param int                  $entry_id Entry post id.
 		 */
-		$payload = (array) apply_filters( 'swf_webhook_payload', $payload, $entry_id );
+		$payload = (array) apply_filters( 'smartlogix_swiftforms_webhook_payload', $payload, $entry_id );
 
 		wp_safe_remote_post(
 			$url,

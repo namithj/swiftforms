@@ -39,7 +39,7 @@ final class SchemaEnforcerTest extends TestCase {
 	}
 
 	public function test_rejects_an_unpublished_form(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name"} /-->' );
 
 		wp_update_post(
 			array(
@@ -59,7 +59,7 @@ final class SchemaEnforcerTest extends TestCase {
 	}
 
 	public function test_drops_slugs_not_present_in_the_stored_form(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name"} /-->' );
 
 		$result = $this->enforcer->enforce(
 			array(
@@ -87,7 +87,7 @@ final class SchemaEnforcerTest extends TestCase {
 		// The form declares `email` as required in its stored blocks; even
 		// if a forged request tried to mark it optional, the enforced
 		// field always carries the stored (required) attributes.
-		$form_id = $this->create_form( '<!-- wp:swf/field-email {"slug":"email","label":"Email","required":true} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-email {"slug":"email","label":"Email","required":true} /-->' );
 
 		$result = $this->enforcer->enforce(
 			array(
@@ -106,7 +106,7 @@ final class SchemaEnforcerTest extends TestCase {
 	}
 
 	public function test_hidden_field_uses_its_stored_value(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-hidden {"slug":"source","value":"newsletter"} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-hidden {"slug":"source","value":"newsletter"} /-->' );
 
 		$result = $this->enforcer->enforce(
 			array(
@@ -124,8 +124,8 @@ final class SchemaEnforcerTest extends TestCase {
 	}
 
 	public function test_hidden_conditional_field_is_dropped_and_not_required(): void {
-		$content = '<!-- wp:swf/field-select {"slug":"country","label":"Country","options":"US|us\nOther|other"} /-->'
-			. '<!-- wp:swf/field-text {"slug":"state","label":"State","required":true,"conditions":{"enabled":true,"action":"show","groups":[[{"field":"country","operator":"equals","value":"us"}]]}} /-->';
+		$content = '<!-- wp:smartlogix-swiftforms/field-select {"slug":"country","label":"Country","options":"US|us\nOther|other"} /-->'
+			. '<!-- wp:smartlogix-swiftforms/field-text {"slug":"state","label":"State","required":true,"conditions":{"enabled":true,"action":"show","groups":[[{"field":"country","operator":"equals","value":"us"}]]}} /-->';
 
 		$form_id = $this->create_form( $content );
 
@@ -151,8 +151,8 @@ final class SchemaEnforcerTest extends TestCase {
 	}
 
 	public function test_visible_conditional_field_is_still_enforced(): void {
-		$content = '<!-- wp:swf/field-select {"slug":"country","label":"Country","options":"US|us\nOther|other"} /-->'
-			. '<!-- wp:swf/field-text {"slug":"state","label":"State","required":true,"conditions":{"enabled":true,"action":"show","groups":[[{"field":"country","operator":"equals","value":"us"}]]}} /-->';
+		$content = '<!-- wp:smartlogix-swiftforms/field-select {"slug":"country","label":"Country","options":"US|us\nOther|other"} /-->'
+			. '<!-- wp:smartlogix-swiftforms/field-text {"slug":"state","label":"State","required":true,"conditions":{"enabled":true,"action":"show","groups":[[{"field":"country","operator":"equals","value":"us"}]]}} /-->';
 
 		$form_id = $this->create_form( $content );
 
@@ -178,7 +178,7 @@ final class SchemaEnforcerTest extends TestCase {
 	}
 
 	public function test_omitted_required_field_is_injected_as_empty(): void {
-		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name","required":true} /-->' );
+		$form_id = $this->create_form( '<!-- wp:smartlogix-swiftforms/field-text {"slug":"name","label":"Name","required":true} /-->' );
 
 		$result = $this->enforcer->enforce(
 			array(

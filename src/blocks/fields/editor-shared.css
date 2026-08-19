@@ -1,5 +1,5 @@
 /**
- * Shared editor-canvas chrome for every swf/field-* block. Referenced
+ * Shared editor-canvas chrome for every smartlogix-swiftforms/field-* block. Referenced
  * directly (not compiled) from each field's block.json so 14 field bundles
  * don't each duplicate the same rules.
  */

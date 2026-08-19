@@ -19,7 +19,7 @@ use SwiftForms\Submissions\UploadHandler;
 final class EntryDownloadController implements Registrable {
 
 	public function register(): void {
-		add_action( 'admin_post_swf_download_entry_upload', array( $this, 'download' ) );
+		add_action( 'admin_post_smartlogix_swiftforms_download_entry_upload', array( $this, 'download' ) );
 		add_filter( 'post_row_actions', array( $this, 'add_download_actions' ), 10, 2 );
 	}
 
@@ -34,11 +34,11 @@ final class EntryDownloadController implements Registrable {
 		}
 
 		foreach ( get_post_meta( $post->ID ) as $key => $meta_values ) {
-			if ( ! str_starts_with( $key, 'swf_field_' ) ) {
+			if ( ! str_starts_with( $key, 'smartlogix_swiftforms_field_' ) ) {
 				continue;
 			}
 
-			$slug = substr( $key, strlen( 'swf_field_' ) );
+			$slug = substr( $key, strlen( 'smartlogix_swiftforms_field_' ) );
 			$url  = $this->url( $post->ID, $slug );
 			if ( '' === $url ) {
 				continue;
@@ -47,7 +47,7 @@ final class EntryDownloadController implements Registrable {
 			$value = maybe_unserialize( $meta_values[0] ?? '' );
 			$name  = is_array( $value ) ? (string) ( $value['name'] ?? '' ) : '';
 			/* translators: %s: uploaded file name. */
-			$actions[ 'swf_download_' . $slug ] = '<a href="' . esc_url( $url ) . '">' . esc_html( sprintf( __( 'Download %s', 'swiftforms' ), $name ) ) . '</a>';
+			$actions[ 'smartlogix_swiftforms_download_' . $slug ] = '<a href="' . esc_url( $url ) . '">' . esc_html( sprintf( __( 'Download %s', 'swiftforms' ), $name ) ) . '</a>';
 		}
 
 		return $actions;
@@ -66,13 +66,13 @@ final class EntryDownloadController implements Registrable {
 		return wp_nonce_url(
 			add_query_arg(
 				array(
-					'action'   => 'swf_download_entry_upload',
+					'action'   => 'smartlogix_swiftforms_download_entry_upload',
 					'entry_id' => $entry_id,
 					'field'    => $field_slug,
 				),
 				admin_url( 'admin-post.php' )
 			),
-			'swf_download_entry_upload_' . $entry_id . '_' . $field_slug
+			'smartlogix_swiftforms_download_entry_upload_' . $entry_id . '_' . $field_slug
 		);
 	}
 
@@ -87,7 +87,7 @@ final class EntryDownloadController implements Registrable {
 			wp_die( esc_html__( 'You are not allowed to download this file.', 'swiftforms' ), 403 );
 		}
 
-		check_admin_referer( 'swf_download_entry_upload_' . $entry_id . '_' . $field_slug );
+		check_admin_referer( 'smartlogix_swiftforms_download_entry_upload_' . $entry_id . '_' . $field_slug );
 		$attachment = $this->attachment( $entry_id, $field_slug );
 		if ( ! $attachment ) {
 			wp_die( esc_html__( 'The requested file could not be found.', 'swiftforms' ), 404 );
@@ -116,7 +116,7 @@ final class EntryDownloadController implements Registrable {
 			return null;
 		}
 
-		$value = get_post_meta( $entry_id, 'swf_field_' . $field_slug, true );
+		$value = get_post_meta( $entry_id, 'smartlogix_swiftforms_field_' . $field_slug, true );
 		if ( ! is_array( $value ) || empty( $value['path'] ) || empty( $value['name'] ) ) {
 			return null;
 		}

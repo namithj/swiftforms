@@ -16,7 +16,7 @@ namespace SwiftForms\Submissions;
  */
 final class NonceGuard {
 
-	public const ACTION = 'swf_submit';
+	public const ACTION = 'smartlogix_swiftforms_submit';
 
 	/**
 	 * Creates a nonce for embedding in rendered form markup.

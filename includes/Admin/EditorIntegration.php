@@ -39,7 +39,7 @@ final class EditorIntegration implements Registrable {
 			return;
 		}
 
-		$entry = SWF_PLUGIN_PATH . 'build/editor/index';
+		$entry = SMARTLOGIX_SWIFTFORMS_PLUGIN_PATH . 'build/editor/index';
 
 		if ( ! file_exists( "{$entry}.js" ) ) {
 			return;
@@ -48,23 +48,23 @@ final class EditorIntegration implements Registrable {
 		$asset = file_exists( "{$entry}.asset.php" ) ? include "{$entry}.asset.php" : array();
 
 		wp_enqueue_script(
-			'swf-editor-integration',
-			SWF_PLUGIN_URL . 'build/editor/index.js',
+			'smartlogix-swiftforms-editor-integration',
+			SMARTLOGIX_SWIFTFORMS_PLUGIN_URL . 'build/editor/index.js',
 			(array) ( $asset['dependencies'] ?? array( 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components' ) ),
-			(string) ( $asset['version'] ?? SWF_VERSION ),
+			(string) ( $asset['version'] ?? SMARTLOGIX_SWIFTFORMS_VERSION ),
 			true
 		);
-		wp_set_script_translations( 'swf-editor-integration', 'swiftforms' );
+		wp_set_script_translations( 'smartlogix-swiftforms-editor-integration', 'swiftforms' );
 
 		if ( file_exists( "{$entry}.css" ) ) {
-			wp_enqueue_style( 'swf-editor-integration', SWF_PLUGIN_URL . 'build/editor/index.css', array(), (string) ( $asset['version'] ?? SWF_VERSION ) );
+			wp_enqueue_style( 'smartlogix-swiftforms-editor-integration', SMARTLOGIX_SWIFTFORMS_PLUGIN_URL . 'build/editor/index.css', array(), (string) ( $asset['version'] ?? SMARTLOGIX_SWIFTFORMS_VERSION ) );
 		}
 
 		global $post;
 
 		wp_add_inline_script(
-			'swf-editor-integration',
-			'window.swfEditorSettings = ' . wp_json_encode(
+			'smartlogix-swiftforms-editor-integration',
+			'window.smartlogixSwiftFormsEditorSettings = ' . wp_json_encode(
 				array(
 					'adminUrl' => esc_url_raw( admin_url() ),
 					'formId'   => $post ? $post->ID : 0,
@@ -82,13 +82,13 @@ final class EditorIntegration implements Registrable {
 			return $actions;
 		}
 
-		$actions['swf-settings'] = sprintf(
+		$actions['smartlogix-swiftforms-settings'] = sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( admin_url( 'post.php?post=' . $post->ID . '&action=edit#' . FormSettingsMetabox::METABOX_ID ) ),
 			esc_html__( 'Settings', 'swiftforms' )
 		);
 
-		$actions['swf-entries'] = sprintf(
+		$actions['smartlogix-swiftforms-entries'] = sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( admin_url( $this->entries_list_url( $post->ID ) ) ),
 			esc_html__( 'Entries', 'swiftforms' )
@@ -112,15 +112,15 @@ final class EditorIntegration implements Registrable {
 
 		$admin_bar->add_node(
 			array(
-				'id'    => 'swf-form',
+				'id'    => 'smartlogix-swiftforms-form',
 				'title' => __( 'SwiftForms', 'swiftforms' ),
 			)
 		);
 
 		$admin_bar->add_node(
 			array(
-				'id'     => 'swf-form-settings',
-				'parent' => 'swf-form',
+				'id'     => 'smartlogix-swiftforms-form-settings',
+				'parent' => 'smartlogix-swiftforms-form',
 				'title'  => __( 'Settings', 'swiftforms' ),
 				'href'   => admin_url( 'post.php?post=' . $post_id . '&action=edit#' . FormSettingsMetabox::METABOX_ID ),
 			)
@@ -128,8 +128,8 @@ final class EditorIntegration implements Registrable {
 
 		$admin_bar->add_node(
 			array(
-				'id'     => 'swf-form-entries',
-				'parent' => 'swf-form',
+				'id'     => 'smartlogix-swiftforms-form-entries',
+				'parent' => 'smartlogix-swiftforms-form',
 				'title'  => __( 'Entries', 'swiftforms' ),
 				'href'   => admin_url( $this->entries_list_url( $post_id ) ),
 			)
@@ -138,7 +138,7 @@ final class EditorIntegration implements Registrable {
 
 	/**
 	 * The Entries list table pre-filtered to one form via the
-	 * `swf_entry_form` taxonomy query var — no lookup needed, the term
+	 * `smartlogix_swf_entry_form` taxonomy query var — no lookup needed, the term
 	 * slug is deterministic (see PostTypes::entry_term_slug()).
 	 */
 	private function entries_list_url( int $form_id ): string {

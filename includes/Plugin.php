@@ -40,7 +40,7 @@ final class Plugin {
 
 	/**
 	 * The dependency container. Services fetch collaborators from here
-	 * (e.g. `swf()->container()->get( 'field_registry' )`) instead of
+	 * (e.g. `smartlogix_swiftforms()->container()->get( 'field_registry' )`) instead of
 	 * deep constructor chains.
 	 */
 	public function container(): Container {
@@ -57,6 +57,10 @@ final class Plugin {
 		}
 
 		$this->booted = true;
+		if ( ! DependencyGuard::available() ) {
+			add_action( 'admin_notices', array( $this, 'dependency_notice' ) );
+			return;
+		}
 
 		add_action( 'init', array( $this, 'load_textdomain' ), 1 );
 
@@ -71,11 +75,17 @@ final class Plugin {
 		}
 	}
 
+	public function dependency_notice(): void {
+		if ( current_user_can( 'activate_plugins' ) ) {
+			echo '<div class="notice notice-error"><p>' . esc_html__( 'SwiftForms could not start because another plugin loaded an incompatible version of its settings library. Deactivate the conflicting plugin or contact support.', 'swiftforms' ) . '</p></div>';
+		}
+	}
+
 	/**
 	 * Loads translations.
 	 */
 	public function load_textdomain(): void {
-		load_plugin_textdomain( 'swiftforms', false, dirname( plugin_basename( SWF_PLUGIN_FILE ) ) . '/languages' );
+		load_plugin_textdomain( 'swiftforms', false, dirname( plugin_basename( SMARTLOGIX_SWIFTFORMS_PLUGIN_FILE ) ) . '/languages' );
 	}
 
 	/**

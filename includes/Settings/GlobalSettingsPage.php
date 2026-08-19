@@ -17,18 +17,19 @@ use SwiftForms\Registrable;
 /**
  * Registers the global Settings page with Cassette-CMF: one metabox
  * (required so the nested tabs container is valid) holding a tabbed field
- * list, filterable via `swf_settings_schema` — see
+ * list, filterable via `smartlogix_swiftforms_settings_schema` — see
  * Design\DesignSystem::inject_design_tab() for the one built-in consumer,
  * which fills in the otherwise-empty "Design" tab.
  *
  * Cassette-CMF renders the page, handles the save POST, sanitizes, and
- * stores each field as its own `swf_settings_{field}` option; none of that
+ * stores each field as its own `smartlogix_swiftforms_settings_{field}` option; none of that
  * is reimplemented here. GlobalSettings::get() reads those options back
  * for the rest of the plugin.
  */
 final class GlobalSettingsPage implements Registrable {
 
-	private const TEST_EMAIL_ACTION = 'swf_send_test_email';
+	private const TEST_EMAIL_ACTION = 'smartlogix_swiftforms_send_test_email';
+	private const SECRET_ACTION     = 'smartlogix_swiftforms_clear_secret';
 
 	public function __construct( private Mailer $mailer ) {
 	}
@@ -47,6 +48,7 @@ final class GlobalSettingsPage implements Registrable {
 
 		add_action( 'admin_init', array( $this, 'seed_defaults' ), 5 );
 		add_action( 'admin_post_' . self::TEST_EMAIL_ACTION, array( $this, 'handle_test_email' ) );
+		add_action( 'admin_post_' . self::SECRET_ACTION, array( $this, 'handle_clear_secret' ) );
 	}
 
 	/**
@@ -62,7 +64,7 @@ final class GlobalSettingsPage implements Registrable {
 						'page_title'  => __( 'SwiftForms Settings', 'swiftforms' ),
 						'menu_title'  => __( 'Settings', 'swiftforms' ),
 						'capability'  => 'manage_options',
-						'menu_slug'   => 'swf-settings',
+						'menu_slug'   => 'smartlogix-swiftforms-settings',
 						'parent_slug' => 'edit.php?post_type=' . PostTypes::FORM_POST_TYPE,
 						'fields'      => $this->page_fields(),
 					),
@@ -81,8 +83,34 @@ final class GlobalSettingsPage implements Registrable {
 	 */
 	public function seed_defaults(): void {
 		foreach ( $this->flat_defaults() as $name => $default ) {
-			add_option( GlobalSettings::PAGE_ID . '_' . $name, $default );
+			add_option( GlobalSettings::PAGE_ID . '_' . $name, $default, '', ! in_array( $name, array( 'smtpPassword', 'turnstileSecretKey' ), true ) );
 		}
+	}
+
+	public function handle_clear_secret(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You are not allowed to do that.', 'swiftforms' ) );
+		}
+		$key = isset( $_POST['secret'] ) ? sanitize_key( wp_unslash( (string) $_POST['secret'] ) ) : '';
+		if ( ! in_array( $key, array( 'smtpPassword', 'turnstileSecretKey' ), true ) ) {
+			wp_die( esc_html__( 'Unknown secret.', 'swiftforms' ), 400 );
+		}
+		check_admin_referer( self::SECRET_ACTION, 'smartlogix_swiftforms_secret_nonce' );
+		$constant = GlobalSettings::constant_for( $key );
+		if ( ! $constant || ! defined( $constant ) ) {
+			delete_option( GlobalSettings::PAGE_ID . '_' . $key );
+			add_option( GlobalSettings::PAGE_ID . '_' . $key, '', '', false );
+		}
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'post_type' => PostTypes::FORM_POST_TYPE,
+					'page'      => 'smartlogix-swiftforms-settings',
+				),
+				admin_url( 'edit.php' )
+			)
+		);
+		exit;
 	}
 
 	/**
@@ -95,20 +123,20 @@ final class GlobalSettingsPage implements Registrable {
 			wp_die( esc_html__( 'You are not allowed to do that.', 'swiftforms' ) );
 		}
 
-		check_admin_referer( self::TEST_EMAIL_ACTION, 'swf_test_email_nonce' );
+		check_admin_referer( self::TEST_EMAIL_ACTION, 'smartlogix_swiftforms_test_email_nonce' );
 
-		$to     = isset( $_POST['swf_test_email_to'] ) ? sanitize_email( wp_unslash( $_POST['swf_test_email_to'] ) ) : '';
+		$to     = isset( $_POST['smartlogix_swiftforms_test_email_to'] ) ? sanitize_email( wp_unslash( $_POST['smartlogix_swiftforms_test_email_to'] ) ) : '';
 		$result = $this->mailer->send_test( $to );
 
 		$args = array(
-			'post_type'      => PostTypes::FORM_POST_TYPE,
-			'page'           => 'swf-settings',
-			'swf_test_email' => is_wp_error( $result ) ? 'error' : 'success',
-			'swf_test_nonce' => wp_create_nonce( self::TEST_EMAIL_ACTION ),
+			'post_type'                        => PostTypes::FORM_POST_TYPE,
+			'page'                             => 'smartlogix-swiftforms-settings',
+			'smartlogix_swiftforms_test_email' => is_wp_error( $result ) ? 'error' : 'success',
+			'smartlogix_swiftforms_test_nonce' => wp_create_nonce( self::TEST_EMAIL_ACTION ),
 		);
 
 		if ( is_wp_error( $result ) ) {
-			$args['swf_test_email_message'] = rawurlencode( $result->get_error_message() );
+			$args['smartlogix_swiftforms_test_email_message'] = rawurlencode( $result->get_error_message() );
 		}
 
 		wp_safe_redirect( add_query_arg( $args, admin_url( 'edit.php' ) ) );
@@ -122,8 +150,8 @@ final class GlobalSettingsPage implements Registrable {
 	 */
 	private function page_fields(): array {
 		return Schema::metabox(
-			'swf_settings',
-			'swf-settings',
+			'smartlogix_swiftforms_settings',
+			'smartlogix-swiftforms-settings',
 			__( 'SwiftForms Settings', 'swiftforms' ),
 			$this->tabs_config()
 		);
@@ -132,7 +160,7 @@ final class GlobalSettingsPage implements Registrable {
 	/**
 	 * Tab id => { label, fields[] }, each field a Cassette-CMF field
 	 * config (name, type, label, default, …). Filterable via
-	 * `swf_settings_schema` so addons — and Design\DesignSystem for the
+	 * `smartlogix_swiftforms_settings_schema` so addons — and Design\DesignSystem for the
 	 * "design" tab — can contribute fields without touching this class.
 	 *
 	 * @return array<string, array<string, mixed>>
@@ -162,12 +190,13 @@ final class GlobalSettingsPage implements Registrable {
 						'description' => __( 'Comma separated. Used when a form has no admin recipients of its own. Falls back to the site admin email.', 'swiftforms' ),
 					),
 					$this->test_email_field(),
-					Schema::heading( 'swf_smtp_heading', __( 'SMTP', 'swiftforms' ) ),
+					Schema::heading( 'smartlogix_swiftforms_smtp_heading', __( 'SMTP', 'swiftforms' ) ),
 					array(
-						'name'    => 'smtpEnabled',
-						'type'    => 'checkbox',
-						'label'   => __( 'Send mail via SMTP', 'swiftforms' ),
-						'default' => '0',
+						'name'        => 'smtpEnabled',
+						'type'        => 'checkbox',
+						'label'       => __( 'Send mail via SMTP', 'swiftforms' ),
+						'default'     => '0',
+						'description' => __( 'Submission email is processed by the configured SMTP provider; disclose that provider where applicable.', 'swiftforms' ),
 					),
 					array(
 						'name'    => 'smtpHost',
@@ -205,8 +234,9 @@ final class GlobalSettingsPage implements Registrable {
 						'type'        => 'password',
 						'label'       => __( 'Password', 'swiftforms' ),
 						'default'     => '',
-						'description' => __( 'Leave blank to keep the currently saved password.', 'swiftforms' ),
+						'description' => __( 'Leave blank to preserve it. Enter the replacement to rotate it; configured values are never displayed.', 'swiftforms' ),
 					),
+					$this->secret_status_field( 'smtpPassword' ),
 					array(
 						'name'    => 'smtpFromEmail',
 						'type'    => 'email',
@@ -250,9 +280,9 @@ final class GlobalSettingsPage implements Registrable {
 						'type'        => 'checkbox',
 						'label'       => __( 'Use Akismet', 'swiftforms' ),
 						'default'     => '0',
-						'description' => __( 'Requires the Akismet plugin to be active and configured.', 'swiftforms' ),
+						'description' => __( 'Requires Akismet. Submitted field content and the visitor IP address are sent to Akismet for spam classification.', 'swiftforms' ),
 					),
-					Schema::heading( 'swf_turnstile_heading', __( 'Cloudflare Turnstile', 'swiftforms' ) ),
+					Schema::heading( 'smartlogix_swiftforms_turnstile_heading', __( 'Cloudflare Turnstile', 'swiftforms' ) ),
 					array(
 						'name'        => 'turnstileSiteKey',
 						'type'        => 'text',
@@ -267,6 +297,7 @@ final class GlobalSettingsPage implements Registrable {
 						'default'     => '',
 						'description' => __( 'Leave blank to keep the currently saved secret key.', 'swiftforms' ),
 					),
+					$this->secret_status_field( 'turnstileSecretKey' ),
 				),
 			),
 			'design'   => array(
@@ -296,7 +327,29 @@ final class GlobalSettingsPage implements Registrable {
 		 *
 		 * @param array<string, array<string, mixed>> $tabs Tab definitions.
 		 */
-		return (array) apply_filters( 'swf_settings_schema', $tabs );
+		return (array) apply_filters( 'smartlogix_swiftforms_settings_schema', $tabs );
+	}
+
+	private function secret_status_field( string $key ): array {
+		$source = GlobalSettings::instance()->secret_source( $key );
+		$labels = array(
+			'constant' => __( 'Configured by a read-only wp-config.php constant.', 'swiftforms' ),
+			'database' => __( 'Configured in the WordPress database.', 'swiftforms' ),
+			'none'     => __( 'Not configured.', 'swiftforms' ),
+		);
+		$markup = '<p><strong>' . esc_html( $labels[ $source ] ) . '</strong></p>';
+		if ( 'database' === $source ) {
+			$markup .= '<button type="submit" class="button" formnovalidate formaction="' . esc_url( admin_url( 'admin-post.php' ) ) . '" formmethod="post" name="action" value="' . esc_attr( self::SECRET_ACTION ) . '">' . esc_html__( 'Clear saved secret', 'swiftforms' ) . '</button>';
+			$markup .= '<input type="hidden" name="secret" value="' . esc_attr( $key ) . '">';
+			$markup .= wp_nonce_field( self::SECRET_ACTION, 'smartlogix_swiftforms_secret_nonce', true, false );
+		}
+		return array(
+			'name'     => 'smartlogix_swiftforms_' . $key . '_status',
+			'type'     => 'custom_html',
+			'label'    => '',
+			'content'  => $markup,
+			'raw_html' => true,
+		);
 	}
 
 	/**
@@ -310,18 +363,18 @@ final class GlobalSettingsPage implements Registrable {
 	private function test_email_field(): array {
 		$markup  = '<div class="swf-test-email">';
 		$markup .= '<label for="swf-test-email-to">' . esc_html__( 'Send a test email to', 'swiftforms' ) . '</label> ';
-		$markup .= '<input type="email" id="swf-test-email-to" name="swf_test_email_to" class="regular-text" placeholder="you@example.com" />';
+		$markup .= '<input type="email" id="swf-test-email-to" name="smartlogix_swiftforms_test_email_to" class="regular-text" placeholder="you@example.com" />';
 		$markup .= ' <button type="submit" class="button" formnovalidate';
 		$markup .= ' formaction="' . esc_url( admin_url( 'admin-post.php' ) ) . '" formmethod="post"';
 		$markup .= ' name="action" value="' . esc_attr( self::TEST_EMAIL_ACTION ) . '">';
 		$markup .= esc_html__( 'Send test email', 'swiftforms' );
 		$markup .= '</button>';
-		$markup .= wp_nonce_field( self::TEST_EMAIL_ACTION, 'swf_test_email_nonce', true, false );
+		$markup .= wp_nonce_field( self::TEST_EMAIL_ACTION, 'smartlogix_swiftforms_test_email_nonce', true, false );
 		$markup .= $this->test_email_notice();
 		$markup .= '</div>';
 
 		return array(
-			'name'     => 'swf_test_email_action',
+			'name'     => 'smartlogix_swiftforms_test_email_action',
 			'type'     => 'custom_html',
 			'label'    => '',
 			'content'  => $markup,
@@ -336,25 +389,25 @@ final class GlobalSettingsPage implements Registrable {
 	 */
 	private function test_email_notice(): string {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only display check; the nonce itself is verified below.
-		if ( empty( $_GET['swf_test_email'] ) || empty( $_GET['swf_test_nonce'] ) ) {
+		if ( empty( $_GET['smartlogix_swiftforms_test_email'] ) || empty( $_GET['smartlogix_swiftforms_test_nonce'] ) ) {
 			return '';
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Verified on the next line.
-		$nonce = sanitize_text_field( wp_unslash( (string) $_GET['swf_test_nonce'] ) );
+		$nonce = sanitize_text_field( wp_unslash( (string) $_GET['smartlogix_swiftforms_test_nonce'] ) );
 
 		if ( ! wp_verify_nonce( $nonce, self::TEST_EMAIL_ACTION ) ) {
 			return '';
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verified above.
-		if ( 'success' === $_GET['swf_test_email'] ) {
+		if ( 'success' === $_GET['smartlogix_swiftforms_test_email'] ) {
 			return '<p class="notice notice-success">' . esc_html__( 'Test email sent.', 'swiftforms' ) . '</p>';
 		}
 
-		$message = isset( $_GET['swf_test_email_message'] )
+		$message = isset( $_GET['smartlogix_swiftforms_test_email_message'] )
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verified above.
-			? sanitize_text_field( wp_unslash( (string) $_GET['swf_test_email_message'] ) )
+			? sanitize_text_field( wp_unslash( (string) $_GET['smartlogix_swiftforms_test_email_message'] ) )
 			: __( 'Could not send the test email.', 'swiftforms' );
 
 		return '<p class="notice notice-error">' . esc_html( $message ) . '</p>';

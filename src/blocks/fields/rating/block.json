@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-rating",
+	"name": "smartlogix-swiftforms/field-rating",
 	"title": "Rating",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "A 1-5 star rating.",
 	"icon": "star-filled",
 	"textdomain": "swiftforms",

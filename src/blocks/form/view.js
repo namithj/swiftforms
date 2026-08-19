@@ -1,5 +1,5 @@
 /**
- * Frontend submission logic for `swf/form`: field collection, client-side
+ * Frontend submission logic for `smartlogix-swiftforms/form`: field collection, client-side
  * pre-validation, conditional visibility, multi-step navigation, submit,
  * and response handling (including a silent one-time nonce refresh+retry
  * for forms sitting on a cached page).
@@ -14,8 +14,9 @@
 
 import { resolveVisibility } from '../../shared/conditions';
 
-const settings = window.swfFormSettings || {
+const settings = window.smartlogixSwiftFormsFormSettings || {
 	restUrl: '',
+	challengeUrl: '',
 	i18n: {
 		genericError: 'Something went wrong. Please try again.',
 		required: 'This field is required.',
@@ -199,27 +200,30 @@ function fieldHasValue( field ) {
 
 function showFieldError( field, message ) {
 	const errorEl = field.wrapper.querySelector( '[data-swf-field-error]' );
+	const target =
+		field.wrapper.querySelector( '[role="radiogroup"]' ) || field.input;
 
-	if ( errorEl ) {
+	if ( errorEl && target ) {
 		errorEl.textContent = message;
 		errorEl.id = errorEl.id || `swf-error-${ field.slug }`;
-		field.input.setAttribute( 'aria-invalid', 'true' );
-		const descriptions = (
-			field.input.getAttribute( 'aria-describedby' ) || ''
-		)
+		target.setAttribute( 'aria-invalid', 'true' );
+		const descriptions = ( target.getAttribute( 'aria-describedby' ) || '' )
 			.split( /\s+/ )
 			.filter( Boolean );
 		if ( ! descriptions.includes( errorEl.id ) ) {
 			descriptions.push( errorEl.id );
 		}
-		field.input.setAttribute(
-			'aria-describedby',
-			descriptions.join( ' ' )
-		);
+		target.setAttribute( 'aria-describedby', descriptions.join( ' ' ) );
 	}
 }
 
 function clearFieldErrors( form ) {
+	const errorIds = new Set(
+		Array.from( form.querySelectorAll( '[data-swf-field-error][id]' ) ).map(
+			( el ) => el.id
+		)
+	);
+
 	form.querySelectorAll( '[data-swf-field-error]' ).forEach( ( el ) => {
 		el.textContent = '';
 	} );
@@ -227,7 +231,7 @@ function clearFieldErrors( form ) {
 		el.removeAttribute( 'aria-invalid' );
 		const descriptions = ( el.getAttribute( 'aria-describedby' ) || '' )
 			.split( /\s+/ )
-			.filter( ( id ) => ! id.endsWith( '-error' ) );
+			.filter( ( id ) => ! errorIds.has( id ) );
 		if ( descriptions.length ) {
 			el.setAttribute( 'aria-describedby', descriptions.join( ' ' ) );
 		} else {
@@ -350,13 +354,14 @@ async function submitForm( form, isRetry = false ) {
 				false
 			);
 			form.reset();
+			await refreshSecurityFields( form );
 			applyConditions( form );
 			resetToFirstStep( form );
 			return;
 		}
 
 		if (
-			'swf_invalid_nonce' === payload.code &&
+			'smartlogix_swiftforms_invalid_nonce' === payload.code &&
 			payload.nonce &&
 			! isRetry
 		) {
@@ -369,7 +374,12 @@ async function submitForm( form, isRetry = false ) {
 		}
 
 		if ( payload.errors ) {
-			applyServerErrors( form, fields, payload.errors );
+			applyServerErrors(
+				form,
+				fields,
+				payload.errors,
+				payload.message || settings.i18n.genericError
+			);
 		} else {
 			setStatus(
 				form,
@@ -379,6 +389,7 @@ async function submitForm( form, isRetry = false ) {
 		}
 
 		resetTurnstile( form );
+		await refreshSecurityFields( form );
 	} catch ( error ) {
 		setStatus( form, settings.i18n.genericError, true );
 	} finally {
@@ -389,8 +400,50 @@ async function submitForm( form, isRetry = false ) {
 	}
 }
 
-function applyServerErrors( form, fields, errors ) {
+async function refreshSecurityFields( form, config = settings ) {
+	if ( ! config.challengeUrl || ! form.dataset.formId ) {
+		return;
+	}
+
+	try {
+		const response = await fetch(
+			`${ config.challengeUrl }/${ form.dataset.formId }`,
+			{ credentials: 'same-origin' }
+		);
+		if ( ! response.ok ) {
+			return;
+		}
+		const payload = await response.json();
+		const nonce = form.querySelector( 'input[name="nonce"]' );
+		const renderTimestamp = form.querySelector( 'input[name="render_ts"]' );
+		if ( nonce ) {
+			nonce.value = payload.nonce || nonce.value;
+		}
+		if ( renderTimestamp ) {
+			renderTimestamp.value = payload.render_ts || renderTimestamp.value;
+		}
+		if ( payload.captcha ) {
+			const label = form.querySelector( '[data-swf-captcha-label]' );
+			const token = form.querySelector( 'input[name="captcha_token"]' );
+			const answer = form.querySelector( 'input[name="captcha_answer"]' );
+			if ( label ) {
+				label.textContent = payload.captcha.question;
+			}
+			if ( token ) {
+				token.value = payload.captcha.token;
+			}
+			if ( answer ) {
+				answer.value = '';
+			}
+		}
+	} catch ( error ) {
+		// The current challenge remains usable until its short expiry.
+	}
+}
+
+function applyServerErrors( form, fields, errors, summary ) {
 	clearFieldErrors( form );
+	setStatus( form, summary, true );
 
 	let firstInvalid = null;
 
@@ -403,6 +456,14 @@ function applyServerErrors( form, fields, errors ) {
 	} );
 
 	if ( firstInvalid && firstInvalid.input ) {
+		const step = firstInvalid.wrapper.closest( '[data-swf-step]' );
+		if ( step && form._swfSteps ) {
+			form._swfSteps.goTo(
+				Array.from(
+					form.querySelectorAll( '[data-swf-step]' )
+				).indexOf( step )
+			);
+		}
 		firstInvalid.input.focus();
 	}
 }
@@ -432,6 +493,10 @@ function initSteps( form ) {
 		reset: () => {
 			state.current = 0;
 			clearFieldErrors( form );
+			render();
+		},
+		goTo: ( index ) => {
+			state.current = Math.max( 0, Math.min( steps.length - 1, index ) );
 			render();
 		},
 	};
@@ -510,6 +575,7 @@ function resetToFirstStep( form ) {
 document.addEventListener( 'submit', ( event ) => {
 	const form = event.target.closest( '[data-swf-form]' );
 	if ( form ) {
+		initForm( form );
 		event.preventDefault();
 		submitForm( form );
 	}
@@ -518,18 +584,51 @@ document.addEventListener( 'submit', ( event ) => {
 document.addEventListener( 'input', ( event ) => {
 	const form = event.target.closest( '[data-swf-form]' );
 	if ( form ) {
-		applyConditions( form );
+		initForm( form );
 	}
 } );
 
 document.addEventListener( 'change', ( event ) => {
 	const form = event.target.closest( '[data-swf-form]' );
 	if ( form ) {
-		applyConditions( form );
+		initForm( form );
 	}
 } );
 
-document.querySelectorAll( '[data-swf-form]' ).forEach( ( form ) => {
+function initForm( form ) {
+	form.querySelector( '[data-swf-script-required]' )?.setAttribute(
+		'hidden',
+		''
+	);
+	const submitButton = form.querySelector( '.swf-form__submit' );
+	if ( submitButton && 'true' !== submitButton.getAttribute( 'aria-busy' ) ) {
+		submitButton.disabled = false;
+	}
 	applyConditions( form );
 	initSteps( form );
-} );
+}
+
+document.querySelectorAll( '[data-swf-form]' ).forEach( initForm );
+
+new window.MutationObserver( ( mutations ) => {
+	mutations.forEach( ( mutation ) =>
+		mutation.addedNodes.forEach( ( node ) => {
+			if ( node.nodeType !== window.Node.ELEMENT_NODE ) {
+				return;
+			}
+			if ( node.matches( '[data-swf-form]' ) ) {
+				initForm( node );
+			}
+			node.querySelectorAll?.( '[data-swf-form]' ).forEach( initForm );
+		} )
+	);
+} ).observe( document.body, { childList: true, subtree: true } );
+
+export {
+	applyServerErrors,
+	clearFieldErrors,
+	collectFields,
+	initForm,
+	refreshSecurityFields,
+	showFieldError,
+};

@@ -16,13 +16,14 @@ namespace SwiftForms;
  */
 final class Privacy implements Registrable {
 
-	public const CLEANUP_HOOK = 'swf_retention_cleanup';
+	public const CLEANUP_HOOK = 'smartlogix_swiftforms_retention_cleanup';
 
 	private const BATCH_SIZE = 50;
 
 	public function register(): void {
 		add_filter( 'wp_privacy_personal_data_exporters', array( $this, 'register_exporter' ) );
 		add_filter( 'wp_privacy_personal_data_erasers', array( $this, 'register_eraser' ) );
+		add_action( 'admin_init', array( $this, 'register_policy_content' ) );
 		add_action( self::CLEANUP_HOOK, array( $this, 'cleanup_expired_entries' ) );
 
 		if ( ! wp_next_scheduled( self::CLEANUP_HOOK ) ) {
@@ -38,6 +39,7 @@ final class Privacy implements Registrable {
 		$exporters['swiftforms'] = array(
 			'exporter_friendly_name' => __( 'SwiftForms Entries', 'swiftforms' ),
 			'callback'               => array( $this, 'export_personal_data' ),
+
 		);
 
 		return $exporters;
@@ -55,6 +57,12 @@ final class Privacy implements Registrable {
 
 		return $erasers;
 	}
+	public function register_policy_content(): void {
+		if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
+			wp_add_privacy_policy_content( __( 'SwiftForms', 'swiftforms' ), wp_kses_post( __( '<p>When visitors submit a SwiftForms form, we collect the fields shown in that form and any files they choose to upload. If entry storage is enabled, this information is stored privately on this website for the retention period chosen by the site owner, which may include indefinite retention. A short-lived hash derived from the visitor IP address and form ID may be stored in the WordPress cache to limit abusive submission rates.</p><p>Submission data may be sent to this website’s email or SMTP provider and to webhook destinations configured by the site owner. If enabled, field content and the visitor IP address may be sent to Akismet for spam classification. If Cloudflare Turnstile is enabled, the visitor browser connects to Cloudflare, which processes a verification token and IP address. These providers may process data in other countries under their own terms.</p><p>Site owners should identify the fields collected, purposes, recipients, provider locations, retention periods, and legal basis in their final policy. WordPress personal-data export and erasure tools can locate stored entries by submitted email address. Erasure may be limited where retention is legally required, and data already delivered to email, SMTP, Akismet, Cloudflare, or webhook providers must be handled separately with those recipients.</p>', 'swiftforms' ) ) );
+		}
+	}
+
 
 	/**
 	 * @return array{data: array<int, array<string, mixed>>, done: bool}
@@ -67,9 +75,9 @@ final class Privacy implements Registrable {
 			$fields = array();
 
 			foreach ( get_post_meta( $entry_id ) as $key => $meta_values ) {
-				if ( str_starts_with( $key, 'swf_field_' ) ) {
+				if ( str_starts_with( $key, 'smartlogix_swiftforms_field_' ) ) {
 					$fields[] = array(
-						'name'  => substr( $key, strlen( 'swf_field_' ) ),
+						'name'  => substr( $key, strlen( 'smartlogix_swiftforms_field_' ) ),
 						'value' => maybe_unserialize( $meta_values[0] ?? '' ),
 					);
 				}
@@ -143,7 +151,7 @@ final class Privacy implements Registrable {
 		$ids = $wpdb->get_col(
 			$wpdb->prepare(
 				"SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND meta_value = %s ORDER BY post_id ASC LIMIT %d OFFSET %d",
-				$wpdb->esc_like( 'swf_field_' ) . '%',
+				$wpdb->esc_like( 'smartlogix_swiftforms_field_' ) . '%',
 				$email,
 				self::BATCH_SIZE,
 				$offset

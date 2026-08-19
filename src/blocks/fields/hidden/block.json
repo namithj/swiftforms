@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-hidden",
+	"name": "smartlogix-swiftforms/field-hidden",
 	"title": "Hidden Field",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "Carries a fixed value, never shown to visitors.",
 	"icon": "hidden",
 	"textdomain": "swiftforms",

@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "swf/field-consent",
+	"name": "smartlogix-swiftforms/field-consent",
 	"title": "Consent",
-	"category": "swf-fields",
+	"category": "smartlogix-swiftforms-fields",
 	"description": "GDPR-style consent checkbox with a fixed statement.",
 	"icon": "privacy",
 	"textdomain": "swiftforms",

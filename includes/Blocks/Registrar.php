@@ -16,14 +16,14 @@ use SwiftForms\Registrable;
 use WP_Block_Type_Registry;
 
 /**
- * Registers `swf/form`, `swf/step`, and one `swf/field-{type}` block per
+ * Registers `smartlogix-swiftforms/form`, `smartlogix-swiftforms/step`, and one `smartlogix-swiftforms/field-{type}` block per
  * FieldRegistry entry. Field blocks are all dynamic — their attribute
  * schema is injected here (via `block_type_metadata`) from FieldRegistry,
  * the single source of truth also consumed by the JS field-block factory.
  */
 final class Registrar implements Registrable {
 
-	private const FIELD_PREFIX = 'swf/field-';
+	private const FIELD_PREFIX = 'smartlogix-swiftforms/field-';
 
 	public function __construct( private FieldRegistry $field_registry ) {
 	}
@@ -48,11 +48,11 @@ final class Registrar implements Registrable {
 		return array_merge(
 			array(
 				array(
-					'slug'  => 'swf',
+					'slug'  => 'smartlogix-swiftforms',
 					'title' => __( 'SwiftForms', 'swiftforms' ),
 				),
 				array(
-					'slug'  => 'swf-fields',
+					'slug'  => 'smartlogix-swiftforms-fields',
 					'title' => __( 'Form Fields', 'swiftforms' ),
 				),
 			),
@@ -87,9 +87,9 @@ final class Registrar implements Registrable {
 	}
 
 	/**
-	 * Restricts which blocks are insertable: inside a `swf_form` post, only
+	 * Restricts which blocks are insertable: inside a `smartlogix_swf_form` post, only
 	 * field blocks, the step block, and a handful of layout blocks; every
-	 * other editor sees the field/step blocks removed (only the `swf/form`
+	 * other editor sees the field/step blocks removed (only the `smartlogix-swiftforms/form`
 	 * embed remains available there).
 	 *
 	 * @param array<int, string>|bool $allowed_blocks Allowed block names, or true for "all".
@@ -108,7 +108,7 @@ final class Registrar implements Registrable {
 			return array_merge(
 				$field_blocks,
 				array(
-					'swf/step',
+					'smartlogix-swiftforms/step',
 					'core/paragraph',
 					'core/heading',
 					'core/group',
@@ -124,7 +124,7 @@ final class Registrar implements Registrable {
 			);
 		}
 
-		$excluded = static fn( string $name ) => str_starts_with( $name, self::FIELD_PREFIX ) || 'swf/step' === $name;
+		$excluded = static fn( string $name ) => str_starts_with( $name, self::FIELD_PREFIX ) || 'smartlogix-swiftforms/step' === $name;
 
 		if ( true === $allowed_blocks ) {
 			$all = array_keys( WP_Block_Type_Registry::get_instance()->get_all_registered() );
@@ -140,11 +140,11 @@ final class Registrar implements Registrable {
 	}
 
 	/**
-	 * Registers `swf/form`, `swf/step`, and every `swf/field-{type}` block
+	 * Registers `smartlogix-swiftforms/form`, `smartlogix-swiftforms/step`, and every `smartlogix-swiftforms/field-{type}` block
 	 * from their compiled `build/blocks/**` directories.
 	 */
 	public function register_blocks(): void {
-		$build_path = SWF_PLUGIN_PATH . 'build/blocks/';
+		$build_path = SMARTLOGIX_SWIFTFORMS_PLUGIN_PATH . 'build/blocks/';
 
 		if ( ! is_dir( $build_path ) ) {
 			return; // Assets not built yet (fresh checkout before `npm run build`).
@@ -158,7 +158,7 @@ final class Registrar implements Registrable {
 				$form_dir,
 				array( 'render_callback' => array( new FormRenderer(), 'render' ) )
 			);
-			wp_set_script_translations( 'swf-form-view-script', 'swiftforms' );
+			wp_set_script_translations( 'smartlogix-swiftforms-form-view-script', 'swiftforms' );
 		}
 
 		$step_dir = $build_path . 'step';
@@ -186,7 +186,7 @@ final class Registrar implements Registrable {
 			);
 
 			foreach ( (array) ( $block_type->editor_script_handles ?? array() ) as $handle ) {
-				wp_add_inline_script( $handle, "window.swfFieldConfig = {$field_config};", 'before' );
+				wp_add_inline_script( $handle, "window.smartlogixSwiftFormsFieldConfig = {$field_config};", 'before' );
 			}
 		}
 	}

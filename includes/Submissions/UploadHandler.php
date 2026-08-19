@@ -49,7 +49,7 @@ final class UploadHandler {
 			return new WP_Error( 'upload_error', __( 'That file is too large.', 'swiftforms' ), array( 'status' => 400 ) );
 		}
 
-		$allowed = (array) apply_filters( 'swf_allowed_upload_types', self::DEFAULT_ALLOWED_TYPES );
+		$allowed = (array) apply_filters( 'smartlogix_swiftforms_allowed_upload_types', self::DEFAULT_ALLOWED_TYPES );
 		$check   = wp_check_filetype_and_ext( (string) $file['tmp_name'], (string) $file['name'], $allowed );
 
 		if ( empty( $check['ext'] ) || empty( $check['type'] ) ) {
@@ -74,11 +74,11 @@ final class UploadHandler {
 
 	/**
 	 * Returns the directory used for private attachments. Sites with a custom
-	 * document-root arrangement may override it with `swf_private_upload_dir`.
+	 * document-root arrangement may override it with `smartlogix_swiftforms_private_upload_dir`.
 	 */
 	public static function private_upload_dir(): string {
 		return untrailingslashit(
-			(string) apply_filters( 'swf_private_upload_dir', trailingslashit( dirname( ABSPATH ) ) . 'swiftforms-uploads' )
+			(string) apply_filters( 'smartlogix_swiftforms_private_upload_dir', trailingslashit( dirname( ABSPATH ) ) . 'swiftforms-uploads' )
 		);
 	}
 

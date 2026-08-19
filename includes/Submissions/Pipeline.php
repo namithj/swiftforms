@@ -55,7 +55,7 @@ final class Pipeline {
 		if ( ! $this->nonce_guard->verify( (string) ( $request['nonce'] ?? '' ) ) ) {
 			return $this->error(
 				403,
-				'swf_invalid_nonce',
+				'smartlogix_swiftforms_invalid_nonce',
 				__( 'Your session has expired. Please try again.', 'swiftforms' ),
 				array( 'nonce' => $this->nonce_guard->create() )
 			);
@@ -142,7 +142,7 @@ final class Pipeline {
 		 * @param array<int, array<string, mixed>> $fields  Validated fields.
 		 * @param int                               $form_id Source form post id.
 		 */
-		do_action( 'swf_pre_submission', $fields, $form_id );
+		do_action( 'smartlogix_swiftforms_pre_submission', $fields, $form_id );
 
 		$entry_id = $save_entries ? $this->entry_repository->create( $form_id, $fields, $is_spam ) : 0;
 
@@ -153,7 +153,11 @@ final class Pipeline {
 		}
 
 		if ( ! $is_spam ) {
-			$this->notifier->dispatch( $entry_id, $form_id, $fields, $form_settings );
+			$delivery = $this->notifier->dispatch( $entry_id, $form_id, $fields, $form_settings );
+			if ( $entry_id > 0 ) {
+				update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_email', in_array( false, $delivery, true ) ? 'failed' : 'sent' );
+				update_post_meta( $entry_id, '_smartlogix_swiftforms_delivery_webhook', ! empty( $form_settings['webhookUrl'] ) ? 'queued' : 'not_configured' );
+			}
 			$this->webhooks->send( $entry_id, $form_id, $fields, $form_settings );
 		}
 
@@ -164,7 +168,7 @@ final class Pipeline {
 		 * @param int                               $form_id  Source form post id.
 		 * @param array<int, array<string, mixed>>  $fields   Validated fields.
 		 */
-		do_action( 'swf_post_submission', $entry_id, $form_id, $fields );
+		do_action( 'smartlogix_swiftforms_post_submission', $entry_id, $form_id, $fields );
 
 		return $this->success( $entry_id, $form_settings );
 	}
@@ -217,8 +221,8 @@ final class Pipeline {
 	 * @return array{status_code: int, body: array<string, mixed>}|null
 	 */
 	private function validate_request_limits( array $request ): ?array {
-		$max_fields      = max( 1, (int) apply_filters( 'swf_submission_max_fields', self::DEFAULT_MAX_FIELDS ) );
-		$max_value_bytes = max( 1, (int) apply_filters( 'swf_submission_max_field_value_bytes', self::DEFAULT_MAX_FIELD_VALUE_BYTES ) );
+		$max_fields      = max( 1, (int) apply_filters( 'smartlogix_swiftforms_submission_max_fields', self::DEFAULT_MAX_FIELDS ) );
+		$max_value_bytes = max( 1, (int) apply_filters( 'smartlogix_swiftforms_submission_max_field_value_bytes', self::DEFAULT_MAX_FIELD_VALUE_BYTES ) );
 		$raw_fields      = $request['fields'] ?? array();
 
 		if ( ! is_array( $raw_fields ) || count( $raw_fields ) > $max_fields ) {
@@ -252,7 +256,7 @@ final class Pipeline {
 	}
 
 	/**
-	 * @param array<string, mixed> $form_settings Resolved `_swf_settings`.
+	 * @param array<string, mixed> $form_settings Resolved `_smartlogix_swiftforms_settings`.
 	 * @return array{status_code: int, body: array<string, mixed>}
 	 */
 	private function success( int $entry_id, array $form_settings ): array {

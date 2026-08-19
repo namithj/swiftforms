@@ -14,6 +14,24 @@ use SwiftForms\Privacy;
 
 final class PrivacyTest extends TestCase {
 
+	public function test_registers_complete_suggested_policy_content(): void {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		set_current_screen( 'options-privacy.php' );
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Simulates the callback's documented admin_init context without firing unrelated admin hooks.
+		$GLOBALS['wp_current_filter'][] = 'admin_init';
+		( new Privacy() )->register_policy_content();
+		array_pop( $GLOBALS['wp_current_filter'] );
+		$reflection = new \ReflectionClass( \WP_Privacy_Policy_Content::class );
+		$content    = $reflection->getStaticPropertyValue( 'policy_content' );
+		$suggestion = end( $content );
+
+		$this->assertSame( 'SwiftForms', $suggestion['plugin_name'] );
+		$this->assertStringContainsString( 'indefinite retention', $suggestion['policy_text'] );
+		$this->assertStringContainsString( 'Akismet', $suggestion['policy_text'] );
+		$this->assertStringContainsString( 'Cloudflare Turnstile', $suggestion['policy_text'] );
+		$this->assertStringContainsString( 'webhook', $suggestion['policy_text'] );
+	}
+
 	public function test_eraser_processes_remaining_entries_after_the_first_batch(): void {
 		$entry_ids = array();
 
@@ -24,7 +42,7 @@ final class PrivacyTest extends TestCase {
 					'post_status' => 'private',
 				)
 			);
-			update_post_meta( $entry_id, 'swf_field_email', 'person@example.com' );
+			update_post_meta( $entry_id, 'smartlogix_swiftforms_field_email', 'person@example.com' );
 			$entry_ids[] = $entry_id;
 		}
 

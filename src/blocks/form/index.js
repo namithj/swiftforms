@@ -15,7 +15,8 @@ import './editor.scss';
 import './style.scss';
 
 function adminUrl( path ) {
-	const base = window.swfEditorSettings?.adminUrl || '/wp-admin/';
+	const base =
+		window.smartlogixSwiftFormsEditorSettings?.adminUrl || '/wp-admin/';
 	return base + path;
 }
 
@@ -25,10 +26,14 @@ function Edit( { attributes, setAttributes } ) {
 
 	const forms = useSelect(
 		( select ) =>
-			select( coreStore ).getEntityRecords( 'postType', 'swf_form', {
-				per_page: -1,
-				status: 'publish,draft',
-			} ),
+			select( coreStore ).getEntityRecords(
+				'postType',
+				'smartlogix_swf_form',
+				{
+					per_page: -1,
+					status: 'publish,draft',
+				}
+			),
 		[]
 	);
 
@@ -64,7 +69,7 @@ function Edit( { attributes, setAttributes } ) {
 							{ ' · ' }
 							<ExternalLink
 								href={ adminUrl(
-									`post.php?post=${ formId }&action=edit#swf-form-settings`
+									`post.php?post=${ formId }&action=edit#smartlogix-swiftforms-form-settings`
 								) }
 							>
 								{ __( 'Settings', 'swiftforms' ) }
@@ -72,7 +77,7 @@ function Edit( { attributes, setAttributes } ) {
 							{ ' · ' }
 							<ExternalLink
 								href={ adminUrl(
-									`edit.php?post_type=swf_entry&swf_entry_form=swf-form-${ formId }`
+									`edit.php?post_type=smartlogix_swf_entry&smartlogix_swf_entry_form=smartlogix-swiftforms-form-${ formId }`
 								) }
 							>
 								{ __( 'Entries', 'swiftforms' ) }
