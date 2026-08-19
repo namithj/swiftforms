@@ -72,7 +72,8 @@ final class UploadHandlerTest extends TestCase {
 		$this->assertIsArray( $result );
 		$this->assertStringEndsWith( '.txt', $result['path'] );
 		$this->assertFileExists( $result['path'] );
-		$this->assertStringContainsString( 'swf-uploads', $result['path'] );
+		$this->assertStringStartsWith( trailingslashit( UploadHandler::private_upload_dir() ), $result['path'] );
+		$this->assertArrayNotHasKey( 'url', $result );
 
 		unlink( $result['path'] );
 	}

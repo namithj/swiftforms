@@ -152,6 +152,50 @@ final class PipelineTest extends TestCase {
 		$this->assertArrayHasKey( 'email', $result['body']['errors'] );
 	}
 
+	public function test_rejects_too_many_submitted_fields(): void {
+		add_filter( 'swf_submission_max_fields', static fn() => 1 );
+
+		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
+		$result  = $this->pipeline->handle(
+			$this->base_request(
+				$form_id,
+				array(
+					array(
+						'slug'  => 'name',
+						'value' => 'Alice',
+					),
+					array(
+						'slug'  => 'extra',
+						'value' => 'Ignored',
+					),
+				)
+			)
+		);
+
+		$this->assertSame( 413, $result['status_code'] );
+		$this->assertSame( 'payload_too_large', $result['body']['code'] );
+	}
+
+	public function test_rejects_an_overlong_scalar_field_value(): void {
+		add_filter( 'swf_submission_max_field_value_bytes', static fn() => 4 );
+
+		$form_id = $this->create_form( '<!-- wp:swf/field-text {"slug":"name","label":"Name"} /-->' );
+		$result  = $this->pipeline->handle(
+			$this->base_request(
+				$form_id,
+				array(
+					array(
+						'slug'  => 'name',
+						'value' => 'Alice',
+					),
+				)
+			)
+		);
+
+		$this->assertSame( 413, $result['status_code'] );
+		$this->assertSame( 'payload_too_large', $result['body']['code'] );
+	}
+
 	public function test_invalid_email_fails_validation(): void {
 		$form_id = $this->create_form( '<!-- wp:swf/field-email {"slug":"email","label":"Email"} /-->' );
 

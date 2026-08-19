@@ -56,8 +56,7 @@ $wpdb->query(
 	)
 );
 
-$swf_uploads    = wp_upload_dir();
-$swf_upload_dir = trailingslashit( $swf_uploads['basedir'] ) . 'swf-uploads';
+$swf_upload_dir = trailingslashit( dirname( ABSPATH ) ) . 'swiftforms-uploads';
 
 if ( is_dir( $swf_upload_dir ) ) {
 	require_once ABSPATH . 'wp-admin/includes/file.php';

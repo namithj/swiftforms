@@ -24,6 +24,9 @@ use WP_Error;
  */
 final class Pipeline {
 
+	private const DEFAULT_MAX_FIELDS            = 100;
+	private const DEFAULT_MAX_FIELD_VALUE_BYTES = 10000;
+
 	public function __construct(
 		private RateLimiter $rate_limiter,
 		private NonceGuard $nonce_guard,
@@ -43,6 +46,12 @@ final class Pipeline {
 	 * @return array{status_code: int, body: array<string, mixed>}
 	 */
 	public function handle( array $request, array $files = array() ): array {
+		$limits_error = $this->validate_request_limits( $request );
+
+		if ( null !== $limits_error ) {
+			return $limits_error;
+		}
+
 		if ( ! $this->nonce_guard->verify( (string) ( $request['nonce'] ?? '' ) ) ) {
 			return $this->error(
 				403,
@@ -166,6 +175,10 @@ final class Pipeline {
 		$fields = array();
 
 		foreach ( (array) ( $request['fields'] ?? array() ) as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+
 			$slug = sanitize_key( (string) ( $row['slug'] ?? '' ) );
 
 			if ( '' === $slug ) {
@@ -193,9 +206,40 @@ final class Pipeline {
 	}
 
 	/**
+	 * Rejects oversized field payloads before sanitization, schema parsing, or spam checks.
+	 *
+	 * Limits apply only to scalar field values. Array values are used by choice fields and
+	 * are subsequently constrained by the stored form schema.
+	 *
+	 * @param array<string, mixed> $request Raw POST body.
+	 * @return array{status_code: int, body: array<string, mixed>}|null
+	 */
+	private function validate_request_limits( array $request ): ?array {
+		$max_fields      = max( 1, (int) apply_filters( 'swf_submission_max_fields', self::DEFAULT_MAX_FIELDS ) );
+		$max_value_bytes = max( 1, (int) apply_filters( 'swf_submission_max_field_value_bytes', self::DEFAULT_MAX_FIELD_VALUE_BYTES ) );
+		$raw_fields      = $request['fields'] ?? array();
+
+		if ( ! is_array( $raw_fields ) || count( $raw_fields ) > $max_fields ) {
+			return $this->error( 413, 'payload_too_large', __( 'This submission is too large. Please shorten your response and try again.', 'swiftforms' ) );
+		}
+
+		foreach ( $raw_fields as $row ) {
+			if ( ! is_array( $row ) || ! isset( $row['value'] ) || ! is_scalar( $row['value'] ) ) {
+				continue;
+			}
+
+			if ( strlen( (string) $row['value'] ) > $max_value_bytes ) {
+				return $this->error( 413, 'payload_too_large', __( 'This submission is too large. Please shorten your response and try again.', 'swiftforms' ) );
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Removes files moved during a submission that cannot be completed.
 	 *
-	 * @param array<int, array{name: string, path: string, url: string, size: int}> $uploaded_files Moved upload metadata.
+	 * @param array<int, array{name: string, path: string, size: int}> $uploaded_files Moved upload metadata.
 	 */
 	private function delete_uploaded_files( array $uploaded_files ): void {
 		foreach ( $uploaded_files as $uploaded_file ) {

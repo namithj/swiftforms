@@ -11,6 +11,7 @@ namespace SwiftForms\Entries;
 
 use SwiftForms\PostTypes;
 use SwiftForms\Registrable;
+use SwiftForms\Submissions\UploadHandler;
 
 /**
  * One post per entry, tagged with its source form via the
@@ -73,7 +74,7 @@ final class EntryRepository implements Registrable {
 
 	/**
 	 * Saves one field's meta, including consent's statement/timestamp and
-	 * file uploads' name/url/path/size.
+	 * file uploads' name/path/size.
 	 *
 	 * @param array{slug: string, type: string, value: mixed, attributes: array<string, mixed>} $field One field.
 	 */
@@ -103,7 +104,7 @@ final class EntryRepository implements Registrable {
 
 			$value = maybe_unserialize( $meta_values[0] ?? '' );
 
-			if ( is_array( $value ) && ! empty( $value['path'] ) && file_exists( $value['path'] ) ) {
+			if ( is_array( $value ) && ! empty( $value['path'] ) && UploadHandler::is_managed_file( (string) $value['path'] ) ) {
 				wp_delete_file( $value['path'] );
 			}
 		}

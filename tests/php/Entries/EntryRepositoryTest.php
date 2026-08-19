@@ -11,6 +11,7 @@ namespace SwiftForms\Tests\Entries;
 
 use SwiftForms\Entries\EntryRepository;
 use SwiftForms\PostTypes;
+use SwiftForms\Submissions\UploadHandler;
 use SwiftForms\Tests\TestCase;
 
 final class EntryRepositoryTest extends TestCase {
@@ -68,5 +69,31 @@ final class EntryRepositoryTest extends TestCase {
 
 		$this->assertSame( 'I agree to the policy.', get_post_meta( $entry_id, 'swf_field_privacy_consent_statement', true ) );
 		$this->assertNotEmpty( get_post_meta( $entry_id, 'swf_field_privacy_consent_accepted_at', true ) );
+	}
+
+	public function test_delete_uploads_for_entry_deletes_only_managed_files(): void {
+		$managed_dir = UploadHandler::private_upload_dir();
+		wp_mkdir_p( $managed_dir );
+		$managed = trailingslashit( $managed_dir ) . 'entry-delete-test.txt';
+		file_put_contents( $managed, 'private attachment' );
+
+		$outside = wp_tempnam( 'swf-outside-upload' );
+		file_put_contents( $outside, 'not managed by SwiftForms' );
+
+		$entry_id = self::factory()->post->create(
+			array(
+				'post_type'   => PostTypes::ENTRY_POST_TYPE,
+				'post_status' => 'private',
+			)
+		);
+		update_post_meta( $entry_id, 'swf_field_attachment', array( 'path' => $managed ) );
+		update_post_meta( $entry_id, 'swf_field_forged', array( 'path' => $outside ) );
+
+		( new EntryRepository() )->delete_uploads_for_entry( $entry_id );
+
+		$this->assertFileDoesNotExist( $managed );
+		$this->assertFileExists( $outside );
+
+		wp_delete_file( $outside );
 	}
 }

@@ -13,8 +13,8 @@ use WP_Error;
 
 /**
  * Content-sniffs the real file type (not just the filename), stores under a
- * hashed name in a `.htaccess`-protected directory, and refuses anything
- * that didn't genuinely arrive via a file upload.
+ * hashed name outside the WordPress document root by default, and refuses
+ * anything that didn't genuinely arrive via a file upload.
  */
 final class UploadHandler {
 
@@ -29,7 +29,7 @@ final class UploadHandler {
 	 * Moves an uploaded file into the protected uploads directory.
 	 *
 	 * @param array{name?: string, type?: string, tmp_name?: string, error?: int, size?: int} $file One `$_FILES`-shaped entry.
-	 * @return array{name: string, path: string, url: string, size: int}|WP_Error|null Null when no file was submitted.
+	 * @return array{name: string, path: string, size: int}|WP_Error|null Null when no file was submitted.
 	 */
 	public function handle( array $file ) {
 		if ( empty( $file['tmp_name'] ) ) {
@@ -68,9 +68,28 @@ final class UploadHandler {
 		return array(
 			'name' => sanitize_file_name( (string) $file['name'] ),
 			'path' => $target,
-			'url'  => trailingslashit( $target_dir['url'] ) . $filename,
 			'size' => $size,
 		);
+	}
+
+	/**
+	 * Returns the directory used for private attachments. Sites with a custom
+	 * document-root arrangement may override it with `swf_private_upload_dir`.
+	 */
+	public static function private_upload_dir(): string {
+		return untrailingslashit(
+			(string) apply_filters( 'swf_private_upload_dir', trailingslashit( dirname( ABSPATH ) ) . 'swiftforms-uploads' )
+		);
+	}
+
+	/**
+	 * Whether a file is inside SwiftForms' private attachment directory.
+	 */
+	public static function is_managed_file( string $path ): bool {
+		$directory = realpath( self::private_upload_dir() );
+		$file      = realpath( $path );
+
+		return false !== $directory && false !== $file && str_starts_with( wp_normalize_path( $file ), trailingslashit( wp_normalize_path( $directory ) ) );
 	}
 
 	/**
@@ -100,19 +119,15 @@ final class UploadHandler {
 	}
 
 	/**
-	 * Ensures `uploads/swf-uploads/{Y}/{m}/` exists and is protected against
-	 * script execution, returning its path and URL.
+	 * Ensures the private attachment directory exists, returning its path.
 	 *
-	 * @return array{path: string, url: string}
+	 * @return array{path: string}
 	 */
 	private function prepare_upload_dir(): array {
-		$upload_dir = wp_upload_dir();
-		$base_path  = trailingslashit( $upload_dir['basedir'] ) . 'swf-uploads';
-		$base_url   = trailingslashit( $upload_dir['baseurl'] ) . 'swf-uploads';
+		$base_path = self::private_upload_dir();
 
 		if ( ! is_dir( $base_path ) ) {
 			wp_mkdir_p( $base_path );
-			$this->protect_directory( $base_path );
 		}
 
 		$sub_path = '/' . gmdate( 'Y' ) . '/' . gmdate( 'm' );
@@ -124,25 +139,6 @@ final class UploadHandler {
 
 		return array(
 			'path' => $path,
-			'url'  => $base_url . $sub_path,
 		);
-	}
-
-	/**
-	 * Drops an `index.html` and a `.htaccess` denying script execution into
-	 * the upload root (Apache; harmless no-op elsewhere — Nginx hosts should
-	 * add an equivalent `location` block themselves).
-	 */
-	private function protect_directory( string $path ): void {
-		$index = trailingslashit( $path ) . 'index.html';
-		if ( ! file_exists( $index ) ) {
-			file_put_contents( $index, '' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
-		}
-
-		$htaccess = trailingslashit( $path ) . '.htaccess';
-		if ( ! file_exists( $htaccess ) ) {
-			$rules = "php_flag engine off\n<FilesMatch \"\\.(php|php\\d|phtml|pl|py|cgi)$\">\nRequire all denied\n</FilesMatch>\n";
-			file_put_contents( $htaccess, $rules ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
-		}
 	}
 }
