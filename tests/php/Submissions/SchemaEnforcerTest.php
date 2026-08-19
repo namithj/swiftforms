@@ -85,6 +85,24 @@ final class SchemaEnforcerTest extends TestCase {
 		$this->assertTrue( $result['fields'][0]['attributes']['required'] );
 	}
 
+	public function test_hidden_field_uses_its_stored_value(): void {
+		$form_id = $this->create_form( '<!-- wp:swf/field-hidden {"slug":"source","value":"newsletter"} /-->' );
+
+		$result = $this->enforcer->enforce(
+			array(
+				'form_id' => $form_id,
+				'fields'  => array(
+					array(
+						'slug'  => 'source',
+						'value' => 'forged-value',
+					),
+				),
+			)
+		);
+
+		$this->assertSame( 'newsletter', $result['fields'][0]['value'] );
+	}
+
 	public function test_hidden_conditional_field_is_dropped_and_not_required(): void {
 		$content = '<!-- wp:swf/field-select {"slug":"country","label":"Country","options":"US|us\nOther|other"} /-->'
 			. '<!-- wp:swf/field-text {"slug":"state","label":"State","required":true,"conditions":{"enabled":true,"action":"show","groups":[[{"field":"country","operator":"equals","value":"us"}]]}} /-->';

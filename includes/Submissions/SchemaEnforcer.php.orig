@@ -49,14 +49,6 @@ final class SchemaEnforcer {
 			}
 		}
 
-		// Hidden fields carry a value configured by the form author. Never let
-		// a visitor replace it with a forged request value.
-		foreach ( $schema as $slug => $field ) {
-			if ( 'hidden' === $field['type'] ) {
-				$submitted[ $slug ] = (string) ( $field['attributes']['value'] ?? '' );
-			}
-		}
-
 		$condition_values = array();
 		foreach ( $schema as $slug => $field ) {
 			$value                     = $submitted[ $slug ] ?? '';

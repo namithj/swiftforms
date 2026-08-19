@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace SwiftForms\Settings;
 
 use Pedalcms\CassetteCmf\Core\Manager;
-use Pedalcms\CassetteCmf\Field\Field_Factory;
 use SwiftForms\PostTypes;
 use SwiftForms\Registrable;
 
@@ -37,13 +36,6 @@ final class FormSettingsMetabox implements Registrable {
 	private const DESIGN_META_PREFIX = '_swf_design_';
 
 	public function register(): void {
-		// Cassette-CMF's built-in textarea field strips line breaks (see
-		// CassetteCmfTextareaField); swap it out before anything ever calls
-		// Field_Factory::create() for one. Safe to call unconditionally —
-		// Field_Factory preserves pre-registered types when it lazily fills
-		// in its other defaults.
-		Field_Factory::register_type( 'textarea', CassetteCmfTextareaField::class );
-
 		// Deferred to `init` (default priority, after Plugin::load_textdomain()
 		// at priority 1), same reasoning as GlobalSettingsPage: building the
 		// field config below calls `__()` a lot, and this would otherwise run

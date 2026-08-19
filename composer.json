@@ -5,7 +5,7 @@
 	"license": "GPL-2.0-or-later",
 	"require": {
 		"php": ">=8.2",
-		"pedalcms/cassette-cmf": "^0.0.9"
+		"pedalcms/cassette-cmf": "^0.1.0"
 	},
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.1",

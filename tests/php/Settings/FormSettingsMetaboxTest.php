@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace SwiftForms\Tests\Settings;
 
 use Pedalcms\CassetteCmf\Field\Field_Factory;
+use Pedalcms\CassetteCmf\Field\Fields\Textarea_Field;
 use SwiftForms\Settings\FormSettingsMetabox;
 use SwiftForms\Tests\TestCase;
 
@@ -61,11 +62,10 @@ final class FormSettingsMetaboxTest extends TestCase {
 	}
 
 	/**
-	 * The regression this class exists to prevent: Cassette-CMF's own
-	 * textarea field strips line breaks (it inherits sanitize_text_field()
-	 * from Abstract_Field), which would mangle multi-line email templates.
+	 * Cassette-CMF's textarea field must preserve line breaks so multi-line
+	 * email templates are not mangled on save.
 	 */
-	public function test_textarea_type_resolves_to_the_newline_preserving_override(): void {
+	public function test_textarea_type_preserves_newlines(): void {
 		$field = Field_Factory::create(
 			array(
 				'name' => 'x',
@@ -73,7 +73,7 @@ final class FormSettingsMetaboxTest extends TestCase {
 			)
 		);
 
-		$this->assertInstanceOf( \SwiftForms\Settings\CassetteCmfTextareaField::class, $field );
+		$this->assertInstanceOf( Textarea_Field::class, $field );
 		$this->assertSame( "Line one\nLine two", $field->sanitize( "Line one\nLine two" ) );
 	}
 }
