@@ -1,0 +1,137 @@
+name: Coding Standards
+
+# Code quality gate for everything that merges into main.
+#
+# PHP: WordPress Coding Standards, PHPStan, and a PHP syntax matrix because the
+# plugin's own code is PHP 7.4 syntax even though the header declares PHP 8.2.
+# JavaScript and CSS: ESLint and Stylelint through @wordpress/scripts.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: coding-standards-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  phpcs:
+    name: PHP Coding Standards
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      # Strauss runs from composer's post-install hook and writes vendor-prefixed/.
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      # lint:release disables the phpcs result cache. A cached run can report a
+      # clean tree while new violations sit unreported.
+      - name: Run PHPCS
+        run: composer lint:release
+
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Run PHPStan
+        run: composer analyse
+
+  php-syntax:
+    name: PHP ${{ matrix.php }} syntax
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Lowest version our own code supports (7.4 syntax) through current stable.
+        php: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Lint every first-party PHP file
+        run: |
+          # Only our own files: dependencies, build output and the throwaway
+          # core cache are excluded.
+          find . -name '*.php' \
+            -not -path './vendor/*' \
+            -not -path './vendor-prefixed/*' \
+            -not -path './node_modules/*' \
+            -not -path './build/*' \
+            -not -path './.cache/*' \
+            -print0 \
+            | xargs -0 -n1 -P4 php -l > /dev/null
+          echo "All PHP files parse on PHP ${{ matrix.php }}."
+
+  js-css:
+    name: ESLint and Stylelint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint:js
+
+      - name: Stylelint
+        run: npm run lint:css
+
+  version-consistency:
+    name: Version consistency
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # The release pipeline rewrites these three values from the tag, but a
+      # branch that lands with them already disagreeing is a bug worth catching
+      # here rather than mid-release.
+      - name: Verify header, constant and readme agree
+        run: bash bin/set-version.sh --check-current

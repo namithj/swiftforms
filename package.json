@@ -1,0 +1,30 @@
+{
+	"name": "swiftforms",
+	"private": true,
+	"description": "Build and test tooling for the SwiftForms WordPress plugin. Never published.",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build": "wp-scripts build --experimental-modules",
+		"start": "wp-scripts start --experimental-modules",
+		"lint:js": "wp-scripts lint-js src tests/js tests/e2e bin playwright.config.js webpack.config.js vitest.config.mjs",
+		"lint:css": "wp-scripts lint-style \"src/**/*.{css,scss}\" --allow-empty-input",
+		"test": "wp-scripts test-unit-js",
+		"test:e2e": "playwright test",
+		"test:e2e:configs": "node bin/run-e2e-configs.mjs",
+		"perf:budget": "node bin/check-perf-budget.mjs",
+		"wp-env": "wp-env"
+	},
+	"devDependencies": {
+		"@playwright/test": "1.64.1",
+		"@wordpress/e2e-test-utils-playwright": "3.1.0",
+		"@wordpress/env": "12.0.0",
+		"@wordpress/scripts": "37.0.0",
+		"vite": "8.3.5",
+		"vitest": "5.0.5"
+	},
+	"dependencies": {
+		"@wordpress/components": "43.0.0",
+		"@wordpress/dataviews": "21.0.0",
+		"@wordpress/interactivity": "8.0.0"
+	}
+}

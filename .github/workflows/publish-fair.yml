@@ -1,0 +1,56 @@
+name: Publish FAIR Metadata
+
+# Publishes release metadata to the FAIR package manager network, so the plugin
+# is discoverable outside the WordPress.org directory.
+#
+# Called by release.yml once the release assets exist; it can also be run on its
+# own to re-publish metadata for an existing tag.
+#
+# Requires the FAIR_VERIFICATION_KEY_PRIVATE / FAIR_VERIFICATION_KEY_PUBLIC
+# secrets (stored on the "fair" environment) and the FAIR_DID repository variable. The job is skipped when the DID
+# is not configured, so forks and fresh clones do not fail on it.
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Release tag to publish, for example v1.0.0'
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to publish, for example v1.0.0'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish to FAIR
+    runs-on: ubuntu-latest
+    if: ${{ vars.FAIR_DID != '' }}
+    # The FAIR signing keys are environment secrets, so the job waits for the
+    # approval rules configured on the "fair" environment.
+    environment: fair
+
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+
+      - name: Publish to FAIR
+        uses: fairpm/fair-pulse@1afe42cbd3df2e6c171e388cba77ec74f40f9f6e # v1.0.8
+        with:
+          version: ${{ inputs.tag }}
+          # Matches the stable asset name produced by release.yml.
+          artifact-name: swiftforms.zip
+          upload-metadata: 'true'
+        env:
+          FAIR_VERIFICATION_KEY_PRIVATE: ${{ secrets.FAIR_VERIFICATION_KEY_PRIVATE }}
+          FAIR_VERIFICATION_KEY_PUBLIC: ${{ secrets.FAIR_VERIFICATION_KEY_PUBLIC }}
+          FAIR_DID: ${{ vars.FAIR_DID }}

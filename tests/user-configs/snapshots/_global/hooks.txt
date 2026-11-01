@@ -1,0 +1,2 @@
+block_bindings_source_value PHP_INT_MAX SwiftForms\Builder_Adapter::filter_bindings_source_value
+init 5 SwiftForms\Plugin::register_blocks

@@ -1,0 +1,66 @@
+# Paths excluded from the distributed plugin.
+#
+# Every pattern is anchored with a leading slash so it matches only at the
+# repository root. rsync — used by bin/build-release.sh and by the WordPress.org
+# deploy action — matches an unanchored pattern at *any* depth, so a bare
+# "vendor" would also strip nested folders the plugin needs at runtime.
+#
+# vendor-prefixed/ (the namespaced frameworks) and build/ (compiled JS and CSS)
+# ship; only the frameworks' own tests, docs and tooling are stripped below.
+/.ai
+/.git
+/.github
+/.vscode
+/.cache
+/.distignore
+/.editorconfig
+/.gitattributes
+/.gitignore
+/bin
+/composer.json
+/composer.lock
+/node_modules
+/package.json
+/package-lock.json
+/phpcs.xml
+/phpcs.xml.dist
+/phpstan.neon.dist
+/.phpunit.result.cache
+/phpunit.xml
+/phpunit.xml.dist
+/playwright.config.js
+/webpack.config.js
+/.wp-env.json
+/src
+/tests
+/test-results
+/playwright-report
+/SECURITY.md
+/dist
+/*.zip
+# Dev-only Composer packages never ship; autoload.php and composer/ stay.
+/vendor/bin
+# Framework folders that are not runtime code.
+/vendor-prefixed/pedalcms/*/tests
+/vendor-prefixed/pedalcms/*/docs
+/vendor-prefixed/pedalcms/*/examples
+/vendor-prefixed/pedalcms/*/bin
+/vendor-prefixed/pedalcms/*/node_modules
+/vendor-prefixed/pedalcms/*/package.json
+/vendor-prefixed/pedalcms/*/package-lock.json
+/vendor-prefixed/pedalcms/*/composer.lock
+/vendor-prefixed/pedalcms/*/jest.config.js
+/vendor-prefixed/pedalcms/*/playwright.config.js
+/vendor-prefixed/pedalcms/*/webpack.config.js
+/vendor-prefixed/pedalcms/*/phpcs.xml.dist
+/vendor-prefixed/pedalcms/*/phpstan.neon.dist
+/vendor-prefixed/pedalcms/*/phpunit.xml
+/vendor-prefixed/pedalcms/*/phpunit.xml.dist
+/vendor-prefixed/pedalcms/*/.github
+/vendor-prefixed/pedalcms/*/.distignore
+/vendor-prefixed/pedalcms/*/.editorconfig
+/vendor-prefixed/pedalcms/*/.gitignore
+/vendor-prefixed/pedalcms/*/.wp-env.json
+/vitest.config.mjs
+/artifacts
+/vitest.config.mjs

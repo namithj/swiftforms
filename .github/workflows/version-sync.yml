@@ -1,0 +1,152 @@
+name: Sync Version From Tag
+
+# Makes the tag the single source of truth for the plugin version.
+#
+# Given a version (normally the pushed tag, v1.0.0 -> 1.0.0) this writes it into
+# every version-bearing published file via bin/set-version.sh and — when
+# anything was out of sync — commits the result, moves the tag onto that commit,
+# and fast-forwards the default branch when the tag was cut from its tip.
+#
+# The commit is what makes the sync permanent: the tag then points at a tree
+# whose plugin header, SWIFTFORMS_VERSION constant and readme Stable tag all
+# read the tagged version, so the release zip, the Playground bundle and the
+# WordPress.org deploy are all built from correct files.
+#
+# This workflow is not triggered by tag pushes directly — release.yml owns that
+# trigger and calls this first, so the build always runs after the sync rather
+# than racing it.
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version to set (for example 1.0.0 or v1.0.0)'
+        required: true
+        type: string
+      tag:
+        description: 'Tag to re-point at the synced commit (empty to skip)'
+        required: false
+        default: ''
+        type: string
+    outputs:
+      version:
+        description: 'Normalized version that was written'
+        value: ${{ jobs.sync.outputs.version }}
+      sha:
+        description: 'Commit that carries the synced version — build from this'
+        value: ${{ jobs.sync.outputs.sha }}
+      changed:
+        description: 'Whether any file needed updating'
+        value: ${{ jobs.sync.outputs.changed }}
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to set (for example 1.0.0 or v1.0.0)'
+        required: true
+        type: string
+      tag:
+        description: 'Tag to re-point at the synced commit (empty to skip)'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Write version into published files
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.sync.outputs.version }}
+      sha: ${{ steps.sync.outputs.sha }}
+      changed: ${{ steps.sync.outputs.changed }}
+
+    steps:
+      # The default branch is checked out (not the tag) so a push back to it is
+      # possible; the tag commit is resolved from the full history below.
+      - name: Checkout default branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Set version, commit, and move the tag
+        id: sync
+        shell: bash
+        env:
+          RAW_VERSION: ${{ inputs.version }}
+          TAG: ${{ inputs.tag }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+
+          VERSION="${RAW_VERSION#v}"
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          BRANCH_SHA="$(git rev-parse HEAD)"
+          TAG_SHA=''
+
+          # Sync the files as they exist at the tag, so the tag keeps pointing at
+          # the code it was cut from — only the version numbers change.
+          if [[ -n "${TAG}" ]]; then
+            if ! TAG_SHA="$(git rev-parse -q --verify "refs/tags/${TAG}^{commit}")"; then
+              echo "Tag ${TAG} does not exist in this repository." >&2
+              exit 1
+            fi
+            git checkout --detach "${TAG_SHA}"
+            echo "Syncing ${TAG} (${TAG_SHA}) to version ${VERSION}."
+          else
+            echo "Syncing ${DEFAULT_BRANCH} (${BRANCH_SHA}) to version ${VERSION}."
+          fi
+
+          bash bin/set-version.sh "${VERSION}"
+
+          if git diff --quiet; then
+            echo "changed=false" >> "${GITHUB_OUTPUT}"
+            echo "sha=$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+            echo "Version is already ${VERSION}; nothing to commit."
+            exit 0
+          fi
+
+          git commit -am "chore: set version to ${VERSION}"
+          SYNCED_SHA="$(git rev-parse HEAD)"
+          echo "changed=true" >> "${GITHUB_OUTPUT}"
+          echo "sha=${SYNCED_SHA}" >> "${GITHUB_OUTPUT}"
+
+          # Move the tag first: even if the branch push is rejected (protected
+          # branch), the tag must end up on a tree with the right version.
+          if [[ -n "${TAG}" ]]; then
+            git tag -f "${TAG}" "${SYNCED_SHA}"
+            git push --force origin "refs/tags/${TAG}"
+            echo "Moved ${TAG} to ${SYNCED_SHA}."
+          fi
+
+          # Only fast-forward the default branch when the tag was cut from its
+          # tip; otherwise the push would drag unrelated history into it.
+          if [[ -z "${TAG}" || "${TAG_SHA}" == "${BRANCH_SHA}" ]]; then
+            git push origin "HEAD:refs/heads/${DEFAULT_BRANCH}"
+            echo "Pushed the version commit to ${DEFAULT_BRANCH}."
+          else
+            echo "::notice::Tag ${TAG} was not at the tip of ${DEFAULT_BRANCH}; the branch was left unchanged."
+          fi
+
+      - name: Summary
+        shell: bash
+        env:
+          VERSION: ${{ steps.sync.outputs.version }}
+          CHANGED: ${{ steps.sync.outputs.changed }}
+          SHA: ${{ steps.sync.outputs.sha }}
+        run: |
+          {
+            echo "### Version sync"
+            echo
+            echo "| Field | Value |"
+            echo "| --- | --- |"
+            echo "| Version | \`${VERSION}\` |"
+            echo "| Files changed | \`${CHANGED}\` |"
+            echo "| Build commit | \`${SHA}\` |"
+          } >> "${GITHUB_STEP_SUMMARY}"

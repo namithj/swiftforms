@@ -1,0 +1,13 @@
+# Static analysis of first-party plugin code. Prefixed frameworks are scanned
+# for symbols only, never analysed.
+parameters:
+    level: 6
+    treatPhpDocTypesAsCertain: false
+    paths:
+        - swiftforms.php
+        - includes
+    scanDirectories:
+        - vendor-prefixed
+    bootstrapFiles:
+        - tests/phpstan-bootstrap.php
+    tmpDir: .cache/phpstan

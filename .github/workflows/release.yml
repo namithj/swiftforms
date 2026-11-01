@@ -1,0 +1,211 @@
+name: Release
+
+# The whole release pipeline, driven by one pushed tag.
+#
+#   push tag v1.0.0
+#     -> version-sync.yml   writes 1.0.0 into every published file, commits it,
+#                           and moves the tag onto that commit
+#     -> build              checks the synced tree, builds the release ZIP and
+#                           the Playground bundle from it, prints their sha256,
+#                           publishes the GitHub release (ZIP, ZIP.sha256,
+#                           Playground bundle) and adds the Playground demo link
+#                           to its notes
+#     -> publish-fair.yml   publishes release metadata to the FAIR network
+#
+# Every artifact therefore carries the tagged version, because the ZIPs are
+# built from the synced commit rather than from the tag as pushed.
+#
+# Publishing to WordPress.org is deliberately NOT part of this pipeline: SVN is
+# a release repository and a push there is public and awkward to undo, so it is
+# run by hand from deploy.yml, behind an approval.
+#
+# The full test matrix (tests.yml, e2e.yml) runs on the commit before the tag is
+# cut; this workflow only re-runs the cheap gates that protect the artifact.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to (re)release, for example v1.0.0'
+        required: true
+        type: string
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    name: Sync version
+    permissions:
+      contents: write
+    uses: ./.github/workflows/version-sync.yml
+    with:
+      # `inputs` is empty for a tag push, so this resolves to the pushed tag.
+      version: ${{ inputs.tag || github.ref_name }}
+      tag: ${{ inputs.tag || github.ref_name }}
+
+  build:
+    name: Build and publish release
+    needs: version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      SLUG: swiftforms
+      TAG: ${{ inputs.tag || github.ref_name }}
+      VERSION: ${{ needs.version.outputs.version }}
+
+    steps:
+      # Built from the commit the sync produced, by SHA, so this cannot pick up
+      # a stale copy of the tag from a caching layer.
+      - name: Checkout synced commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.version.outputs.sha }}
+          fetch-depth: 0
+
+      # PHP 8.3: Strauss and the bundled frameworks need PHP 8.2 or newer.
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: '8.3'
+          tools: composer
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Verify the checked-out tree carries the tagged version
+        run: bash bin/set-version.sh --check "${VERSION}"
+
+      # Release gate: fails when readme.txt "Tested up to" is behind the current WordPress major.
+      - name: Verify "Tested up to" covers the current WordPress release
+        run: bash bin/check-tested-up-to.sh
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Verify coding standards
+        run: composer lint:release
+
+      - name: Verify static analysis
+        run: composer analyse
+
+      - name: Verify JavaScript unit tests and size budget
+        run: |
+          npm test
+          npm run build
+          npm run perf:budget
+
+      # Builds in a scratch copy, installs production dependencies only, runs
+      # Strauss, builds the JavaScript, zips, and asserts on the ZIP contents.
+      - name: Build release ZIP
+        shell: bash
+        run: |
+          bash bin/build-release.sh "${RUNNER_TEMP}/dist"
+          cp "${RUNNER_TEMP}/dist/${SLUG}.zip" "${RUNNER_TEMP}/${SLUG}.zip"
+          ( cd "${RUNNER_TEMP}" && sha256sum "${SLUG}.zip" | tee "${SLUG}.zip.sha256" )
+
+      - name: Build Playground bundle
+        run: bash bin/build-playground-bundle.sh "${RUNNER_TEMP}/${SLUG}.zip" "${RUNNER_TEMP}/${SLUG}-playground.zip"
+
+      - name: Create or update GitHub release
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        with:
+          tag_name: ${{ inputs.tag || github.ref_name }}
+          files: |
+            ${{ runner.temp }}/swiftforms.zip
+            ${{ runner.temp }}/swiftforms.zip.sha256
+            ${{ runner.temp }}/swiftforms-playground.zip
+          generate_release_notes: true
+
+      # The demo installs the ZIP attached to this very release.
+      - name: Generate release Playground URL
+        shell: bash
+        run: |
+          PLAYGROUND_URL="$(node -e '
+            const blueprint = JSON.parse( require( "fs" ).readFileSync( "assets/blueprints/blueprint.json", "utf8" ) );
+            const [ repository, tag ] = process.argv.slice( 1 );
+            for ( const step of blueprint.steps ) {
+              if ( step.step === "installPlugin" ) {
+                step.pluginData = { resource: "url", url: "https://github.com/" + repository + "/releases/download/" + tag + "/swiftforms.zip" };
+              }
+            }
+            process.stdout.write( "https://playground.wordpress.net/#" + Buffer.from( JSON.stringify( blueprint ) ).toString( "base64" ) );
+          ' "${GITHUB_REPOSITORY}" "${TAG}")"
+          echo "PLAYGROUND_URL=${PLAYGROUND_URL}" >> "${GITHUB_ENV}"
+
+      - name: Add Playground link to release description
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const startMarker = '<!-- swiftforms-playground:start -->';
+            const endMarker = '<!-- swiftforms-playground:end -->';
+            const section = [
+              startMarker,
+              '## Live demo',
+              '',
+              `[Try this release in WordPress Playground](${process.env.PLAYGROUND_URL})`,
+              endMarker,
+            ].join('\n');
+            const markerPattern = new RegExp(
+              `\\n?${startMarker}[\\s\\S]*?${endMarker}\\n?`,
+              'g',
+            );
+            const { owner, repo } = context.repo;
+            const release = (
+              await github.rest.repos.getReleaseByTag({
+                owner,
+                repo,
+                tag: process.env.TAG,
+              })
+            ).data;
+            // Regenerated notes are preserved; only the marked section is replaced.
+            const preservedBody = (release.body || '').replace(markerPattern, '').trimEnd();
+            const body = preservedBody ? `${preservedBody}\n\n${section}` : section;
+
+            await github.rest.repos.updateRelease({
+              owner,
+              repo,
+              release_id: Number(release.id),
+              body,
+            });
+
+      - name: Summary
+        shell: bash
+        run: |
+          {
+            echo "### Release ${TAG}"
+            echo
+            echo "- Version: \`${VERSION}\`"
+            echo "- Built from: \`${{ needs.version.outputs.sha }}\`"
+            echo "- SHA-256: \`$(cut -d' ' -f1 "${RUNNER_TEMP}/swiftforms.zip.sha256")\`"
+            echo "- [Try it in WordPress Playground](${PLAYGROUND_URL})"
+            echo
+            echo "WordPress.org is not published automatically. To ship this"
+            echo "release there, run the **Deploy to WordPress.org** workflow"
+            echo "with tag \`${TAG}\` — untick *Dry run* to commit to SVN."
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+  publish-fair:
+    name: Publish FAIR metadata
+    needs: [version, build]
+    permissions:
+      contents: write
+    uses: ./.github/workflows/publish-fair.yml
+    with:
+      tag: ${{ inputs.tag || github.ref_name }}
+    secrets: inherit

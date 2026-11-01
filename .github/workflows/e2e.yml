@@ -1,0 +1,92 @@
+name: E2E
+
+# Browser checks against a real WordPress (wp-env, Docker) for every user
+# config, one after another: the config is applied to a freshly reset site and
+# Playwright then checks that each stored post opens in the block editor
+# without a validation warning and saves without changing its content (S12),
+# and, once forms exist (R01), that the forms work on the front end (S13).
+#
+# Two cells: the lowest supported WordPress and PHP, and the latest of both.
+# The first cell uses PHP 8.2, not 7.4: the plugin header declares Requires PHP
+# 8.2 (the bundled frameworks need it), so WordPress refuses to activate the
+# plugin on anything older. Lower it when that header is lowered.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    name: E2E — ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: PHP 8.2 / WP 6.8
+            php: '8.2'
+            core: 'WordPress/WordPress#6.8'
+          - name: PHP latest / WP latest
+            php: '8.4'
+            core: ''
+    env:
+      WP_ENV_PHP_VERSION: ${{ matrix.php }}
+      WP_ENV_CORE: ${{ matrix.core }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: '8.3'
+          tools: composer
+          coverage: none
+
+      # vendor-prefixed/ (written by Strauss) is part of the plugin that wp-env mounts.
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Start wp-env
+        run: npm run wp-env -- start
+
+      - name: User-config e2e (all configs, one after another)
+        run: npm run test:e2e:configs
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report-${{ strategy.job-index }}
+          path: |
+            playwright-report/
+            artifacts/
+          if-no-files-found: ignore
+          retention-days: 7

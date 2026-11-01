@@ -1,0 +1,88 @@
+{
+    "name": "namithj/swiftforms",
+    "description": "SwiftForms: contact forms built with blocks in the WordPress block editor.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/PedalCMS/cassette-cmf-block-builder"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "pedalcms/cassette-cmf": "0.1.2",
+        "pedalcms/cassette-cmf-block-builder": "dev-main#3952ccff4f81c0ac25a5416cee5dcaa11e381a2d"
+    },
+    "require-dev": {
+        "brianhenryie/strauss": "^0.31",
+        "phpcompatibility/php-compatibility": "^10.0@alpha",
+        "phpcompatibility/phpcompatibility-paragonie": "^2.0@alpha",
+        "phpcompatibility/phpcompatibility-wp": "^3.0@alpha",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^9.6",
+        "squizlabs/php_codesniffer": "^3.13",
+        "szepeviktor/phpstan-wordpress": "^2.0",
+        "wp-coding-standards/wpcs": "^3.4.1",
+        "wp-phpunit/wp-phpunit": "^7.1",
+        "yoast/phpunit-polyfills": "^4.0.0"
+    },
+    "autoload": {
+        "classmap": [
+            "includes/"
+        ]
+    },
+    "extra": {
+        "strauss": {
+            "target_directory": "vendor-prefixed",
+            "namespace_prefix": "SwiftForms\\Vendor\\",
+            "classmap_prefix": "SwiftForms_Vendor_",
+            "constant_prefix": "SWIFTFORMS_VENDOR_",
+            "packages": [
+                "pedalcms/cassette-cmf",
+                "pedalcms/cassette-cmf-block-builder"
+            ],
+            "delete_vendor_packages": true,
+            "update_call_sites": false
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        },
+        "platform": {
+            "php": "8.2.0"
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "prefix-namespaces": "@php vendor/bin/strauss",
+        "post-install-cmd": [
+            "@prefix-namespaces"
+        ],
+        "post-update-cmd": [
+            "@prefix-namespaces"
+        ],
+        "format": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf --report=summary,source",
+        "lint": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs --report=summary,source",
+        "lint:release": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs --no-cache --report=summary,source",
+        "analyse": "@php ./vendor/bin/phpstan analyse --memory-limit=1024M",
+        "test:configs": [
+            "Composer\\Config::disableProcessTimeout",
+            "bash bin/test-user-configs.sh"
+        ],
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "bash bin/phpunit.sh --exclude-group user-configs"
+        ],
+        "test:upgrade": "bash bin/test-upgrade-path.sh",
+        "test:all": [
+            "@test:configs",
+            "@test:upgrade",
+            "@test"
+        ],
+        "build": "bin/build-release.sh"
+    }
+}

@@ -1,0 +1,19 @@
+{
+	"core": null,
+	"phpVersion": null,
+	"plugins": [ "." ],
+	"themes": [
+		"./tests/user-configs/themes/sf-test-block",
+		"./tests/user-configs/themes/sf-test-classic"
+	],
+	"mappings": {
+		"wp-content/mu-plugins/sf-test-clock.php": "./tests/e2e/mu/sf-test-clock.php"
+	},
+	"config": {
+		"SWIFTFORMS_TEST_NOW": 1795082400,
+		"WP_DEBUG": true,
+		"WP_DEBUG_LOG": true,
+		"WP_DEBUG_DISPLAY": false,
+		"SCRIPT_DEBUG": false
+	}
+}

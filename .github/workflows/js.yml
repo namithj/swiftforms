@@ -1,0 +1,49 @@
+name: JavaScript
+
+# Builds the front-end assets, runs the JavaScript unit tests and enforces the
+# front-end size budget (view module <= 12 KB gzipped, front-end CSS <= 4 KB).
+#
+# The budget counts only SwiftForms' own build/ files. The block builder's
+# editor.css (about 389 bytes gzipped) loads on every front-end page once the
+# builder has started and lives in vendor-prefixed/, so it is not measured here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: js-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  js:
+    name: Build, unit tests, size budget
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Front-end performance budget
+        run: npm run perf:budget

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+	bootstrap="tests/phpunit/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	beStrictAboutTestsThatDoNotTestAnything="true"
+	beStrictAboutOutputDuringTests="true"
+	convertErrorsToExceptions="true"
+	convertWarningsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertDeprecationsToExceptions="false"
+	cacheResultFile=".cache/phpunit.result.cache"
+>
+	<testsuites>
+		<testsuite name="swiftforms">
+			<directory suffix="Test.php">tests/phpunit/tests</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
