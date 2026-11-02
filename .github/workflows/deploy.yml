@@ -53,7 +53,7 @@ jobs:
           ref: ${{ inputs.tag }}
           fetch-depth: 0
 
-      # PHP 8.3: Strauss and the bundled frameworks need PHP 8.2 or newer.
+      # PHP 8.3: Strauss needs PHP 8.2 or newer.
       - name: Setup PHP
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
         with:
@@ -98,6 +98,29 @@ jobs:
           bash bin/build-release.sh "${RUNNER_TEMP}/dist"
           mkdir -p "${RUNNER_TEMP}/deploy"
           unzip -q "${RUNNER_TEMP}/dist/swiftforms.zip" -d "${RUNNER_TEMP}/deploy"
+
+      # The live preview on wordpress.org installs the plugin from the directory, so the SVN copy of the
+      # blueprint (assets/blueprints/blueprint.json in SVN) swaps the GitHub ZIP for the directory slug.
+      # The images in .wordpress-org/ are committed; the blueprint is generated here and not committed.
+      - name: Prepare the wordpress.org blueprint
+        shell: bash
+        run: |
+          mkdir -p .wordpress-org/blueprints
+          node -e '
+            const fs = require( "fs" );
+            const blueprint = JSON.parse( fs.readFileSync( "assets/blueprints/blueprint.json", "utf8" ) );
+            let swapped = 0;
+            for ( const step of blueprint.steps ) {
+              if ( step.step === "installPlugin" ) {
+                step.pluginData = { resource: "wordpress.org/plugins", slug: "swiftforms" };
+                swapped++;
+              }
+            }
+            if ( swapped !== 1 ) {
+              throw new Error( "Expected exactly one installPlugin step." );
+            }
+            fs.writeFileSync( ".wordpress-org/blueprints/blueprint.json", JSON.stringify( blueprint, null, 2 ) + "\n" );
+          '
 
       - name: Deploy to WordPress.org
         uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0

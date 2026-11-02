@@ -1,0 +1,96 @@
+== S9 registered ==
+exporter: SwiftForms entries
+eraser: SwiftForms entries
+
+== S9 export for person0042@example.com ==
+[
+    {
+        "data": [
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-42",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2025-11-22 11:51:34"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Person 0042"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "person0042@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Enquiry number 42."
+                    }
+                ]
+            }
+        ],
+        "done": true
+    }
+]
+
+== S9 export for an address with no entries ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase person0042@example.com ==
+[
+    {
+        "items_removed": true,
+        "items_retained": false,
+        "messages": [
+            "Removed 1 SwiftForms entry."
+        ],
+        "done": true
+    }
+]
+
+== S9 rows before and after the erasure ==
+before:
+{
+    "entries with the address": 1,
+    "entries": 5019,
+    "value rows": 15271,
+    "mail log rows naming it": 0
+}
+after:
+{
+    "entries with the address": 0,
+    "entries": 5018,
+    "value rows": 15268,
+    "orphan value rows": 0,
+    "orphan meta rows": 0,
+    "mail log rows naming it": 0
+}
+
+== S9 export again after the erasure ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase an address with no entries ==
+[
+    {
+        "items_removed": false,
+        "items_retained": false,
+        "messages": [],
+        "done": true
+    }
+]
+

@@ -1,0 +1,115 @@
+== S9 registered ==
+exporter: SwiftForms entries
+eraser: SwiftForms entries
+
+== S9 export for ada@example.com ==
+[
+    {
+        "data": [
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E3}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Newsletter"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Consent",
+                        "value": "1"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E7}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Newsletter"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Consent",
+                        "value": "1"
+                    }
+                ]
+            }
+        ],
+        "done": true
+    }
+]
+
+== S9 export for an address with no entries ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase ada@example.com ==
+[
+    {
+        "items_removed": true,
+        "items_retained": false,
+        "messages": [
+            "Removed 2 SwiftForms entries."
+        ],
+        "done": true
+    }
+]
+
+== S9 rows before and after the erasure ==
+before:
+{
+    "entries with the address": 2,
+    "entries": 19,
+    "value rows": 55,
+    "mail log rows naming it": 0
+}
+after:
+{
+    "entries with the address": 0,
+    "entries": 17,
+    "value rows": 51,
+    "orphan value rows": 0,
+    "orphan meta rows": 0,
+    "mail log rows naming it": 0
+}
+
+== S9 export again after the erasure ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase an address with no entries ==
+[
+    {
+        "items_removed": false,
+        "items_retained": false,
+        "messages": [],
+        "done": true
+    }
+]
+

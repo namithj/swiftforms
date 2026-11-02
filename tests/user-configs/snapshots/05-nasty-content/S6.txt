@@ -1,0 +1,653 @@
+== S6 GET /entries (default: new and read, newest first) ==
+x-wp-total: 5
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E5}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "\"><svg onload=alert(1)> · mallory@example.com"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    }
+]
+
+== S6 GET /forms ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "counts": {
+            "new": 5,
+            "read": 0,
+            "spam": 11,
+            "trash": 0
+        }
+    }
+]
+
+== S6 GET /entries?form=nasty#1&status=new ==
+x-wp-total: 5
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E5}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "\"><svg onload=alert(1)> · mallory@example.com"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    }
+]
+
+== S6 GET /entries?status=new ==
+x-wp-total: 5
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E5}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "\"><svg onload=alert(1)> · mallory@example.com"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    }
+]
+
+== S6 GET /entries?status=read ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries?status=spam ==
+x-wp-total: 11
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E16}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E15}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E14}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E13}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E12}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E11}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E10}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E9}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E8}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f050001-0000-4000-8000-000000000001",
+        "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+    }
+]
+
+== S6 GET /entries?status=trash ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries/{E5} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E5}",
+    "form_id": "5f050001-0000-4000-8000-000000000001",
+    "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "new",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
+            "type": "email",
+            "values": [
+                {
+                    "value": "zoe@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "note",
+            "label": "ملاحظة (RTL) ‮override",
+            "type": "text",
+            "values": [
+                {
+                    "value": "javascript:alert(1) ‮override",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "website",
+            "label": "Website",
+            "type": "url",
+            "values": [
+                {
+                    "value": "https://example.com/?a=1&b=2#frag",
+                    "is_link": true,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "topic",
+            "label": "Topic, with | pipes",
+            "type": "select",
+            "values": [
+                {
+                    "value": "a,b",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "plan",
+            "label": "الاسم الكامل",
+            "type": "radio",
+            "values": [
+                {
+                    "value": "pro",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "tags",
+            "label": "Tags",
+            "type": "checkboxes",
+            "values": [
+                {
+                    "value": "a,b,c",
+                    "is_link": false,
+                    "is_email": false
+                },
+                {
+                    "value": "p|q|r",
+                    "is_link": false,
+                    "is_email": false
+                },
+                {
+                    "value": "it's",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "marker",
+            "label": "Marker",
+            "type": "hidden",
+            "values": [
+                {
+                    "value": "{field:x} [gallery ids=\"1\"]",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Nasty",
+        "link": "http://example.org/nasty/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E5} {"status":"read"} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E5}",
+    "form_id": "5f050001-0000-4000-8000-000000000001",
+    "form_title": "Nasty & <b>\"quoted\"</b> ünï 漢字 🚀",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
+            "type": "email",
+            "values": [
+                {
+                    "value": "zoe@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "note",
+            "label": "ملاحظة (RTL) ‮override",
+            "type": "text",
+            "values": [
+                {
+                    "value": "javascript:alert(1) ‮override",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "website",
+            "label": "Website",
+            "type": "url",
+            "values": [
+                {
+                    "value": "https://example.com/?a=1&b=2#frag",
+                    "is_link": true,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "topic",
+            "label": "Topic, with | pipes",
+            "type": "select",
+            "values": [
+                {
+                    "value": "a,b",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "plan",
+            "label": "الاسم الكامل",
+            "type": "radio",
+            "values": [
+                {
+                    "value": "pro",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "tags",
+            "label": "Tags",
+            "type": "checkboxes",
+            "values": [
+                {
+                    "value": "a,b,c",
+                    "is_link": false,
+                    "is_email": false
+                },
+                {
+                    "value": "p|q|r",
+                    "is_link": false,
+                    "is_email": false
+                },
+                {
+                    "value": "it's",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "marker",
+            "label": "Marker",
+            "type": "hidden",
+            "values": [
+                {
+                    "value": "{field:x} [gallery ids=\"1\"]",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Nasty",
+        "link": "http://example.org/nasty/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E5} {"starred":true} ==
+status: 200, entry status: read, starred: true
+
+== S6 PATCH /entries/{E5} {"status":"spam"} ==
+status: 200, entry status: spam, starred: true
+
+== S6 PATCH /entries/{E5} {"status":"trash"} ==
+status: 200, entry status: trash, starred: true
+
+== S6 PATCH /entries/{E5} {"status":"new"} ==
+status: 200, entry status: new, starred: true
+
+== S6 PATCH /entries/{E5} {"starred":false} ==
+status: 200, entry status: new, starred: false
+
+== S6 PATCH /entries/{E5} with nothing to change ==
+status: 400
+{
+    "code": "rest_missing_callback_param",
+    "message": "Send a status or starred.",
+    "data": {
+        "status": 400
+    }
+}
+
+== S6 GET /entries/999999999 (no such entry) ==
+status: 404
+{
+    "code": "swiftforms_entry_not_found",
+    "message": "No such entry.",
+    "data": {
+        "status": 404
+    }
+}
+
+== S6 GET /entries as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+
+== S6 PATCH /entries/{id} as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+

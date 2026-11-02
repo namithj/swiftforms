@@ -45,10 +45,77 @@ class SwiftForms_Normaliser_Test extends PHPUnit\Framework\TestCase {
 		$this->assertSame( 'v2.lq3x9k.0123456789abcdef0123456789abcdef', SF_Normaliser::html( 'v2.lq3x9k.0123456789abcdef0123456789abcdef' ), 'Only the v1 shape is a token.' );
 	}
 
+	public function test_html_signed_render_times() {
+		$this->assertSame( '<input type="hidden" name="_sf_t" value="{T}">', SF_Normaliser::html( '<input type="hidden" name="_sf_t" value="1795082400.0123456789abcdef">' ) );
+		$this->assertSame( '<input value="{T}" name="_sf_t">', SF_Normaliser::html( '<input value="1795082400.0123456789abcdef" name="_sf_t">' ) );
+		$this->assertSame( '<input name="_sf_t" value="js.10000">', SF_Normaliser::html( '<input name="_sf_t" value="js.10000">' ), 'Only the signed shape is a render time.' );
+		$this->assertSame( '<input name="other" value="1795082400.0123456789abcdef">', SF_Normaliser::html( '<input name="other" value="1795082400.0123456789abcdef">' ), 'Only the _sf_t control changes.' );
+	}
+
+	public function test_html_result_keys() {
+		$this->assertSame( '<a href="http://example.org/contact/?sf_result={RESULT}">', SF_Normaliser::html( '<a href="http://example.org/contact/?sf_result=0123456789abcdef0123456789abcdef">' ) );
+		$this->assertSame( 'sf_result=0123456789abcdef', SF_Normaliser::html( 'sf_result=0123456789abcdef' ), 'Only a 32-character key is a result key.' );
+	}
+
+	public function test_html_plugin_version_control() {
+		$this->assertSame( '<input type="hidden" name="_sf_v" value="{VERSION}">', SF_Normaliser::html( '<input type="hidden" name="_sf_v" value="1.0.0">' ) );
+		$this->assertSame( '<input type="hidden" name="_sf_v" value="{VERSION}">', SF_Normaliser::html( '<input type="hidden" name="_sf_v" value="0.1.0-beta.2">' ) );
+		$this->assertSame( '<input name="x" value="1.0.0">', SF_Normaliser::html( '<input name="x" value="1.0.0">' ), 'Only the _sf_v control changes.' );
+	}
+
+	public function test_html_emoji_image_version() {
+		$this->assertSame( '<img src="https://s.w.org/images/core/emoji/{EMOJI}/72x72/1f680.png" alt="x">', SF_Normaliser::html( '<img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f680.png" alt="x">' ) );
+		$this->assertSame( '<img src="https://s.w.org/images/core/emoji/{EMOJI}/svg/1f680.svg">', SF_Normaliser::html( '<img src="https://s.w.org/images/core/emoji/16.0.0/svg/1f680.svg">' ) );
+		$this->assertSame( '<img src="https://example.org/emoji/17.0.2/a.png">', SF_Normaliser::html( '<img src="https://example.org/emoji/17.0.2/a.png">' ), 'Only core emoji images change.' );
+	}
+
+	public function test_client_state_nonce() {
+		$this->assertSame( '{"restUrl":"http://example.org/wp-json/","nonce": "{NONCE}"}', SF_Normaliser::tokens( '{"restUrl":"http://example.org/wp-json/","nonce": "88575b2429"}' ) );
+		$this->assertSame( '{"nonce":"{NONCE}"}', SF_Normaliser::html( '{"nonce":"88575b2429"}' ) );
+		$this->assertSame( '{"nonce":"short"}', SF_Normaliser::tokens( '{"nonce":"short"}' ), 'Only a ten-digit hex nonce changes.' );
+	}
+
+	public function test_tokens_for_text_that_is_not_html() {
+		$this->assertSame( '{"token":"{TOKEN}"}', SF_Normaliser::tokens( '{"token":"v1.lq3x9k.0123456789abcdef0123456789abcdef"}' ) );
+		$this->assertSame( 'Location: http://example.org/a/?sf_result={RESULT}', SF_Normaliser::tokens( 'Location: http://example.org/a/?sf_result=0123456789abcdef0123456789abcdef' ) );
+		$this->assertSame( 'plain 1.0.0', SF_Normaliser::tokens( 'plain 1.0.0' ) );
+	}
+
+	public function test_scrub_replaces_literal_aliases_longest_first() {
+		$this->assertSame(
+			'post:about post:contact',
+			SF_Normaliser::scrub(
+				'post:12 post:123',
+				[
+					'post:12'  => 'post:about',
+					'post:123' => 'post:contact',
+				]
+			)
+		);
+		$this->assertSame(
+			'post:contact',
+			SF_Normaliser::scrub(
+				'post:123',
+				[
+					'post:12'  => 'post:about',
+					'post:123' => 'post:contact',
+				]
+			),
+			'The longer value wins over its own prefix.'
+		);
+		$this->assertSame( 'unchanged', SF_Normaliser::scrub( 'unchanged', [] ) );
+	}
+
 	public function test_html_removes_the_core_paragraph_class() {
 		$this->assertSame( '<p>a</p>', SF_Normaliser::html( '<p class="wp-block-paragraph">a</p>' ) );
 		$this->assertSame( '<p class="has-large-font-size">a</p>', SF_Normaliser::html( '<p class="has-large-font-size wp-block-paragraph">a</p>' ) );
 		$this->assertSame( '<p class="wp-block-paragraph-x">a</p>', SF_Normaliser::html( '<p class="wp-block-paragraph-x">a</p>' ), 'Only the exact class is removed.' );
+	}
+
+	public function test_html_removes_the_anchor_of_a_form_element() {
+		$this->assertSame( '<form class="swiftforms-form a" method="post">', SF_Normaliser::html( '<form class="swiftforms-form a" id="hero" method="post">' ) );
+		$this->assertSame( '<div class="swiftforms-form swiftforms-form--submitted">', SF_Normaliser::html( '<div class="swiftforms-form swiftforms-form--submitted" id="hero">' ) );
+		$this->assertSame( '<div class="other" id="hero"><input id="x">', SF_Normaliser::html( '<div class="other" id="hero"><input id="x">' ), 'Other elements keep their id.' );
 	}
 
 	public function test_html_keeps_the_test_home_url() {
@@ -100,6 +167,8 @@ class SwiftForms_Normaliser_Test extends PHPUnit\Framework\TestCase {
 			'everything' => [ "<div class=\"wp-container-core-group-is-layout-9f0d2b3c\">\r\n  <a href=\"/x?ver=1&amp;_wpnonce=0a1b2c3d4e\"> </a>\n<input name=\"_wpnonce\" value=\"0a1b2c3d4e\"> <b data-nonce=\"0a1b2c3d4e\">v1.abc.0123456789abcdef0123456789abcdef</b>  \n</div>  " ],
 			'ver only'   => [ '<script src="a.js?ver=1.2"></script> <link href="b.css?a=1&ver=2&b=3">' ],
 			'paragraph'  => [ '<p class="x wp-block-paragraph">a</p> <p class="wp-block-paragraph">b</p>' ],
+			'controls'   => [ '<input name="_sf_t" value="1795082400.0123456789abcdef"><input name="_sf_v" value="1.0.0"><a href="?sf_result=0123456789abcdef0123456789abcdef">' ],
+			'emoji'      => [ '<img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f680.png" alt="x"> <p>a</p>' ],
 			'plain'      => [ "just text  \n\n" ],
 		];
 	}

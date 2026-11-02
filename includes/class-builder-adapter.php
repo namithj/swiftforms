@@ -14,34 +14,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Builder_Adapter
  *
- * The only class that references the Strauss-prefixed block builder, and the
- * place that holds every fallback for a framework request that has not landed
- * yet. A late framework fix replaces a fallback here without touching stored
- * data.
+ * The only class that references the Strauss-prefixed block builder. A late
+ * framework change is absorbed here without touching stored data.
  *
- * Fallbacks in force (see .ai/handover.md):
- * - BB-17 (tagged builder release): composer pins dev-main at a commit.
- * - BB-18 (close the cassette-cmf/field disclosure): filter_bindings_source_value().
- * - BB-16/CMF-8 (PHP 7.4 in the frameworks): none needed here; the plugin header
- *   declares PHP 8.2 instead. On PHP below 8.2 the builder registers nothing.
- * - Builder assets URL: no filter. The prefixed copy's default, realpath based,
- *   resolution already points at vendor-prefixed/, and the filter name is
- *   unprefixed and global, so setting it would hijack any other plugin's copy.
+ * State delivered with the frameworks 0.2.x (see .ai/handover.md):
+ * - No fallbacks are in force. The builder's bindings source is off by default
+ *   (BB-18), so SwiftForms boots it without one; BindingsSourceTest guards that.
+ * - PHP namespaces are prefixed by Strauss (SwiftForms\Vendor\); every name that
+ *   WordPress or the browser sees (script and style handles, REST namespace,
+ *   JS global) is derived from the builder's boot prefix PREFIX.
+ * - The builder boots lazily, on the first non-empty block configuration, so a
+ *   site with no SwiftForms blocks gets no REST route, no editor assets and no
+ *   hooks from it.
+ * - cassette-cmf is not booted: the builder uses it only as a library (field
+ *   sanitising and validation); SwiftForms registers none of its settings pages,
+ *   assets or REST routes.
+ * - The builder's stylesheet is for the editor. It is removed again on the front
+ *   end (strip_front_end_style()).
  */
 class Builder_Adapter {
 
 	/**
-	 * Name of the block bindings source the builder registers.
+	 * Boot prefix of the block builder (handles, REST namespace, JS global).
 	 */
-	const BINDINGS_SOURCE = 'cassette-cmf/field';
-
-	/**
-	 * Fields that blocks may read through the bindings source.
-	 *
-	 * Empty: SwiftForms never binds anything through cassette-cmf/field, so
-	 * everything is refused. R01 adds names here only if a block really needs it.
-	 */
-	const BINDINGS_ALLOWLIST = [];
+	const PREFIX = 'swiftforms';
 
 	/**
 	 * Single instance.
@@ -63,47 +59,49 @@ class Builder_Adapter {
 	}
 
 	/**
-	 * Attach the adapter's hooks.
+	 * Boot the block builder, without a bindings source.
 	 *
-	 * @return void
+	 * Safe to repeat: the builder ignores an identical second boot, and
+	 * WordPress ignores the same callback added twice.
+	 *
+	 * @return bool False when the builder is not available.
 	 */
-	public function register_hooks() {
-		// PHP_INT_MAX so that no other callback can undo the refusal.
-		add_filter( 'block_bindings_source_value', [ $this, 'filter_bindings_source_value' ], PHP_INT_MAX, 5 );
+	private function boot() {
+		$class = '\\SwiftForms\\Vendor\\PedalCMS\\CassetteCMFBlocks\\CassetteCMFBlocks';
+		if ( ! class_exists( $class ) ) {
+			return false;
+		}
+
+		// No 'bindings_source': it stays off (BB-18), and no 'prefix'-named source exists.
+		$class::boot( [ 'prefix' => self::PREFIX ] );
+
+		// Priority 100: after the builder's own enqueue at priority 10.
+		add_action( 'enqueue_block_assets', [ $this, 'strip_front_end_style' ], 100 );
+
+		return true;
 	}
 
 	/**
-	 * BB-18 fallback: make cassette-cmf/field resolve nothing.
+	 * Remove the builder's editor stylesheet from the front end.
 	 *
-	 * The builder's binding source reads any option, post meta or term meta by
-	 * name, so a contributor could bind a paragraph to a secret and read it in
-	 * a preview. Returning null makes core keep the block's own static content.
-	 * Remove this when BB-18 lands in the builder (the leak test then still
-	 * guards it).
+	 * The builder enqueues it on enqueue_block_assets, which also runs on the
+	 * front end of every page once it has started. The editor (admin, incl. the
+	 * iframed canvas) keeps it; SwiftForms ships its own front-end stylesheet.
 	 *
-	 * @param mixed     $value          Value resolved by the source.
-	 * @param string    $name           Source name.
-	 * @param mixed     $source_args    The binding's arguments.
-	 * @param \WP_Block $block_instance Block being rendered.
-	 * @param string    $attribute_name Bound attribute.
-	 * @return mixed
+	 * @return void
 	 */
-	public function filter_bindings_source_value( $value, $name, $source_args = [], $block_instance = null, $attribute_name = '' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Fixed hook signature.
-		if ( self::BINDINGS_SOURCE !== $name ) {
-			return $value;
+	public function strip_front_end_style() {
+		if ( is_admin() ) {
+			return;
 		}
-
-		$field = ( is_array( $source_args ) && isset( $source_args['field'] ) && is_string( $source_args['field'] ) ) ? $source_args['field'] : '';
-		// @phpstan-ignore function.impossibleType (the allowlist is empty until R01 adds names)
-		if ( '' !== $field && in_array( $field, self::BINDINGS_ALLOWLIST, true ) ) {
-			return $value;
-		}
-
-		return null;
+		wp_dequeue_style( self::PREFIX . '-blocks-editor-style' );
+		wp_deregister_style( self::PREFIX . '-blocks-editor-style' );
 	}
 
 	/**
 	 * Register blocks through the block builder.
+	 *
+	 * Boots the builder first, but only when there is something to register.
 	 *
 	 * @param array<string, mixed> $config Builder configuration ('blocks' => [...]).
 	 * @return void
@@ -113,11 +111,11 @@ class Builder_Adapter {
 			return;
 		}
 
-		$class = '\\SwiftForms\\Vendor\\PedalCMS\\CassetteCMFBlocks\\CassetteCMFBlocks';
-		if ( ! class_exists( $class ) ) {
+		if ( ! $this->boot() ) {
 			return;
 		}
 
+		$class = '\\SwiftForms\\Vendor\\PedalCMS\\CassetteCMFBlocks\\CassetteCMFBlocks';
 		$class::register_from_array( $config );
 	}
 }

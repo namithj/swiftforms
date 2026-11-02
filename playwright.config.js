@@ -15,6 +15,8 @@ module.exports = defineConfig( {
 	...baseConfig,
 	testDir: path.join( __dirname, 'tests/e2e' ),
 	testMatch: '**/*.spec.js',
+	// The per-config specs run through bin/run-e2e-configs.mjs (it sets SF_CONFIG); a plain `playwright test` leaves them out.
+	testIgnore: process.env.SF_CONFIG ? [] : [ '**/user-configs.spec.js' ],
 	webServer: undefined,
 	use: {
 		...baseConfig.use,

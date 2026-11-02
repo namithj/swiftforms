@@ -83,7 +83,7 @@ FAILED=0
 
 # Must be in the ZIP: the namespaced frameworks and both autoloaders. build/ is
 # required once the JavaScript build exists.
-required=( "${PLUGIN_SLUG}.php" "readme.txt" "includes/" "vendor/autoload.php" "vendor-prefixed/autoload.php" "vendor-prefixed/pedalcms/" )
+required=( "${PLUGIN_SLUG}.php" "readme.txt" "composer.json" "includes/" "vendor/autoload.php" "vendor-prefixed/autoload.php" "vendor-prefixed/pedalcms/" )
 if [[ -f package.json ]]; then
 	required+=( "build/" )
 fi
@@ -95,7 +95,7 @@ for path in "${required[@]}"; do
 done
 
 # Must not be in the ZIP: planning files, tests, sources, scripts, dev tooling.
-forbidden=( "vendor/pedalcms/" ".ai/" "tests/" "src/" "bin/" ".github/" "node_modules/" "composer.json" "composer.lock" "vendor/bin/" "vendor/phpunit/" "vendor/squizlabs/" "vendor/brianhenryie/" "vendor-prefixed/pedalcms/cassette-cmf-block-builder/tests/" )
+forbidden=( "vendor/pedalcms/" ".ai/" "tests/" "src/" "bin/" ".github/" "node_modules/" "composer.lock" "vendor/bin/" "vendor/phpunit/" "vendor/squizlabs/" "vendor/brianhenryie/" "vendor-prefixed/pedalcms/cassette-cmf-block-builder/tests/" )
 for path in "${forbidden[@]}"; do
 	if grep -q "^${PLUGIN_SLUG}/${path}" <<< "${ZIP_ENTRIES}"; then
 		echo "Must not be in the release ZIP: ${path}" >&2

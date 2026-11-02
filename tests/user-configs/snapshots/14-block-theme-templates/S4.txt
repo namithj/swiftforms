@@ -1,0 +1,231 @@
+== S4 about#1 ==
+-- valid --
+redirect 303 Location: http://example.org/about/?sf_result={RESULT}
+left behind:
+entry:
+{
+    "id": "{E6}",
+    "form_id": "5f140003-0000-4000-8000-000000000003",
+    "schema_hash": "91554eb5d360bcaecb240b8a2cf6807f35d11db02090282d4a48bd763635fc04",
+    "source": "post:about",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value question[0] = "Do you cater for twenty people?"
+log mail/info 5f140003-0000-4000-8000-000000000003: Notification sent. {"entry":"{E6}","notification":0,"to":["editor@fse-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: editor@fse-site.example
+subject: New submission: Ask us
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Question</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you cater for twenty people?</td></tr></table></td></tr></table></td></tr></table></body></html>
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<p>We are a small restaurant.</p>
+<div class="swiftforms-form swiftforms-form--labels-top swiftforms-form--submitted wp-block-swiftforms-form"><div class="swiftforms-confirmation" role="status">
+<p>We will answer soon.</p>
+</div></div>
+
+-- invalid --
+redirect 303 Location: http://example.org/about/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<p>We are a small restaurant.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140003-0000-4000-8000-000000000003&quot;,&quot;source&quot;:&quot;post:about&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Please fix the following:</p><ul><li><a href="#sf-5f140003-email-1">Please enter a valid email address.</a></li><li><a href="#sf-5f140003-question-1">This field is required.</a></li></ul></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f140003-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f140003-email-1" name="sf[email]" value="ada" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f140003-email-1-error"><p class="swiftforms-error" id="sf-5f140003-email-1-error">Please enter a valid email address.</p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f140003-question-1">Question<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><textarea class="swiftforms-textarea" id="sf-5f140003-question-1" name="sf[question]" rows="4" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f140003-question-1-error"></textarea><p class="swiftforms-error" id="sf-5f140003-question-1-error">This field is required.</p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Ask</button></div>
+<input type="hidden" name="_sf_form" value="5f140003-0000-4000-8000-000000000003"><input type="hidden" name="_sf_source" value="post:about"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+
+-- expired token --
+redirect 303 Location: http://example.org/about/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<p>We are a small restaurant.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140003-0000-4000-8000-000000000003&quot;,&quot;source&quot;:&quot;post:about&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div><div class="swiftforms-notice swiftforms-notice--info" role="status">Please submit again.</div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f140003-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f140003-email-1" name="sf[email]" value="ada@example.com" required aria-required="true" aria-describedby="sf-5f140003-email-1-error"><p class="swiftforms-error" id="sf-5f140003-email-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f140003-question-1">Question<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><textarea class="swiftforms-textarea" id="sf-5f140003-question-1" name="sf[question]" rows="4" required aria-required="true" aria-describedby="sf-5f140003-question-1-error">Do you cater for twenty people?</textarea><p class="swiftforms-error" id="sf-5f140003-question-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Ask</button></div>
+<input type="hidden" name="_sf_form" value="5f140003-0000-4000-8000-000000000003"><input type="hidden" name="_sf_source" value="post:about"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+
+
+== S4 footer-part#1 ==
+-- valid --
+redirect 303 Location: http://example.org/?sf_result={RESULT}
+left behind:
+entry:
+{
+    "id": "{E7}",
+    "form_id": "5f140001-0000-4000-8000-000000000001",
+    "schema_hash": "3318e4a0fa617118e8441c5283a417c78eeb6a291a6122e9cf429372f66c6eb5",
+    "source": "template_part:sf-test-block-files//footer",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+log mail/info 5f140001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E7}","notification":0,"to":["editor@fse-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: editor@fse-site.example
+subject: New submission: Footer newsletter
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<div class="wp-block-template-part">
+<footer class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+<p>Stay in touch.</p>
+<div class="swiftforms-form swiftforms-form--labels-top swiftforms-form--submitted wp-block-swiftforms-form"><div class="swiftforms-confirmation" role="status">
+<p>You are subscribed.</p>
+</div></div></footer>
+</div>
+
+-- invalid --
+redirect 303 Location: http://example.org/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<div class="wp-block-template-part">
+<footer class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+<p>Stay in touch.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;template_part:sf-test-block-files\/\/footer&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Please fix the following:</p><ul><li><a href="#sf-5f140001-email-1">Please enter a valid email address.</a></li></ul></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f140001-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f140001-email-1" name="sf[email]" value="ada@" autocomplete="email" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f140001-email-1-error"><p class="swiftforms-error" id="sf-5f140001-email-1-error">Please enter a valid email address.</p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Subscribe</button></div>
+<input type="hidden" name="_sf_form" value="5f140001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="template_part:sf-test-block-files//footer"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></footer>
+</div>
+
+-- expired token --
+redirect 303 Location: http://example.org/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<div class="wp-block-template-part">
+<footer class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+<p>Stay in touch.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;template_part:sf-test-block-files\/\/footer&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div><div class="swiftforms-notice swiftforms-notice--info" role="status">Please submit again.</div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f140001-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f140001-email-1" name="sf[email]" value="ada@example.com" autocomplete="email" required aria-required="true" aria-describedby="sf-5f140001-email-1-error"><p class="swiftforms-error" id="sf-5f140001-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Subscribe</button></div>
+<input type="hidden" name="_sf_form" value="5f140001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="template_part:sf-test-block-files//footer"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></footer>
+</div>
+
+
+== S4 single-template#1 ==
+-- valid --
+redirect 303 Location: http://example.org/?sf_result={RESULT}
+left behind:
+entry:
+{
+    "id": "{E8}",
+    "form_id": "5f140002-0000-4000-8000-000000000002",
+    "schema_hash": "29e248540ac71e86ad6469ab475efc22e45f83a7a03548b2a409faa5848c0fa5",
+    "source": "template:sf-test-block-files//single",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value feedback[0] = "Loved the article on analytical engines."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f140002-0000-4000-8000-000000000002: Notification sent. {"entry":"{E8}","notification":0,"to":["editor@fse-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: editor@fse-site.example
+subject: New submission: Reader feedback
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Your name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Feedback</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Loved the article on analytical engines.</td></tr></table></td></tr></table></td></tr></table></body></html>
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<header class="wp-block-template-part"><h1 class="wp-block-site-title"><a href="http://example.org" target="_self" rel="home">SwiftForms Test Suite</a></h1>
+</header>
+<main class="wp-block-group is-layout-flow wp-block-group-is-layout-flow"><h2 class="wp-block-post-title">Hello world</h2>
+<div class="entry-content wp-block-post-content is-layout-flow wp-block-post-content-is-layout-flow">
+<p>A post without a form of its own; its single template carries one.</p>
+</div>
+<div class="swiftforms-form swiftforms-form--labels-top swiftforms-form--submitted wp-block-swiftforms-form"><div class="swiftforms-confirmation" role="status">
+<p>Thank you for your feedback.</p>
+</div></div></main>
+<footer class="wp-block-template-part">
+<footer class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+<p>Stay in touch.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;template_part:sf-test-block-files\/\/footer&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f140001-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f140001-email-1" name="sf[email]" autocomplete="email" required aria-required="true" aria-describedby="sf-5f140001-email-1-error"><p class="swiftforms-error" id="sf-5f140001-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Subscribe</button></div>
+<input type="hidden" name="_sf_form" value="5f140001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="template_part:sf-test-block-files//footer"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></footer>
+</footer>
+
+-- invalid --
+redirect 303 Location: http://example.org/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<header class="wp-block-template-part"><h1 class="wp-block-site-title"><a href="http://example.org" target="_self" rel="home">SwiftForms Test Suite</a></h1>
+</header>
+<main class="wp-block-group is-layout-flow wp-block-group-is-layout-flow"><h2 class="wp-block-post-title">Hello world</h2>
+<div class="entry-content wp-block-post-content is-layout-flow wp-block-post-content-is-layout-flow">
+<p>A post without a form of its own; its single template carries one.</p>
+</div>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140002-0000-4000-8000-000000000002&quot;,&quot;source&quot;:&quot;template:sf-test-block-files\/\/single&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Please fix the following:</p><ul><li><a href="#sf-5f140002-name-1">This field is required.</a></li><li><a href="#sf-5f140002-feedback-1">This field is required.</a></li></ul></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f140002-name-1">Your name<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="text" id="sf-5f140002-name-1" name="sf[name]" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f140002-name-1-error"><p class="swiftforms-error" id="sf-5f140002-name-1-error">This field is required.</p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f140002-feedback-1">Feedback<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><textarea class="swiftforms-textarea" id="sf-5f140002-feedback-1" name="sf[feedback]" rows="4" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f140002-feedback-1-error"></textarea><p class="swiftforms-error" id="sf-5f140002-feedback-1-error">This field is required.</p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Send feedback</button></div>
+<input type="hidden" name="_sf_form" value="5f140002-0000-4000-8000-000000000002"><input type="hidden" name="_sf_source" value="template:sf-test-block-files//single"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></main>
+<footer class="wp-block-template-part">
+<footer class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+<p>Stay in touch.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;template_part:sf-test-block-files\/\/footer&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f140001-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f140001-email-1" name="sf[email]" autocomplete="email" required aria-required="true" aria-describedby="sf-5f140001-email-1-error"><p class="swiftforms-error" id="sf-5f140001-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Subscribe</button></div>
+<input type="hidden" name="_sf_form" value="5f140001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="template_part:sf-test-block-files//footer"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></footer>
+</footer>
+
+-- expired token --
+redirect 303 Location: http://example.org/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<header class="wp-block-template-part"><h1 class="wp-block-site-title"><a href="http://example.org" target="_self" rel="home">SwiftForms Test Suite</a></h1>
+</header>
+<main class="wp-block-group is-layout-flow wp-block-group-is-layout-flow"><h2 class="wp-block-post-title">Hello world</h2>
+<div class="entry-content wp-block-post-content is-layout-flow wp-block-post-content-is-layout-flow">
+<p>A post without a form of its own; its single template carries one.</p>
+</div>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140002-0000-4000-8000-000000000002&quot;,&quot;source&quot;:&quot;template:sf-test-block-files\/\/single&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div><div class="swiftforms-notice swiftforms-notice--info" role="status">Please submit again.</div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f140002-name-1">Your name<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="text" id="sf-5f140002-name-1" name="sf[name]" value="Ada Lovelace" required aria-required="true" aria-describedby="sf-5f140002-name-1-error"><p class="swiftforms-error" id="sf-5f140002-name-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f140002-feedback-1">Feedback<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><textarea class="swiftforms-textarea" id="sf-5f140002-feedback-1" name="sf[feedback]" rows="4" required aria-required="true" aria-describedby="sf-5f140002-feedback-1-error">Loved the article on analytical engines.</textarea><p class="swiftforms-error" id="sf-5f140002-feedback-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Send feedback</button></div>
+<input type="hidden" name="_sf_form" value="5f140002-0000-4000-8000-000000000002"><input type="hidden" name="_sf_source" value="template:sf-test-block-files//single"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></main>
+<footer class="wp-block-template-part">
+<footer class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+<p>Stay in touch.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f140001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;template_part:sf-test-block-files\/\/footer&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f140001-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f140001-email-1" name="sf[email]" autocomplete="email" required aria-required="true" aria-describedby="sf-5f140001-email-1-error"><p class="swiftforms-error" id="sf-5f140001-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Subscribe</button></div>
+<input type="hidden" name="_sf_form" value="5f140001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="template_part:sf-test-block-files//footer"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></footer>
+</footer>
+
+
+== S4 template:sf-test-block-files//sf-landing#1 ==
+(no page or stored template shows this form, so there is nothing to post to)
+

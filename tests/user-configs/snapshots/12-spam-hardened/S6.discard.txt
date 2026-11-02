@@ -1,0 +1,460 @@
+== S6 GET /entries (default: new and read, newest first) ==
+x-wp-total: 7
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E7}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f120002-0000-4000-8000-000000000002",
+        "form_title": "Quick question (protection off)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com · Is the shop open on bank holidays?"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f120002-0000-4000-8000-000000000002",
+        "form_title": "Quick question (protection off)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com · Is the shop open on bank holidays?"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /forms ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "title": "Contact (protected)",
+        "counts": {
+            "new": 5,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "5f120002-0000-4000-8000-000000000002",
+        "title": "Quick question (protection off)",
+        "counts": {
+            "new": 2,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    }
+]
+
+== S6 GET /entries?form=contact#1&status=new ==
+x-wp-total: 5
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E7}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /entries?form=quick#1&status=new ==
+x-wp-total: 2
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E5}",
+        "form_id": "5f120002-0000-4000-8000-000000000002",
+        "form_title": "Quick question (protection off)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com · Is the shop open on bank holidays?"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f120002-0000-4000-8000-000000000002",
+        "form_title": "Quick question (protection off)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com · Is the shop open on bank holidays?"
+    }
+]
+
+== S6 GET /entries?status=new ==
+x-wp-total: 7
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E7}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f120002-0000-4000-8000-000000000002",
+        "form_title": "Quick question (protection off)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com · Is the shop open on bank holidays?"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f120002-0000-4000-8000-000000000002",
+        "form_title": "Quick question (protection off)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com · Is the shop open on bank holidays?"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f120001-0000-4000-8000-000000000001",
+        "form_title": "Contact (protected)",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /entries?status=read ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries?status=spam ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries?status=trash ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries/{E7} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E7}",
+    "form_id": "5f120001-0000-4000-8000-000000000001",
+    "form_title": "Contact (protected)",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "new",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Ada Lovelace",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "ada@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "I would like to ask about your opening hours.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null,
+    "ip": "203.0.113.7",
+    "user_agent": "SwiftForms-Regression/1.0"
+}
+
+== S6 PATCH /entries/{E7} {"status":"read"} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E7}",
+    "form_id": "5f120001-0000-4000-8000-000000000001",
+    "form_title": "Contact (protected)",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Ada Lovelace",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "ada@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "I would like to ask about your opening hours.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null,
+    "ip": "203.0.113.7",
+    "user_agent": "SwiftForms-Regression/1.0"
+}
+
+== S6 PATCH /entries/{E7} {"starred":true} ==
+status: 200, entry status: read, starred: true
+
+== S6 PATCH /entries/{E7} {"status":"spam"} ==
+status: 200, entry status: spam, starred: true
+
+== S6 PATCH /entries/{E7} {"status":"trash"} ==
+status: 200, entry status: trash, starred: true
+
+== S6 PATCH /entries/{E7} {"status":"new"} ==
+status: 200, entry status: new, starred: true
+
+== S6 PATCH /entries/{E7} {"starred":false} ==
+status: 200, entry status: new, starred: false
+
+== S6 PATCH /entries/{E7} with nothing to change ==
+status: 400
+{
+    "code": "rest_missing_callback_param",
+    "message": "Send a status or starred.",
+    "data": {
+        "status": 400
+    }
+}
+
+== S6 GET /entries/999999999 (no such entry) ==
+status: 404
+{
+    "code": "swiftforms_entry_not_found",
+    "message": "No such entry.",
+    "data": {
+        "status": 404
+    }
+}
+
+== S6 GET /entries as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+
+== S6 PATCH /entries/{id} as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+

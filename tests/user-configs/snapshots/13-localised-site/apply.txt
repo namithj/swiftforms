@@ -1,0 +1,48 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Asia/Kolkata
+permalink_structure = /%postname%/
+WPLANG = fr_FR
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_from_name = Boutique Soleil
+swiftforms_email_notification_to = commandes@boutique-soleil.example
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- livraison (page/publish, slug livraison, title Demande de livraison)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Demande de livraison</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f130001-0000-4000-8000-000000000001","title":"Demande de livraison","notifications":[{"enabled":true,"to":"logistique@boutique-soleil.example","cc":"","bcc":"","subject":"Livraison demandée par {field:nom} le {entry:date}","replyTo":"{field:email}","body":"Date souhaitée : {field:date_livraison}\nCréneau : {field:creneau}\n\n{field:message}","format":"plain"}]} -->
+<!-- wp:swiftforms/field-text {"label":"Nom et prénom","name":"nom","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Adresse e-mail","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-date {"label":"Date de livraison souhaitée","name":"date_livraison","required":true,"help":"Entre le 20 novembre 2026 et le 31 mars 2027.","min":"2026-11-20","max":"2027-03-31"} /-->
+
+<!-- wp:swiftforms/field-select {"label":"Créneau","name":"creneau","required":true,"placeholderOption":"Choisissez un créneau","options":[{"value":"matin","label":"Matin (8 h – 12 h)"},{"value":"apres-midi","label":"Après-midi (14 h – 18 h)"}]} /-->
+
+<!-- wp:swiftforms/field-consent {"label":"Consentement","name":"consentement","text":"J’accepte que mes données servent à organiser la livraison."} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Précisions","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Demander la livraison"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Merci ! Nous confirmons la date par e-mail.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- lettre (page/publish, slug lettre, title Lettre d’information)
+<!-- wp:swiftforms/form {"formId":"5f130002-0000-4000-8000-000000000002","title":"Lettre d’information"} -->
+<!-- wp:swiftforms/field-email {"label":"Votre e-mail","name":"email","required":true} /-->
+
+<!-- wp:swiftforms/submit /-->
+<!-- /wp:swiftforms/form -->

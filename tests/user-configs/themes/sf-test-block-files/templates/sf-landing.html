@@ -1,0 +1,23 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main"} -->
+<main class="wp-block-group"><!-- wp:heading -->
+<h2 class="wp-block-heading">Reserve a table</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f140004-0000-4000-8000-000000000004","title":"Table reservation"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-number {"label":"Guests","name":"guests","required":true,"min":"1","max":"12","step":"1"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Reserve"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Your table is reserved.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

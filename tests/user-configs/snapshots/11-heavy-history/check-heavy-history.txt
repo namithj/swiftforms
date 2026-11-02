@@ -1,0 +1,332 @@
+== Entries stored per form and status (after the scenarios) ==
+5f110001-0000-4000-8000-000000000001 new: 1203 entries, 133 starred
+5f110001-0000-4000-8000-000000000001 read: 1200 entries, 133 starred
+5f110001-0000-4000-8000-000000000001 spam: 311 entries, 33 starred
+5f110001-0000-4000-8000-000000000001 trash: 300 entries, 34 starred
+5f110002-0000-4000-8000-000000000002 new: 482 entries, 53 starred
+5f110002-0000-4000-8000-000000000002 read: 480 entries, 53 starred
+5f110002-0000-4000-8000-000000000002 spam: 120 entries, 14 starred
+5f110002-0000-4000-8000-000000000002 trash: 120 entries, 13 starred
+5f110003-0000-4000-8000-000000000003 new: 322 entries, 36 starred
+5f110003-0000-4000-8000-000000000003 read: 320 entries, 35 starred
+5f110003-0000-4000-8000-000000000003 spam: 80 entries, 9 starred
+5f110003-0000-4000-8000-000000000003 trash: 80 entries, 9 starred
+
+== List queries: contact#1 / new ==
+contact#1 / new / page 1 of 61: x-wp-total 1203, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+contact#1 / new / page 31 of 61: x-wp-total 1203, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+contact#1 / new / page 61 of 61: x-wp-total 1203, 3 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: contact#1 / read ==
+contact#1 / read / page 1 of 60: x-wp-total 1200, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+contact#1 / read / page 30 of 60: x-wp-total 1200, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+contact#1 / read / page 60 of 60: x-wp-total 1200, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: contact#1 / spam ==
+contact#1 / spam / page 1 of 16: x-wp-total 311, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+contact#1 / spam / page 8 of 16: x-wp-total 311, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+contact#1 / spam / page 16 of 16: x-wp-total 311, 11 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: contact#1 / trash ==
+contact#1 / trash / page 1 of 15: x-wp-total 300, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+contact#1 / trash / page 8 of 15: x-wp-total 300, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+contact#1 / trash / page 15 of 15: x-wp-total 300, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: newsletter#1 / new ==
+newsletter#1 / new / page 1 of 25: x-wp-total 482, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+newsletter#1 / new / page 13 of 25: x-wp-total 482, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+newsletter#1 / new / page 25 of 25: x-wp-total 482, 2 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: newsletter#1 / read ==
+newsletter#1 / read / page 1 of 24: x-wp-total 480, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+newsletter#1 / read / page 12 of 24: x-wp-total 480, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+newsletter#1 / read / page 24 of 24: x-wp-total 480, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: newsletter#1 / spam ==
+newsletter#1 / spam / page 1 of 6: x-wp-total 120, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+newsletter#1 / spam / page 3 of 6: x-wp-total 120, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+newsletter#1 / spam / page 6 of 6: x-wp-total 120, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: newsletter#1 / trash ==
+newsletter#1 / trash / page 1 of 6: x-wp-total 120, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+newsletter#1 / trash / page 3 of 6: x-wp-total 120, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+newsletter#1 / trash / page 6 of 6: x-wp-total 120, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: survey#1 / new ==
+survey#1 / new / page 1 of 17: x-wp-total 322, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+survey#1 / new / page 9 of 17: x-wp-total 322, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+survey#1 / new / page 17 of 17: x-wp-total 322, 2 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: survey#1 / read ==
+survey#1 / read / page 1 of 16: x-wp-total 320, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+survey#1 / read / page 8 of 16: x-wp-total 320, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+survey#1 / read / page 16 of 16: x-wp-total 320, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: survey#1 / spam ==
+survey#1 / spam / page 1 of 4: x-wp-total 80, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+survey#1 / spam / page 2 of 4: x-wp-total 80, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+survey#1 / spam / page 4 of 4: x-wp-total 80, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== List queries: survey#1 / trash ==
+survey#1 / trash / page 1 of 4: x-wp-total 80, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+survey#1 / trash / page 2 of 4: x-wp-total 80, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+survey#1 / trash / page 4 of 4: x-wp-total 80, 20 items, 4 SwiftForms queries; count query uses form_status_date; page query uses form_status_date
+
+== One entry per schema snapshot of the first form ==
+-- entry 1 --
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": 1,
+    "form_id": "5f110001-0000-4000-8000-000000000001",
+    "form_title": "Contact",
+    "date_gmt": "2025-11-19T12:01:47Z",
+    "date_display": "November 19, 2025 12:01 pm",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Person 0001",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "person0001@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "Enquiry number 1.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null
+}
+-- entry 601 --
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": 601,
+    "form_id": "5f110001-0000-4000-8000-000000000001",
+    "form_title": "Contact",
+    "date_gmt": "2026-01-02T07:11:47Z",
+    "date_display": "January 2, 2026 7:11 am",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Person 0601",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "person0601@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "phone",
+            "label": "Phone",
+            "type": "tel",
+            "values": [
+                {
+                    "value": "+44 20 7946 0601",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "Enquiry number 601.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null
+}
+-- entry 1301 --
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": 1301,
+    "form_id": "5f110001-0000-4000-8000-000000000001",
+    "form_title": "Contact",
+    "date_gmt": "2026-02-22T09:33:27Z",
+    "date_display": "February 22, 2026 9:33 am",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Person 1301",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "person1301@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "topic",
+            "label": "Topic",
+            "type": "select",
+            "values": [
+                {
+                    "value": "press",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "Enquiry number 1301.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null
+}
+-- entry 2001 --
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": 2001,
+    "form_id": "5f110001-0000-4000-8000-000000000001",
+    "form_title": "Contact",
+    "date_gmt": "2026-04-14T11:55:07Z",
+    "date_display": "April 14, 2026 12:55 pm",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Person 2001",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "person2001@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "topic",
+            "label": "Topic",
+            "type": "select",
+            "values": [
+                {
+                    "value": "sales",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "details",
+            "label": "Details",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "Enquiry number 2001.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null
+}
+

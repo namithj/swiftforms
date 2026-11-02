@@ -4,7 +4,8 @@
 	"plugins": [ "." ],
 	"themes": [
 		"./tests/user-configs/themes/sf-test-block",
-		"./tests/user-configs/themes/sf-test-classic"
+		"./tests/user-configs/themes/sf-test-classic",
+		"./tests/user-configs/themes/sf-test-block-files"
 	],
 	"mappings": {
 		"wp-content/mu-plugins/sf-test-clock.php": "./tests/e2e/mu/sf-test-clock.php"

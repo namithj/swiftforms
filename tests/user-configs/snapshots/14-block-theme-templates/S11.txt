@@ -1,0 +1,79 @@
+== S11 site as stored ==
+before:
+{
+    "db_version row": "1",
+    "install marker (raw)": "a:2:{s:7:\"version\";s:5:\"1.0.0\";s:4:\"time\";i:1795082400;}",
+    "settings row present": true,
+    "backups in the ring": 0,
+    "newest backup": null,
+    "migration log rows": 0,
+    "migration lock row": false
+}
+first run returned false, second run returned false
+after both:
+{
+    "db_version row": "1",
+    "install marker (raw)": "a:2:{s:7:\"version\";s:5:\"1.0.0\";s:4:\"time\";i:1795082400;}",
+    "settings row present": true,
+    "backups in the ring": 0,
+    "newest backup": null,
+    "migration log rows": 0,
+    "migration lock row": false
+}
+
+== S11 site as before an update (version row removed) ==
+before:
+{
+    "db_version row": null,
+    "install marker (raw)": "a:2:{s:7:\"version\";s:5:\"1.0.0\";s:4:\"time\";i:1795082400;}",
+    "settings row present": true,
+    "backups in the ring": 0,
+    "newest backup": null,
+    "migration log rows": 0,
+    "migration lock row": false
+}
+first run returned true (swiftforms_db_version_changed fired 1 time(s))
+after the first run:
+{
+    "db_version row": "1",
+    "install marker (raw)": "a:2:{s:7:\"version\";s:5:\"1.0.0\";s:4:\"time\";i:1795082400;}",
+    "settings row present": true,
+    "backups in the ring": 1,
+    "newest backup": {
+        "time": 1795082400,
+        "reason": "migration-1",
+        "version": "{VERSION}",
+        "options": {
+            "swiftforms_email_notification_to": "editor@fse-site.example",
+            "swiftforms_installed": {
+                "version": "1.0.0",
+                "time": 1795082400
+            }
+        }
+    },
+    "migration log rows": 1,
+    "migration lock row": false
+}
+second run returned false
+after the second run:
+{
+    "db_version row": "1",
+    "install marker (raw)": "a:2:{s:7:\"version\";s:5:\"1.0.0\";s:4:\"time\";i:1795082400;}",
+    "settings row present": true,
+    "backups in the ring": 1,
+    "newest backup": {
+        "time": 1795082400,
+        "reason": "migration-1",
+        "version": "{VERSION}",
+        "options": {
+            "swiftforms_email_notification_to": "editor@fse-site.example",
+            "swiftforms_installed": {
+                "version": "1.0.0",
+                "time": 1795082400
+            }
+        }
+    },
+    "migration log rows": 1,
+    "migration lock row": false
+}
+

@@ -1,0 +1,501 @@
+== S9 registered ==
+exporter: SwiftForms entries
+eraser: SwiftForms entries
+
+== S9 export for ada@example.com ==
+[
+    {
+        "data": [
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-1",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-17 09:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E1}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E2}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E3}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E4}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E5}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E6}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E7}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E8}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E9}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E10}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Can I get a demo?"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E11}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 1"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E12}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 2"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E13}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 3"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E14}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 4"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E15}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Support request"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 5"
+                    }
+                ]
+            }
+        ],
+        "done": true
+    }
+]
+
+== S9 export for an address with no entries ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase ada@example.com ==
+[
+    {
+        "items_removed": true,
+        "items_retained": false,
+        "messages": [
+            "Removed 16 SwiftForms entries."
+        ],
+        "done": true
+    }
+]
+
+== S9 rows before and after the erasure ==
+before:
+{
+    "entries with the address": 16,
+    "entries": 19,
+    "value rows": 57,
+    "mail log rows naming it": 0
+}
+after:
+{
+    "entries with the address": 0,
+    "entries": 3,
+    "value rows": 9,
+    "orphan value rows": 0,
+    "orphan meta rows": 0,
+    "mail log rows naming it": 0
+}
+
+== S9 export again after the erasure ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase an address with no entries ==
+[
+    {
+        "items_removed": false,
+        "items_retained": false,
+        "messages": [],
+        "done": true
+    }
+]
+

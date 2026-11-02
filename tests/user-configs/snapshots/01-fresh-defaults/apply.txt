@@ -1,0 +1,30 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- contact (page/publish, slug contact, title Contact)
+<!-- wp:swiftforms/form {"formId":"5f010001-0000-4000-8000-000000000001"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks! We'll be in touch.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

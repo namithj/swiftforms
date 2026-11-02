@@ -17,7 +17,7 @@
 /.gitattributes
 /.gitignore
 /bin
-/composer.json
+# composer.json ships: Plugin Check (missing_composer_json_file) wants it next to vendor/, and it tells reviewers which packages are bundled.
 /composer.lock
 /node_modules
 /package.json
@@ -32,6 +32,10 @@
 /webpack.config.js
 /.wp-env.json
 /src
+# wordpress.org listing assets (banner, icon, screenshots) go to SVN assets/, never into the plugin ZIP;
+# assets/ holds the Playground blueprint and the sources of the listing artwork.
+/.wordpress-org
+/assets
 /tests
 /test-results
 /playwright-report

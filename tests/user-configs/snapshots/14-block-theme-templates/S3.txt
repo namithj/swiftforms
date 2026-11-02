@@ -1,0 +1,109 @@
+== S3 about#1 ==
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- without question --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "question": "This field is required."
+    }
+}
+-- payload c14-ask-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "Please enter a valid email address.",
+        "question": "This field is required."
+    }
+}
+
+== S3 footer-part#1 ==
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- payload c14-news-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "Please enter a valid email address."
+    }
+}
+
+== S3 single-template#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without feedback --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "feedback": "This field is required."
+    }
+}
+-- payload c14-feedback-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required.",
+        "feedback": "This field is required."
+    }
+}
+
+== S3 template:sf-test-block-files//sf-landing#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without guests --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "guests": "This field is required."
+    }
+}
+-- payload c14-table-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "guests": "Please enter a number that is at most 12."
+    }
+}
+

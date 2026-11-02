@@ -1,0 +1,560 @@
+== S6 GET /entries (default: new and read, newest first) ==
+x-wp-total: 9
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E6}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": 1,
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-18T20:30:00Z",
+        "date_display": "19/11/2026 02:00",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    },
+    {
+        "id": 3,
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-18T18:30:00Z",
+        "date_display": "19/11/2026 00:00",
+        "status": "read",
+        "starred": false,
+        "summary": "Zoé Lefèvre · zoe@example.fr"
+    },
+    {
+        "id": 2,
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-17T18:29:59Z",
+        "date_display": "17/11/2026 23:59",
+        "status": "read",
+        "starred": false,
+        "summary": "Étienne Müller · etienne@example.fr"
+    }
+]
+
+== S6 GET /forms ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "title": "Demande de livraison",
+        "counts": {
+            "new": 3,
+            "read": 2,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "title": "Lettre d’information",
+        "counts": {
+            "new": 4,
+            "read": 0,
+            "spam": 11,
+            "trash": 0
+        }
+    }
+]
+
+== S6 GET /entries?form=lettre#1&status=new ==
+x-wp-total: 4
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E6}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    }
+]
+
+== S6 GET /entries?form=livraison#1&status=new ==
+x-wp-total: 3
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E5}",
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    },
+    {
+        "id": 1,
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-18T20:30:00Z",
+        "date_display": "19/11/2026 02:00",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    }
+]
+
+== S6 GET /entries?status=new ==
+x-wp-total: 7
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E6}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "new",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": 1,
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-18T20:30:00Z",
+        "date_display": "19/11/2026 02:00",
+        "status": "new",
+        "starred": false,
+        "summary": "Camille Durand · camille@example.fr"
+    }
+]
+
+== S6 GET /entries?status=read ==
+x-wp-total: 2
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": 3,
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-18T18:30:00Z",
+        "date_display": "19/11/2026 00:00",
+        "status": "read",
+        "starred": false,
+        "summary": "Zoé Lefèvre · zoe@example.fr"
+    },
+    {
+        "id": 2,
+        "form_id": "5f130001-0000-4000-8000-000000000001",
+        "form_title": "Demande de livraison",
+        "date_gmt": "2026-11-17T18:29:59Z",
+        "date_display": "17/11/2026 23:59",
+        "status": "read",
+        "starred": false,
+        "summary": "Étienne Müller · etienne@example.fr"
+    }
+]
+
+== S6 GET /entries?status=spam ==
+x-wp-total: 11
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E17}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E16}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E15}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E14}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E13}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E12}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E11}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E10}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E9}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E8}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f130002-0000-4000-8000-000000000002",
+        "form_title": "Lettre d’information",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "19/11/2026 15:30",
+        "status": "spam",
+        "starred": false,
+        "summary": "camille@example.fr"
+    }
+]
+
+== S6 GET /entries?status=trash ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries/{E6} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E6}",
+    "form_id": "5f130002-0000-4000-8000-000000000002",
+    "form_title": "Lettre d’information",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "19/11/2026 15:30",
+    "status": "new",
+    "starred": false,
+    "fields": [
+        {
+            "name": "email",
+            "label": "Votre e-mail",
+            "type": "email",
+            "values": [
+                {
+                    "value": "camille@example.fr",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Lettre d’information",
+        "link": "http://example.org/lettre/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E6} {"status":"read"} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E6}",
+    "form_id": "5f130002-0000-4000-8000-000000000002",
+    "form_title": "Lettre d’information",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "19/11/2026 15:30",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "email",
+            "label": "Votre e-mail",
+            "type": "email",
+            "values": [
+                {
+                    "value": "camille@example.fr",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Lettre d’information",
+        "link": "http://example.org/lettre/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E6} {"starred":true} ==
+status: 200, entry status: read, starred: true
+
+== S6 PATCH /entries/{E6} {"status":"spam"} ==
+status: 200, entry status: spam, starred: true
+
+== S6 PATCH /entries/{E6} {"status":"trash"} ==
+status: 200, entry status: trash, starred: true
+
+== S6 PATCH /entries/{E6} {"status":"new"} ==
+status: 200, entry status: new, starred: true
+
+== S6 PATCH /entries/{E6} {"starred":false} ==
+status: 200, entry status: new, starred: false
+
+== S6 PATCH /entries/{E6} with nothing to change ==
+status: 400
+{
+    "code": "rest_missing_callback_param",
+    "message": "Send a status or starred.",
+    "data": {
+        "status": 400
+    }
+}
+
+== S6 GET /entries/999999999 (no such entry) ==
+status: 404
+{
+    "code": "swiftforms_entry_not_found",
+    "message": "No such entry.",
+    "data": {
+        "status": 404
+    }
+}
+
+== S6 GET /entries as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+
+== S6 PATCH /entries/{id} as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+

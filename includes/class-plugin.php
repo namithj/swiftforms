@@ -55,7 +55,25 @@ class Plugin {
 		}
 		$this->booted = true;
 
-		Builder_Adapter::instance()->register_hooks();
+		Settings::init();
+		Access::init();
+		Cron::init();
+		Activator::init();
+		Source_Stack::init();
+		Form_Index::init();
+		Form_Id_Writer::init();
+		Assets::init();
+		Form_Renderer::init();
+		Rest_Public::init();
+		Rest_Submit::init();
+		Rest_Token::init();
+		Rest_Nonce::init();
+		Nojs_Handler::init();
+		Admin_Menu::init();
+		Rest_Entries::init();
+		Settings_Page::init();
+		Privacy::init();
+		Mail_Notice::init();
 
 		// Priority 5: the block builder registers its blocks on init and must see our configs first.
 		add_action( 'init', [ $this, 'register_blocks' ], 5 );
@@ -71,9 +89,8 @@ class Plugin {
 	}
 
 	/**
-	 * Block configurations for the block builder.
-	 *
-	 * Empty in R00: the blocks themselves are R01.
+	 * Block configurations for the block builder: the form, field, submit and confirmation blocks, the
+	 * "Forms" categories and the six patterns (Block_Configs).
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -83,6 +100,6 @@ class Plugin {
 		 *
 		 * @param array<string, mixed> $config Block builder configuration array.
 		 */
-		return (array) apply_filters( 'swiftforms_block_configs', [] );
+		return (array) apply_filters( 'swiftforms_block_configs', Block_Configs::all() );
 	}
 }

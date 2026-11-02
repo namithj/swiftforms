@@ -1,0 +1,6 @@
+control (page): unchanged
+nameless (page): formId written by the server: (none stored) -> {FORM:nameless#1}
+orig (page): unchanged
+copy (page): formId written by the server: 5f180003-0000-4000-8000-000000000003 -> {FORM:copy#1}
+dupes (page): unchanged
+future (page): unchanged

@@ -1,0 +1,156 @@
+== S2 shop#1 / c07-ada (guest) ==
+request:
+{
+    "_sf_form": "5f070001-0000-4000-8000-000000000001",
+    "_sf_source": "post:shop",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Do you stock vinyl?\nI am after a first pressing."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E1}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f070001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E1}","notification":0,"to":["owner@oldschool.example"]}
+log mail/info 5f070001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E1}","notification":1,"to":["shop@oldschool.example"]}
+-- mail 1 (phpmailer_init) --
+from: Old School Shop (relay) <relay@smtp-sim.example>
+sender: bounces@smtp-sim.example
+mailer: smtp
+to: owner@oldschool.example
+cc:
+bcc:
+reply-to:
+subject: New submission: Shop enquiry
+content-type: text/html; charset=UTF-8
+header: X-Mailer-Sim: smtp-plugin
+-- body --
+<table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you stock vinyl?<br>
+I am after a first pressing.</td></tr></table>
+-- alt body --
+Name: Ada Lovelace
+Email: ada@example.com
+Message: Do you stock vinyl?
+I am after a first pressing.
+-- mail 2 (phpmailer_init) --
+from: Old School Shop (relay) <relay@smtp-sim.example>
+sender: bounces@smtp-sim.example
+mailer: smtp
+to: shop@oldschool.example
+cc:
+bcc:
+reply-to: ada@example.com
+subject: Enquiry from Ada Lovelace
+content-type: text/plain; charset=UTF-8
+header: X-Mailer-Sim: smtp-plugin
+-- body --
+Name: Ada Lovelace
+Email: ada@example.com
+
+Do you stock vinyl?
+I am after a first pressing.
+-- alt body --
+(none)
+
+== S2 shop#1 / c07-ada (administrator) ==
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    },
+    "entryId": "{E2}"
+}
+left behind:
+entry:
+{
+    "id": "{E2}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "new",
+    "starred": "0",
+    "user_id": "{USER:admin}",
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f070001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E2}","notification":0,"to":["owner@oldschool.example"]}
+log mail/info 5f070001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E2}","notification":1,"to":["shop@oldschool.example"]}
+-- mail 1 (phpmailer_init) --
+from: Old School Shop (relay) <relay@smtp-sim.example>
+sender: bounces@smtp-sim.example
+mailer: smtp
+to: owner@oldschool.example
+cc:
+bcc:
+reply-to:
+subject: New submission: Shop enquiry
+content-type: text/html; charset=UTF-8
+header: X-Mailer-Sim: smtp-plugin
+-- body --
+<table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you stock vinyl?<br>
+I am after a first pressing.</td></tr></table>
+-- alt body --
+Name: Ada Lovelace
+Email: ada@example.com
+Message: Do you stock vinyl?
+I am after a first pressing.
+-- mail 2 (phpmailer_init) --
+from: Old School Shop (relay) <relay@smtp-sim.example>
+sender: bounces@smtp-sim.example
+mailer: smtp
+to: shop@oldschool.example
+cc:
+bcc:
+reply-to: ada@example.com
+subject: Enquiry from Ada Lovelace
+content-type: text/plain; charset=UTF-8
+header: X-Mailer-Sim: smtp-plugin
+-- body --
+Name: Ada Lovelace
+Email: ada@example.com
+
+Do you stock vinyl?
+I am after a first pressing.
+-- alt body --
+(none)
+

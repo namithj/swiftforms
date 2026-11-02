@@ -1,0 +1,54 @@
+# French translation of the SwiftForms strings that config 13 shows (a fixture, not the plugin's translation).
+msgid ""
+msgstr ""
+"Project-Id-Version: SwiftForms fixture\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "This field is required."
+msgstr "Ce champ est obligatoire."
+
+msgid "Please enter a valid email address."
+msgstr "Veuillez saisir une adresse e-mail valide."
+
+msgid "Please enter a valid date as YYYY-MM-DD."
+msgstr "Veuillez saisir une date valide au format AAAA-MM-JJ."
+
+msgid "Please enter a date on or after {min}."
+msgstr "Veuillez saisir une date à partir du {min}."
+
+msgid "Please enter a date on or before {max}."
+msgstr "Veuillez saisir une date jusqu’au {max}."
+
+msgid "Please choose one of the available options."
+msgstr "Veuillez choisir l’une des options proposées."
+
+msgid "Please tick this box to continue."
+msgstr "Veuillez cocher cette case pour continuer."
+
+msgid "Please fix the following:"
+msgstr "Veuillez corriger les points suivants :"
+
+msgid "(required)"
+msgstr "(obligatoire)"
+
+msgid "Submit"
+msgstr "Envoyer"
+
+msgid "Please submit again."
+msgstr "Veuillez envoyer à nouveau."
+
+msgid "Thank you. Your message has been sent."
+msgstr "Merci. Votre message a bien été envoyé."
+
+msgid "New submission: {form:title}"
+msgstr "Nouvelle demande : {form:title}"
+
+msgid "The form could not be sent. Please check your connection and try again."
+msgstr "Le formulaire n’a pas pu être envoyé. Vérifiez votre connexion et réessayez."
+
+msgid "This form is no longer accepting submissions."
+msgstr "Ce formulaire n’accepte plus de réponses."

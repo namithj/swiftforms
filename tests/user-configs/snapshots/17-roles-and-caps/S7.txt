@@ -1,0 +1,11 @@
+Export does not exist in 1.0.0: no REST route with "export" in its name is registered.
+GET /swiftforms/v1/entries/export as an administrator:
+status: 404
+{
+    "code": "rest_no_route",
+    "message": "No route was found matching the URL and request method.",
+    "data": {
+        "status": 404
+    }
+}
+From R02 this file holds the CSV and JSON bytes of an export.

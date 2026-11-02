@@ -1,0 +1,123 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_notification_to = pages@states.example
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- published (page/publish, slug published, title Open page)
+<!-- wp:paragraph -->
+<p>This page is published (control).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f160001-0000-4000-8000-000000000001","title":"Published (control)"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you (published).</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- draft (page/draft, slug draft, title Draft page)
+<!-- wp:paragraph -->
+<p>This page is draft.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f160002-0000-4000-8000-000000000002","title":"Draft"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you (draft).</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- private (page/private, slug private, title Private page)
+<!-- wp:paragraph -->
+<p>This page is private.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f160003-0000-4000-8000-000000000003","title":"Private"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you (private).</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- locked (page/publish, slug locked, title Locked page)
+<!-- wp:paragraph -->
+<p>This page is password protected.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f160004-0000-4000-8000-000000000004","title":"Password protected"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you (locked).</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- scheduled (page/future, slug scheduled, title Scheduled page)
+<!-- wp:paragraph -->
+<p>This page is scheduled.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f160005-0000-4000-8000-000000000005","title":"Scheduled"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you (scheduled).</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- trashed (page/trash, slug trashed__trashed, title Trashed page)
+<!-- wp:paragraph -->
+<p>This page is trashed.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f160006-0000-4000-8000-000000000006","title":"Trashed"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you (trashed).</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

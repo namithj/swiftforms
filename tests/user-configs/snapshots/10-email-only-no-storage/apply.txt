@@ -1,0 +1,72 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_notification_to = inbox@mailonly.example
+swiftforms_general_store_entries = 0
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- stored (page/publish, slug stored, title Stored)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Stored and default</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f100001-0000-4000-8000-000000000001","title":"Always stored","storeEntries":"yes"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Sent. Always stored.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f100002-0000-4000-8000-000000000002","title":"Follows the site"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Sent. Follows the site.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- never (page/publish, slug never, title Never)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Never stored</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f100003-0000-4000-8000-000000000003","title":"Never stored","storeEntries":"no"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Sent. Never stored.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

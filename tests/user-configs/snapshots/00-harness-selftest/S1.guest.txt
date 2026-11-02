@@ -1,3 +1,0 @@
-== selftest ==
-<p>SwiftForms harness self-test.</p>
-

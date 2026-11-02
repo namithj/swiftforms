@@ -7,7 +7,7 @@
  * Author URI: https://smartlogix.co.in/
  * Version: 0.1.0
  * Requires at least: 6.8
- * Requires PHP: 8.2
+ * Requires PHP: 7.4
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: swiftforms
@@ -34,10 +34,10 @@ define( 'SWIFTFORMS_FILE', __FILE__ );
 /**
  * Floors checked by the bootstrap guard below.
  *
- * SWIFTFORMS_MIN_PHP is the floor of SwiftForms' own code (phpcs testVersion
- * 7.4-), so the PHP 7.4 CI cell exercises it. The "Requires PHP" header is
- * stricter (8.2) because the bundled frameworks need it; WordPress enforces the
- * header, this guard is the last line of defence when the header was bypassed.
+ * SWIFTFORMS_MIN_PHP is the floor of SwiftForms' own code and of the bundled
+ * frameworks (phpcs testVersion 7.4-), and it matches the "Requires PHP" header.
+ * WordPress enforces the header; this guard is the last line of defence when the
+ * header was bypassed.
  */
 define( 'SWIFTFORMS_MIN_PHP', '7.4' );
 define( 'SWIFTFORMS_MIN_WP', '6.8' );
@@ -97,6 +97,10 @@ if ( ! is_readable( __DIR__ . '/vendor-prefixed/autoload.php' ) || ! is_readable
 
 require_once __DIR__ . '/vendor-prefixed/autoload.php';
 require_once __DIR__ . '/vendor/autoload.php';
+
+// Registered here, not in Plugin::boot(): activation runs before plugins_loaded fires.
+register_activation_hook( SWIFTFORMS_FILE, [ \SwiftForms\Activator::class, 'activate' ] );
+register_deactivation_hook( SWIFTFORMS_FILE, [ \SwiftForms\Activator::class, 'deactivate' ] );
 
 add_action(
 	'plugins_loaded',

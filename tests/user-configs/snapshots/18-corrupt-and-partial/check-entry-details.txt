@@ -1,0 +1,107 @@
+== GET /entries/1 ==
+status: 404
+{
+    "code": "swiftforms_entry_not_found",
+    "message": "No such entry.",
+    "data": {
+        "status": 404
+    }
+}
+
+== GET /entries/2 ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": 2,
+    "form_id": "5f180003-0000-4000-8000-000000000003",
+    "form_title": "Shared id",
+    "date_gmt": "2026-11-09T09:00:00Z",
+    "date_display": "November 9, 2026 9:00 am",
+    "status": "read",
+    "starred": true,
+    "fields": [
+        {
+            "name": "email",
+            "label": "email",
+            "type": "text",
+            "values": [
+                {
+                    "value": "margaret@example.org",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "legacy_phone",
+            "label": "legacy_phone",
+            "type": "text",
+            "values": [
+                {
+                    "value": "+1 555 0100",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "name",
+            "label": "name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Margaret Hamilton",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Original",
+        "link": "http://example.org/original/"
+    },
+    "user": null
+}
+
+== GET /entries/3 ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": 3,
+    "form_id": "5f18dead-0000-4000-8000-00000000dead",
+    "form_title": "Deleted form",
+    "date_gmt": "2026-08-01T09:00:00Z",
+    "date_display": "August 1, 2026 10:00 am",
+    "status": "new",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Your name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Dennis Ritchie",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Your email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "dennis@example.org",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        }
+    ],
+    "source": null,
+    "user": null
+}
+

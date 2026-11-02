@@ -1,0 +1,99 @@
+== S8 GET /swiftforms-cmf/v1/settings/swiftforms (4 settings option(s) stored) ==
+status: 200
+{
+    "values": {
+        "general_store_entries": true,
+        "general_load_styles": true,
+        "general_default_success_message": "Thank you. Your message has been sent.",
+        "email_from_name": "Old School Shop",
+        "email_from_email": "shop@oldschool.example",
+        "email_notification_to": "owner@oldschool.example",
+        "email_html_template": false,
+        "email_logo_id": 0,
+        "email_accent_color": "",
+        "email_footer_text": "",
+        "email_visitor_mail_daily_cap": 100,
+        "email_visitor_mail_hourly_cap": 200,
+        "spam_honeypot": true,
+        "spam_js_token": true,
+        "spam_min_seconds": 3,
+        "spam_rate_limit_per_minute": 5,
+        "spam_blocked_words": "",
+        "spam_spam_action": "store",
+        "general_store_ip": false,
+        "general_store_user_agent": false,
+        "general_retention_days": 0,
+        "privacy_exporter": true,
+        "privacy_eraser": true,
+        "advanced_debug_log": false
+    }
+}
+
+== S8 POST with the same values ==
+status: 200
+{
+    "values": {
+        "general_store_entries": true,
+        "general_load_styles": true,
+        "general_default_success_message": "Thank you. Your message has been sent.",
+        "email_from_name": "Old School Shop",
+        "email_from_email": "shop@oldschool.example",
+        "email_notification_to": "owner@oldschool.example",
+        "email_html_template": false,
+        "email_logo_id": 0,
+        "email_accent_color": "",
+        "email_footer_text": "",
+        "email_visitor_mail_daily_cap": 100,
+        "email_visitor_mail_hourly_cap": 200,
+        "spam_honeypot": true,
+        "spam_js_token": true,
+        "spam_min_seconds": 3,
+        "spam_rate_limit_per_minute": 5,
+        "spam_blocked_words": "",
+        "spam_spam_action": "store",
+        "general_store_ip": false,
+        "general_store_user_agent": false,
+        "general_retention_days": 0,
+        "privacy_exporter": true,
+        "privacy_eraser": true,
+        "advanced_debug_log": false
+    }
+}
+
+== S8 POST with two values it already has ==
+status: 200
+{
+    "values": {
+        "general_store_entries": true,
+        "general_load_styles": true,
+        "general_default_success_message": "Thank you. Your message has been sent.",
+        "email_from_name": "Old School Shop",
+        "email_from_email": "shop@oldschool.example",
+        "email_notification_to": "owner@oldschool.example",
+        "email_html_template": false,
+        "email_logo_id": 0,
+        "email_accent_color": "",
+        "email_footer_text": "",
+        "email_visitor_mail_daily_cap": 100,
+        "email_visitor_mail_hourly_cap": 200,
+        "spam_honeypot": true,
+        "spam_js_token": true,
+        "spam_min_seconds": 3,
+        "spam_rate_limit_per_minute": 5,
+        "spam_blocked_words": "",
+        "spam_spam_action": "store",
+        "general_store_ip": false,
+        "general_store_user_agent": false,
+        "general_retention_days": 0,
+        "privacy_exporter": true,
+        "privacy_eraser": true,
+        "advanced_debug_log": false
+    }
+}
+
+== S8 writes ==
+writes to swiftforms_{section}_* options: 0
+settings options before: 4, after: 4
+stored options unchanged (names and values): yes
+cassette-cmf options written: 0
+

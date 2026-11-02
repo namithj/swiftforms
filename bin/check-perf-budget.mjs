@@ -2,8 +2,10 @@
 /**
  * Front-end performance budget: gzip every file under build/ and compare it
  * with the budgets in this file (view module <= 12 KB gz, front-end
- * CSS <= 4 KB gz). Exits 1 when a file is over budget or a required file is
- * missing. Run `npm run build` first.
+ * CSS <= 4 KB gz) and refuse a jQuery dependency in any front-end .asset.php
+ * (the view module and the front-end stylesheet; the editor and admin apps are
+ * not front-end). Exits 1 when a file is over budget, a required file is
+ * missing or a front-end asset needs jQuery. Run `npm run build` first.
  *
  *   node bin/check-perf-budget.mjs [build-dir]
  */
@@ -18,9 +20,9 @@ import { fileURLToPath } from 'node:url';
  * build/ (forward slashes). `required` budgets fail when no file matches.
  *
  * Only SwiftForms' own build/ files are counted. The block builder's own
- * editor.css (about 389 bytes gzipped) is enqueued on every front-end page
- * once the builder has started; it lives in vendor-prefixed/, is not counted
- * here, and R01 must add it to the front-end CSS figure or filter it out.
+ * editor.css (about 389 bytes gzipped) lives in vendor-prefixed/ and is not
+ * counted here: Builder_Adapter removes it from the front end, so it never adds
+ * to a visitor's page weight.
  */
 export const BUDGETS = [
 	{
@@ -31,9 +33,10 @@ export const BUDGETS = [
 	},
 	{
 		name: 'front-end CSS',
-		pattern: /^(?!editor).*\.css$/,
+		// style/form.css and its RTL twin; the editor-only files (style/editor*, editor/*) are not front-end weight.
+		pattern: /^(?!editor\/|style\/editor).*\.css$/,
 		maxGzipBytes: 4 * 1024,
-		required: false,
+		required: true,
 	},
 ];
 
@@ -78,6 +81,26 @@ export function checkBudgets( files, budgets = BUDGETS ) {
 		),
 		results,
 	};
+}
+
+/**
+ * Front-end asset files: everything except the editor and admin builds.
+ */
+const FRONT_END_ASSET = /^(?!editor\/|admin\/|style\/editor).*\.asset\.php$/;
+
+/**
+ * Front-end .asset.php files that list jQuery as a dependency.
+ *
+ * @param {Array<{path: string, source: string}>} assets Every .asset.php under build/ with its text.
+ * @return {string[]} Paths of the offending files.
+ */
+export function findJqueryDependencies( assets ) {
+	return assets
+		.filter( ( asset ) => FRONT_END_ASSET.test( asset.path ) )
+		.filter( ( asset ) =>
+			/['"]jquery(?:-[a-z]+)?['"]/i.test( asset.source )
+		)
+		.map( ( asset ) => asset.path );
 }
 
 /**
@@ -129,7 +152,24 @@ function main() {
 		);
 	}
 
-	if ( ! ok ) {
+	const assets = walk( buildDir )
+		.filter( ( rel ) => rel.endsWith( '.asset.php' ) )
+		.map( ( rel ) => ( {
+			path: rel,
+			source: fs.readFileSync( path.join( buildDir, rel ), 'utf8' ),
+		} ) );
+	const jquery = findJqueryDependencies( assets );
+	for ( const rel of jquery ) {
+		console.log( `JQUERY  ${ rel } depends on jQuery` );
+	}
+	const frontAssets = assets.filter( ( a ) =>
+		FRONT_END_ASSET.test( a.path )
+	);
+	console.log(
+		`${ jquery.length ? 'FAIL   ' : 'OK     ' } no jQuery in ${ frontAssets.length } front-end .asset.php file(s)`
+	);
+
+	if ( ! ok || jquery.length > 0 ) {
 		console.error( 'Performance budget failed.' );
 		process.exit( 1 );
 	}

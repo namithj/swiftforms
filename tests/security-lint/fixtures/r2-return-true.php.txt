@@ -1,0 +1,3 @@
+<?php
+// expect: R2
+register_rest_route( "x/v1", "/bad", [ "methods" => "GET", "callback" => "f", "permission_callback" => "__return_true" ] );

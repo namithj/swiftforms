@@ -1,0 +1,91 @@
+== S3 everything#1 ==
+-- without full_name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "full_name": "This field is required."
+    }
+}
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- without guests --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "guests": "This field is required."
+    }
+}
+-- without room --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "room": "This field is required."
+    }
+}
+-- without terms --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "terms": "Please tick this box to continue."
+    }
+}
+-- payload c04-bad-text --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "full_name": "Please use at least 2 characters.",
+        "ref_code": "Use the format ABC-1234."
+    }
+}
+-- payload c04-bad-numbers --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "guests": "Please enter a number that is at most 12."
+    }
+}
+-- payload c04-bad-choices --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "room": "Please choose one of the available options.",
+        "extras": "Please choose one of the available options.",
+        "contact_pref": "Please choose one of the available options.",
+        "interests": "Please choose at most 2."
+    }
+}
+-- payload c04-bad-misc --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "website": "Please enter a valid web address starting with http:// or https://.",
+        "guests": "Please enter a number.",
+        "arrival": "Please enter a date on or before 2027-12-31.",
+        "notes": "Please use at most 500 characters.",
+        "terms": "Please tick this box to continue."
+    }
+}
+

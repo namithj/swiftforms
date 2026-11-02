@@ -1,0 +1,195 @@
+== columns (page) ==
+<div class="wp-block-columns is-layout-flex wp-container-{HASH} wp-block-columns-is-layout-flex">
+<div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+<p>Opening hours: every day, 9 to 5.</p>
+</div>
+<div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow"><form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f150003-0000-4000-8000-000000000003&quot;,&quot;source&quot;:&quot;post:columns&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f150003-name-1">Name<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="text" id="sf-5f150003-name-1" name="sf[name]" autocomplete="name" required aria-required="true" aria-describedby="sf-5f150003-name-1-error"><p class="swiftforms-error" id="sf-5f150003-name-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--date swiftforms-w-100 wp-block-swiftforms-field-date"><label class="swiftforms-label" for="sf-5f150003-day-1">Day</label><input class="swiftforms-input" type="date" id="sf-5f150003-day-1" name="sf[day]" min="2026-11-20" aria-describedby="sf-5f150003-day-1-error"><p class="swiftforms-error" id="sf-5f150003-day-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Book</button></div>
+<input type="hidden" name="_sf_form" value="5f150003-0000-4000-8000-000000000003"><input type="hidden" name="_sf_source" value="post:columns"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></div>
+</div>
+-- assets: style swiftforms-form, module @swiftforms/view
+-- client state --
+{
+    "state": {
+        "swiftforms": {
+            "restUrl": "http://example.org/wp-json/",
+            "submitUrl": "http://example.org/wp-json/swiftforms/v1/submit",
+            "tokenUrl": "http://example.org/wp-json/swiftforms/v1/token",
+            "ajaxUrl": "http://example.org/wp-admin/admin-ajax.php",
+            "messages": {
+                "required": "This field is required.",
+                "email": "Please enter a valid email address.",
+                "url": "Please enter a valid web address starting with http:// or https://.",
+                "number": "Please enter a number.",
+                "number_min": "Please enter a number that is at least {min}.",
+                "number_max": "Please enter a number that is at most {max}.",
+                "number_step": "Please enter a multiple of {step}.",
+                "date": "Please enter a valid date as YYYY-MM-DD.",
+                "date_min": "Please enter a date on or after {min}.",
+                "date_max": "Please enter a date on or before {max}.",
+                "max_length": "Please use at most {max} characters.",
+                "min_length": "Please use at least {min} characters.",
+                "pattern": "Please match the requested format.",
+                "option": "Please choose one of the available options.",
+                "min_choices": "Please choose at least {min}.",
+                "max_choices": "Please choose at most {max}.",
+                "consent": "Please tick this box to continue.",
+                "invalid": "Please check this field."
+            },
+            "i18n": {
+                "summary": "Please fix the following:",
+                "network": "The form could not be sent. Please check your connection and try again.",
+                "closed": "This form is no longer accepting submissions.",
+                "rateLimited": "Too many attempts. Please wait a moment and try again.",
+                "blocked": "Your submission could not be accepted. Please reload the page and try again."
+            }
+        }
+    }
+}
+
+== featured (post) ==
+<p>Tell us who you are and we will keep you posted.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f150004-0000-4000-8000-000000000004&quot;,&quot;source&quot;:&quot;post:featured&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f150004-name-1">Name<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="text" id="sf-5f150004-name-1" name="sf[name]" autocomplete="name" required aria-required="true" aria-describedby="sf-5f150004-name-1-error"><p class="swiftforms-error" id="sf-5f150004-name-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f150004-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f150004-email-1" name="sf[email]" required aria-required="true" aria-describedby="sf-5f150004-email-1-error"><p class="swiftforms-error" id="sf-5f150004-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Join the club</button></div>
+<input type="hidden" name="_sf_form" value="5f150004-0000-4000-8000-000000000004"><input type="hidden" name="_sf_source" value="post:featured"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+-- assets: style swiftforms-form, module @swiftforms/view
+-- client state --
+{
+    "state": {
+        "swiftforms": {
+            "restUrl": "http://example.org/wp-json/",
+            "submitUrl": "http://example.org/wp-json/swiftforms/v1/submit",
+            "tokenUrl": "http://example.org/wp-json/swiftforms/v1/token",
+            "ajaxUrl": "http://example.org/wp-admin/admin-ajax.php",
+            "messages": {
+                "required": "This field is required.",
+                "email": "Please enter a valid email address.",
+                "url": "Please enter a valid web address starting with http:// or https://.",
+                "number": "Please enter a number.",
+                "number_min": "Please enter a number that is at least {min}.",
+                "number_max": "Please enter a number that is at most {max}.",
+                "number_step": "Please enter a multiple of {step}.",
+                "date": "Please enter a valid date as YYYY-MM-DD.",
+                "date_min": "Please enter a date on or after {min}.",
+                "date_max": "Please enter a date on or before {max}.",
+                "max_length": "Please use at most {max} characters.",
+                "min_length": "Please use at least {min} characters.",
+                "pattern": "Please match the requested format.",
+                "option": "Please choose one of the available options.",
+                "min_choices": "Please choose at least {min}.",
+                "max_choices": "Please choose at most {max}.",
+                "consent": "Please tick this box to continue.",
+                "invalid": "Please check this field."
+            },
+            "i18n": {
+                "summary": "Please fix the following:",
+                "network": "The form could not be sent. Please check your connection and try again.",
+                "closed": "This form is no longer accepting submissions.",
+                "rateLimited": "Too many attempts. Please wait a moment and try again.",
+                "blocked": "Your submission could not be accepted. Please reload the page and try again."
+            }
+        }
+    }
+}
+
+== plain (post) ==
+<p>A post with no form.</p>
+-- assets: style swiftforms-form
+
+== sidebar sf-sidebar (rendered: widget_area) ==
+<section id="block-2" class="widget widget_block"><form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f150001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;widget:block-2&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f150001-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f150001-email-1" name="sf[email]" autocomplete="email" required aria-required="true" aria-describedby="sf-5f150001-email-1-error"><p class="swiftforms-error" id="sf-5f150001-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Join</button></div>
+<input type="hidden" name="_sf_form" value="5f150001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="widget:block-2"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form></section>
+-- assets: style swiftforms-form, module @swiftforms/view
+-- client state --
+{
+    "state": {
+        "swiftforms": {
+            "restUrl": "http://example.org/wp-json/",
+            "submitUrl": "http://example.org/wp-json/swiftforms/v1/submit",
+            "tokenUrl": "http://example.org/wp-json/swiftforms/v1/token",
+            "ajaxUrl": "http://example.org/wp-admin/admin-ajax.php",
+            "messages": {
+                "required": "This field is required.",
+                "email": "Please enter a valid email address.",
+                "url": "Please enter a valid web address starting with http:// or https://.",
+                "number": "Please enter a number.",
+                "number_min": "Please enter a number that is at least {min}.",
+                "number_max": "Please enter a number that is at most {max}.",
+                "number_step": "Please enter a multiple of {step}.",
+                "date": "Please enter a valid date as YYYY-MM-DD.",
+                "date_min": "Please enter a date on or after {min}.",
+                "date_max": "Please enter a date on or before {max}.",
+                "max_length": "Please use at most {max} characters.",
+                "min_length": "Please use at least {min} characters.",
+                "pattern": "Please match the requested format.",
+                "option": "Please choose one of the available options.",
+                "min_choices": "Please choose at least {min}.",
+                "max_choices": "Please choose at most {max}.",
+                "consent": "Please tick this box to continue.",
+                "invalid": "Please check this field."
+            },
+            "i18n": {
+                "summary": "Please fix the following:",
+                "network": "The form could not be sent. Please check your connection and try again.",
+                "closed": "This form is no longer accepting submissions.",
+                "rateLimited": "Too many attempts. Please wait a moment and try again.",
+                "blocked": "Your submission could not be accepted. Please reload the page and try again."
+            }
+        }
+    }
+}
+
+== blog index (rendered: blog_index) ==
+<p>Tell us who you are and we will keep you posted.</p>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f150004-0000-4000-8000-000000000004&quot;,&quot;source&quot;:&quot;post:featured&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f150004-name-1">Name<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="text" id="sf-5f150004-name-1" name="sf[name]" autocomplete="name" required aria-required="true" aria-describedby="sf-5f150004-name-1-error"><p class="swiftforms-error" id="sf-5f150004-name-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f150004-email-1">Email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f150004-email-1" name="sf[email]" required aria-required="true" aria-describedby="sf-5f150004-email-1-error"><p class="swiftforms-error" id="sf-5f150004-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Join the club</button></div>
+<input type="hidden" name="_sf_form" value="5f150004-0000-4000-8000-000000000004"><input type="hidden" name="_sf_source" value="post:featured"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+<p>A post with no form.</p>
+-- assets: style swiftforms-form, module @swiftforms/view
+-- client state --
+{
+    "state": {
+        "swiftforms": {
+            "restUrl": "http://example.org/wp-json/",
+            "submitUrl": "http://example.org/wp-json/swiftforms/v1/submit",
+            "tokenUrl": "http://example.org/wp-json/swiftforms/v1/token",
+            "ajaxUrl": "http://example.org/wp-admin/admin-ajax.php",
+            "messages": {
+                "required": "This field is required.",
+                "email": "Please enter a valid email address.",
+                "url": "Please enter a valid web address starting with http:// or https://.",
+                "number": "Please enter a number.",
+                "number_min": "Please enter a number that is at least {min}.",
+                "number_max": "Please enter a number that is at most {max}.",
+                "number_step": "Please enter a multiple of {step}.",
+                "date": "Please enter a valid date as YYYY-MM-DD.",
+                "date_min": "Please enter a date on or after {min}.",
+                "date_max": "Please enter a date on or before {max}.",
+                "max_length": "Please use at most {max} characters.",
+                "min_length": "Please use at least {min} characters.",
+                "pattern": "Please match the requested format.",
+                "option": "Please choose one of the available options.",
+                "min_choices": "Please choose at least {min}.",
+                "max_choices": "Please choose at most {max}.",
+                "consent": "Please tick this box to continue.",
+                "invalid": "Please check this field."
+            },
+            "i18n": {
+                "summary": "Please fix the following:",
+                "network": "The form could not be sent. Please check your connection and try again.",
+                "closed": "This form is no longer accepting submissions.",
+                "rateLimited": "Too many attempts. Please wait a moment and try again.",
+                "blocked": "Your submission could not be accepted. Please reload the page and try again."
+            }
+        }
+    }
+}
+

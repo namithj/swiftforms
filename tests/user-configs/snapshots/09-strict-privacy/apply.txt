@@ -1,0 +1,40 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_notification_to = dpo@eu-example.org
+swiftforms_general_retention_days = 30
+swiftforms_general_store_ip = 0
+swiftforms_general_store_user_agent = 0
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- contact (page/publish, slug contact, title Contact)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Contact (EU)</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f090001-0000-4000-8000-000000000001","title":"EU contact"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/field-consent {"label":"Consent","name":"gdpr","text":"I agree that my data is stored to answer my request."} /-->
+
+<!-- wp:swiftforms/submit /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you. Your request is stored for 30 days.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

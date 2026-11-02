@@ -1,0 +1,80 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- thanks (page/publish, slug thanks, title Thanks)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Thank you</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>You made it.</p>
+<!-- /wp:paragraph -->
+-- funnel (page/publish, slug funnel, title Funnel)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Join the programme</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f080001-0000-4000-8000-000000000001","title":"Funnel A (page)","confirmationType":"redirect","redirectPageId":900001} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Continue"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Funnel A: stay on this page.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f080002-0000-4000-8000-000000000002","title":"Funnel B (external)","confirmationType":"redirect","redirectUrl":"https://partner.example/welcome?email={field:email}\u0026src=funnel"} -->
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Continue"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Funnel B: stay on this page.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f080003-0000-4000-8000-000000000003","title":"Funnel C (deleted page)","confirmationType":"redirect","redirectPageId":4242424} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Continue"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Funnel C: the thank-you page is gone, so you see this message.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f080004-0000-4000-8000-000000000004","title":"Funnel D (javascript)","confirmationType":"redirect","redirectUrl":"javascript:alert(1)"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Continue"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Funnel D: unsafe address ignored, so you see this message.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

@@ -1,0 +1,187 @@
+== S2 nasty#1 / c05-nasty-a (guest) ==
+request:
+{
+    "_sf_form": "5f050001-0000-4000-8000-000000000001",
+    "_sf_source": "post:nasty",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>",
+        "email": "zoe@example.com",
+        "note": "javascript:alert(1) ‮override",
+        "website": "https://example.com/?a=1&b=2#frag",
+        "topic": "a,b",
+        "plan": "pro",
+        "tags": [
+            "a,b,c",
+            "p|q|r",
+            "it's"
+        ],
+        "message": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks Zoë ünï 漢字 🚀 &lt;/textarea&gt;&lt;script&gt;alert(&apos;v&apos;)&lt;/script&gt;! &lt;script&gt;alert(1)&lt;/script&gt; You wrote: <code>Line one &amp;amp; &lt;b&gt;two&lt;/b&gt; &quot;quoted&quot;\nمرحبا بالعالم\n[gallery ids=&quot;1&quot;] {field:x}</code> [gallery ids=\"1\"] {field:x}</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E1}",
+    "form_id": "5f050001-0000-4000-8000-000000000001",
+    "schema_hash": "ae2d2e0ac9f5ce100914eedfb1058e87703bc7a71a57b5488007d944c30ccb8d",
+    "source": "post:nasty",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "zoe@example.com"
+  value marker[0] = "{field:x} [gallery ids=\"1\"]"
+  value message[0] = "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+  value name[0] = "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+  value note[0] = "javascript:alert(1) ‮override"
+  value plan[0] = "pro"
+  value tags[0] = "a,b,c"
+  value tags[1] = "p|q|r"
+  value tags[2] = "it's"
+  value topic[0] = "a,b"
+  value website[0] = "https://example.com/?a=1&b=2#frag"
+log mail/info 5f050001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E1}","notification":0,"to":["owner@example.org"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@example.org
+subject: New submission: Nasty & <b>"quoted"</b> ünï 漢字 🚀
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Näme ünï 漢字 <img src="https://s.w.org/images/core/emoji/{EMOJI}/72x72/1f680.png" alt="🚀" class="wp-smiley" style="height: 1em; max-height: 1em;" /></th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Zoë ünï 漢字 <img src="https://s.w.org/images/core/emoji/{EMOJI}/72x72/1f680.png" alt="🚀" class="wp-smiley" style="height: 1em; max-height: 1em;" /> &lt;/textarea&gt;&lt;script&gt;alert(&#039;v&#039;)&lt;/script&gt;</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">E-mail — &quot;quoted&quot; &amp; &#039;single&#039; &amp;amp; &amp;lt;b&amp;gt;</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">zoe@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">ملاحظة (RTL) ‮override</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">javascript:alert(1) ‮override</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Website</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">https://example.com/?a=1&amp;b=2#frag</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Topic, with | pipes</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">a,b</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">الاسم الكامل</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">pro</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Tags</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">a,b,c, p|q|r, it&#039;s</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Line one &amp;amp; &lt;b&gt;two&lt;/b&gt; &quot;quoted&quot;<br>
+مرحبا بالعالم<br>
+[gallery ids=&quot;1&quot;] {field:x}</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Marker</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">{field:x} [gallery ids=&quot;1&quot;]</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent from ünï &amp; co &mdash; alert(1)<a href="alert(1)">unsafe link</a></p></td></tr></table></td></tr></table></body></html>
+
+== S2 nasty#1 / c05-nasty-b (guest) ==
+request:
+{
+    "_sf_form": "5f050001-0000-4000-8000-000000000001",
+    "_sf_source": "post:nasty",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "\"><svg onload=alert(1)>",
+        "email": "mallory@example.com",
+        "note": "{user:email}",
+        "topic": "x|y",
+        "plan": "team",
+        "message": "{all_fields} {field:other} {user:email} {form:title} {entry:id}"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks &quot;&gt;&lt;svg onload=alert(1)&gt;! &lt;script&gt;alert(1)&lt;/script&gt; You wrote: <code>{all_fields} {field:other} {user:email} {form:title} {entry:id}</code> [gallery ids=\"1\"] {field:x}</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E2}",
+    "form_id": "5f050001-0000-4000-8000-000000000001",
+    "schema_hash": "ae2d2e0ac9f5ce100914eedfb1058e87703bc7a71a57b5488007d944c30ccb8d",
+    "source": "post:nasty",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "mallory@example.com"
+  value marker[0] = "{field:x} [gallery ids=\"1\"]"
+  value message[0] = "{all_fields} {field:other} {user:email} {form:title} {entry:id}"
+  value name[0] = "\"><svg onload=alert(1)>"
+  value note[0] = "{user:email}"
+  value plan[0] = "team"
+  value topic[0] = "x|y"
+log mail/info 5f050001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E2}","notification":0,"to":["owner@example.org"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@example.org
+subject: New submission: Nasty & <b>"quoted"</b> ünï 漢字 🚀
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Näme ünï 漢字 <img src="https://s.w.org/images/core/emoji/{EMOJI}/72x72/1f680.png" alt="🚀" class="wp-smiley" style="height: 1em; max-height: 1em;" /></th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">&quot;&gt;&lt;svg onload=alert(1)&gt;</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">E-mail — &quot;quoted&quot; &amp; &#039;single&#039; &amp;amp; &amp;lt;b&amp;gt;</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">mallory@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">ملاحظة (RTL) ‮override</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">{user:email}</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Website</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7"></td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Topic, with | pipes</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">x|y</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">الاسم الكامل</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">team</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Tags</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7"></td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">{all_fields} {field:other} {user:email} {form:title} {entry:id}</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Marker</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">{field:x} [gallery ids=&quot;1&quot;]</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent from ünï &amp; co &mdash; alert(1)<a href="alert(1)">unsafe link</a></p></td></tr></table></td></tr></table></body></html>
+
+== S2 nasty#1 / c05-nasty-a (administrator) ==
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks Zoë ünï 漢字 🚀 &lt;/textarea&gt;&lt;script&gt;alert(&apos;v&apos;)&lt;/script&gt;! &lt;script&gt;alert(1)&lt;/script&gt; You wrote: <code>Line one &amp;amp; &lt;b&gt;two&lt;/b&gt; &quot;quoted&quot;\nمرحبا بالعالم\n[gallery ids=&quot;1&quot;] {field:x}</code> [gallery ids=\"1\"] {field:x}</p>"
+    },
+    "entryId": "{E3}"
+}
+left behind:
+entry:
+{
+    "id": "{E3}",
+    "form_id": "5f050001-0000-4000-8000-000000000001",
+    "schema_hash": "ae2d2e0ac9f5ce100914eedfb1058e87703bc7a71a57b5488007d944c30ccb8d",
+    "source": "post:nasty",
+    "status": "new",
+    "starred": "0",
+    "user_id": "{USER:admin}",
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "zoe@example.com"
+  value marker[0] = "{field:x} [gallery ids=\"1\"]"
+  value message[0] = "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+  value name[0] = "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+  value note[0] = "javascript:alert(1) ‮override"
+  value plan[0] = "pro"
+  value tags[0] = "a,b,c"
+  value tags[1] = "p|q|r"
+  value tags[2] = "it's"
+  value topic[0] = "a,b"
+  value website[0] = "https://example.com/?a=1&b=2#frag"
+log mail/info 5f050001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E3}","notification":0,"to":["owner@example.org"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@example.org
+subject: New submission: Nasty & <b>"quoted"</b> ünï 漢字 🚀
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Näme ünï 漢字 <img src="https://s.w.org/images/core/emoji/{EMOJI}/72x72/1f680.png" alt="🚀" class="wp-smiley" style="height: 1em; max-height: 1em;" /></th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Zoë ünï 漢字 <img src="https://s.w.org/images/core/emoji/{EMOJI}/72x72/1f680.png" alt="🚀" class="wp-smiley" style="height: 1em; max-height: 1em;" /> &lt;/textarea&gt;&lt;script&gt;alert(&#039;v&#039;)&lt;/script&gt;</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">E-mail — &quot;quoted&quot; &amp; &#039;single&#039; &amp;amp; &amp;lt;b&amp;gt;</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">zoe@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">ملاحظة (RTL) ‮override</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">javascript:alert(1) ‮override</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Website</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">https://example.com/?a=1&amp;b=2#frag</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Topic, with | pipes</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">a,b</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">الاسم الكامل</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">pro</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Tags</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">a,b,c, p|q|r, it&#039;s</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Line one &amp;amp; &lt;b&gt;two&lt;/b&gt; &quot;quoted&quot;<br>
+مرحبا بالعالم<br>
+[gallery ids=&quot;1&quot;] {field:x}</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Marker</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">{field:x} [gallery ids=&quot;1&quot;]</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent from ünï &amp; co &mdash; alert(1)<a href="alert(1)">unsafe link</a></p></td></tr></table></td></tr></table></body></html>
+

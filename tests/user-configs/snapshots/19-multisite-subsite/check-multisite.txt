@@ -1,0 +1,117 @@
+== Main site before anything else ==
+entries: 0, tables missing: 0
+
+== Before network activation: alpha (plugin was on, own data) ==
+tables: all 6 present
+table prefix: {prefix:alpha}
+swiftforms_db_version: 1
+swiftforms_installed: a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+settings options: 1
+  swiftforms_email_notification_to = alpha@network.example
+effective notification_to: "alpha@network.example", retention_days: 0, store_ip: false
+entries: new 1, read 1, spam 1
+forms in the index: Alpha contact (live)
+
+== Before network activation: beta (plugin was on, own data and settings) ==
+tables: all 6 present
+table prefix: {prefix:beta}
+swiftforms_db_version: 1
+swiftforms_installed: a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+settings options: 3
+  swiftforms_email_notification_to = beta@network.example
+  swiftforms_general_retention_days = 30
+  swiftforms_general_store_ip = 1
+effective notification_to: "beta@network.example", retention_days: 30, store_ip: true
+entries: new 1
+forms in the index: Beta contact (live)
+
+== Before network activation: legacy (never had the plugin) ==
+tables: 6 of 6 missing
+table prefix: {prefix:legacy}
+swiftforms_db_version: (absent)
+swiftforms_installed: (absent)
+settings options: (none)
+effective notification_to: "", retention_days: 0, store_ip: false
+
+== After network activation: legacy is still untouched ==
+tables: 6 of 6 missing
+table prefix: {prefix:legacy}
+swiftforms_db_version: (absent)
+swiftforms_installed: (absent)
+settings options: (none)
+effective notification_to: "", retention_days: 0, store_ip: false
+
+== Created after activation: fresh (installed by wp_initialize_site) ==
+tables: all 6 present
+table prefix: {prefix:fresh}
+swiftforms_db_version: 1
+swiftforms_installed: a:2:{s:7:"version";s:5:"{VERSION}";s:4:"time";i:1795082400;}
+settings options: (none)
+effective notification_to: "", retention_days: 0, store_ip: false
+entries: (none)
+forms in the index: (none)
+
+== fresh after its page and an entry were added ==
+tables: all 6 present
+table prefix: {prefix:fresh}
+swiftforms_db_version: 1
+swiftforms_installed: a:2:{s:7:"version";s:5:"{VERSION}";s:4:"time";i:1795082400;}
+settings options: (none)
+effective notification_to: "", retention_days: 0, store_ip: false
+entries: new 1
+forms in the index: Fresh contact (live)
+
+== legacy after its first request (lazy install) ==
+tables: all 6 present
+table prefix: {prefix:legacy}
+swiftforms_db_version: 1
+swiftforms_installed: a:2:{s:7:"version";s:5:"{VERSION}";s:4:"time";i:1795082400;}
+settings options: (none)
+effective notification_to: "", retention_days: 0, store_ip: false
+entries: (none)
+forms in the index: (none)
+
+== A submission to alpha ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks from alpha.</p>"
+    }
+}
+tables: all 6 present
+table prefix: {prefix:alpha}
+swiftforms_db_version: 1
+swiftforms_installed: a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+settings options: 1
+  swiftforms_email_notification_to = alpha@network.example
+effective notification_to: "alpha@network.example", retention_days: 0, store_ip: false
+entries: new 2, read 1, spam 1
+forms in the index: Alpha contact (live)
+
+== beta (untouched by the submission) ==
+tables: all 6 present
+table prefix: {prefix:beta}
+swiftforms_db_version: 1
+swiftforms_installed: a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+settings options: 3
+  swiftforms_email_notification_to = beta@network.example
+  swiftforms_general_retention_days = 30
+  swiftforms_general_store_ip = 1
+effective notification_to: "beta@network.example", retention_days: 30, store_ip: true
+entries: new 1
+forms in the index: Beta contact (live)
+
+== Main site after all of it ==
+entries: 0, tables missing: 0, settings options unchanged: yes
+
+== Deleting sites ==
+fresh: 6 SwiftForms tables before, 0 after
+legacy (installed lazily): 0 tables after
+alpha: 6 tables, beta: 6 tables (untouched)
+
+== Main site at the very end ==
+entries: 0, tables missing: 0, settings options unchanged: yes
+

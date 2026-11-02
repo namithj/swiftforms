@@ -1,0 +1,367 @@
+== S2 control#1 / c18-ada (guest) ==
+request:
+{
+    "_sf_form": "5f180001-0000-4000-8000-000000000001",
+    "_sf_source": "post:control",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E1}",
+    "form_id": "5f180001-0000-4000-8000-000000000001",
+    "schema_hash": "e77e88691acb0bb39f11e34c1be9910bc07cdea4c718a97ca46ec19c4204eb0e",
+    "source": "post:control",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value name[0] = "Ada Lovelace"
+log mail/info 5f180001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E1}","notification":0,"to":["owner@broken-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@broken-site.example
+subject: New submission: Control form
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 copy#1 / c18-ada-message (guest) ==
+request:
+{
+    "_sf_form": "{FORM:copy#1}",
+    "_sf_source": "post:copy",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Which of the two pages did you mean?"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E2}",
+    "form_id": "{FORM:copy#1}",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:copy",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Which of the two pages did you mean?"
+  value name[0] = "Ada Lovelace"
+log mail/info {FORM:copy#1}: Notification sent. {"entry":"{E2}","notification":0,"to":["owner@broken-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@broken-site.example
+subject: New submission: Shared id
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Which of the two pages did you mean?</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 dupes#1 / c18-ada-dupes (guest) ==
+request:
+{
+    "_sf_form": "5f180004-0000-4000-8000-000000000004",
+    "_sf_source": "post:dupes",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "email-2": "ada@example.com",
+        "message": "Two email fields share one name."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E3}",
+    "form_id": "5f180004-0000-4000-8000-000000000004",
+    "schema_hash": "c22a4b05490cb2eb23f6a0fdf861a9128ce4a650313d2d46b39df33137b834b4",
+    "source": "post:dupes",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value email-2[0] = "ada@example.com"
+  value message[0] = "Two email fields share one name."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f180004-0000-4000-8000-000000000004: Notification sent. {"entry":"{E3}","notification":0,"to":["owner@broken-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@broken-site.example
+subject: New submission: Duplicate field names
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Confirm email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Two email fields share one name.</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 future#1 / c18-ada-future (guest) ==
+request:
+{
+    "_sf_form": "5f180005-0000-4000-8000-000000000005",
+    "_sf_source": "post:future",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "rating": "5"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E4}",
+    "form_id": "5f180005-0000-4000-8000-000000000005",
+    "schema_hash": "23993e36147028b5f3cbd43b8ecdaa1f2915d4a9f643ce105d5e457b0654dc98",
+    "source": "post:future",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value name[0] = "Ada Lovelace"
+log mail/info 5f180005-0000-4000-8000-000000000005: Notification sent. {"entry":"{E4}","notification":0,"to":["owner@broken-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@broken-site.example
+subject: New submission: Written by a newer release
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 nameless#1 / c18-ada (guest) ==
+request:
+{
+    "_sf_form": "{FORM:nameless#1}",
+    "_sf_source": "post:nameless",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E5}",
+    "form_id": "{FORM:nameless#1}",
+    "schema_hash": "e77e88691acb0bb39f11e34c1be9910bc07cdea4c718a97ca46ec19c4204eb0e",
+    "source": "post:nameless",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value name[0] = "Ada Lovelace"
+log mail/info {FORM:nameless#1}: Notification sent. {"entry":"{E5}","notification":0,"to":["owner@broken-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@broken-site.example
+subject: New submission: Form without an id
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 orig#1 / c18-ada-message (guest) ==
+request:
+{
+    "_sf_form": "5f180003-0000-4000-8000-000000000003",
+    "_sf_source": "post:orig",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Which of the two pages did you mean?"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E6}",
+    "form_id": "5f180003-0000-4000-8000-000000000003",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:orig",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Which of the two pages did you mean?"
+  value name[0] = "Ada Lovelace"
+log mail/info 5f180003-0000-4000-8000-000000000003: Notification sent. {"entry":"{E6}","notification":0,"to":["owner@broken-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@broken-site.example
+subject: New submission: Shared id
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Which of the two pages did you mean?</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 control#1 / c18-ada (administrator) ==
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks.</p>"
+    },
+    "entryId": "{E7}"
+}
+left behind:
+entry:
+{
+    "id": "{E7}",
+    "form_id": "5f180001-0000-4000-8000-000000000001",
+    "schema_hash": "e77e88691acb0bb39f11e34c1be9910bc07cdea4c718a97ca46ec19c4204eb0e",
+    "source": "post:control",
+    "status": "new",
+    "starred": "0",
+    "user_id": "{USER:admin}",
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value name[0] = "Ada Lovelace"
+log mail/info 5f180001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E7}","notification":0,"to":["owner@broken-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: owner@broken-site.example
+subject: New submission: Control form
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+

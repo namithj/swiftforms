@@ -1,0 +1,2 @@
+newsletter-pattern (wp_block): unchanged
+landing (page): unchanged

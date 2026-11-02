@@ -11,6 +11,7 @@
  * @package SwiftForms
  */
 
+require_once __DIR__ . '/fixtures/builder.php';
 require_once __DIR__ . '/fixtures/blocks.php';
 require_once __DIR__ . '/fixtures/values.php';
 
@@ -28,6 +29,16 @@ class SF_User_Config_Loader {
 	 * Seed for mt_rand() and SwiftForms\Random.
 	 */
 	const SEED = 20261119;
+
+	/**
+	 * The first post ID and user ID a config gets, counting up in the order the config lists them.
+	 *
+	 * Auto-increment IDs depend on how many runs came before, and values such as a hidden field's {post:id}
+	 * or {user:id} are stored in entries, so a config pins its IDs. The bases are far above anything the
+	 * auto-increment counter reaches.
+	 */
+	const POST_ID_BASE = 900000;
+	const USER_ID_BASE = 800000;
 
 	/**
 	 * Every scenario id a config may list in "skip".
@@ -98,6 +109,13 @@ class SF_User_Config_Loader {
 	private static $theme_dirs_before = null;
 
 	/**
+	 * The global $locale before a config changed it: [ was set, value ], or null when no config changed it.
+	 *
+	 * @var array{0:bool,1:mixed}|null
+	 */
+	private static $locale_before = null;
+
+	/**
 	 * Directory that holds the configs, fixtures, themes and snapshots.
 	 *
 	 * @return string
@@ -123,7 +141,7 @@ class SF_User_Config_Loader {
 	/**
 	 * Load one config, validate its shape and fill in the optional keys.
 	 *
-	 * @param string $slug Config slug, for example "00-harness-selftest".
+	 * @param string $slug Config slug, for example "01-fresh-defaults".
 	 * @return array
 	 */
 	public static function load( $slug ) {
@@ -153,13 +171,22 @@ class SF_User_Config_Loader {
 				'http_fixtures' => [],
 				'variants'      => [],
 				'skip'          => [],
+				'mail_capture'  => 'wp_mail',
+				'privacy_email' => '',
 			],
 			$config
 		);
 
+		if ( ! in_array( $config['mail_capture'], [ 'wp_mail', 'phpmailer' ], true ) ) {
+			throw new UnexpectedValueException( 'Config ' . $slug . ' has an unknown mail_capture "' . $config['mail_capture'] . '" (wp_mail or phpmailer).' );
+		}
+
 		foreach ( $config['skip'] as $scenario => $reason ) {
 			if ( ! in_array( $scenario, self::SCENARIOS, true ) ) {
 				throw new UnexpectedValueException( 'Config ' . $slug . ' skips an unknown scenario "' . $scenario . '".' );
+			}
+			if ( in_array( $scenario, [ 'S12', 'S13' ], true ) ) {
+				throw new UnexpectedValueException( 'Config ' . $slug . ' lists "' . $scenario . '" in skip: S12 and S13 run in the browser (tests/e2e/user-configs.spec.js, bin/run-e2e-configs.mjs) for every config and are not listed.' );
 			}
 			if ( ! is_string( $reason ) || ! preg_match( '/^pending: R\d\d$/', $reason ) ) {
 				throw new UnexpectedValueException( 'Config ' . $slug . ' skip "' . $scenario . '" must be "pending: Rnn", got ' . wp_json_encode( $reason ) . '.' );
@@ -182,6 +209,7 @@ class SF_User_Config_Loader {
 	 * @param bool   $environment Install the per-config test environment (mail capture, blocked HTTP, frozen time, example.org). apply-cli.php passes false: wp-env is a real site.
 	 */
 	public static function apply( array $config, $variant = '', $environment = true ) {
+		self::remove_applied();
 		self::$post_ids   = [];
 		self::$user_ids   = [];
 		self::$post_types = [];
@@ -190,13 +218,21 @@ class SF_User_Config_Loader {
 			self::install_environment( $config );
 		}
 
+		self::reset_stored_state();
 		self::apply_site( $config['site'] );
+		self::apply_roles( (array) ( $config['roles'] ?? [] ) );
 		self::apply_users( $config['users'] );
 		self::apply_posts( $config['posts'] );
 
 		foreach ( self::effective_options( $config, $variant ) as $name => $value ) {
-			self::write_option( $name, self::resolve_references( $value ) );
+			if ( null === $value ) {
+				continue; // A variant sets an option to null to leave it absent.
+			}
+			self::write_option( $name, self::resolve_references( $value, true ) );
 		}
+
+		// core keeps the placement of widgets in memory after the first read; a site's request starts with it empty.
+		$GLOBALS['_wp_sidebars_widgets'] = null;
 
 		self::apply_tables( $config['tables'] );
 
@@ -205,18 +241,68 @@ class SF_User_Config_Loader {
 			if ( ! is_file( $path ) ) {
 				throw new RuntimeException( 'Unknown mu-plugin snippet: ' . $snippet );
 			}
-			require $path;
+			require_once $path; // Once per process: a variant applies the same config again, and the hooks a snippet adds are still in force.
 		}
 
 		/**
-		 * Fires after a user config has been written.
+		 * Fires after a user config has been written, before the form index is rebuilt.
 		 *
-		 * Test-only. R01 hooks the form-index rebuild in here; the real rebuild is
-		 * SwiftForms' own code, run exactly as on a real site after an update.
+		 * Test-only. The rebuild that follows is SwiftForms' own code, run exactly as on a
+		 * real site after an update (swiftforms_db_version_changed).
 		 *
 		 * @param array $config The loaded config.
 		 */
 		do_action( 'swiftforms_user_config_applied', $config ); // phpcs:ignore WordPress.NamingConventions.ValidHookName -- Test-only hook, documented above.
+
+		if ( class_exists( 'SwiftForms\\Form_Index' ) ) {
+			SwiftForms\Form_Index::rebuild();
+		}
+	}
+
+	/**
+	 * Remove the posts and users an earlier apply() in this process created (a variant is the same config applied again).
+	 */
+	private static function remove_applied() {
+		if ( ! self::$post_ids && ! self::$user_ids ) {
+			return;
+		}
+		require_once ABSPATH . 'wp-admin/includes/user.php';
+		foreach ( array_reverse( self::$post_ids ) as $id ) {
+			wp_delete_post( (int) $id, true );
+		}
+		foreach ( self::$user_ids as $id ) {
+			wp_delete_user( (int) $id );
+		}
+	}
+
+	/**
+	 * Start from the stored state of a site that has the six tables and nothing else.
+	 *
+	 * The plugin installs itself on init, so a test database (or wp-env) already holds
+	 * swiftforms_db_version, the install marker and a migration log row. A config
+	 * describes the whole stored state, so every swiftforms_* option is removed and
+	 * every SwiftForms table is emptied (created first when it is missing) before the
+	 * config is written. Rows are deleted, not truncated: TRUNCATE commits, and the
+	 * PHPUnit run relies on its transaction to leave the database as it found it.
+	 */
+	private static function reset_stored_state() {
+		global $wpdb;
+
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'swiftforms\\_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		wp_cache_flush();
+
+		if ( class_exists( 'SwiftForms\\Settings' ) ) {
+			SwiftForms\Settings::flush_cache();
+		}
+		if ( class_exists( 'SwiftForms\\Form_Index' ) ) {
+			SwiftForms\Form_Index::flush_cache();
+		}
+		if ( class_exists( 'SwiftForms\\Database' ) ) {
+			SwiftForms\Database::install();
+			foreach ( SwiftForms\Database::tables() as $table ) {
+				$wpdb->query( 'DELETE FROM `' . $table . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Own table; name built from $wpdb->prefix and a fixed list.
+			}
+		}
 	}
 
 	/**
@@ -238,13 +324,16 @@ class SF_User_Config_Loader {
 	}
 
 	/**
-	 * Post key to {id, post_type, edit_url}, the shape apply-cli.php prints.
+	 * Post key to {id, post_type, edit_url}, the shape apply-cli.php prints (attachments are left out: the editor does not open them).
 	 *
 	 * @return array<string, array{id:int,post_type:string,edit_url:string}>
 	 */
 	public static function posts_summary() {
 		$summary = [];
 		foreach ( self::$post_ids as $key => $id ) {
+			if ( 'attachment' === self::$post_types[ $key ] ) {
+				continue; // Not something the block editor opens (config 06's logo).
+			}
 			$summary[ $key ] = [
 				'id'        => $id,
 				'post_type' => self::$post_types[ $key ],
@@ -261,6 +350,13 @@ class SF_User_Config_Loader {
 	 */
 	public static function mails() {
 		return self::$mails;
+	}
+
+	/**
+	 * Forget the mails captured so far.
+	 */
+	public static function forget_mails() {
+		self::$mails = [];
 	}
 
 	/**
@@ -322,15 +418,42 @@ class SF_User_Config_Loader {
 		self::$env_filters       = [];
 		self::$theme_dirs_before = null;
 
-		self::add_filter(
-			'pre_wp_mail',
-			static function ( $short_circuit, $atts ) {
-				self::$mails[] = $atts;
-				return true;
-			},
-			10,
-			2
-		);
+		if ( 'phpmailer' === $config['mail_capture'] ) {
+			// wp_mail() runs for real (the sent mail goes to the core test suite's mock mailer), so a config's wp_mail_from and phpmailer_init hooks act on it; the final PHPMailer state is recorded after them.
+			self::add_filter(
+				'phpmailer_init',
+				static function ( $mailer ) {
+					self::$mails[] = [
+						'via'          => 'phpmailer_init',
+						'from'         => $mailer->From, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'from_name'    => $mailer->FromName, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'sender'       => $mailer->Sender, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'mailer'       => $mailer->Mailer, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'to'           => $mailer->getToAddresses(),
+						'cc'           => $mailer->getCcAddresses(),
+						'bcc'          => $mailer->getBccAddresses(),
+						'reply_to'     => $mailer->getReplyToAddresses(),
+						'subject'      => $mailer->Subject, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'content_type' => $mailer->ContentType, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'charset'      => $mailer->CharSet, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'body'         => $mailer->Body, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'alt_body'     => $mailer->AltBody, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+						'headers'      => $mailer->getCustomHeaders(),
+					];
+				},
+				PHP_INT_MAX
+			);
+		} else {
+			self::add_filter(
+				'pre_wp_mail',
+				static function ( $short_circuit, $atts ) {
+					self::$mails[] = $atts;
+					return true;
+				},
+				10,
+				2
+			);
+		}
 		self::add_filter(
 			'pre_http_request',
 			static function ( $short_circuit, $args, $url ) {
@@ -385,6 +508,15 @@ class SF_User_Config_Loader {
 			wp_clean_themes_cache();
 		}
 
+		if ( null !== self::$locale_before ) {
+			if ( self::$locale_before[0] ) {
+				$GLOBALS['locale'] = self::$locale_before[1];
+			} else {
+				unset( $GLOBALS['locale'] );
+			}
+			self::$locale_before = null;
+		}
+
 		self::$uploads_dir   = '';
 		self::$mails         = [];
 		self::$http_fixtures = [];
@@ -400,12 +532,34 @@ class SF_User_Config_Loader {
 	 * @param array $site The config's "site" block.
 	 */
 	private static function apply_site( array $site ) {
+		if ( ! empty( $site['multisite'] ) && ! is_multisite() ) {
+			throw new RuntimeException( 'This config is a network install: run it with WP_TESTS_MULTISITE=1 (bin/test-user-configs.sh does for config 19).' );
+		}
+		if ( ! empty( $site['network_active'] ) && defined( 'SWIFTFORMS_FILE' ) ) {
+			// Network-activated: the plugin is in the network's list of active plugins, the way a network admin leaves it.
+			update_site_option( 'active_sitewide_plugins', [ plugin_basename( SWIFTFORMS_FILE ) => self::FROZEN_TIME ] );
+		}
 		if ( isset( $site['locale'] ) && 'en_US' !== $site['locale'] ) {
+			// WordPress clears WPLANG when the language pack is not installed; a fixture site has the option stored and the locale in force.
+			$keep = static function () use ( $site ) {
+				return $site['locale'];
+			};
+			add_filter( 'sanitize_option_WPLANG', $keep, 99 );
 			update_option( 'WPLANG', $site['locale'] );
+			remove_filter( 'sanitize_option_WPLANG', $keep, 99 );
+			if ( null === self::$locale_before ) {
+				self::$locale_before = [ isset( $GLOBALS['locale'] ), $GLOBALS['locale'] ?? null ];
+			}
+			$GLOBALS['locale'] = $site['locale']; // get_locale() keeps its answer in this global after the first call.
 		}
 		$timezone = $site['timezone_string'] ?? ( $site['timezone'] ?? '' );
 		if ( '' !== $timezone ) {
 			update_option( 'timezone_string', $timezone );
+		}
+		foreach ( [ 'date_format', 'time_format', 'start_of_week', 'show_on_front', 'page_for_posts' ] as $name ) {
+			if ( isset( $site[ $name ] ) ) {
+				update_option( $name, $site[ $name ] );
+			}
 		}
 		if ( isset( $site['permalinks'] ) ) {
 			global $wp_rewrite;
@@ -426,14 +580,28 @@ class SF_User_Config_Loader {
 	}
 
 	/**
-	 * Create the users: a list of roles, or a map of key => role.
+	 * Create custom roles (stored data: they sit in the wp_user_roles option of a real site).
+	 *
+	 * @param array $roles Role slug => [ 'name' => display name, 'caps' => [ capability => true ] ].
+	 */
+	private static function apply_roles( array $roles ) {
+		foreach ( $roles as $slug => $role ) {
+			remove_role( (string) $slug );
+			add_role( (string) $slug, (string) ( $role['name'] ?? $slug ), (array) ( $role['caps'] ?? [] ) );
+		}
+	}
+
+	/**
+	 * Create the users: a list of roles, or a map of key => role. The role "admin" means administrator.
 	 *
 	 * @param array $users The config's "users" block.
 	 */
 	private static function apply_users( array $users ) {
 		foreach ( $users as $key => $role ) {
 			$key = is_int( $key ) ? $role : $key;
-			$id  = wp_insert_user(
+			// "admin" is the config's name for the administrator role (WordPress has no role called admin).
+			$role = 'admin' === $role ? 'administrator' : $role;
+			$id   = wp_insert_user(
 				[
 					'user_login' => 'sf-' . $key,
 					'user_pass'  => 'sf-test-password',
@@ -444,7 +612,14 @@ class SF_User_Config_Loader {
 			if ( is_wp_error( $id ) ) {
 				throw new RuntimeException( 'Could not create user ' . $key . ': ' . $id->get_error_message() );
 			}
-			self::$user_ids[ $key ] = (int) $id;
+			// Pin the ID (see POST_ID_BASE): a plain update of the primary key, which neither commits nor moves the auto-increment counter.
+			$fixed = self::USER_ID_BASE + count( self::$user_ids ) + 1;
+			global $wpdb;
+			$wpdb->update( $wpdb->users, [ 'ID' => $fixed ], [ 'ID' => (int) $id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->update( $wpdb->usermeta, [ 'user_id' => $fixed ], [ 'user_id' => (int) $id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			clean_user_cache( (int) $id );
+			clean_user_cache( $fixed );
+			self::$user_ids[ $key ] = $fixed;
 		}
 	}
 
@@ -452,7 +627,8 @@ class SF_User_Config_Loader {
 	 * Insert the posts as stored data.
 	 *
 	 * Fixture content is stored data, not a save: kses filters and SwiftForms'
-	 * wp_insert_post_data callbacks are detached for the insert, and the stored
+	 * save callbacks (wp_insert_post_data, and the form-index hooks on
+	 * wp_after_insert_post and transition_post_status) are detached for the insert, and the stored
 	 * post_content is read back from the database and compared byte for byte.
 	 *
 	 * @param array $posts The config's "posts" block.
@@ -461,7 +637,11 @@ class SF_User_Config_Loader {
 		global $wpdb;
 
 		kses_remove_filters();
-		$detached = self::detach_swiftforms_callbacks( 'wp_insert_post_data' );
+		$detached = array_merge(
+			self::detach_swiftforms_callbacks( 'wp_insert_post_data' ),
+			self::detach_swiftforms_callbacks( 'wp_after_insert_post' ),
+			self::detach_swiftforms_callbacks( 'transition_post_status' )
+		);
 
 		try {
 			foreach ( $posts as $post ) {
@@ -477,12 +657,30 @@ class SF_User_Config_Loader {
 				if ( isset( $post['author'], self::$user_ids[ $post['author'] ] ) ) {
 					$args['post_author'] = self::$user_ids[ $post['author'] ];
 				}
-				$id = wp_insert_post( wp_slash( $args ), true );
+				if ( isset( $post['mime'] ) ) {
+					$args['post_mime_type'] = (string) $post['mime'];
+				}
+				if ( isset( $post['password'] ) ) {
+					$args['post_password'] = (string) $post['password'];
+				}
+				if ( isset( $post['date'] ) ) {
+					// "date" is GMT; the local date follows from the site timezone set above.
+					$args['post_date_gmt'] = (string) $post['date'];
+					$args['post_date']     = get_date_from_gmt( (string) $post['date'] );
+				}
+				$args['import_id'] = self::POST_ID_BASE + count( self::$post_ids ) + 1;
+				$id                = wp_insert_post( wp_slash( $args ), true );
 				if ( is_wp_error( $id ) ) {
 					throw new RuntimeException( 'Could not insert post ' . $key . ': ' . $id->get_error_message() );
 				}
+				foreach ( (array) ( $post['meta'] ?? [] ) as $meta_key => $meta_value ) {
+					update_post_meta( $id, $meta_key, $meta_value );
+				}
+				foreach ( (array) ( $post['terms'] ?? [] ) as $taxonomy => $terms ) {
+					wp_set_object_terms( $id, $terms, $taxonomy );
+				}
 				$stored = $wpdb->get_var( $wpdb->prepare( "SELECT post_content FROM {$wpdb->posts} WHERE ID = %d", $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-				if ( $stored !== $content ) {
+				if ( (string) $stored !== $content ) {
 					throw new RuntimeException( 'Post ' . $key . ' was not stored byte-identically (a filter rewrote the fixture content).' );
 				}
 				self::$post_ids[ $key ]   = (int) $id;
@@ -495,7 +693,7 @@ class SF_User_Config_Loader {
 	}
 
 	/**
-	 * Insert raw rows into SwiftForms tables.
+	 * Insert raw rows into SwiftForms tables ("{{post:key}}" in a string column becomes the post ID).
 	 *
 	 * @param array $tables Table name (without prefix) => list of rows.
 	 */
@@ -506,28 +704,70 @@ class SF_User_Config_Loader {
 			if ( $full !== $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $full ) ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				throw new RuntimeException( 'Table ' . $full . ' does not exist yet; the config cannot store rows in it.' );
 			}
-			foreach ( $rows as $row ) {
-				if ( false === $wpdb->insert( $full, $row ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-					throw new RuntimeException( 'Could not insert a row into ' . $full . ': ' . $wpdb->last_error );
+			// Rows go in as multi-row INSERTs of up to 500 rows with the same columns (a config may hold thousands).
+			$batch   = [];
+			$columns = '';
+			$flush   = static function () use ( &$batch, &$columns, $wpdb, $full ) {
+				if ( ! $batch ) {
+					return;
 				}
+				$names  = array_keys( $batch[0] );
+				$tuples = [];
+				foreach ( $batch as $row ) {
+					$cells = [];
+					foreach ( $row as $value ) {
+						if ( null === $value ) {
+							$cells[] = 'NULL';
+						} elseif ( is_int( $value ) ) {
+							$cells[] = (string) $value;
+						} else {
+							$cells[] = "'" . $wpdb->_real_escape( (string) $value ) . "'"; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Escaped with the connection's own escaper.
+						}
+					}
+					$tuples[] = '(' . implode( ',', $cells ) . ')';
+				}
+				$sql = 'INSERT INTO `' . $full . '` (`' . implode( '`,`', $names ) . '`) VALUES ' . implode( ',', $tuples );
+				if ( false === $wpdb->query( $sql ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Fixture rows, escaped above.
+					throw new RuntimeException( 'Could not insert rows into ' . $full . ': ' . $wpdb->last_error );
+				}
+				$batch = [];
+			};
+			foreach ( $rows as $row ) {
+				$row = self::resolve_references( $row );
+				$key = implode( ',', array_keys( $row ) );
+				if ( $batch && ( $key !== $columns || count( $batch ) >= 500 ) ) {
+					$flush();
+				}
+				$columns = $key;
+				$batch[] = $row;
 			}
+			$flush();
 		}
 	}
 
 	/**
 	 * Replace "{{post:key}}" and "{{user:key}}" in strings, recursively.
 	 *
-	 * Unknown keys are left as they are.
+	 * Unknown keys are left as they are. In an option value (typed), a string that is exactly one
+	 * placeholder becomes the integer ID, because a setting such as email.logo_id is an integer.
 	 *
 	 * @param mixed $value Any value.
+	 * @param bool  $typed Whether the value is an option value.
 	 * @return mixed
 	 */
-	private static function resolve_references( $value ) {
+	private static function resolve_references( $value, $typed = false ) {
 		if ( is_array( $value ) ) {
-			return array_map( [ __CLASS__, 'resolve_references' ], $value );
+			foreach ( $value as $key => $item ) {
+				$value[ $key ] = self::resolve_references( $item, $typed );
+			}
+			return $value;
 		}
 		if ( ! is_string( $value ) || false === strpos( $value, '{{' ) ) {
 			return $value;
+		}
+		if ( $typed && 1 === preg_match( '/^\{\{(post|user):([a-z0-9_-]+)\}\}$/i', $value, $exact ) ) {
+			$map = 'post' === $exact[1] ? self::$post_ids : self::$user_ids;
+			return isset( $map[ $exact[2] ] ) ? $map[ $exact[2] ] : $value;
 		}
 		return preg_replace_callback(
 			'/\{\{(post|user):([a-z0-9_-]+)\}\}/i',

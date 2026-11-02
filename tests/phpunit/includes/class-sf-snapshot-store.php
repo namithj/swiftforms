@@ -76,7 +76,7 @@ class SF_Snapshot_Store {
 	/**
 	 * Compare actual text with the stored snapshot.
 	 *
-	 * @param string $relative Path relative to the root, for example "00-harness-selftest/apply.txt".
+	 * @param string $relative Path relative to the root, for example "01-fresh-defaults/apply.txt".
 	 * @param string $actual   The text produced by this run.
 	 * @return string|null A failure message, or null when the snapshot matches.
 	 */

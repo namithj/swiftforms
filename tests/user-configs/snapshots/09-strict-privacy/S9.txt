@@ -1,0 +1,100 @@
+== S9 registered ==
+exporter: SwiftForms entries
+eraser: SwiftForms entries
+
+== S9 export for person25@eu-example.org ==
+[
+    {
+        "data": [
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-25",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "EU contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-03 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Person 25"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "person25@eu-example.org"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Request number 25."
+                    },
+                    {
+                        "name": "Consent",
+                        "value": "1"
+                    }
+                ]
+            }
+        ],
+        "done": true
+    }
+]
+
+== S9 export for an address with no entries ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase person25@eu-example.org ==
+[
+    {
+        "items_removed": true,
+        "items_retained": false,
+        "messages": [
+            "Removed 1 SwiftForms entry."
+        ],
+        "done": true
+    }
+]
+
+== S9 rows before and after the erasure ==
+before:
+{
+    "entries with the address": 1,
+    "entries": 55,
+    "value rows": 220,
+    "mail log rows naming it": 0
+}
+after:
+{
+    "entries with the address": 0,
+    "entries": 54,
+    "value rows": 216,
+    "orphan value rows": 0,
+    "orphan meta rows": 0,
+    "mail log rows naming it": 0
+}
+
+== S9 export again after the erasure ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase an address with no entries ==
+[
+    {
+        "items_removed": false,
+        "items_retained": false,
+        "messages": [],
+        "done": true
+    }
+]
+

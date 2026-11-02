@@ -1,0 +1,67 @@
+/*
+ * SwiftForms editor canvas additions. The front-end stylesheet is loaded in
+ * the editor too; this file only adapts it to the block list wrappers.
+ */
+
+/* The inputs are real but disabled; clicks must reach the block wrapper. */
+.swiftforms-form :is(input, textarea, select, button) {
+	pointer-events: none;
+}
+
+.swiftforms-form .block-editor-block-list__layout {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sf-gap, 1rem);
+	align-items: flex-start;
+}
+
+.swiftforms-form .block-editor-block-list__layout > .block-editor-block-list__block {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+}
+
+.swiftforms-form .block-editor-block-list__layout > .swiftforms-w-75 {
+	width: calc(75% - var(--sf-gap, 1rem) * 0.25);
+}
+
+.swiftforms-form .block-editor-block-list__layout > .swiftforms-w-66 {
+	width: calc(66.66% - var(--sf-gap, 1rem) * 0.34);
+}
+
+.swiftforms-form .block-editor-block-list__layout > .swiftforms-w-50 {
+	width: calc(50% - var(--sf-gap, 1rem) * 0.5);
+}
+
+.swiftforms-form .block-editor-block-list__layout > .swiftforms-w-33 {
+	width: calc(33.33% - var(--sf-gap, 1rem) * 0.67);
+}
+
+.swiftforms-form .block-editor-block-list__layout > .swiftforms-w-25 {
+	width: calc(25% - var(--sf-gap, 1rem) * 0.75);
+}
+
+/* A hidden field has no visible control; show a quiet marker instead. */
+.swiftforms-field--hidden-preview {
+	padding: 0.25em 0.75em;
+	border: 1px dashed;
+	font-size: 0.875em;
+	opacity: 0.7;
+}
+
+/* Confirmation hidden unless the toolbar toggle is on (editor-only). */
+.swiftforms-form:not(.swiftforms-is-previewing-confirmation)
+.wp-block-swiftforms-confirmation {
+	display: none;
+}
+
+.swiftforms-is-previewing-confirmation .wp-block-swiftforms-confirmation {
+	outline: 1px dashed currentcolor;
+	outline-offset: 4px;
+}
+
+/* RawHTML in the canvas wraps the consent text in a div;
+   keep it on the line of the box. */
+.swiftforms-consent div {
+	display: inline;
+}

@@ -1,0 +1,3 @@
+footer-part (wp_template_part): unchanged
+single-template (wp_template): unchanged
+about (page): unchanged

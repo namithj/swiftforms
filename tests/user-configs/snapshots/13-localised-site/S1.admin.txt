@@ -1,0 +1,98 @@
+== livraison (page) ==
+<h2 class="wp-block-heading">Demande de livraison</h2>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f130001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;post:livraison&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f130001-nom-1">Nom et prénom<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="text" id="sf-5f130001-nom-1" name="sf[nom]" autocomplete="name" required aria-required="true" aria-describedby="sf-5f130001-nom-1-error"><p class="swiftforms-error" id="sf-5f130001-nom-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f130001-email-1">Adresse e-mail<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="email" id="sf-5f130001-email-1" name="sf[email]" autocomplete="email" required aria-required="true" aria-describedby="sf-5f130001-email-1-error"><p class="swiftforms-error" id="sf-5f130001-email-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--date swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-date"><label class="swiftforms-label" for="sf-5f130001-date_livraison-1">Date de livraison souhaitée<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="date" id="sf-5f130001-date_livraison-1" name="sf[date_livraison]" min="2026-11-20" max="2027-03-31" required aria-required="true" aria-describedby="sf-5f130001-date_livraison-1-help sf-5f130001-date_livraison-1-error"><p class="swiftforms-help" id="sf-5f130001-date_livraison-1-help">Entre le 20 novembre 2026 et le 31 mars 2027.</p><p class="swiftforms-error" id="sf-5f130001-date_livraison-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--select swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-select"><label class="swiftforms-label" for="sf-5f130001-creneau-1">Créneau<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><select class="swiftforms-select" id="sf-5f130001-creneau-1" name="sf[creneau]" required aria-required="true" aria-describedby="sf-5f130001-creneau-1-error"><option value="">Choisissez un créneau</option><option value="matin">Matin (8 h – 12 h)</option><option value="apres-midi">Après-midi (14 h – 18 h)</option></select><p class="swiftforms-error" id="sf-5f130001-creneau-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--consent swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-consent"><label class="swiftforms-choice swiftforms-label swiftforms-consent" for="sf-5f130001-consentement-1"><input type="checkbox" id="sf-5f130001-consentement-1" name="sf[consentement]" value="1" required aria-required="true" aria-describedby="sf-5f130001-consentement-1-error"><span>J’accepte que mes données servent à organiser la livraison.<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></span></label><p class="swiftforms-error" id="sf-5f130001-consentement-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f130001-message-1">Précisions</label><textarea class="swiftforms-textarea" id="sf-5f130001-message-1" name="sf[message]" rows="4" aria-describedby="sf-5f130001-message-1-error"></textarea><p class="swiftforms-error" id="sf-5f130001-message-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Demander la livraison</button></div>
+<input type="hidden" name="_sf_form" value="5f130001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="post:livraison"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><input type="hidden" name="_wpnonce" value="{NONCE}"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+-- assets: style swiftforms-form, module @swiftforms/view
+-- client state --
+{
+    "state": {
+        "swiftforms": {
+            "restUrl": "http://example.org/wp-json/",
+            "submitUrl": "http://example.org/wp-json/swiftforms/v1/submit",
+            "tokenUrl": "http://example.org/wp-json/swiftforms/v1/token",
+            "ajaxUrl": "http://example.org/wp-admin/admin-ajax.php",
+            "messages": {
+                "required": "Ce champ est obligatoire.",
+                "email": "Veuillez saisir une adresse e-mail valide.",
+                "url": "Please enter a valid web address starting with http:// or https://.",
+                "number": "Please enter a number.",
+                "number_min": "Please enter a number that is at least {min}.",
+                "number_max": "Please enter a number that is at most {max}.",
+                "number_step": "Please enter a multiple of {step}.",
+                "date": "Veuillez saisir une date valide au format AAAA-MM-JJ.",
+                "date_min": "Veuillez saisir une date à partir du {min}.",
+                "date_max": "Veuillez saisir une date jusqu’au {max}.",
+                "max_length": "Please use at most {max} characters.",
+                "min_length": "Please use at least {min} characters.",
+                "pattern": "Please match the requested format.",
+                "option": "Veuillez choisir l’une des options proposées.",
+                "min_choices": "Please choose at least {min}.",
+                "max_choices": "Please choose at most {max}.",
+                "consent": "Veuillez cocher cette case pour continuer.",
+                "invalid": "Please check this field."
+            },
+            "i18n": {
+                "summary": "Veuillez corriger les points suivants :",
+                "network": "Le formulaire n’a pas pu être envoyé. Vérifiez votre connexion et réessayez.",
+                "closed": "Ce formulaire n’accepte plus de réponses.",
+                "rateLimited": "Too many attempts. Please wait a moment and try again.",
+                "blocked": "Your submission could not be accepted. Please reload the page and try again."
+            },
+            "nonce": "{NONCE}"
+        }
+    }
+}
+
+== lettre (page) ==
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f130002-0000-4000-8000-000000000002&quot;,&quot;source&quot;:&quot;post:lettre&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f130002-email-1">Votre e-mail<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="email" id="sf-5f130002-email-1" name="sf[email]" required aria-required="true" aria-describedby="sf-5f130002-email-1-error"><p class="swiftforms-error" id="sf-5f130002-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Envoyer</button></div>
+<input type="hidden" name="_sf_form" value="5f130002-0000-4000-8000-000000000002"><input type="hidden" name="_sf_source" value="post:lettre"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><input type="hidden" name="_wpnonce" value="{NONCE}"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+-- assets: style swiftforms-form, module @swiftforms/view
+-- client state --
+{
+    "state": {
+        "swiftforms": {
+            "restUrl": "http://example.org/wp-json/",
+            "submitUrl": "http://example.org/wp-json/swiftforms/v1/submit",
+            "tokenUrl": "http://example.org/wp-json/swiftforms/v1/token",
+            "ajaxUrl": "http://example.org/wp-admin/admin-ajax.php",
+            "messages": {
+                "required": "Ce champ est obligatoire.",
+                "email": "Veuillez saisir une adresse e-mail valide.",
+                "url": "Please enter a valid web address starting with http:// or https://.",
+                "number": "Please enter a number.",
+                "number_min": "Please enter a number that is at least {min}.",
+                "number_max": "Please enter a number that is at most {max}.",
+                "number_step": "Please enter a multiple of {step}.",
+                "date": "Veuillez saisir une date valide au format AAAA-MM-JJ.",
+                "date_min": "Veuillez saisir une date à partir du {min}.",
+                "date_max": "Veuillez saisir une date jusqu’au {max}.",
+                "max_length": "Please use at most {max} characters.",
+                "min_length": "Please use at least {min} characters.",
+                "pattern": "Please match the requested format.",
+                "option": "Veuillez choisir l’une des options proposées.",
+                "min_choices": "Please choose at least {min}.",
+                "max_choices": "Please choose at most {max}.",
+                "consent": "Veuillez cocher cette case pour continuer.",
+                "invalid": "Please check this field."
+            },
+            "i18n": {
+                "summary": "Veuillez corriger les points suivants :",
+                "network": "Le formulaire n’a pas pu être envoyé. Vérifiez votre connexion et réessayez.",
+                "closed": "Ce formulaire n’accepte plus de réponses.",
+                "rateLimited": "Too many attempts. Please wait a moment and try again.",
+                "blocked": "Your submission could not be accepted. Please reload the page and try again."
+            },
+            "nonce": "{NONCE}"
+        }
+    }
+}
+

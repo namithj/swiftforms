@@ -1,0 +1,797 @@
+== S5 control: a clean submission of the same values ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E24}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E24}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+log mail/info 5f200001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E24}","notification":1,"to":["dev@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Hero contact
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+-- mail 2 (wp_mail arguments) --
+to: dev@power-site.example
+subject: [power] Hello from the hook: Ada Lovelace
+header: From: Power Site <forms@power-site.example>
+header: Reply-To: ada@example.com
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S5 contact#1 / honeypot filled ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E25}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+
+== S5 contact#1 / too fast (js.500) ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E26}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"too_fast"}
+
+== S5 contact#1 / forged token ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E27}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"token_forged"}
+
+== S5 contact#1 / no token ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E28}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"token_forged"}
+
+== S5 contact#1 / no browser-measured time ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E29}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"time_missing"}
+
+== S5 contact#1 / signed time over REST (no js token) ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E30}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"too_fast"}
+
+== S5 contact#1 / too fast for this site (js.1000, min_seconds 2) ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E31}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"too_fast"}
+
+== S5 contact#1 / blocked word: c20-hook-spam ==
+answered like a clean submission (other values than the control, so the body is compared by kind)
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E32}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "bot@example.com"
+  value message[0] = "This mentions hook-spam on purpose."
+  value name[0] = "Hook Bot"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"filter:power-user-rule"}
+
+== S5 contact#1 / slow enough for this site (js.3000, min_seconds 2) ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E33}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E33}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+log mail/info 5f200001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E33}","notification":1,"to":["dev@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Hero contact
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+-- mail 2 (wp_mail arguments) --
+to: dev@power-site.example
+subject: [power] Hello from the hook: Ada Lovelace
+header: From: Power Site <forms@power-site.example>
+header: Reply-To: ada@example.com
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S5 contact#1 / per-form rate limit ==
+limit 20 per minute; statuses of requests 1 to 21: 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 429
+last response:
+status: 429
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+retry-after: 60
+{
+    "status": "rate_limited"
+}
+left behind:
+entry:
+{
+    "id": "{E34}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 1"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E35}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 2"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E36}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 3"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E37}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 4"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E38}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 5"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E39}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 6"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E40}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 7"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E41}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 8"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E42}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 9"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E43}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 10"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E44}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 11"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E45}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 12"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E46}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 13"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E47}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 14"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E48}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 15"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E49}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 16"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E50}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 17"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E51}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 18"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E52}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 19"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E53}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 20"
+  value name[0] = "Ada Lovelace"
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+log error/debug 5f200001-0000-4000-8000-000000000001: Submission judged spam. {"reason":"honeypot"}
+
+== S5 coarse limiter (61 requests in one minute) ==
+statuses of requests 1 to 60: 403
+request 61:
+status: 429
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+retry-after: 60
+{
+    "status": "rate_limited"
+}
+
+== S5 locations that are not live ==
+-- unknown formId, real source --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+-- real formId, source that is not --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+-- real formId, malformed source --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+-- malformed formId --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+-- real formId, the source of another form --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+

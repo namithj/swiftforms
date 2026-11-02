@@ -1,0 +1,48 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_footer_text = <p>Sent from ünï &amp; co &mdash; <script>alert(1)</script><a href="javascript:alert(1)">unsafe link</a></p>
+swiftforms_email_notification_to = owner@example.org
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- nasty (page/publish, slug nasty, title Nasty)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Nasty ünï 漢字 &amp; co</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f050001-0000-4000-8000-000000000001","title":"Nasty \u0026 \u003cb\u003e\u0022quoted\u0022\u003c/b\u003e ünï 漢字 🚀"} -->
+<!-- wp:swiftforms/field-text {"label":"Näme ünï 漢字 🚀 \u003c/textarea\u003e\u003cscript\u003ealert('l')\u003c/script\u003e","name":"name","required":true,"help":"Shortcode-looking: [contact-form-7 id=\u00221\u0022 title=\u0022x\u0022] and {field:x} and {all_fields}","placeholder":"\u0022\u003e\u003csvg onload=alert(1)\u003e","autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"E-mail — \u0022quoted\u0022 \u0026 'single' \u0026amp; \u0026lt;b\u0026gt;","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-text {"label":"ملاحظة (RTL) ‮override","name":"note","help":"اكتب هنا — النص من اليمين إلى اليسار"} /-->
+
+<!-- wp:swiftforms/field-url {"label":"Website","name":"website"} /-->
+
+<!-- wp:swiftforms/field-select {"label":"Topic, with | pipes","name":"topic","required":true,"placeholderOption":"Pick, one | now","options":[{"value":"a,b","label":"Comma, separated"},{"value":"x|y","label":"Pipe | separated"},{"value":"ünï 漢字","label":"Unicode ünï 漢字 🚀"},{"value":"مرحبا","label":"مرحبا بالعالم"},{"value":"fish\u0026chips","label":"Fish \u0026amp; Chips"},{"value":"tom\u003cb\u003e","label":"Tom \u0026 \u0022Jerry\u0022 \u003cb\u003ebold\u003c/b\u003e"}]} /-->
+
+<!-- wp:swiftforms/field-radio {"label":"الاسم الكامل","name":"plan","options":[{"value":"basic","label":"Basic [shortcode]"},{"value":"pro","label":"{field:other}"},{"value":"team","label":"\u003cscript\u003ealert(1)\u003c/script\u003e"}]} /-->
+
+<!-- wp:swiftforms/field-checkboxes {"label":"Tags","name":"tags","options":[{"value":"a,b,c","label":"a,b,c"},{"value":"p|q|r","label":"p|q|r"},{"value":"it's","label":"It's \u0022quoted\u0022"}]} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ","name":"message","required":true,"help":"\u003c/textarea\u003e\u003cb\u003ehelp\u003c/b\u003e"} /-->
+
+<!-- wp:swiftforms/field-hidden {"label":"Marker","name":"marker","value":"{field:x} [gallery ids=\u00221\u0022]"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send ünï 漢字 🚀"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks {field:name}! &lt;script&gt;alert(1)&lt;/script&gt; You wrote: <code>{field:message}</code> [gallery ids="1"] {field:x}</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

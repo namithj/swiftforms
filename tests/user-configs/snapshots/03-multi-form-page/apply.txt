@@ -1,0 +1,84 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- newsletter-pattern (wp_block/publish, slug newsletter-signup, title Newsletter signup)
+<!-- wp:swiftforms/form {"formId":"5f030001-0000-4000-8000-000000000001","title":"Newsletter"} -->
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"placeholder":"you@example.com","autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-consent {"label":"Consent","name":"consent","text":"Send me the monthly newsletter."} /-->
+
+<!-- wp:swiftforms/submit {"label":"Subscribe"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>You are subscribed. Thank you!</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- landing (page/publish, slug landing, title Landing)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Welcome</h2>
+<!-- /wp:heading -->
+
+<!-- wp:block {"ref":900001} /-->
+
+<!-- wp:swiftforms/form {"formId":"5f030002-0000-4000-8000-000000000002","title":"Request a callback"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-tel {"label":"Phone","name":"phone","required":true,"autocomplete":"tel"} /-->
+
+<!-- wp:swiftforms/field-select {"label":"Best time to call","name":"time","placeholderOption":"Choose a time","options":[{"value":"morning","label":"Morning"},{"value":"afternoon","label":"Afternoon"},{"value":"evening","label":"Evening"}]} /-->
+
+<!-- wp:swiftforms/submit {"label":"Call me"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>We will call you back soon.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f030003-0000-4000-8000-000000000003","title":"Contact"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks for your message.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:paragraph -->
+<p>Prefer the newsletter again?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:block {"ref":900001} /-->
+-- news-a (page/publish, slug news-a, title News A)
+<!-- wp:paragraph -->
+<p>Stay up to date.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:block {"ref":900001} /-->
+-- news-b (page/publish, slug news-b, title News B)
+<!-- wp:paragraph -->
+<p>Stay up to date.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:block {"ref":900001} /-->

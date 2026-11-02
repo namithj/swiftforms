@@ -122,8 +122,8 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	 * Run-wide snapshots: hooks, REST routes, database schema and blocks.
 	 *
 	 * Run once by bin/test-user-configs.sh after the configs. They are the same
-	 * on every PHP version: the block builder registers nothing below PHP 8.2, so
-	 * nothing here reads from it (hooks leave out SwiftForms\Vendor\, routes list
+	 * on every PHP version: nothing here reads from the block builder
+	 * (hooks leave out SwiftForms\Vendor\, routes list
 	 * only swiftforms/v1, blocks come from SwiftForms' own configs).
 	 */
 	public function test_global_snapshots() {
@@ -152,16 +152,20 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Not snapshotted (the builder only exists on PHP 8.2 and later): its config route is never public.
+	 * Not snapshotted: the builder's config route is never public.
 	 */
 	private function assert_builder_config_route_is_not_public() {
-		$handlers = rest_get_server()->get_routes( 'cassette-cmf-block-builder/v1' );
+		$handlers = rest_get_server()->get_routes( 'swiftforms-blocks/v1' );
 		if ( ! $handlers ) {
-			// The builder has not started (no blocks configured, or PHP below 8.2): nothing to check.
+			// The builder has not started (no blocks configured): nothing to check.
 			$this->addToAssertionCount( 1 );
 			return;
 		}
 		foreach ( $handlers as $route => $route_handlers ) {
+			if ( '/swiftforms-blocks/v1' === $route ) {
+				// The namespace index WordPress adds itself: it lists routes and shows no data.
+				continue;
+			}
 			foreach ( $route_handlers as $handler ) {
 				$this->assertFalse( SF_User_Config_Runner::is_public( $handler ), "The builder route {$route} is public." );
 			}
@@ -169,14 +173,9 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Every swiftforms/* block SwiftForms configures is registered (PHP 8.2 and later only).
+	 * Every swiftforms/* block SwiftForms configures is registered.
 	 */
 	private function assert_configured_blocks_are_registered() {
-		if ( PHP_VERSION_ID < 80200 ) {
-			// The block builder registers nothing below PHP 8.2.
-			$this->addToAssertionCount( 1 );
-			return;
-		}
 		foreach ( explode( "\n", trim( SF_User_Config_Runner::blocks_text() ) ) as $line ) {
 			if ( '(none)' === $line || '' === $line ) {
 				continue;

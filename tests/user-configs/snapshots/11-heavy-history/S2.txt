@@ -1,0 +1,209 @@
+== S2 contact#1 / c11-contact (guest) ==
+request:
+{
+    "_sf_form": "5f110001-0000-4000-8000-000000000001",
+    "_sf_source": "post:contact",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "topic": "support",
+        "details": "A new enquiry on top of five thousand old ones."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thank you. We will reply soon.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E1}",
+    "form_id": "5f110001-0000-4000-8000-000000000001",
+    "schema_hash": "71f98317627b3e2ca8b4eecf11d0b3e253ecb4cbf3a3f7dcb936dfd9bf003c9a",
+    "source": "post:contact",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value details[0] = "A new enquiry on top of five thousand old ones."
+  value email[0] = "ada@example.com"
+  value name[0] = "Ada Lovelace"
+  value topic[0] = "support"
+log mail/info 5f110001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E1}","notification":0,"to":["ops@busy-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: ops@busy-site.example
+subject: New submission: Contact
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Topic</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">support</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Details</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A new enquiry on top of five thousand old ones.</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 newsletter#1 / c11-news (guest) ==
+request:
+{
+    "_sf_form": "5f110002-0000-4000-8000-000000000002",
+    "_sf_source": "post:newsletter",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "email": "reader@example.net"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>You are on the list.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E2}",
+    "form_id": "5f110002-0000-4000-8000-000000000002",
+    "schema_hash": "3318e4a0fa617118e8441c5283a417c78eeb6a291a6122e9cf429372f66c6eb5",
+    "source": "post:newsletter",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "reader@example.net"
+log mail/info 5f110002-0000-4000-8000-000000000002: Notification sent. {"entry":"{E2}","notification":0,"to":["ops@busy-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: ops@busy-site.example
+subject: New submission: Newsletter
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">reader@example.net</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 survey#1 / c11-survey (guest) ==
+request:
+{
+    "_sf_form": "5f110003-0000-4000-8000-000000000003",
+    "_sf_source": "post:survey",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Grace Hopper",
+        "interests": [
+            "news",
+            "jobs"
+        ],
+        "comment": "More compilers, please."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thanks for your answers.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E3}",
+    "form_id": "5f110003-0000-4000-8000-000000000003",
+    "schema_hash": "84acdf8d8f3b4809803a62f4f71c60ac4150485e027b0bc6c0b0ff2cc843c3eb",
+    "source": "post:survey",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value comment[0] = "More compilers, please."
+  value interests[0] = "news"
+  value interests[1] = "jobs"
+  value name[0] = "Grace Hopper"
+log mail/info 5f110003-0000-4000-8000-000000000003: Notification sent. {"entry":"{E3}","notification":0,"to":["ops@busy-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: ops@busy-site.example
+subject: New submission: Reader survey
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Grace Hopper</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">What would you like to hear about?</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">news, jobs</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Comment</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">More compilers, please.</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 contact#1 / c11-contact (administrator) ==
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Thank you. We will reply soon.</p>"
+    },
+    "entryId": "{E4}"
+}
+left behind:
+entry:
+{
+    "id": "{E4}",
+    "form_id": "5f110001-0000-4000-8000-000000000001",
+    "schema_hash": "71f98317627b3e2ca8b4eecf11d0b3e253ecb4cbf3a3f7dcb936dfd9bf003c9a",
+    "source": "post:contact",
+    "status": "new",
+    "starred": "0",
+    "user_id": "{USER:admin}",
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value details[0] = "A new enquiry on top of five thousand old ones."
+  value email[0] = "ada@example.com"
+  value name[0] = "Ada Lovelace"
+  value topic[0] = "support"
+log mail/info 5f110001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E4}","notification":0,"to":["ops@busy-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: ops@busy-site.example
+subject: New submission: Contact
+header: From: SwiftForms Test Suite <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Topic</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">support</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Details</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A new enquiry on top of five thousand old ones.</td></tr></table></td></tr></table></td></tr></table></body></html>
+

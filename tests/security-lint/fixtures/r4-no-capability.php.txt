@@ -1,0 +1,6 @@
+<?php
+// expect: R4
+add_action( "admin_post_swiftforms_thing", "f" );
+function f() {
+	check_admin_referer( "x" );
+}

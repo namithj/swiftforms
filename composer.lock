@@ -4,28 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77571d1e6adf032142620d447f73c0e7",
+    "content-hash": "12c8a3b96a760301538cef94a3424a21",
     "packages": [
         {
             "name": "pedalcms/cassette-cmf",
-            "version": "0.1.2",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PedalCMS/cassette-cmf.git",
-                "reference": "bebf0df6968ac6b6e0fe9807251a1d47cb057428"
+                "reference": "f808f8f5150b1961b7414d20b632996d2b118a43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PedalCMS/cassette-cmf/zipball/bebf0df6968ac6b6e0fe9807251a1d47cb057428",
-                "reference": "bebf0df6968ac6b6e0fe9807251a1d47cb057428",
+                "url": "https://api.github.com/repos/PedalCMS/cassette-cmf/zipball/f808f8f5150b1961b7414d20b632996d2b118a43",
+                "reference": "f808f8f5150b1961b7414d20b632996d2b118a43",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^1.1",
                 "php-stubs/wordpress-stubs": "^6.7",
+                "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan": "^2.1",
                 "phpunit/phpunit": "^9.6.23",
@@ -54,31 +55,32 @@
             "description": "WP Content Modeling Framework",
             "support": {
                 "issues": "https://github.com/PedalCMS/cassette-cmf/issues",
-                "source": "https://github.com/PedalCMS/cassette-cmf/tree/v0.1.2"
+                "source": "https://github.com/PedalCMS/cassette-cmf/tree/v0.2.1"
             },
-            "time": "2026-10-01T19:40:32+00:00"
+            "time": "2026-11-01T18:39:00+00:00"
         },
         {
             "name": "pedalcms/cassette-cmf-block-builder",
-            "version": "dev-main",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PedalCMS/cassette-cmf-block-builder.git",
-                "reference": "3952ccff4f81c0ac25a5416cee5dcaa11e381a2d"
+                "reference": "d47e6fc920c411868ea9947d33f7ffe6cf7aa429"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PedalCMS/cassette-cmf-block-builder/zipball/3952ccff4f81c0ac25a5416cee5dcaa11e381a2d",
-                "reference": "3952ccff4f81c0ac25a5416cee5dcaa11e381a2d",
+                "url": "https://api.github.com/repos/PedalCMS/cassette-cmf-block-builder/zipball/d47e6fc920c411868ea9947d33f7ffe6cf7aa429",
+                "reference": "d47e6fc920c411868ea9947d33f7ffe6cf7aa429",
                 "shasum": ""
             },
             "require": {
-                "pedalcms/cassette-cmf": "^0.1.1",
-                "php": ">=8.2"
+                "pedalcms/cassette-cmf": "^0.2.0",
+                "php": ">=7.4"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^1.1",
                 "php-stubs/wordpress-stubs": "^6.8",
+                "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan": "^2.1",
                 "phpunit/phpunit": "^9.6.23",
@@ -89,7 +91,6 @@
                 "wp-phpunit/wp-phpunit": "^6.8",
                 "yoast/phpunit-polyfills": "^3.1"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "classmap": [
@@ -99,55 +100,7 @@
                     "src/assets/"
                 ]
             },
-            "autoload-dev": {
-                "classmap": [
-                    "tests/"
-                ]
-            },
-            "scripts": {
-                "test": [
-                    "phpunit"
-                ],
-                "test-install": [
-                    "bash bin/install-wp-tests.sh wordpress_test root root localhost latest"
-                ],
-                "cs": [
-                    "phpcs src/"
-                ],
-                "cs:fix": [
-                    "phpcbf src/"
-                ],
-                "cs:examples": [
-                    "phpcs examples/"
-                ],
-                "cs:fix:examples": [
-                    "phpcbf examples/"
-                ],
-                "cs:tests": [
-                    "phpcs tests/"
-                ],
-                "cs:fix:tests": [
-                    "phpcbf tests/"
-                ],
-                "cs:all": [
-                    "@cs",
-                    "@cs:examples",
-                    "@cs:tests"
-                ],
-                "cs:fix:all": [
-                    "@cs:fix",
-                    "@cs:fix:examples",
-                    "@cs:fix:tests"
-                ],
-                "analyse": [
-                    "phpstan analyse --memory-limit=2048M"
-                ],
-                "ci": [
-                    "@cs:all",
-                    "@analyse",
-                    "@test"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -158,10 +111,10 @@
             ],
             "description": "Declarative Gutenberg blocks for Cassette-CMF",
             "support": {
-                "source": "https://github.com/PedalCMS/cassette-cmf-block-builder/tree/main",
-                "issues": "https://github.com/PedalCMS/cassette-cmf-block-builder/issues"
+                "issues": "https://github.com/PedalCMS/cassette-cmf-block-builder/issues",
+                "source": "https://github.com/PedalCMS/cassette-cmf-block-builder/tree/v0.2.0"
             },
-            "time": "2026-10-01T15:31:16+00:00"
+            "time": "2026-11-01T18:58:19+00:00"
         }
     ],
     "packages-dev": [
@@ -6672,7 +6625,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "pedalcms/cassette-cmf-block-builder": 20,
         "phpcompatibility/php-compatibility": 15,
         "phpcompatibility/phpcompatibility-paragonie": 15,
         "phpcompatibility/phpcompatibility-wp": 15

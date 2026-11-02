@@ -1,0 +1,51 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_accent_color = #1d4ed8
+swiftforms_email_footer_text = <p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p>
+swiftforms_email_from_email = leads@agency.example
+swiftforms_email_from_name = Agency Leads
+swiftforms_email_html_template = 1
+swiftforms_email_logo_id = 900001
+swiftforms_email_notification_to = owner@agency.example
+swiftforms_general_store_ip = 1
+swiftforms_general_store_user_agent = 1
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+swiftforms_spam_blocked_words = casino
+viagra
+
+== posts ==
+-- logo (attachment/inherit, slug agency-logo, title Agency logo)
+
+-- start (page/publish, slug start, title Start a project)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Start a project</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f060001-0000-4000-8000-000000000001","title":"Agency lead","useDefaultNotification":false,"notifications":[{"enabled":true,"to":"sales@agency.example, leads@agency.example","cc":"manager@agency.example, ops@agency.example","bcc":"archive@agency.example","subject":"New lead: {field:name}","replyTo":"{field:email}","body":"{all_fields}","format":"html"},{"enabled":true,"to":"{field:email}","cc":"","bcc":"","subject":"Thanks {field:name}, we got your enquiry","replyTo":"sales@agency.example","body":"Hello {field:name},\n\nThank you for your enquiry. A member of the team will contact you within one working day.","format":"html"},{"enabled":true,"to":"{field:company}, support@agency.example","cc":"","bcc":"","subject":"Lead from {field:company}","replyTo":"","body":"Company: {field:company}\nDepartment: {field:department}\n\n{field:message}","format":"plain"}]} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Work email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-text {"label":"Company","name":"company","autocomplete":"organization"} /-->
+
+<!-- wp:swiftforms/field-select {"label":"Department","name":"department","required":true,"placeholderOption":"Choose a department","options":[{"value":"sales","label":"Sales"},{"value":"support","label":"Support"},{"value":"billing","label":"Billing"}]} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Project brief","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Request a proposal"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks. We will be in touch shortly.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

@@ -63,8 +63,8 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       # Strauss 0.31 (which writes vendor-prefixed/ from composer's post-install
-      # hook) and the bundled frameworks need PHP 8.2 or newer, so dependencies
-      # are always installed on PHP 8.3 and PHP is switched to the matrix
+      # hook) and the dev tools need PHP 8.2 or newer, so dependencies are always
+      # installed on PHP 8.3 and PHP is switched to the matrix
       # version afterwards. Our own code and the test suite then run on the
       # version under test. The lockfile is installed as committed, never updated.
       - name: Setup PHP 8.3 (dependency install only)
@@ -74,11 +74,11 @@ jobs:
           tools: composer
           coverage: none
 
-      # --ignore-platform-req=php also stops Composer from generating
-      # vendor/composer/platform_check.php, which would otherwise refuse to
-      # load the autoloader on PHP 7.4 to 8.1.
+      # composer.json sets platform-check to false, so no
+      # vendor/composer/platform_check.php refuses to load the autoloader on
+      # PHP 7.4 to 8.1 (the runtime packages need only PHP 7.4).
       - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --no-interaction --ignore-platform-req=php
+        run: composer install --no-progress --prefer-dist --no-interaction
 
       - name: Setup PHP ${{ matrix.php }}
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
@@ -120,3 +120,8 @@ jobs:
 
       - name: PHPUnit
         run: composer test
+
+      # The multisite group (lazy per-site install, wp_initialize_site, wpmu_drop_tables)
+      # runs the suite as a network, which reinstalls the test tables in network mode.
+      - name: PHPUnit (multisite group)
+        run: composer test:multisite

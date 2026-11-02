@@ -7,7 +7,7 @@
 	<arg name="parallel" value="20"/>
 	<arg value="ps"/>
 	<ini name="memory_limit" value="1024M"/>
-	<!-- Our own code is PHP 7.4 syntax even though the plugin header declares PHP 8.2 (the bundled frameworks need it). -->
+	<!-- Our own code is PHP 7.4 syntax and the plugin header declares PHP 7.4 too. -->
 	<config name="testVersion" value="7.4-"/>
 	<file>.</file>
 	<exclude-pattern>/vendor/*</exclude-pattern>
@@ -15,6 +15,8 @@
 	<exclude-pattern>/.cache/*</exclude-pattern>
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/build/*</exclude-pattern>
+	<!-- Listing and demo sources (a Playground runPHP snippet, artwork, capture scripts): never shipped. -->
+	<exclude-pattern>/assets/wporg-src/*</exclude-pattern>
 
 	<rule ref="WordPress-Extra">
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
@@ -38,6 +40,14 @@
 				<element value="SwiftForms"/>
 				<element value="sf_test"/>
 			</property>
+			<!-- Test cases that extend our shared base class count as test classes (no prefix needed). -->
+			<property name="custom_test_classes" type="array">
+				<element value="SF_Storage_Test_Case"/>
+				<element value="SF_Resolver_Test_Case"/>
+				<element value="SF_Render_Test_Case"/>
+				<element value="SF_Submission_Test_Case"/>
+				<element value="SF_Admin_Test_Case"/>
+			</property>
 		</properties>
 	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound">
@@ -55,5 +65,18 @@
 	</rule>
 	<rule ref="WordPress.WP.EnqueuedResources">
 		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+	<!-- SwiftForms capabilities are meta capabilities mapped by Access (C-8.4); no role holds them. -->
+	<rule ref="WordPress.WP.Capabilities">
+		<properties>
+			<property name="custom_capabilities" type="array">
+				<element value="swiftforms_manage_settings"/>
+				<element value="swiftforms_view_entries"/>
+				<element value="swiftforms_edit_entries"/>
+				<element value="swiftforms_delete_entries"/>
+				<element value="swiftforms_export_entries"/>
+				<element value="swiftforms_manage_integrations"/>
+			</property>
+		</properties>
 	</rule>
 </ruleset>

@@ -1,0 +1,88 @@
+== S3 lettre#1 ==
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "Ce champ est obligatoire."
+    }
+}
+-- payload c13-lettre-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "Veuillez saisir une adresse e-mail valide."
+    }
+}
+
+== S3 livraison#1 ==
+-- without nom --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "nom": "Ce champ est obligatoire."
+    }
+}
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "Ce champ est obligatoire."
+    }
+}
+-- without date_livraison --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "date_livraison": "Ce champ est obligatoire."
+    }
+}
+-- without creneau --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "creneau": "Ce champ est obligatoire."
+    }
+}
+-- without consentement --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "consentement": "Veuillez cocher cette case pour continuer."
+    }
+}
+-- payload c13-date-fr --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "date_livraison": "Veuillez saisir une date valide au format AAAA-MM-JJ."
+    }
+}
+-- payload c13-date-out --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "Veuillez saisir une adresse e-mail valide.",
+        "date_livraison": "Veuillez saisir une date jusqu’au 2027-03-31.",
+        "creneau": "Veuillez choisir l’une des options proposées.",
+        "consentement": "Veuillez cocher cette case pour continuer."
+    }
+}
+

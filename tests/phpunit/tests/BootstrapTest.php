@@ -48,32 +48,43 @@ class BootstrapTest extends WP_UnitTestCase {
 			]
 		);
 		$this->assertSame( SWIFTFORMS_MIN_WP, $data['WP'] );
-		$this->assertSame( '8.2', $data['PHP'] );
+		$this->assertSame( '7.4', $data['PHP'] );
 	}
 
 	/**
-	 * Booting wires the adapter and the init hook.
+	 * Booting wires the init hook (the adapter attaches nothing until there are blocks).
 	 *
 	 * @return void
 	 */
 	public function test_boot_wires_hooks() {
-		$this->assertNotFalse( has_filter( 'block_bindings_source_value', [ Builder_Adapter::instance(), 'filter_bindings_source_value' ] ) );
 		$this->assertSame( 5, has_action( 'init', [ Plugin::instance(), 'register_blocks' ] ) );
 	}
 
 	/**
 	 * With no block configs, the adapter registers nothing and does not start the builder.
 	 *
+	 * SwiftForms itself always has blocks (they are registered on init in the bootstrap), so this is a
+	 * property of the adapter: an empty configuration never creates the builder's block manager.
+	 *
 	 * @return void
 	 */
-	public function test_no_blocks_registered_in_r00() {
-		$this->assertSame( [], Plugin::instance()->block_configs() );
-		$registered = array_filter(
-			array_keys( WP_Block_Type_Registry::get_instance()->get_all_registered() ),
-			static function ( $name ) {
-				return 0 === strpos( $name, 'swiftforms/' );
-			}
-		);
-		$this->assertSame( [], array_values( $registered ) );
+	public function test_empty_config_does_not_start_the_builder() {
+		\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::reset();
+
+		Builder_Adapter::instance()->register_blocks( [] );
+		Builder_Adapter::instance()->register_blocks( [ 'blocks' => [] ] );
+
+		$this->assertNull( \SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::get_instance(), 'The builder must not start without blocks.' );
+	}
+
+	/**
+	 * The plugin's own blocks are registered through the builder on init.
+	 *
+	 * @return void
+	 */
+	public function test_blocks_are_registered_on_init() {
+		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/form' ) );
+		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/field-text' ) );
+		$this->assertTrue( has_action( 'enqueue_block_assets', [ Builder_Adapter::instance(), 'strip_front_end_style' ] ) !== false );
 	}
 }

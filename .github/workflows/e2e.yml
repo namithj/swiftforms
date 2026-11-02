@@ -1,15 +1,16 @@
 name: E2E
 
-# Browser checks against a real WordPress (wp-env, Docker) for every user
-# config, one after another: the config is applied to a freshly reset site and
-# Playwright then checks that each stored post opens in the block editor
-# without a validation warning and saves without changing its content (S12),
-# and, once forms exist (R01), that the forms work on the front end (S13).
+# Browser checks against a real WordPress (wp-env, Docker).
+#
+# 1. The feature specs (editor, front end, admin) against a fresh site. The front-end spec moves the plugin's clock
+#    (an old page, an expired token): the clock mu-plugin reads tests/e2e/.state/now on every request and the spec
+#    writes to it (SF_E2E_NOW_FILE), the plugin folder being mounted into the container.
+# 2. Every user config, one after another: the config is applied to a freshly reset site and Playwright checks
+#    that each stored post, template and part opens in the block editor without a validation warning and saves
+#    without changing its content (S12), and that the forms work on the front end, with axe (S13).
 #
 # Two cells: the lowest supported WordPress and PHP, and the latest of both.
-# The first cell uses PHP 8.2, not 7.4: the plugin header declares Requires PHP
-# 8.2 (the bundled frameworks need it), so WordPress refuses to activate the
-# plugin on anything older. Lower it when that header is lowered.
+# The first cell is the floor of the plugin header: PHP 7.4 and WordPress 6.8.
 
 on:
   push:
@@ -34,8 +35,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: PHP 8.2 / WP 6.8
-            php: '8.2'
+          - name: PHP 7.4 / WP 6.8
+            php: '7.4'
             core: 'WordPress/WordPress#6.8'
           - name: PHP latest / WP latest
             php: '8.4'
@@ -77,7 +78,15 @@ jobs:
       - name: Start wp-env
         run: npm run wp-env -- start
 
-      - name: User-config e2e (all configs, one after another)
+      # The clock file lives in the plugin folder, which wp-env mounts into the container.
+      - name: Editor, front-end and admin specs
+        env:
+          SF_E2E_NOW_FILE: ${{ github.workspace }}/tests/e2e/.state/now
+        run: |
+          mkdir -p tests/e2e/.state
+          npm run test:e2e
+
+      - name: User-config e2e (S12 and S13, all configs, one after another)
         run: npm run test:e2e:configs
 
       - name: Upload Playwright report

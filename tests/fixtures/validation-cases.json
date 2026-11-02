@@ -1,0 +1,830 @@
+[
+ {
+  "name": "text required empty",
+  "field": {
+   "type": "text",
+   "required": true
+  },
+  "value": "",
+  "expect": "required"
+ },
+ {
+  "name": "text optional empty",
+  "field": {
+   "type": "text"
+  },
+  "value": "",
+  "expect": null
+ },
+ {
+  "name": "text plain",
+  "field": {
+   "type": "text",
+   "required": true
+  },
+  "value": "hello",
+  "expect": null
+ },
+ {
+  "name": "textarea required empty",
+  "field": {
+   "type": "textarea",
+   "required": true
+  },
+  "value": "",
+  "expect": "required"
+ },
+ {
+  "name": "textarea ok",
+  "field": {
+   "type": "textarea"
+  },
+  "value": "line one\nline two",
+  "expect": null
+ },
+ {
+  "name": "tel ok",
+  "field": {
+   "type": "tel"
+  },
+  "value": "+1 555 0100",
+  "expect": null
+ },
+ {
+  "name": "email ok",
+  "field": {
+   "type": "email"
+  },
+  "value": "a@b.co",
+  "expect": null
+ },
+ {
+  "name": "email plus tag",
+  "field": {
+   "type": "email"
+  },
+  "value": "user+tag@example.com",
+  "expect": null
+ },
+ {
+  "name": "email no at",
+  "field": {
+   "type": "email"
+  },
+  "value": "abc",
+  "expect": "email"
+ },
+ {
+  "name": "email no dot in domain",
+  "field": {
+   "type": "email"
+  },
+  "value": "a@b",
+  "expect": "email"
+ },
+ {
+  "name": "email too short",
+  "field": {
+   "type": "email"
+  },
+  "value": "a@b.c",
+  "expect": "email"
+ },
+ {
+  "name": "email double dot domain",
+  "field": {
+   "type": "email"
+  },
+  "value": "a@b..com",
+  "expect": "email"
+ },
+ {
+  "name": "email hyphen edge label",
+  "field": {
+   "type": "email"
+  },
+  "value": "a@-b.com",
+  "expect": "email"
+ },
+ {
+  "name": "email trailing dot",
+  "field": {
+   "type": "email"
+  },
+  "value": "a@b.com.",
+  "expect": "email"
+ },
+ {
+  "name": "email non-ascii local",
+  "field": {
+   "type": "email"
+  },
+  "value": "ünï@example.com",
+  "expect": "email"
+ },
+ {
+  "name": "email required empty",
+  "field": {
+   "type": "email",
+   "required": true
+  },
+  "value": "",
+  "expect": "required"
+ },
+ {
+  "name": "url ok",
+  "field": {
+   "type": "url"
+  },
+  "value": "https://example.com/path?x=1",
+  "expect": null
+ },
+ {
+  "name": "url ipv6",
+  "field": {
+   "type": "url"
+  },
+  "value": "https://[::1]/",
+  "expect": null
+ },
+ {
+  "name": "url ftp",
+  "field": {
+   "type": "url"
+  },
+  "value": "ftp://example.com",
+  "expect": "url"
+ },
+ {
+  "name": "url no scheme",
+  "field": {
+   "type": "url"
+  },
+  "value": "example.com",
+  "expect": "url"
+ },
+ {
+  "name": "url no host",
+  "field": {
+   "type": "url"
+  },
+  "value": "http://",
+  "expect": "url"
+ },
+ {
+  "name": "url javascript",
+  "field": {
+   "type": "url"
+  },
+  "value": "javascript:alert(1)",
+  "expect": "url"
+ },
+ {
+  "name": "url space",
+  "field": {
+   "type": "url"
+  },
+  "value": "http://exa mple.com",
+  "expect": "url"
+ },
+ {
+  "name": "number ok",
+  "field": {
+   "type": "number"
+  },
+  "value": "12",
+  "expect": null
+ },
+ {
+  "name": "number decimal",
+  "field": {
+   "type": "number"
+  },
+  "value": "1.5",
+  "expect": null
+ },
+ {
+  "name": "number leading dot",
+  "field": {
+   "type": "number"
+  },
+  "value": ".5",
+  "expect": null
+ },
+ {
+  "name": "number negative",
+  "field": {
+   "type": "number"
+  },
+  "value": "-3",
+  "expect": null
+ },
+ {
+  "name": "number text",
+  "field": {
+   "type": "number"
+  },
+  "value": "abc",
+  "expect": "number"
+ },
+ {
+  "name": "number exponent",
+  "field": {
+   "type": "number"
+  },
+  "value": "1e3",
+  "expect": "number"
+ },
+ {
+  "name": "number below min",
+  "field": {
+   "type": "number",
+   "min": "10"
+  },
+  "value": "5",
+  "expect": "number_min"
+ },
+ {
+  "name": "number above max",
+  "field": {
+   "type": "number",
+   "max": "3"
+  },
+  "value": "5",
+  "expect": "number_max"
+ },
+ {
+  "name": "number at min",
+  "field": {
+   "type": "number",
+   "min": "10"
+  },
+  "value": "10",
+  "expect": null
+ },
+ {
+  "name": "number step ok",
+  "field": {
+   "type": "number",
+   "min": "0",
+   "step": "5"
+  },
+  "value": "10",
+  "expect": null
+ },
+ {
+  "name": "number step bad",
+  "field": {
+   "type": "number",
+   "min": "0",
+   "step": "5"
+  },
+  "value": "11",
+  "expect": "number_step"
+ },
+ {
+  "name": "number step decimal ok",
+  "field": {
+   "type": "number",
+   "step": "0.1"
+  },
+  "value": "0.3",
+  "expect": null
+ },
+ {
+  "name": "number step from min bad",
+  "field": {
+   "type": "number",
+   "min": "1",
+   "step": "2"
+  },
+  "value": "4",
+  "expect": "number_step"
+ },
+ {
+  "name": "number step from min ok",
+  "field": {
+   "type": "number",
+   "min": "1",
+   "step": "2"
+  },
+  "value": "5",
+  "expect": null
+ },
+ {
+  "name": "number step any",
+  "field": {
+   "type": "number",
+   "step": "any"
+  },
+  "value": "7.3",
+  "expect": null
+ },
+ {
+  "name": "date ok",
+  "field": {
+   "type": "date"
+  },
+  "value": "2024-02-29",
+  "expect": null
+ },
+ {
+  "name": "date not leap",
+  "field": {
+   "type": "date"
+  },
+  "value": "2026-02-29",
+  "expect": "date"
+ },
+ {
+  "name": "date month 13",
+  "field": {
+   "type": "date"
+  },
+  "value": "2026-13-01",
+  "expect": "date"
+ },
+ {
+  "name": "date short",
+  "field": {
+   "type": "date"
+  },
+  "value": "26-1-1",
+  "expect": "date"
+ },
+ {
+  "name": "date before min",
+  "field": {
+   "type": "date",
+   "min": "2026-01-01"
+  },
+  "value": "2025-12-31",
+  "expect": "date_min"
+ },
+ {
+  "name": "date after max",
+  "field": {
+   "type": "date",
+   "max": "2026-01-31"
+  },
+  "value": "2026-02-01",
+  "expect": "date_max"
+ },
+ {
+  "name": "date within range",
+  "field": {
+   "type": "date",
+   "min": "2026-01-01",
+   "max": "2026-01-31"
+  },
+  "value": "2026-01-15",
+  "expect": null
+ },
+ {
+  "name": "min length multibyte",
+  "field": {
+   "type": "text",
+   "minLength": 4
+  },
+  "value": "ééé",
+  "expect": "min_length"
+ },
+ {
+  "name": "max length multibyte",
+  "field": {
+   "type": "text",
+   "maxLength": 2
+  },
+  "value": "ééé",
+  "expect": "max_length"
+ },
+ {
+  "name": "max length emoji counts one",
+  "field": {
+   "type": "text",
+   "maxLength": 2
+  },
+  "value": "😀😀",
+  "expect": null
+ },
+ {
+  "name": "default cap",
+  "field": {
+   "type": "text"
+  },
+  "value": "",
+  "expect": "max_length",
+  "valueRepeat": {
+   "char": "a",
+   "times": 5001
+  }
+ },
+ {
+  "name": "at default cap",
+  "field": {
+   "type": "text"
+  },
+  "value": "",
+  "expect": null,
+  "valueRepeat": {
+   "char": "a",
+   "times": 5000
+  }
+ },
+ {
+  "name": "pattern ok",
+  "field": {
+   "type": "text",
+   "pattern": "[A-Z]{3}"
+  },
+  "value": "ABC",
+  "expect": null
+ },
+ {
+  "name": "pattern anchored end",
+  "field": {
+   "type": "text",
+   "pattern": "[A-Z]{3}"
+  },
+  "value": "ABCD",
+  "expect": "pattern"
+ },
+ {
+  "name": "pattern anchored start",
+  "field": {
+   "type": "text",
+   "pattern": "[A-Z]{3}"
+  },
+  "value": "xABC",
+  "expect": "pattern"
+ },
+ {
+  "name": "pattern wrong case",
+  "field": {
+   "type": "text",
+   "pattern": "[A-Z]{3}"
+  },
+  "value": "abc",
+  "expect": "pattern"
+ },
+ {
+  "name": "pattern alternation anchored",
+  "field": {
+   "type": "text",
+   "pattern": "a|b"
+  },
+  "value": "ab",
+  "expect": "pattern"
+ },
+ {
+  "name": "pattern alternation ok",
+  "field": {
+   "type": "text",
+   "pattern": "a|b"
+  },
+  "value": "b",
+  "expect": null
+ },
+ {
+  "name": "pattern with hash",
+  "field": {
+   "type": "text",
+   "pattern": "a#b"
+  },
+  "value": "a#b",
+  "expect": null
+ },
+ {
+  "name": "pattern unicode letters",
+  "field": {
+   "type": "text",
+   "pattern": "\\p{L}+"
+  },
+  "value": "été",
+  "expect": null
+ },
+ {
+  "name": "pattern invalid is ignored",
+  "field": {
+   "type": "text",
+   "pattern": "("
+  },
+  "value": "anything",
+  "expect": null
+ },
+ {
+  "name": "pattern not applied to email type",
+  "field": {
+   "type": "email",
+   "pattern": "[0-9]+"
+  },
+  "value": "a@b.co",
+  "expect": null
+ },
+ {
+  "name": "checkboxes required none",
+  "field": {
+   "type": "checkboxes",
+   "required": true,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [],
+  "expect": "required"
+ },
+ {
+  "name": "checkboxes optional none",
+  "field": {
+   "type": "checkboxes",
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [],
+  "expect": null
+ },
+ {
+  "name": "checkboxes min choices",
+  "field": {
+   "type": "checkboxes",
+   "minChoices": 2,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [
+   "a"
+  ],
+  "expect": "min_choices"
+ },
+ {
+  "name": "checkboxes min choices met",
+  "field": {
+   "type": "checkboxes",
+   "minChoices": 2,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [
+   "a",
+   "b"
+  ],
+  "expect": null
+ },
+ {
+  "name": "checkboxes min ignored when empty and optional",
+  "field": {
+   "type": "checkboxes",
+   "minChoices": 2,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [],
+  "expect": null
+ },
+ {
+  "name": "checkboxes max choices",
+  "field": {
+   "type": "checkboxes",
+   "maxChoices": 1,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [
+   "a",
+   "b"
+  ],
+  "expect": "max_choices"
+ },
+ {
+  "name": "checkboxes unknown option",
+  "field": {
+   "type": "checkboxes",
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [
+   "z"
+  ],
+  "expect": "option",
+  "clientExpect": null
+ },
+ {
+  "name": "select required empty",
+  "field": {
+   "type": "select",
+   "required": true,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": "",
+  "expect": "required"
+ },
+ {
+  "name": "select ok",
+  "field": {
+   "type": "select",
+   "required": true,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": "a",
+  "expect": null
+ },
+ {
+  "name": "select unknown option",
+  "field": {
+   "type": "select",
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": "z",
+  "expect": "option",
+  "clientExpect": null
+ },
+ {
+  "name": "select multiple required none",
+  "field": {
+   "type": "select",
+   "required": true,
+   "multiple": true,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [],
+  "expect": "required"
+ },
+ {
+  "name": "select multiple ok",
+  "field": {
+   "type": "select",
+   "multiple": true,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": [
+   "a",
+   "b"
+  ],
+  "expect": null
+ },
+ {
+  "name": "radio required none",
+  "field": {
+   "type": "radio",
+   "required": true,
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": "",
+  "expect": "required"
+ },
+ {
+  "name": "radio unknown option",
+  "field": {
+   "type": "radio",
+   "options": [
+    {
+     "value": "a",
+     "label": "A"
+    },
+    {
+     "value": "b",
+     "label": "B"
+    }
+   ]
+  },
+  "value": "z",
+  "expect": "option",
+  "clientExpect": null
+ },
+ {
+  "name": "consent required unticked",
+  "field": {
+   "type": "consent",
+   "required": true
+  },
+  "value": "",
+  "expect": "consent"
+ },
+ {
+  "name": "consent ticked",
+  "field": {
+   "type": "consent",
+   "required": true
+  },
+  "value": "1",
+  "expect": null
+ },
+ {
+  "name": "consent optional unticked",
+  "field": {
+   "type": "consent",
+   "required": false
+  },
+  "value": "",
+  "expect": null
+ }
+]

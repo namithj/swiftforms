@@ -1,0 +1,259 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_advanced_debug_log = 1
+swiftforms_db_version = 1
+swiftforms_email_accent_color = #1d4ed8
+swiftforms_email_footer_text = <p>Sent by the power site.</p>
+swiftforms_email_from_email = forms@power-site.example
+swiftforms_email_from_name = Power Site
+swiftforms_email_notification_to = dev@power-site.example, ops@power-site.example
+swiftforms_general_default_success_message = Received.
+swiftforms_general_load_styles = 0
+swiftforms_general_store_ip = 1
+swiftforms_general_store_user_agent = 1
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+swiftforms_spam_js_token = 0
+swiftforms_spam_min_seconds = 2
+swiftforms_spam_rate_limit_per_minute = 20
+
+== posts ==
+-- contact (page/publish, slug contact, title Contact)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Contact</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f200001-0000-4000-8000-000000000001","title":"Hero contact","labelPosition":"inline","notifications":[{"enabled":true,"to":"dev@power-site.example","cc":"","bcc":"","subject":"{power:greeting}: {field:name}","replyTo":"{field:email}","body":"{all_fields}","format":"html"}],"anchor":"contact-hero","className":"power-form power-form\u002d\u002dhero"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-text {"label":"Promo code","name":"code"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f200002-0000-4000-8000-000000000002","title":"Newsletter (no JavaScript)","requiredIndicator":"text","ajax":false,"anchor":"newsletter"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- faq (page/publish, slug faq, title Faq)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Faq</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f200003-0000-4000-8000-000000000003","title":"Quiet form","labelPosition":"hidden","requiredIndicator":"none","className":"power-form power-form\u002d\u002dquiet"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f200004-0000-4000-8000-000000000004","title":"Anonymous poll (no JavaScript)","storeEntries":"no","ajax":false} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- services (page/publish, slug services, title Services)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Services</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f200005-0000-4000-8000-000000000005","title":"Redirect form","confirmationType":"redirect","redirectPageId":900007} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f200006-0000-4000-8000-000000000006","title":"Spam protection off","spamProtection":"off"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- pricing (page/publish, slug pricing, title Pricing)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Pricing</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f200007-0000-4000-8000-000000000007","title":"Two notifications","useDefaultNotification":false,"notifications":[{"enabled":true,"to":"sales@power-site.example","cc":"","bcc":"","subject":"Pricing question from {field:name}","replyTo":"{field:email}","body":"{field:message}\n\n{site:name}","format":"plain"},{"enabled":true,"to":"archive@power-site.example","cc":"","bcc":"","subject":"Archive: {form:title}","replyTo":"","body":"{all_fields}","format":"html"}]} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f200008-0000-4000-8000-000000000008","title":"Stored although the site does not store","storeEntries":"yes","ajax":false,"anchor":"always-stored"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- events (page/publish, slug events, title Events)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Events</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f200009-0000-4000-8000-000000000009","title":"Visit booking","className":"power-form"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-date {"label":"Visit on","name":"visit","min":"2026-11-20"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f200010-0000-4000-8000-000000000010","title":"Plan chooser"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-radio {"label":"Plan","name":"plan","layout":"inline","options":[{"value":"free","label":"Free"},{"value":"pro","label":"Pro"}]} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- updates (page/publish, slug updates, title Updates)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Updates</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f200011-0000-4000-8000-000000000011","title":"Where did you read this?"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-hidden {"label":"Page","name":"page_title","value":"{post:title}"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+
+<!-- wp:swiftforms/form {"formId":"5f200012-0000-4000-8000-000000000012","title":"Topics","anchor":"topics","className":"power-form power-form\u002d\u002dtopics"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-select {"label":"Topics","name":"topics","multiple":true,"options":[{"value":"wp","label":"WordPress"},{"value":"php","label":"PHP"},{"value":"js","label":"JavaScript"}]} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- thanks (page/publish, slug thanks, title Thanks)
+<!-- wp:paragraph -->
+<p>Thank you, we have your message.</p>
+<!-- /wp:paragraph -->
+-- global-styles (wp_global_styles/publish, slug wp-global-styles-sf-test-block, title Custom Styles)
+{"version":3,"isGlobalStylesUserThemeJSON":true,"styles":{"blocks":{"swiftforms/form":{"color":{"background":"#f6f7f7"},"spacing":{"padding":{"top":"1rem","bottom":"1rem"}},"border":{"radius":"6px"}},"swiftforms/submit":{"color":{"background":"#1d4ed8","text":"#ffffff"}},"swiftforms/field-text":{"spacing":{"margin":{"bottom":"0.75rem"}}}}}}

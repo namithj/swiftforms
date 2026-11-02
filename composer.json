@@ -3,16 +3,10 @@
     "description": "SwiftForms: contact forms built with blocks in the WordPress block editor.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/PedalCMS/cassette-cmf-block-builder"
-        }
-    ],
     "require": {
         "php": ">=7.4.0",
-        "pedalcms/cassette-cmf": "0.1.2",
-        "pedalcms/cassette-cmf-block-builder": "dev-main#3952ccff4f81c0ac25a5416cee5dcaa11e381a2d"
+        "pedalcms/cassette-cmf": "0.2.1",
+        "pedalcms/cassette-cmf-block-builder": "0.2.0"
     },
     "require-dev": {
         "brianhenryie/strauss": "^0.31",
@@ -55,6 +49,7 @@
         "platform": {
             "php": "8.2.0"
         },
+        "platform-check": false,
         "sort-packages": true
     },
     "scripts": {
@@ -77,6 +72,11 @@
             "Composer\\Config::disableProcessTimeout",
             "bash bin/phpunit.sh --exclude-group user-configs"
         ],
+        "test:multisite": [
+            "Composer\\Config::disableProcessTimeout",
+            "WP_TESTS_MULTISITE=1 bash bin/phpunit.sh --group multisite"
+        ],
+        "i18n:pot": "bash bin/make-pot.sh",
         "test:upgrade": "bash bin/test-upgrade-path.sh",
         "test:all": [
             "@test:configs",

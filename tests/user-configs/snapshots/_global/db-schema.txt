@@ -1,1 +1,73 @@
-(none)
+CREATE TABLE `{prefix}swiftforms_entries` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `form_id` char(36) NOT NULL DEFAULT '',
+  `schema_hash` char(64) NOT NULL DEFAULT '',
+  `source` varchar(191) NOT NULL DEFAULT '',
+  `status` varchar(20) NOT NULL DEFAULT 'new',
+  `starred` tinyint NOT NULL DEFAULT '0',
+  `user_id` bigint unsigned NOT NULL DEFAULT '0',
+  `ip` varbinary(16) DEFAULT NULL,
+  `user_agent` varchar(255) DEFAULT NULL,
+  `created_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `form_status_date` (`form_id`,`status`,`created_gmt`),
+  KEY `created_gmt` (`created_gmt`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE `{prefix}swiftforms_entry_meta` (
+  `meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `entry_id` bigint unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(64) NOT NULL DEFAULT '',
+  `meta_value` longtext NOT NULL,
+  `user_id` bigint unsigned NOT NULL DEFAULT '0',
+  `created_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`meta_id`),
+  KEY `entry_key` (`entry_id`,`meta_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE `{prefix}swiftforms_entry_values` (
+  `entry_id` bigint unsigned NOT NULL,
+  `field` varchar(160) NOT NULL,
+  `idx` smallint unsigned NOT NULL DEFAULT '0',
+  `value` longtext NOT NULL,
+  PRIMARY KEY (`entry_id`,`field`,`idx`),
+  KEY `value_prefix` (`value`(150))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE `{prefix}swiftforms_forms` (
+  `form_id` char(36) NOT NULL,
+  `stored_id` char(36) NOT NULL DEFAULT '',
+  `source` varchar(191) NOT NULL DEFAULT '',
+  `title` text NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT '',
+  `locations` longtext NOT NULL,
+  `schema_hash` char(64) NOT NULL DEFAULT '',
+  `created_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`form_id`),
+  KEY `source` (`source`),
+  KEY `stored_id` (`stored_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE `{prefix}swiftforms_log` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(20) NOT NULL DEFAULT '',
+  `ref` varchar(100) NOT NULL DEFAULT '',
+  `level` varchar(10) NOT NULL DEFAULT 'info',
+  `message` text NOT NULL,
+  `context` longtext NOT NULL,
+  `created_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `created_gmt` (`created_gmt`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE `{prefix}swiftforms_schemas` (
+  `schema_hash` char(64) NOT NULL,
+  `form_id` char(36) NOT NULL DEFAULT '',
+  `schema` longtext NOT NULL,
+  `created_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`schema_hash`),
+  KEY `form_id` (`form_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+

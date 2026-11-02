@@ -35,3 +35,14 @@ tests_add_filter(
 );
 
 require $sf_test_lib_dir . '/includes/bootstrap.php';
+
+// A user-config run on the same database commits rows (its table DDL ends the test
+// transaction), and a later suite must not see them: start from empty SwiftForms tables.
+// No test transaction is open yet, so this runs with autocommit.
+if ( class_exists( 'SwiftForms\Database' ) ) {
+	$sf_test_suppress = $GLOBALS['wpdb']->suppress_errors();
+	foreach ( SwiftForms\Database::tables() as $sf_test_table ) {
+		$GLOBALS['wpdb']->query( 'DELETE FROM `' . $sf_test_table . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Own table; name built from $wpdb->prefix and a fixed list.
+	}
+	$GLOBALS['wpdb']->suppress_errors( $sf_test_suppress );
+}

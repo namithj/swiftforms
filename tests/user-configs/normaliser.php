@@ -32,8 +32,24 @@
  *     to every paragraph block, 6.8 does not. The class is removed (and an
  *     emptied class attribute with it). This is the only such class listed; add
  *     another here, with a test, only when a core release changes it.
- *  8. Edges: leading and trailing whitespace is trimmed.
+ *  8. Signed render times: the "_sf_t" control of a rendered form, "{unix}.{16 hex}" (the Time_Trap MAC), becomes
+ *     "{T}" in an input tag. The suite asserts the signature in S1 before it is replaced.
+ *  9. Result keys: the 128-bit key of a no-JS result, "sf_result={32 hex}", becomes "sf_result={RESULT}". The suite
+ *     asserts that it is a valid, stored key before it is replaced (S4).
+ * 10. Plugin version: the "_sf_v" control carries SWIFTFORMS_VERSION, which changes every release; its value becomes
+ *     "{VERSION}".
+ *     The REST nonce in the view module's client state (JSON, "nonce": ten hex digits) becomes "{NONCE}" like the other nonces.
+ * 11. Emoji images: core turns an emoji in an HTML mail into an image from s.w.org whose path carries the Unicode
+ *     version core ships ("/emoji/17.0.2/"); the version becomes "{EMOJI}".
+ * 12. Edges: leading and trailing whitespace is trimmed.
+ * 13. Anchors: core prints the "anchor" of a dynamic block as an id only from the release that added anchor.php to
+ *     block-supports (after 6.8). The id attribute of a SwiftForms form element (a form, or the div that replaces it with
+ *     its confirmation) is removed; the runner asserts the id is there when core supports it (S1).
  *  "http://example.org" (the test home URL) is deliberately NOT rewritten.
+ *
+ * tokens() applies rules 5, 6, 8, 9 and 10 to text that is not HTML (JSON, mail bodies, request dumps). scrub() is a
+ * literal alias map for values that depend on the database (post IDs, derived formIds, entry IDs); the runner builds it
+ * from the config it applied, so nothing is guessed.
  *
  * Every rule is idempotent: normalise( normalise( x ) ) === normalise( x ).
  */
@@ -67,6 +83,9 @@ class SF_Normaliser {
 		// 6. Tokens.
 		$html = preg_replace( '/\bv1\.[a-z0-9]+\.[a-f0-9]{32}\b/', '{TOKEN}', $html );
 
+		// 8. Signed render times, 9. result keys, 10. plugin version.
+		$html = self::controls( $html );
+
 		// 7. Core-version classes.
 		$html = preg_replace_callback(
 			'/(\s)class="([^"]*)"/',
@@ -81,8 +100,66 @@ class SF_Normaliser {
 			$html
 		);
 
-		// 8. Edges.
+		// 13. Anchors of form elements.
+		$html = preg_replace_callback(
+			'/<(form|div) class="swiftforms-form[ "][^>]*>/',
+			static function ( $m ) {
+				return preg_replace( '/ id="[^"]*"/', '', $m[0], 1 );
+			},
+			$html
+		);
+
+		// 11. Emoji images.
+		$html = preg_replace( '#(s\.w\.org/images/core/emoji/)[0-9][0-9.]*/#', '$1{EMOJI}/', $html );
+
+		// 12. Edges.
 		return trim( $html );
+	}
+
+	/**
+	 * Rules 5, 6, 8, 9 and 10 for text that is not HTML.
+	 *
+	 * @param string $text Text (JSON, a mail, a request dump).
+	 * @return string
+	 */
+	public static function tokens( $text ) {
+		$text = (string) $text;
+		$text = preg_replace( '/(_wpnonce=|data-nonce=["\'])[a-f0-9]{10}\b/', '$1{NONCE}', $text );
+		$text = preg_replace( '/\bv1\.[a-z0-9]+\.[a-f0-9]{32}\b/', '{TOKEN}', $text );
+		return self::controls( $text );
+	}
+
+	/**
+	 * Replace literal values using an alias map, longest value first.
+	 *
+	 * @param string                $text    Text.
+	 * @param array<string, string> $aliases Value => replacement.
+	 * @return string
+	 */
+	public static function scrub( $text, array $aliases ) {
+		uksort(
+			$aliases,
+			static function ( $a, $b ) {
+				return strlen( $b ) - strlen( $a );
+			}
+		);
+		return strtr( (string) $text, $aliases );
+	}
+
+	/**
+	 * Rules 8 to 10: the hidden controls of a form and the result key of a no-JS redirect.
+	 *
+	 * @param string $text Text.
+	 * @return string
+	 */
+	private static function controls( $text ) {
+		$text = preg_replace( '/(name=["\']_sf_t["\'][^>]*?value=["\'])\d{9,12}\.[0-9a-f]{16}(["\'])/', '$1{T}$2', $text );
+		$text = preg_replace( '/(value=["\'])\d{9,12}\.[0-9a-f]{16}(["\'][^>]*?name=["\']_sf_t["\'])/', '$1{T}$2', $text );
+		$text = preg_replace( '/(name=["\']_sf_v["\'][^>]*?value=["\'])[0-9][0-9a-zA-Z.+-]*(["\'])/', '$1{VERSION}$2', $text );
+		$text = preg_replace( '/(value=["\'])[0-9][0-9a-zA-Z.+-]*(["\'][^>]*?name=["\']_sf_v["\'])/', '$1{VERSION}$2', $text );
+		$text = preg_replace( '/(sf_result=)[0-9a-f]{32}\b/', '$1{RESULT}', $text );
+		$text = preg_replace( '/("nonce":\s*")[a-f0-9]{10}"/', '$1{NONCE}"', $text );
+		return $text;
 	}
 
 	/**

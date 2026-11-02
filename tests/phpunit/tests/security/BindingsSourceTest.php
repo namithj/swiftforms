@@ -1,15 +1,18 @@
 <?php
 /**
- * The BB-18 leak test: cassette-cmf/field must not read secrets.
+ * The BB-18 leak test: the builder must not expose a bindings source that reads secrets.
  *
- * Permanent. It guards the SwiftForms fallback filter now, and the block
- * builder itself once BB-18 lands.
+ * Permanent. Since the block builder 0.2.0 its bindings source is off unless
+ * the host asks for it, and SwiftForms does not. No SwiftForms filter stands in
+ * the way any more, so this proves the builder's own default and fails if a
+ * future change turns a source on or lets a binding read an option, post meta
+ * or term meta by name.
  *
  * @package SwiftForms
  * @group security
  */
 
-use SwiftForms\Builder_Adapter;
+use SwiftForms\Plugin;
 
 /**
  * Class BindingsSourceTest
@@ -27,6 +30,11 @@ class BindingsSourceTest extends WP_UnitTestCase {
 	const META_SECRET = 'sf-secret-meta';
 
 	/**
+	 * Binding source names that must not exist.
+	 */
+	const SOURCES = [ 'cassette-cmf/field', 'swiftforms/field' ];
+
+	/**
 	 * ID of the private post that holds the meta secret.
 	 *
 	 * @var int
@@ -34,53 +42,89 @@ class BindingsSourceTest extends WP_UnitTestCase {
 	private $private_post_id = 0;
 
 	/**
-	 * Set up the secrets and a contributor.
+	 * Set up the secrets, a non-empty block config and a contributor.
 	 *
 	 * @return void
 	 */
 	public function set_up() {
 		parent::set_up();
 
-		if ( PHP_VERSION_ID < 80200 ) {
-			$this->markTestSkipped( 'BB-18 landed or source not registered: the block builder needs PHP 8.2 and registers nothing below it.' );
-		}
-
 		update_option( 'mailserver_pass', self::OPTION_SECRET );
 
 		$this->private_post_id = self::factory()->post->create( [ 'post_status' => 'private' ] );
 		update_post_meta( $this->private_post_id, '_sf_secret', self::META_SECRET );
 
-		// The builder registers its bindings source on init, but only once it has been started.
-		// Its init callback ran before this test, so register the source by hand.
-		\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::init();
-		if ( ! $this->source_registered() ) {
-			\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Binding\Binding_Source_Registrar::register_source();
+		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/throwaway' ) ) {
+			unregister_block_type( 'swiftforms/throwaway' );
 		}
+
+		// Start the builder the way SwiftForms does, with one throwaway block.
+		$manager = \SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::class;
+		$manager::reset();
+		add_filter( 'swiftforms_block_configs', [ $this, 'throwaway_config' ] );
+		$this->setExpectedIncorrectUsage( 'SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::register_blocks' );
+		Plugin::instance()->register_blocks();
+		// init has already run in the test process, so register the block types now.
+		$manager::init()->register_blocks();
+		// What the builder does on init, when the host asked for a source (SwiftForms does not).
+		\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Binding\Binding_Source_Registrar::register_source();
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'contributor' ] ) );
 	}
 
 	/**
-	 * Whether the builder's bindings source exists.
+	 * Reset the builder so that later tests start clean.
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	private function source_registered() {
-		return WP_Block_Bindings_Registry::get_instance()->is_registered( Builder_Adapter::BINDINGS_SOURCE );
+	public function tear_down() {
+		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/throwaway' ) ) {
+			unregister_block_type( 'swiftforms/throwaway' );
+		}
+		\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::reset();
+		foreach ( self::SOURCES as $source ) {
+			if ( WP_Block_Bindings_Registry::get_instance()->is_registered( $source ) ) {
+				unregister_block_bindings_source( $source );
+			}
+		}
+		parent::tear_down();
 	}
 
 	/**
-	 * Render a core/paragraph bound to cassette-cmf/field.
+	 * Block config with one throwaway block.
 	 *
-	 * @param array $args Binding arguments.
+	 * @return array
+	 */
+	public function throwaway_config() {
+		return [
+			'blocks' => [
+				[
+					'id'     => 'swiftforms/throwaway',
+					'fields' => [
+						[
+							'name'  => 'title',
+							'type'  => 'text',
+							'label' => 'Title',
+						],
+					],
+				],
+			],
+		];
+	}
+
+	/**
+	 * Render a core/paragraph bound to a source.
+	 *
+	 * @param string $source Bindings source name.
+	 * @param array  $args   Binding arguments.
 	 * @return string
 	 */
-	private function render_bound_paragraph( array $args ) {
+	private function render_bound_paragraph( $source, array $args ) {
 		$attributes = [
 			'metadata' => [
 				'bindings' => [
 					'content' => [
-						'source' => Builder_Adapter::BINDINGS_SOURCE,
+						'source' => $source,
 						'args'   => $args,
 					],
 				],
@@ -117,56 +161,65 @@ class BindingsSourceTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * With the fallback filter on, neither secret reaches the output.
+	 * The builder started, and registered the throwaway block.
+	 *
+	 * @return void
+	 */
+	public function test_builder_is_running() {
+		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/throwaway' ) );
+	}
+
+	/**
+	 * Neither cassette-cmf/field nor swiftforms/field is a registered bindings source.
+	 *
+	 * @return void
+	 */
+	public function test_no_bindings_source_is_registered() {
+		foreach ( self::SOURCES as $source ) {
+			$this->assertFalse( WP_Block_Bindings_Registry::get_instance()->is_registered( $source ), "{$source} must not be registered." );
+		}
+	}
+
+	/**
+	 * A contributor's preview renders neither secret, whichever source name is used.
 	 *
 	 * @return void
 	 */
 	public function test_secrets_are_not_rendered() {
-		$this->assertTrue( $this->source_registered(), 'The bindings source should be registered.' );
+		foreach ( self::SOURCES as $source ) {
+			$option_html = $this->render_bound_paragraph( $source, $this->option_args() );
+			$meta_html   = $this->render_bound_paragraph( $source, $this->meta_args() );
 
-		$option_html = $this->render_bound_paragraph( $this->option_args() );
-		$meta_html   = $this->render_bound_paragraph( $this->meta_args() );
-
-		$this->assertStringNotContainsString( self::OPTION_SECRET, $option_html );
-		$this->assertStringNotContainsString( self::META_SECRET, $meta_html );
-		$this->assertStringContainsString( 'placeholder', $option_html );
+			$this->assertStringNotContainsString( self::OPTION_SECRET, $option_html, "{$source} leaks the option." );
+			$this->assertStringNotContainsString( self::META_SECRET, $meta_html, "{$source} leaks the post meta." );
+			$this->assertStringContainsString( 'placeholder', $option_html );
+		}
 	}
 
 	/**
-	 * Without the filter the leak is real, which proves the filter is what blocks it.
+	 * SwiftForms keeps no callback on block_bindings_source_value (BB-18 needs no fallback).
 	 *
 	 * @return void
 	 */
-	public function test_leak_is_real_without_the_filter() {
-		if ( ! $this->source_registered() ) {
-			$this->markTestSkipped( 'BB-18 landed or source not registered: cassette-cmf/field does not exist in this run.' );
+	public function test_no_swiftforms_bindings_callback() {
+		global $wp_filter;
+
+		if ( ! isset( $wp_filter['block_bindings_source_value'] ) ) {
+			$this->assertTrue( true );
+			return;
 		}
 
-		$adapter = Builder_Adapter::instance();
-		remove_filter( 'block_bindings_source_value', [ $adapter, 'filter_bindings_source_value' ], PHP_INT_MAX );
-
-		$option_html = $this->render_bound_paragraph( $this->option_args() );
-		$meta_html   = $this->render_bound_paragraph( $this->meta_args() );
-
-		add_filter( 'block_bindings_source_value', [ $adapter, 'filter_bindings_source_value' ], PHP_INT_MAX, 5 );
-
-		if ( false === strpos( $option_html, self::OPTION_SECRET ) && false === strpos( $meta_html, self::META_SECRET ) ) {
-			$this->markTestSkipped( 'BB-18 landed or source not registered: the builder no longer leaks on its own. The fallback filter can be removed.' );
+		foreach ( $wp_filter['block_bindings_source_value']->callbacks as $callbacks ) {
+			foreach ( $callbacks as $callback ) {
+				$function = $callback['function'];
+				$owner    = '';
+				if ( is_array( $function ) ) {
+					$owner = is_object( $function[0] ) ? get_class( $function[0] ) : (string) $function[0];
+				} elseif ( is_object( $function ) && ! $function instanceof Closure ) {
+					$owner = get_class( $function );
+				}
+				$this->assertStringNotContainsString( 'SwiftForms', $owner, 'SwiftForms must not filter block bindings.' );
+			}
 		}
-
-		$this->assertStringContainsString( self::OPTION_SECRET, $option_html, 'The option secret leaks without the filter.' );
-		$this->assertStringContainsString( self::META_SECRET, $meta_html, 'The post meta secret leaks without the filter.' );
-	}
-
-	/**
-	 * The fallback filter is attached at the very last priority.
-	 *
-	 * @return void
-	 */
-	public function test_filter_runs_last() {
-		$this->assertSame(
-			PHP_INT_MAX,
-			has_filter( 'block_bindings_source_value', [ Builder_Adapter::instance(), 'filter_bindings_source_value' ] )
-		);
 	}
 }
