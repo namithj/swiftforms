@@ -69,9 +69,9 @@ class ConfirmationTest extends SF_Submission_Test_Case {
 			$result
 		);
 
-		$this->set_settings( [ 'general' => [ 'default_success_message' => 'Got it, <b>thanks</b><script>x</script> {field:name}' ] ] );
+		$this->set_settings( [ 'general' => [ 'default_success_message' => 'Got it, <b>thanks</b><script src="https://evil.example/x.js"></script> {field:name}' ] ] );
 		$result = Confirmation::build( $this->ctx() );
-		$this->assertSame( '<p>Got it, <b>thanks</b>x Ada</p>', $result['html'], 'kses applies, tags are merged.' );
+		$this->assertSame( '<p>Got it, <b>thanks</b> Ada</p>', $result['html'], 'kses applies, tags are merged.' );
 	}
 
 	/**

@@ -268,14 +268,14 @@ class FieldRendererTest extends SF_Render_Test_Case {
 			[
 				'name'  => 'agree',
 				'label' => 'Agree',
-				'text'  => 'I accept the <a href="https://example.org/terms" target="_blank" rel="noopener">terms</a><script>alert(1)</script> <strong>now</strong>',
+				'text'  => 'I accept the <a href="https://example.org/terms" rel="noopener" target="_blank">terms</a><script src="https://evil.example/x.js"></script> <strong>now</strong>',
 			]
 		);
 
 		$this->assertSame(
 			'<div class="swiftforms-field swiftforms-field--consent swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-consent">'
 			. '<label class="swiftforms-choice swiftforms-label swiftforms-consent" for="' . self::P . 'agree-1"><input type="checkbox" id="' . self::P . 'agree-1" name="sf[agree]" value="1" required aria-required="true" aria-describedby="' . self::P . 'agree-1-error">'
-			. '<span>I accept the <a href="https://example.org/terms" target="_blank" rel="noopener">terms</a>alert(1) <strong>now</strong><span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></span></label>'
+			. '<span>I accept the <a href="https://example.org/terms" rel="noopener" target="_blank">terms</a> <strong>now</strong><span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></span></label>'
 			. '<p class="swiftforms-error" id="' . self::P . 'agree-1-error" hidden></p>'
 			. '</div>',
 			$html

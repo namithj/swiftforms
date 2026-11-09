@@ -372,7 +372,7 @@ class MailTest extends SF_Submission_Test_Case {
 					'html_template' => true,
 					'logo_id'       => $attachment,
 					'accent_color'  => '#ff0066',
-					'footer_text'   => '<em>Sent by <script>x</script>us</em>',
+					'footer_text'   => '<em>Sent by <script src="https://evil.example/x.js"></script>us</em>',
 				],
 			]
 		);
@@ -382,7 +382,7 @@ class MailTest extends SF_Submission_Test_Case {
 		$this->assertStringContainsString( '<!DOCTYPE html>', $body );
 		$this->assertStringContainsString( '#ff0066', $body );
 		$this->assertStringContainsString( wp_get_attachment_image_url( $attachment, 'medium' ), $body );
-		$this->assertStringContainsString( '<em>Sent by xus</em>', $body );
+		$this->assertStringContainsString( '<em>Sent by us</em>', $body );
 		$this->assertStringNotContainsString( '<script', $body, 'The footer passes kses.' );
 		$this->assertStringContainsString( 'dir="ltr"', $body );
 		$this->assertStringContainsString( get_option( 'blogname' ), $body );

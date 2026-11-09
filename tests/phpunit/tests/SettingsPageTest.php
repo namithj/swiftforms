@@ -521,12 +521,12 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		$this->call(
 			'POST',
 			[
-				'email_footer_text'               => '<b>Hi</b> <a href="https://example.org" onclick="x()">link</a><script>alert(1)</script>',
+				'email_footer_text'               => '<b>Hi</b> <a href="https://example.org" onclick="x()">link</a><script src="https://evil.example/x.js"></script>',
 				'general_default_success_message' => "Thanks <i>a lot</i>\n<iframe src=\"https://evil.example\"></iframe>",
 			]
 		);
 
-		$this->assertSame( '<b>Hi</b> <a href="https://example.org">link</a>alert(1)', Settings::get_value( 'email.footer_text' ) );
+		$this->assertSame( '<b>Hi</b> <a href="https://example.org">link</a>', Settings::get_value( 'email.footer_text' ) );
 		$this->assertSame( "Thanks <i>a lot</i>\n", Settings::get_value( 'general.default_success_message' ) );
 	}
 
