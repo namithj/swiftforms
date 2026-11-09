@@ -144,9 +144,9 @@ class Form_Renderer {
 		if ( null === self::$ended ) {
 			self::$ended = new \SplObjectStorage();
 		}
-		if ( ! self::$ended->contains( $instance ) && count( self::$stack ) > 0 ) {
+		if ( ! self::$ended->offsetExists( $instance ) && count( self::$stack ) > 0 ) {
 			array_pop( self::$stack );
-			self::$ended->attach( $instance );
+			self::$ended->offsetSet( $instance, null );
 		}
 		return $content;
 	}

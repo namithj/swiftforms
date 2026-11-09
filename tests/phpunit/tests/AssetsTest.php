@@ -157,7 +157,9 @@ class AssetsTest extends SF_Render_Test_Case {
 		} else {
 			// WordPress 6.8 has no public getter.
 			$property = new ReflectionProperty( $modules, 'registered' );
-			$property->setAccessible( true );
+			if ( PHP_VERSION_ID < 80100 ) {
+				$property->setAccessible( true );
+			}
 			$queue = [];
 			foreach ( $property->getValue( $modules ) as $id => $module ) {
 				if ( ! empty( $module['enqueue'] ) ) {

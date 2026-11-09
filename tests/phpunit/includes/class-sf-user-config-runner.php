@@ -1198,7 +1198,9 @@ class SF_User_Config_Runner {
 			foreach ( [ 'state_data', 'config_data', 'namespace_stack', 'context_stack', 'queue', 'done' ] as $property ) {
 				if ( property_exists( $object, $property ) ) {
 					$reflection = new ReflectionProperty( $object, $property );
-					$reflection->setAccessible( true );
+					if ( PHP_VERSION_ID < 80100 ) {
+						$reflection->setAccessible( true );
+					}
 					$reflection->setValue( $object, [] );
 				}
 			}

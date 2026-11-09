@@ -55,7 +55,9 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 	private function reset_store() {
 		$api  = wp_interactivity();
 		$prop = new ReflectionProperty( $api, 'state_data' );
-		$prop->setAccessible( true );
+		if ( PHP_VERSION_ID < 80100 ) {
+			$prop->setAccessible( true );
+		}
 		$data = $prop->getValue( $api );
 		unset( $data['swiftforms'] );
 		$prop->setValue( $api, $data );

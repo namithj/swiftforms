@@ -9,7 +9,7 @@ WPLANG =
 
 == options ==
 swiftforms_db_version = 1
-swiftforms_email_footer_text = <p>Sent from ünï &amp; co &mdash; <script>alert(1)</script><a href="javascript:alert(1)">unsafe link</a></p>
+swiftforms_email_footer_text = <p>Sent from ünï &amp; co — <script src="https://evil.example/x.js"></script><a href="javascript:alert(1)">unsafe link</a></p>
 swiftforms_email_notification_to = owner@example.org
 swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
 

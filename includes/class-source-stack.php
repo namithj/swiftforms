@@ -219,8 +219,8 @@ class Source_Stack {
 		if ( null === self::$ended ) {
 			self::$ended = new \SplObjectStorage();
 		}
-		if ( ! self::$ended->contains( $instance ) && self::pop( $name ) ) {
-			self::$ended->attach( $instance );
+		if ( ! self::$ended->offsetExists( $instance ) && self::pop( $name ) ) {
+			self::$ended->offsetSet( $instance, null );
 		}
 		return $content;
 	}

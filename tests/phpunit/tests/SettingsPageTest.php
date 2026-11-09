@@ -207,7 +207,9 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		add_menu_page( 'Entries', 'Forms', 'swiftforms_view_entries', 'swiftforms', '__return_empty_string' );
 		$page = $this->page();
 		$prop = new ReflectionProperty( $page, 'registered' );
-		$prop->setAccessible( true );
+		if ( PHP_VERSION_ID < 80100 ) {
+			$prop->setAccessible( true );
+		}
 		$prop->setValue( $page, false );
 		Manager::init()->get_new_settings_handler()->register_pages();
 
@@ -623,7 +625,9 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		add_menu_page( 'Entries', 'Forms', 'swiftforms_view_entries', 'swiftforms', '__return_empty_string' );
 		$page = $this->page();
 		$prop = new ReflectionProperty( $page, 'registered' );
-		$prop->setAccessible( true );
+		if ( PHP_VERSION_ID < 80100 ) {
+			$prop->setAccessible( true );
+		}
 		$prop->setValue( $page, false );
 		$handler = Manager::init()->get_new_settings_handler();
 		$handler->register_pages();
