@@ -44,6 +44,7 @@
             },
             "i18n": {
                 "summary": "Please fix the following:",
+                "summaryItem": "%1$s: %2$s",
                 "network": "The form could not be sent. Please check your connection and try again.",
                 "closed": "This form is no longer accepting submissions.",
                 "rateLimited": "Too many attempts. Please wait a moment and try again.",
@@ -99,6 +100,7 @@
             },
             "i18n": {
                 "summary": "Please fix the following:",
+                "summaryItem": "%1$s: %2$s",
                 "network": "The form could not be sent. Please check your connection and try again.",
                 "closed": "This form is no longer accepting submissions.",
                 "rateLimited": "Too many attempts. Please wait a moment and try again.",
@@ -154,6 +156,7 @@
             },
             "i18n": {
                 "summary": "Please fix the following:",
+                "summaryItem": "%1$s: %2$s",
                 "network": "The form could not be sent. Please check your connection and try again.",
                 "closed": "This form is no longer accepting submissions.",
                 "rateLimited": "Too many attempts. Please wait a moment and try again.",
@@ -209,6 +212,7 @@
             },
             "i18n": {
                 "summary": "Please fix the following:",
+                "summaryItem": "%1$s: %2$s",
                 "network": "The form could not be sent. Please check your connection and try again.",
                 "closed": "This form is no longer accepting submissions.",
                 "rateLimited": "Too many attempts. Please wait a moment and try again.",
@@ -266,6 +270,7 @@
             },
             "i18n": {
                 "summary": "Please fix the following:",
+                "summaryItem": "%1$s: %2$s",
                 "network": "The form could not be sent. Please check your connection and try again.",
                 "closed": "This form is no longer accepting submissions.",
                 "rateLimited": "Too many attempts. Please wait a moment and try again.",
@@ -323,6 +328,7 @@
             },
             "i18n": {
                 "summary": "Please fix the following:",
+                "summaryItem": "%1$s: %2$s",
                 "network": "The form could not be sent. Please check your connection and try again.",
                 "closed": "This form is no longer accepting submissions.",
                 "rateLimited": "Too many attempts. Please wait a moment and try again.",

@@ -169,7 +169,9 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 			}
 			$found[ $name ] = $field->get_type();
 			$path           = preg_replace( '/_/', '.', $name, 1 );
-			$this->assertSame( Settings::defaults( SwiftForms\Install_Marker::installed_version() )[ explode( '.', $path )[0] ][ explode( '.', $path, 2 )[1] ], $field->get_config( 'default' ), $name . ' default' );
+			// The logo field shows '' (not 0) so the upload control does not offer "Remove logo"; Settings keeps 0.
+			$expected = 'email_logo_id' === $name ? '' : Settings::defaults( SwiftForms\Install_Marker::installed_version() )[ explode( '.', $path )[0] ][ explode( '.', $path, 2 )[1] ];
+			$this->assertSame( $expected, $field->get_config( 'default' ), $name . ' default' );
 			$this->assertSame( 'swiftforms_' . $name, $field->get_option_name( Settings_Page::PAGE_ID ), $name . ' option' );
 		}
 		ksort( $expect );
@@ -248,7 +250,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		$this->assertSame( 0, $values['general_retention_days'] );
 		$this->assertSame( 'Thank you. Your message has been sent.', $values['general_default_success_message'] );
 		$this->assertSame( '', $values['email_from_email'] );
-		$this->assertSame( 0, $values['email_logo_id'] );
+		$this->assertSame( '', $values['email_logo_id'] );
 		$this->assertSame( '', $values['email_accent_color'] );
 		$this->assertSame( 100, $values['email_visitor_mail_daily_cap'] );
 		$this->assertSame( 'store', $values['spam_spam_action'] );

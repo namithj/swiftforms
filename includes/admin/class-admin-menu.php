@@ -94,5 +94,9 @@ class Admin_Menu {
 		if ( isset( self::$screens['entries'] ) && self::$screens['entries'] === $hook_suffix ) {
 			Entries_Screen::enqueue();
 		}
+		if ( get_plugin_page_hookname( Settings_Page::MENU_SLUG, Settings_Page::PARENT_SLUG ) === $hook_suffix ) {
+			$path = plugin_dir_path( SWIFTFORMS_FILE ) . 'includes/admin/settings.css';
+			wp_enqueue_style( 'swiftforms-admin-settings', plugins_url( 'includes/admin/settings.css', SWIFTFORMS_FILE ), [], is_readable( $path ) ? (string) filemtime( $path ) : SWIFTFORMS_VERSION );
+		}
 	}
 }

@@ -284,6 +284,8 @@ class Form_Renderer {
 			'messages'  => Validator::messages(),
 			'i18n'      => [
 				'summary'     => __( 'Please fix the following:', 'swiftforms' ),
+				/* translators: 1: field label, 2: error message. */
+				'summaryItem' => __( '%1$s: %2$s', 'swiftforms' ),
 				'network'     => __( 'The form could not be sent. Please check your connection and try again.', 'swiftforms' ),
 				'closed'      => __( 'This form is no longer accepting submissions.', 'swiftforms' ),
 				'rateLimited' => __( 'Too many attempts. Please wait a moment and try again.', 'swiftforms' ),
@@ -310,7 +312,14 @@ class Form_Renderer {
 		foreach ( $context->schema->fields as $field ) {
 			$name = $field['name'];
 			if ( isset( $errors[ $name ] ) && is_string( $errors[ $name ] ) ) {
-				$items .= '<li><a href="#' . esc_attr( $context->element_id( $name ) ) . '">' . esc_html( $errors[ $name ] ) . '</a></li>';
+				$message = $errors[ $name ];
+				$label   = isset( $field['label'] ) && is_string( $field['label'] ) ? trim( $field['label'] ) : '';
+				// A consent label is a long sentence, so the message stands alone there.
+				if ( '' !== $label && ( ! isset( $field['type'] ) || 'consent' !== $field['type'] ) ) {
+					/* translators: 1: field label, 2: error message. */
+					$message = sprintf( __( '%1$s: %2$s', 'swiftforms' ), $label, $message );
+				}
+				$items .= '<li><a href="#' . esc_attr( $context->element_id( $name ) ) . '">' . esc_html( $message ) . '</a></li>';
 			}
 		}
 

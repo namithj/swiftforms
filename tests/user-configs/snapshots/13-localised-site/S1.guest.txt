@@ -40,6 +40,7 @@
             },
             "i18n": {
                 "summary": "Veuillez corriger les points suivants :",
+                "summaryItem": "%1$s: %2$s",
                 "network": "Le formulaire n’a pas pu être envoyé. Vérifiez votre connexion et réessayez.",
                 "closed": "Ce formulaire n’accepte plus de réponses.",
                 "rateLimited": "Too many attempts. Please wait a moment and try again.",
@@ -85,6 +86,7 @@
             },
             "i18n": {
                 "summary": "Veuillez corriger les points suivants :",
+                "summaryItem": "%1$s: %2$s",
                 "network": "Le formulaire n’a pas pu être envoyé. Vérifiez votre connexion et réessayez.",
                 "closed": "Ce formulaire n’accepte plus de réponses.",
                 "rateLimited": "Too many attempts. Please wait a moment and try again.",

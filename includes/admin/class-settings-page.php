@@ -222,6 +222,8 @@ class Settings_Page {
 				Settings_Image_Field::TYPE,
 				__( 'Logo', 'swiftforms' ),
 				[
+					// The upload control treats anything but '' as "has a file"; 0 would show "Remove logo".
+					'default'      => '',
 					'description'  => __( 'Shown at the top of HTML emails.', 'swiftforms' ),
 					'library_type' => 'image',
 					'button_text'  => __( 'Choose logo', 'swiftforms' ),
@@ -250,7 +252,7 @@ class Settings_Page {
 	 */
 	private static function spam_fields() {
 		return [
-			self::checkbox( 'spam.honeypot', __( 'Hidden trap field', 'swiftforms' ) ),
+			self::checkbox( 'spam.honeypot', __( 'Hidden trap field', 'swiftforms' ), __( 'Adds a field that people cannot see. Bots that fill it in are treated as spam.', 'swiftforms' ) ),
 			self::checkbox( 'spam.js_token', __( 'Require JavaScript proof', 'swiftforms' ), __( 'Submissions sent without the browser script are treated as spam.', 'swiftforms' ) ),
 			self::number( 'spam.min_seconds', __( 'Fastest plausible submission (seconds)', 'swiftforms' ), __( 'Forms sent faster than this are treated as spam. 0 turns the check off.', 'swiftforms' ) ),
 			self::number( 'spam.rate_limit_per_minute', __( 'Submissions per minute, per form and visitor', 'swiftforms' ), __( '0 turns the limit off.', 'swiftforms' ) ),

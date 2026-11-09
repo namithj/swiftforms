@@ -17,6 +17,63 @@
 	width: 22%;
 }
 
+/* Every row of the entry box carries one dashicon, drawn like core's publish box (core only does Status). */
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-status:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-starred:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-unstarred:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-date:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-form:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-source:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-user:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-ip:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-browser:before {
+	font: normal 20px/1 dashicons;
+	display: inline-block;
+	margin-inline-start: -1px;
+	padding-inline-end: 3px;
+	vertical-align: top;
+	color: #8c8f94;
+	speak: never;
+	-webkit-font-smoothing: antialiased;
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-status:before {
+	content: "\f173";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-starred:before {
+	content: "\f155";
+	color: #dba617;
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-unstarred:before {
+	content: "\f154";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-date:before {
+	content: "\f145";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-form:before {
+	content: "\f175";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-source:before {
+	content: "\f105";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-user:before {
+	content: "\f110";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-ip:before {
+	content: "\f230";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-browser:before {
+	content: "\f472";
+}
+
 .swiftforms-star {
 	color: #dba617;
 }

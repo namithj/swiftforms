@@ -590,27 +590,26 @@ class Entries_Screen {
 			<div class="inside">
 				<div class="submitbox">
 					<div id="minor-publishing">
-						<div class="misc-pub-section misc-pub-post-status">
+						<div class="misc-pub-section misc-pub-post-status swiftforms-meta-status">
 							<?php esc_html_e( 'Status:', 'swiftforms' ); ?>
 							<strong class="swiftforms-entry-status"><?php echo esc_html( $labels[ $status ] ?? $status ); ?></strong>
 							<?php self::inline_link( $actions, [ 'read', 'unread', 'unspam' ], $id ); ?>
 						</div>
-						<div class="misc-pub-section">
-							<span class="dashicons dashicons-star-filled swiftforms-star" aria-hidden="true"></span>
+						<div class="misc-pub-section <?php echo $starred ? 'swiftforms-meta-starred' : 'swiftforms-meta-unstarred'; ?>">
 							<?php esc_html_e( 'Starred:', 'swiftforms' ); ?>
 							<strong><?php echo $starred ? esc_html__( 'Yes', 'swiftforms' ) : esc_html__( 'No', 'swiftforms' ); ?></strong>
 							<?php self::inline_link( $actions, [ 'star', 'unstar' ], $id ); ?>
 						</div>
-						<div class="misc-pub-section misc-pub-curtime">
+						<div class="misc-pub-section misc-pub-curtime swiftforms-meta-date">
 							<?php esc_html_e( 'Submitted:', 'swiftforms' ); ?>
 							<strong><time datetime="<?php echo esc_attr( $detail['date_gmt'] ); ?>"><?php echo esc_html( $detail['date_display'] ); ?></time></strong>
 						</div>
-						<div class="misc-pub-section">
+						<div class="misc-pub-section swiftforms-meta-form">
 							<?php esc_html_e( 'Form:', 'swiftforms' ); ?>
 							<strong><a href="<?php echo esc_url( self::list_url( [ 'form' => (string) $detail['form_id'] ] ) ); ?>"><?php echo esc_html( $title ); ?></a></strong>
 						</div>
 						<?php if ( ! empty( $detail['source'] ) ) : ?>
-							<div class="misc-pub-section">
+							<div class="misc-pub-section swiftforms-meta-source">
 								<?php esc_html_e( 'Sent from:', 'swiftforms' ); ?>
 								<strong>
 									<?php if ( '' !== $detail['source']['link'] ) : ?>
@@ -622,19 +621,19 @@ class Entries_Screen {
 							</div>
 						<?php endif; ?>
 						<?php if ( ! empty( $detail['user'] ) ) : ?>
-							<div class="misc-pub-section">
+							<div class="misc-pub-section swiftforms-meta-user">
 								<?php esc_html_e( 'User:', 'swiftforms' ); ?>
 								<strong><?php echo esc_html( Entry_Presenter::visible_text( $detail['user'] ) ); ?></strong>
 							</div>
 						<?php endif; ?>
 						<?php if ( ! empty( $detail['ip'] ) ) : ?>
-							<div class="misc-pub-section">
+							<div class="misc-pub-section swiftforms-meta-ip">
 								<?php esc_html_e( 'IP address:', 'swiftforms' ); ?>
 								<strong><?php echo esc_html( Entry_Presenter::visible_text( $detail['ip'] ) ); ?></strong>
 							</div>
 						<?php endif; ?>
 						<?php if ( ! empty( $detail['user_agent'] ) ) : ?>
-							<div class="misc-pub-section swiftforms-user-agent">
+							<div class="misc-pub-section swiftforms-meta-browser swiftforms-user-agent">
 								<?php esc_html_e( 'Browser:', 'swiftforms' ); ?>
 								<strong><?php echo esc_html( Entry_Presenter::visible_text( $detail['user_agent'] ) ); ?></strong>
 							</div>

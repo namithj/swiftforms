@@ -263,6 +263,25 @@ function showSummary( form, items, focus ) {
 }
 
 /**
+ * Visible label text of a field wrapper, without the required marker. Empty for consent
+ * checkboxes (their label is a whole sentence).
+ *
+ * @param {Element} wrapper Field wrapper.
+ * @return {string} Label text.
+ */
+function labelOf( wrapper ) {
+	const source = wrapper.querySelector( '.swiftforms-label' );
+	if ( ! source || source.classList.contains( 'swiftforms-consent' ) ) {
+		return '';
+	}
+	const clone = source.cloneNode( true );
+	clone
+		.querySelectorAll( '.swiftforms-required, .swiftforms-sr-only, input' )
+		.forEach( ( node ) => node.remove() );
+	return clone.textContent.trim();
+}
+
+/**
  * Summary items for every field that is marked invalid.
  *
  * @param {HTMLFormElement} form Form.
@@ -274,8 +293,15 @@ function currentItems( form ) {
 		.map( ( wrapper ) => {
 			const error = wrapper.querySelector( '.swiftforms-error' );
 			const first = controlsOf( wrapper )[ 0 ];
+			const label = labelOf( wrapper );
+			const message = error ? error.textContent : '';
 			return {
-				text: error ? error.textContent : '',
+				text:
+					label && message
+						? text( 'summaryItem', '%1$s: %2$s' )
+								.replace( '%1$s', () => label )
+								.replace( '%2$s', () => message )
+						: message,
 				href: first && first.id ? '#' + first.id : '',
 			};
 		} )

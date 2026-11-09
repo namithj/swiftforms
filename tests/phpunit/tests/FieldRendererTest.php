@@ -487,7 +487,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		$this->assertStringContainsString( '<input type="checkbox" id="' . self::P . 'topics-1-2" name="sf[topics][]" value="q" checked>', $html );
 		$this->assertStringContainsString( '<input type="checkbox" id="' . self::P . 'topics-1-1" name="sf[topics][]" value="x">', $html );
 		$this->assertStringContainsString( ' value="1" checked', $html );
-		$this->assertStringContainsString( '<div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Please fix the following:</p><ul><li><a href="#' . self::P . 'who-1">Please enter a &lt;b&gt;name&lt;/b&gt;.</a></li></ul></div>', $html );
+		$this->assertStringContainsString( '<div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Please fix the following:</p><ul><li><a href="#' . self::P . 'who-1">Who: Please enter a &lt;b&gt;name&lt;/b&gt;.</a></li></ul></div>', $html );
 		$this->assertStringNotContainsString( 'errors-summary" tabindex="-1" hidden', $html );
 	}
 

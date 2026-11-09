@@ -1,5 +1,5 @@
 === SwiftForms – Contact Form Builder for the Block Editor ===
-Contributors: namithj
+Contributors: namithjawahar
 Tags: contact form, form builder, forms, gutenberg form, block editor
 Requires at least: 6.8
 Tested up to: 7.1

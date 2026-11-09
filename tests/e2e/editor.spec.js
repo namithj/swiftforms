@@ -445,7 +445,7 @@ test.describe( 'SwiftForms editor', () => {
 			sidebar.getByRole( 'button', { name: 'Notifications' } )
 		).toBeVisible();
 		await expect(
-			sidebar.getByRole( 'button', { name: 'Advanced' } ).first()
+			sidebar.getByRole( 'button', { name: 'Submission' } )
 		).toBeVisible();
 
 		await editor.publishPost();

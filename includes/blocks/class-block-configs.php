@@ -283,7 +283,7 @@ class Block_Configs {
 				[
 					'name'         => 'panel_advanced',
 					'type'         => 'panel',
-					'title'        => __( 'Advanced', 'swiftforms' ),
+					'title'        => __( 'Submission', 'swiftforms' ),
 					'initial_open' => false,
 					'fields'       => [
 						[
@@ -681,7 +681,7 @@ class Block_Configs {
 			$fields[] = [
 				'name'         => 'panel_advanced',
 				'type'         => 'panel',
-				'title'        => __( 'Advanced', 'swiftforms' ),
+				'title'        => __( 'More options', 'swiftforms' ),
 				'initial_open' => false,
 				'fields'       => $panels['advanced'],
 			];
