@@ -2411,7 +2411,16 @@ class SF_User_Config_Runner {
 		// 5. Deleting a site drops its tables; the others keep theirs.
 		$fresh_prefix = $wpdb->get_blog_prefix( $ids['fresh'] );
 		$tables_of    = static function ( $prefix ) use ( $wpdb ) {
-			return count( (array) $wpdb->get_col( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $prefix . 'swiftforms_' ) . '%' ) ) );
+			// DESCRIBE (not SHOW TABLES) because the test suite's tables are TEMPORARY, which MySQL 8 does not list (same as Database::missing()).
+			$count    = 0;
+			$suppress = $wpdb->suppress_errors();
+			foreach ( \SwiftForms\Database::TABLES as $name ) {
+				if ( $wpdb->get_results( 'DESCRIBE `' . esc_sql( $prefix . \SwiftForms\Database::PREFIX . $name ) . '`' ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Table name built from a prefix and a fixed list.
+					++$count;
+				}
+			}
+			$wpdb->suppress_errors( $suppress );
+			return $count;
 		};
 		$had          = $tables_of( $fresh_prefix );
 		wp_delete_site( $ids['fresh'] );
@@ -2964,8 +2973,15 @@ class SF_User_Config_Runner {
 			$sql = str_replace( '`' . $wpdb->prefix, '`{prefix}', $row[1] );
 			$sql = preg_replace( '/ AUTO_INCREMENT=\d+/', '', $sql );
 			// MySQL 8.0.17+ drops integer display widths and quotes numeric defaults; MariaDB keeps the width and does not quote. Snapshots must not depend on the server.
-			$sql   = preg_replace( '/\b(tinyint|smallint|mediumint|bigint|int)\(\d+\)/', '$1', $sql );
-			$sql   = preg_replace( "/ DEFAULT (-?\d+)(?=,?\n)/", " DEFAULT '\$1'", $sql );
+			$sql = preg_replace( '/\b(tinyint|smallint|mediumint|bigint|int)\(\d+\)/', '$1', $sql );
+			$sql = preg_replace( "/ DEFAULT (-?\d+)(?=,?\n)/", " DEFAULT '\$1'", $sql );
+			// MySQL 8 repeats the table collation/charset on every text column when it differs from the server default; MariaDB omits it. Drop only the clauses that equal the table's own.
+			if ( preg_match( '/ COLLATE=(\w+)/', $sql, $m ) ) {
+				$sql = preg_replace( '/ COLLATE ' . preg_quote( $m[1], '/' ) . '\b(?!=)/', '', $sql );
+			}
+			if ( preg_match( '/DEFAULT CHARSET=(\w+)/', $sql, $m ) ) {
+				$sql = preg_replace( '/ CHARACTER SET ' . preg_quote( $m[1], '/' ) . '\b(?!=)/', '', $sql );
+			}
 			$text .= $sql . ";\n\n";
 		}
 		return SF_Normaliser::text( '' === $text ? "(none)\n" : $text );

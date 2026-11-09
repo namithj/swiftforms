@@ -319,7 +319,23 @@ test.describe( 'SwiftForms editor', () => {
 		await clipboardEvent( 'copy', form.clientId );
 		await clipboardEvent( 'paste', paragraphId );
 
-		await expect.poll( async () => ( await api.tree() ).length ).toBe( 2 );
+		// The paragraph already makes the tree two blocks long, so a length check passes before the paste lands; wait for two forms instead. The builder gives the copy its new ID one animation frame later, so wait for that too.
+		await expect
+			.poll( async () =>
+				( await api.tree() ).map( ( block ) => block.name )
+			)
+			.toEqual( [ FORM, FORM ] );
+		await expect
+			.poll( async () => {
+				const current = ( await api.tree() ).map(
+					( block ) => block.attributes.formId
+				);
+				return (
+					UUID_V4.test( current[ 1 ] || '' ) &&
+					current[ 1 ] !== current[ 0 ]
+				);
+			} )
+			.toBe( true );
 		const ids = ( await api.tree() ).map(
 			( block ) => block.attributes.formId
 		);
