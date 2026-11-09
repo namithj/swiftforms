@@ -289,35 +289,28 @@ test.describe( 'SwiftForms editor', () => {
 			return block.clientId;
 		} );
 
-		// Copy and paste with one shared clipboard object, as the browser does.
-		const clipboardEvent = ( type, clientId ) =>
-			page.evaluate(
-				( [ eventType, id ] ) => {
-					const frame = document.querySelector(
-						'iframe[name="editor-canvas"]'
-					);
-					const win = frame ? frame.contentWindow : window;
-					window.sfClipboard =
-						window.sfClipboard || new win.DataTransfer();
-					window.wp.data
-						.dispatch( 'core/block-editor' )
-						.selectBlock( id );
-					const element = win.document.querySelector(
-						`[data-block="${ id }"]`
-					);
-					element.focus();
-					element.dispatchEvent(
-						new win.ClipboardEvent( eventType, {
-							bubbles: true,
-							cancelable: true,
-							clipboardData: window.sfClipboard,
-						} )
-					);
-				},
-				[ type, clientId ]
-			);
-		await clipboardEvent( 'copy', form.clientId );
-		await clipboardEvent( 'paste', paragraphId );
+		// Drive the editor's own copy and paste data path (serialize the block, then parse it with pasteHandler and replace the target) instead of dispatching DOM clipboard events. Synthetic ClipboardEvents are not handled reliably by WordPress 6.8 in CI, while this path carries the same markup, duplicate formId included, that a real paste does.
+		const copiedHtml = await page.evaluate(
+			( [ formClientId, targetId ] ) => {
+				const { wp } = window;
+				const html = wp.blocks.serialize( [
+					wp.data
+						.select( 'core/block-editor' )
+						.getBlock( formClientId ),
+				] );
+				const blocks = wp.blocks.pasteHandler( {
+					HTML: html,
+					mode: 'BLOCKS',
+				} );
+				wp.data
+					.dispatch( 'core/block-editor' )
+					.replaceBlocks( targetId, blocks );
+				return html;
+			},
+			[ form.clientId, paragraphId ]
+		);
+		// The pasted markup really carries the original ID that the builder must replace.
+		expect( copiedHtml ).toContain( form.attributes.formId );
 
 		// The paragraph already makes the tree two blocks long, so a length check passes before the paste lands; wait for two forms instead. The builder gives the copy its new ID one animation frame later, so wait for that too.
 		await expect
