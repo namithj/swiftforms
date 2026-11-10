@@ -180,31 +180,22 @@ class Entries_Repository {
 		$per_page = max( 1, min( 100, (int) ( $args['per_page'] ?? 20 ) ) );
 		$page     = max( 1, (int) ( $args['page'] ?? 1 ) );
 
-		$where  = [];
-		$params = [];
+		$where = [];
 		if ( '' !== $form ) {
-			$where[]  = 'form_id = %s';
-			$params[] = $form;
+			$where[] = $wpdb->prepare( 'form_id = %s', $form );
 		}
 		if ( '' !== $status ) {
-			$where[]  = 'status = %s';
-			$params[] = $status;
+			$where[] = $wpdb->prepare( 'status = %s', $status );
 		} else {
-			$where[]  = 'status IN (%s, %s)';
-			$params[] = 'new';
-			$params[] = 'read';
+			$where[] = $wpdb->prepare( 'status IN (%s, %s)', 'new', 'read' );
 		}
 		if ( ! empty( $args['starred'] ) ) {
-			$where[] = 'starred = 1';
+			$where[] = $wpdb->prepare( 'starred = %d', 1 );
 		}
-		$direction = isset( $args['order'] ) && 'asc' === strtolower( (string) $args['order'] ) ? 'ASC' : 'DESC';
-		$clause    = implode( ' AND ', $where );
-		$table     = esc_sql( Database::table( 'entries' ) );
-		// With a form chosen, form_status_date is the index to use: left alone, the optimiser may walk the whole created_gmt index
-		// when the default "new or read" filter matches most rows, which is slow for a small form among many.
-		$index = '' !== $form ? ' FORCE INDEX (form_status_date)' : '';
+		$ascending = isset( $args['order'] ) && 'asc' === strtolower( (string) $args['order'] );
+		$table     = Database::table( 'entries' );
 
-		$total = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE {$clause}", $params ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- Own table; the clause holds only placeholders.
+		$total = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM %i WHERE ', $table ) . implode( ' AND ', $where ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Own table; every fragment is prepared.
 		if ( 0 === $total ) {
 			return [
 				'total'  => 0,
@@ -213,9 +204,17 @@ class Entries_Repository {
 			];
 		}
 
-		$page_params = array_merge( $params, [ $per_page, ( $page - 1 ) * $per_page ] );
-		$rows        = $wpdb->get_results( $wpdb->prepare( "SELECT id, form_id, schema_hash, source, status, starred, user_id, created_gmt, updated_gmt FROM {$table}{$index} WHERE {$clause} ORDER BY created_gmt {$direction}, id {$direction} LIMIT %d OFFSET %d", $page_params ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- Own table; the clause holds only placeholders.
-		$rows        = is_array( $rows ) ? $rows : [];
+		// With a form chosen, form_status_date is the index to use: left alone, the optimiser may walk the whole created_gmt index
+		// when the default "new or read" filter matches most rows, which is slow for a small form among many.
+		$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Own table; every fragment is prepared.
+			$wpdb->prepare( 'SELECT id, form_id, schema_hash, source, status, starred, user_id, created_gmt, updated_gmt FROM %i', $table )
+				. ( '' !== $form ? ' FORCE INDEX (form_status_date)' : '' )
+				. ' WHERE ' . implode( ' AND ', $where )
+				. ( $ascending ? ' ORDER BY created_gmt ASC, id ASC' : ' ORDER BY created_gmt DESC, id DESC' )
+				. $wpdb->prepare( ' LIMIT %d OFFSET %d', $per_page, ( $page - 1 ) * $per_page ),
+			ARRAY_A
+		);
+		$rows = is_array( $rows ) ? $rows : [];
 
 		foreach ( $rows as $i => $row ) {
 			$rows[ $i ]['id']      = (int) $row['id'];
@@ -376,17 +375,13 @@ class Entries_Repository {
 	public static function ids_before( $cutoff, array $statuses = [], $limit = self::DELETE_BATCH ) {
 		global $wpdb;
 
-		$table    = esc_sql( Database::table( 'entries' ) );
-		$params   = [ (string) $cutoff ];
-		$clause   = '';
 		$statuses = array_values( array_intersect( $statuses, self::STATUSES ) );
-		if ( $statuses ) {
-			$clause = ' AND status IN (' . implode( ', ', array_fill( 0, count( $statuses ), '%s' ) ) . ')';
-			$params = array_merge( $params, $statuses );
-		}
-		$params[] = max( 1, (int) $limit );
 
-		$ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$table} WHERE created_gmt < %s{$clause} ORDER BY created_gmt ASC, id ASC LIMIT %d", $params ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- Own table; the clause holds only placeholders.
+		$ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Own table; every fragment is prepared.
+			$wpdb->prepare( 'SELECT id FROM %i WHERE created_gmt < %s', Database::table( 'entries' ), (string) $cutoff )
+			. ( $statuses ? $wpdb->prepare( ' AND status IN (' . implode( ', ', array_fill( 0, count( $statuses ), '%s' ) ) . ')', $statuses ) : '' )
+			. $wpdb->prepare( ' ORDER BY created_gmt ASC, id ASC LIMIT %d', max( 1, (int) $limit ) )
+		);
 		return array_map( 'intval', is_array( $ids ) ? $ids : [] );
 	}
 
@@ -411,17 +406,13 @@ class Entries_Repository {
 			}
 		}
 
-		$table = esc_sql( Database::table( 'entry_values' ) );
-		$ok    = true;
+		$ok = true;
 		foreach ( array_chunk( $rows, self::CHUNK ) as $chunk ) {
-			$placeholders = [];
-			$args         = [];
+			$args = [ Database::table( 'entry_values' ) ];
 			foreach ( $chunk as $row ) {
-				$placeholders[] = '(%d, %s, %d, %s)';
 				array_push( $args, $entry_id, $row[0], $row[1], $row[2] );
 			}
-			$sql = "INSERT INTO {$table} (entry_id, field, idx, value) VALUES " . implode( ', ', $placeholders ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name built from $wpdb->prefix; the values are placeholders.
-			if ( false === $wpdb->query( $wpdb->prepare( $sql, $args ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Own table; placeholders above.
+			if ( false === $wpdb->query( $wpdb->prepare( 'INSERT INTO %i (entry_id, field, idx, value) VALUES ' . implode( ', ', array_fill( 0, count( $chunk ), '(%d, %s, %d, %s)' ) ), $args ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- Own table; one argument per placeholder.
 				$ok = false;
 			}
 		}

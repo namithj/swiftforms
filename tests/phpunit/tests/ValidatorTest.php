@@ -367,9 +367,11 @@ class ValidatorTest extends SF_Storage_Test_Case {
 		$this->assertSame( 'pattern', $this->check( $field, str_repeat( 'a', 4000 ) . '!' ) );
 		$this->assertContains( 'A field pattern failed at run time (PCRE error); the value counts as invalid.', $this->log_messages() );
 
-		// The backtrack limit is restored afterwards.
-		$this->assertSame( ini_get( 'pcre.backtrack_limit' ), ini_get( 'pcre.backtrack_limit' ) );
-		$this->assertGreaterThanOrEqual( 100000, (int) ini_get( 'pcre.backtrack_limit' ) );
+		// The bound lives in the compiled regex; the ini setting is never touched.
+		$before = ini_get( 'pcre.backtrack_limit' );
+		$this->check( $field, str_repeat( 'a', 4000 ) . '!' );
+		$this->assertSame( $before, ini_get( 'pcre.backtrack_limit' ) );
+		$this->assertStringStartsWith( '#(*LIMIT_MATCH=' . Validator::PATTERN_BACKTRACK_LIMIT . ')^(?:', (string) Validator::compile( '(a+)+$' ) );
 	}
 
 	/**

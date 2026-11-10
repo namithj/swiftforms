@@ -345,19 +345,17 @@ class Entry_Presenter {
 		);
 
 		if ( $form_ids || $need ) {
-			$forms_table   = esc_sql( Database::table( 'forms' ) );
-			$schemas_table = esc_sql( Database::table( 'schemas' ) );
-			$parts         = [];
-			$args          = [];
-			if ( $form_ids ) {
-				$parts[] = "SELECT 'f' AS kind, form_id AS id, title AS body FROM {$forms_table} WHERE form_id IN (" . implode( ', ', array_fill( 0, count( $form_ids ), '%s' ) ) . ')';
-				$args    = array_merge( $args, $form_ids );
-			}
-			if ( $need ) {
-				$parts[] = "SELECT 's' AS kind, schema_hash AS id, `schema` AS body FROM {$schemas_table} WHERE schema_hash IN (" . implode( ', ', array_fill( 0, count( $need ), '%s' ) ) . ')';
-				$args    = array_merge( $args, $need );
-			}
-			$rows = $wpdb->get_results( $wpdb->prepare( implode( ' UNION ALL ', $parts ), $args ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Own tables; every value is a placeholder.
+			// Both halves always run; an empty list becomes IN (''), which matches no row (formIds are UUIDs, hashes are hex).
+			$in_forms   = $form_ids ? $form_ids : [ '' ];
+			$in_schemas = $need ? $need : [ '' ];
+			$rows       = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Own tables.
+				$wpdb->prepare(
+					'SELECT \'f\' AS kind, form_id AS id, title AS body FROM %i WHERE form_id IN (' . implode( ', ', array_fill( 0, count( $in_forms ), '%s' ) ) . ')'
+					. ' UNION ALL SELECT \'s\' AS kind, schema_hash AS id, `schema` AS body FROM %i WHERE schema_hash IN (' . implode( ', ', array_fill( 0, count( $in_schemas ), '%s' ) ) . ')',
+					array_merge( [ Database::table( 'forms' ) ], $in_forms, [ Database::table( 'schemas' ) ], $in_schemas )
+				),
+				ARRAY_A
+			);
 			foreach ( is_array( $rows ) ? $rows : [] as $row ) {
 				if ( 'f' === $row['kind'] ) {
 					$titles[ (string) $row['id'] ] = (string) $row['body'];
