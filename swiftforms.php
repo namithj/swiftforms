@@ -5,7 +5,7 @@
  * Description: Build contact forms with blocks, right in the editor. Fast, accessible and free, with no upsells.
  * Author: namithjawahar
  * Author URI: https://smartlogix.co.in/
- * Version: 0.1.0
+ * Version: 1.0.0
  * Requires at least: 6.8
  * Requires PHP: 7.4
  * License: GPL-2.0-or-later
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Kept in step with the plugin header and the readme Stable tag by
  * bin/set-version.sh, which the release pipeline runs from the pushed tag.
  */
-define( 'SWIFTFORMS_VERSION', '0.1.0' );
+define( 'SWIFTFORMS_VERSION', '1.0.0' );
 
 /**
  * Main plugin file, for plugin_dir_path() / plugin_dir_url() and activation hooks.
