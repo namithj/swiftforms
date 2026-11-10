@@ -1,0 +1,168 @@
+/* Forms → Entries: the list table and the single-entry screen. Logical properties keep it right in both directions. */
+
+.swiftforms-entries .column-starred {
+	width: 2.2em;
+	text-align: center;
+}
+
+.swiftforms-entries .column-starred .dashicons {
+	vertical-align: middle;
+}
+
+.swiftforms-entries .column-date {
+	width: 14%;
+}
+
+.swiftforms-entries .column-form {
+	width: 22%;
+}
+
+/* Every row of the entry box carries one dashicon, drawn like core's publish box (core only does Status). */
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-status:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-starred:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-unstarred:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-date:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-form:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-source:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-user:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-ip:before,
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-browser:before {
+	font: normal 20px/1 dashicons;
+	display: inline-block;
+	margin-inline-start: -1px;
+	padding-inline-end: 3px;
+	vertical-align: top;
+	color: #8c8f94;
+	speak: never;
+	-webkit-font-smoothing: antialiased;
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-status:before {
+	content: "\f173";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-starred:before {
+	content: "\f155";
+	color: #dba617;
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-unstarred:before {
+	content: "\f154";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-date:before {
+	content: "\f145";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-form:before {
+	content: "\f175";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-source:before {
+	content: "\f105";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-user:before {
+	content: "\f110";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-ip:before {
+	content: "\f230";
+}
+
+#swiftforms-entry-box #minor-publishing .swiftforms-meta-browser:before {
+	content: "\f472";
+}
+
+.swiftforms-star {
+	color: #dba617;
+}
+
+/* An unread entry reads bold with a coloured edge, like an unapproved comment. */
+.swiftforms-entries tr.unread > * {
+	background-color: #f0f6fc;
+}
+
+.swiftforms-entries tr.unread > :first-child {
+	box-shadow: inset 4px 0 0 #2271b1;
+}
+
+html[dir="rtl"] .swiftforms-entries tr.unread > :first-child {
+	box-shadow: inset -4px 0 0 #2271b1;
+}
+
+.swiftforms-entries .column-entry strong,
+.swiftforms-entries .column-entry .row-title {
+	font-weight: 400;
+}
+
+.swiftforms-entries tr.unread .column-entry strong,
+.swiftforms-entries tr.unread .column-entry .row-title {
+	font-weight: 700;
+}
+
+.swiftforms-entry .swiftforms-back {
+	margin: 0 0 12px;
+}
+
+.swiftforms-entry-fields th {
+	width: 22%;
+	vertical-align: top;
+}
+
+.swiftforms-entry-fields td {
+	overflow-wrap: anywhere;
+}
+
+.swiftforms-values {
+	margin: 0;
+	padding-inline-start: 1.2em;
+	list-style: disc;
+}
+
+.swiftforms-entry #poststuff .swiftforms-inline-action {
+	margin-inline-start: 6px;
+}
+
+.swiftforms-entry .swiftforms-user-agent strong {
+	display: block;
+	font-weight: 400;
+	overflow-wrap: anywhere;
+}
+
+.swiftforms-entry #delete-action a + a {
+	margin-inline-start: 8px;
+}
+
+@media print {
+	#adminmenumain,
+	#wpadminbar,
+	#wpfooter,
+	#screen-meta,
+	#screen-meta-links,
+	.notice,
+	.swiftforms-back,
+	#postbox-container-1,
+	.wp-header-end {
+		display: none !important;
+	}
+
+	#wpcontent,
+	#wpfooter {
+		margin-inline-start: 0 !important;
+	}
+
+	html.wp-toolbar {
+		padding-top: 0 !important;
+	}
+
+	.swiftforms-entry #post-body.columns-2 #post-body-content {
+		float: none;
+		margin: 0;
+		width: auto;
+	}
+
+	.swiftforms-entry #post-body.columns-2 {
+		margin-inline-end: 0;
+	}
+}

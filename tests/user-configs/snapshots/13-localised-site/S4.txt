@@ -1,0 +1,139 @@
+== S4 lettre#1 ==
+-- valid --
+redirect 303 Location: http://example.org/lettre/?sf_result={RESULT}
+left behind:
+entry:
+{
+    "id": "{E4}",
+    "form_id": "5f130002-0000-4000-8000-000000000002",
+    "schema_hash": "ad64d451f999f91f51737537d0e66025a1aa77261ef1efec37d3ee4c9bc7bc7d",
+    "source": "post:lettre",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "camille@example.fr"
+log mail/info 5f130002-0000-4000-8000-000000000002: Notification sent. {"entry":"{E4}","notification":0,"to":["commandes@boutique-soleil.example"]}
+-- mail 1 (wp_mail arguments) --
+to: commandes@boutique-soleil.example
+subject: Nouvelle demande : Lettre d’information
+header: From: Boutique Soleil <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="fr-FR" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Votre e-mail</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">camille@example.fr</td></tr></table></td></tr></table></td></tr></table></body></html>
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<div class="swiftforms-form swiftforms-form--labels-top swiftforms-form--submitted wp-block-swiftforms-form"><div class="swiftforms-confirmation" role="status"><p>Merci. Votre message a bien été envoyé.</p></div></div>
+
+-- invalid --
+redirect 303 Location: http://example.org/lettre/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f130002-0000-4000-8000-000000000002&quot;,&quot;source&quot;:&quot;post:lettre&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Veuillez corriger les points suivants :</p><ul><li><a href="#sf-5f130002-email-1">Votre e-mail: Veuillez saisir une adresse e-mail valide.</a></li></ul></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f130002-email-1">Votre e-mail<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="email" id="sf-5f130002-email-1" name="sf[email]" value="camille" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f130002-email-1-error"><p class="swiftforms-error" id="sf-5f130002-email-1-error">Veuillez saisir une adresse e-mail valide.</p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Envoyer</button></div>
+<input type="hidden" name="_sf_form" value="5f130002-0000-4000-8000-000000000002"><input type="hidden" name="_sf_source" value="post:lettre"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+
+-- expired token --
+redirect 303 Location: http://example.org/lettre/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f130002-0000-4000-8000-000000000002&quot;,&quot;source&quot;:&quot;post:lettre&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div><div class="swiftforms-notice swiftforms-notice--info" role="status">Veuillez envoyer à nouveau.</div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f130002-email-1">Votre e-mail<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="email" id="sf-5f130002-email-1" name="sf[email]" value="camille@example.fr" required aria-required="true" aria-describedby="sf-5f130002-email-1-error"><p class="swiftforms-error" id="sf-5f130002-email-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Envoyer</button></div>
+<input type="hidden" name="_sf_form" value="5f130002-0000-4000-8000-000000000002"><input type="hidden" name="_sf_source" value="post:lettre"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+
+
+== S4 livraison#1 ==
+-- valid --
+redirect 303 Location: http://example.org/livraison/?sf_result={RESULT}
+left behind:
+entry:
+{
+    "id": "{E5}",
+    "form_id": "5f130001-0000-4000-8000-000000000001",
+    "schema_hash": "23504079905a698ecf81e28d5bb37b0e1e31c63211f9c43fdc68ac7201e044ec",
+    "source": "post:livraison",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value consentement[0] = "1"
+  value creneau[0] = "matin"
+  value date_livraison[0] = "2026-12-05"
+  value email[0] = "camille@example.fr"
+  value message[0] = "Livraison avant Noël, merci."
+  value nom[0] = "Camille Durand"
+log mail/info 5f130001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E5}","notification":0,"to":["commandes@boutique-soleil.example"]}
+log mail/info 5f130001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E5}","notification":1,"to":["logistique@boutique-soleil.example"]}
+-- mail 1 (wp_mail arguments) --
+to: commandes@boutique-soleil.example
+subject: Nouvelle demande : Demande de livraison
+header: From: Boutique Soleil <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="fr-FR" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Nom et prénom</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Camille Durand</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Adresse e-mail</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">camille@example.fr</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Date de livraison souhaitée</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">2026-12-05</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Créneau</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">matin</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Consentement</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">1</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Précisions</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Livraison avant Noël, merci.</td></tr></table></td></tr></table></td></tr></table></body></html>
+-- mail 2 (wp_mail arguments) --
+to: logistique@boutique-soleil.example
+subject: Livraison demandée par Camille Durand le 19/11/2026 15:30
+header: From: Boutique Soleil <wordpress@example.org>
+header: Reply-To: camille@example.fr
+header: Content-Type: text/plain; charset=UTF-8
+attachments: (none)
+-- body --
+Date souhaitée : 2026-12-05
+Créneau : matin
+
+Livraison avant Noël, merci.
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<h2 class="wp-block-heading">Demande de livraison</h2>
+<div class="swiftforms-form swiftforms-form--labels-top swiftforms-form--submitted wp-block-swiftforms-form"><div class="swiftforms-confirmation" role="status">
+<p>Merci ! Nous confirmons la date par e-mail.</p>
+</div></div>
+
+-- invalid --
+redirect 303 Location: http://example.org/livraison/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<h2 class="wp-block-heading">Demande de livraison</h2>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f130001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;post:livraison&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Veuillez corriger les points suivants :</p><ul><li><a href="#sf-5f130001-date_livraison-1">Date de livraison souhaitée: Veuillez saisir une date valide au format AAAA-MM-JJ.</a></li></ul></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f130001-nom-1">Nom et prénom<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="text" id="sf-5f130001-nom-1" name="sf[nom]" value="Camille Durand" autocomplete="name" required aria-required="true" aria-describedby="sf-5f130001-nom-1-error"><p class="swiftforms-error" id="sf-5f130001-nom-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f130001-email-1">Adresse e-mail<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="email" id="sf-5f130001-email-1" name="sf[email]" value="camille@example.fr" autocomplete="email" required aria-required="true" aria-describedby="sf-5f130001-email-1-error"><p class="swiftforms-error" id="sf-5f130001-email-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--date swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-date"><label class="swiftforms-label" for="sf-5f130001-date_livraison-1">Date de livraison souhaitée<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="date" id="sf-5f130001-date_livraison-1" name="sf[date_livraison]" value="05/12/2026" min="2026-11-20" max="2027-03-31" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f130001-date_livraison-1-help sf-5f130001-date_livraison-1-error"><p class="swiftforms-help" id="sf-5f130001-date_livraison-1-help">Entre le 20 novembre 2026 et le 31 mars 2027.</p><p class="swiftforms-error" id="sf-5f130001-date_livraison-1-error">Veuillez saisir une date valide au format AAAA-MM-JJ.</p></div>
+<div class="swiftforms-field swiftforms-field--select swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-select"><label class="swiftforms-label" for="sf-5f130001-creneau-1">Créneau<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><select class="swiftforms-select" id="sf-5f130001-creneau-1" name="sf[creneau]" required aria-required="true" aria-describedby="sf-5f130001-creneau-1-error"><option value="">Choisissez un créneau</option><option value="matin" selected>Matin (8 h – 12 h)</option><option value="apres-midi">Après-midi (14 h – 18 h)</option></select><p class="swiftforms-error" id="sf-5f130001-creneau-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--consent swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-consent"><label class="swiftforms-choice swiftforms-label swiftforms-consent" for="sf-5f130001-consentement-1"><input type="checkbox" id="sf-5f130001-consentement-1" name="sf[consentement]" value="1" checked required aria-required="true" aria-describedby="sf-5f130001-consentement-1-error"><span>J’accepte que mes données servent à organiser la livraison.<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></span></label><p class="swiftforms-error" id="sf-5f130001-consentement-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f130001-message-1">Précisions</label><textarea class="swiftforms-textarea" id="sf-5f130001-message-1" name="sf[message]" rows="4" aria-describedby="sf-5f130001-message-1-error"></textarea><p class="swiftforms-error" id="sf-5f130001-message-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Demander la livraison</button></div>
+<input type="hidden" name="_sf_form" value="5f130001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="post:livraison"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+
+-- expired token --
+redirect 303 Location: http://example.org/livraison/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<h2 class="wp-block-heading">Demande de livraison</h2>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f130001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;post:livraison&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div><div class="swiftforms-notice swiftforms-notice--info" role="status">Veuillez envoyer à nouveau.</div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f130001-nom-1">Nom et prénom<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="text" id="sf-5f130001-nom-1" name="sf[nom]" value="Camille Durand" autocomplete="name" required aria-required="true" aria-describedby="sf-5f130001-nom-1-error"><p class="swiftforms-error" id="sf-5f130001-nom-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f130001-email-1">Adresse e-mail<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="email" id="sf-5f130001-email-1" name="sf[email]" value="camille@example.fr" autocomplete="email" required aria-required="true" aria-describedby="sf-5f130001-email-1-error"><p class="swiftforms-error" id="sf-5f130001-email-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--date swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-date"><label class="swiftforms-label" for="sf-5f130001-date_livraison-1">Date de livraison souhaitée<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><input class="swiftforms-input" type="date" id="sf-5f130001-date_livraison-1" name="sf[date_livraison]" value="2026-12-05" min="2026-11-20" max="2027-03-31" required aria-required="true" aria-describedby="sf-5f130001-date_livraison-1-help sf-5f130001-date_livraison-1-error"><p class="swiftforms-help" id="sf-5f130001-date_livraison-1-help">Entre le 20 novembre 2026 et le 31 mars 2027.</p><p class="swiftforms-error" id="sf-5f130001-date_livraison-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--select swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-select"><label class="swiftforms-label" for="sf-5f130001-creneau-1">Créneau<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></label><select class="swiftforms-select" id="sf-5f130001-creneau-1" name="sf[creneau]" required aria-required="true" aria-describedby="sf-5f130001-creneau-1-error"><option value="">Choisissez un créneau</option><option value="matin" selected>Matin (8 h – 12 h)</option><option value="apres-midi">Après-midi (14 h – 18 h)</option></select><p class="swiftforms-error" id="sf-5f130001-creneau-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--consent swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-consent"><label class="swiftforms-choice swiftforms-label swiftforms-consent" for="sf-5f130001-consentement-1"><input type="checkbox" id="sf-5f130001-consentement-1" name="sf[consentement]" value="1" checked required aria-required="true" aria-describedby="sf-5f130001-consentement-1-error"><span>J’accepte que mes données servent à organiser la livraison.<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (obligatoire)</span></span></label><p class="swiftforms-error" id="sf-5f130001-consentement-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f130001-message-1">Précisions</label><textarea class="swiftforms-textarea" id="sf-5f130001-message-1" name="sf[message]" rows="4" aria-describedby="sf-5f130001-message-1-error">Livraison avant Noël, merci.</textarea><p class="swiftforms-error" id="sf-5f130001-message-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Demander la livraison</button></div>
+<input type="hidden" name="_sf_form" value="5f130001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="post:livraison"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+
+

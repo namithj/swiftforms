@@ -1,0 +1,38 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_from_email = shop@oldschool.example
+swiftforms_email_from_name = Old School Shop
+swiftforms_email_html_template = 0
+swiftforms_email_notification_to = owner@oldschool.example
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- shop (page/publish, slug shop, title Shop)
+<!-- wp:paragraph -->
+<p>Write to the shop.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f070001-0000-4000-8000-000000000001","title":"Shop enquiry","notifications":[{"enabled":true,"to":"shop@oldschool.example","cc":"","bcc":"","subject":"Enquiry from {field:name}","replyTo":"{field:email}","body":"Name: {field:name}\nEmail: {field:email}\n\n{field:message}","format":"plain"}]} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Message sent. Thank you.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

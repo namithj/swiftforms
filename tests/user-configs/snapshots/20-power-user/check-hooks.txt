@@ -1,0 +1,33 @@
+== Documented v1 hooks used by the config's mu-plugin ==
+swiftforms_entry_saved            ran, 25 calls
+    arguments: integer, SwiftForms\Submission_Context
+swiftforms_mail_sent              ran, 34 calls
+    arguments: boolean, array, SwiftForms\Submission_Context
+swiftforms_submission_complete    ran, 27 calls
+    arguments: SwiftForms\Submission_Context, SwiftForms\Submission_Result
+swiftforms_validate_field         ran
+    arguments: NULL, array, array, SwiftForms\Submission_Context
+    arguments: NULL, string, array, SwiftForms\Submission_Context
+    arguments: string, string, array, SwiftForms\Submission_Context
+swiftforms_spam_check             ran
+    arguments: boolean, SwiftForms\Submission_Context
+swiftforms_before_send_mail       ran
+    arguments: array, SwiftForms\Submission_Context, array
+swiftforms_merge_tags             ran
+    arguments: array, SwiftForms\Submission_Context, string
+swiftforms_render_form            ran
+    arguments: string, string, integer, array
+swiftforms_capability_map         ran
+    arguments: array
+swiftforms_client_ip              ran
+    arguments: string
+swiftforms_throttle_limit         ran
+    arguments: integer
+
+== swiftforms_client_ip returns 198.51.100.9 ==
+status: 200
+stored address (hex): C6336409
+
+== swiftforms_throttle_limit returns 3 ==
+statuses of 5 requests: 403, 403, 403, 429, 429
+

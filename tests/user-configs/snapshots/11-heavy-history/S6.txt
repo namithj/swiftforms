@@ -1,0 +1,1891 @@
+== S6 GET /entries (default: new and read, newest first) ==
+x-wp-total: 4008
+x-wp-totalpages: 201
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E8}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · news, jobs"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader@example.net"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · news, jobs"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader@example.net"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": 5000,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 5000 · news, events, offers"
+    },
+    {
+        "id": 4999,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T08:14:53Z",
+        "date_display": "November 19, 2026 8:14 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4999 · partners, news"
+    },
+    {
+        "id": 4998,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T06:29:46Z",
+        "date_display": "November 19, 2026 6:29 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4998 · jobs"
+    },
+    {
+        "id": 4996,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T02:59:32Z",
+        "date_display": "November 19, 2026 2:59 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4996 · events, offers"
+    },
+    {
+        "id": 4994,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T23:29:18Z",
+        "date_display": "November 18, 2026 11:29 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4994 · partners, news, events"
+    },
+    {
+        "id": 4993,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T21:44:11Z",
+        "date_display": "November 18, 2026 9:44 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4993 · jobs, partners"
+    },
+    {
+        "id": 4992,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T19:59:04Z",
+        "date_display": "November 18, 2026 7:59 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4992 · offers"
+    },
+    {
+        "id": 4991,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T18:13:57Z",
+        "date_display": "November 18, 2026 6:13 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4991 · events, offers, jobs"
+    },
+    {
+        "id": 4990,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T16:28:50Z",
+        "date_display": "November 18, 2026 4:28 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4990 · news, events"
+    },
+    {
+        "id": 4989,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T14:43:43Z",
+        "date_display": "November 18, 2026 2:43 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4989 · partners"
+    },
+    {
+        "id": 4988,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T12:58:36Z",
+        "date_display": "November 18, 2026 12:58 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4988 · jobs, partners, news"
+    },
+    {
+        "id": 4986,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T09:28:22Z",
+        "date_display": "November 18, 2026 9:28 am",
+        "status": "new",
+        "starred": true,
+        "summary": "Respondent 4986 · events"
+    }
+]
+
+== S6 GET /forms ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "title": "Contact",
+        "counts": {
+            "new": 1204,
+            "read": 1200,
+            "spam": 311,
+            "trash": 300
+        }
+    },
+    {
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "title": "Newsletter",
+        "counts": {
+            "new": 482,
+            "read": 480,
+            "spam": 120,
+            "trash": 120
+        }
+    },
+    {
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "title": "Reader survey",
+        "counts": {
+            "new": 322,
+            "read": 320,
+            "spam": 80,
+            "trash": 80
+        }
+    }
+]
+
+== S6 GET /entries?form=contact#1&status=new ==
+x-wp-total: 1204
+x-wp-totalpages: 61
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E8}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": 3000,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-26T10:06:40Z",
+        "date_display": "June 26, 2026 11:06 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 3000 · person3000@example.com"
+    },
+    {
+        "id": 2999,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-26T08:21:33Z",
+        "date_display": "June 26, 2026 9:21 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2999 · person2999@example.com"
+    },
+    {
+        "id": 2996,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-26T03:06:12Z",
+        "date_display": "June 26, 2026 4:06 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2996 · person2996@example.com"
+    },
+    {
+        "id": 2992,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-25T20:05:44Z",
+        "date_display": "June 25, 2026 9:05 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2992 · person2992@example.com"
+    },
+    {
+        "id": 2990,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-25T16:35:30Z",
+        "date_display": "June 25, 2026 5:35 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2990 · person2990@example.com"
+    },
+    {
+        "id": 2989,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-25T14:50:23Z",
+        "date_display": "June 25, 2026 3:50 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2989 · person2989@example.com"
+    },
+    {
+        "id": 2986,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-25T09:35:02Z",
+        "date_display": "June 25, 2026 10:35 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2986 · person2986@example.com"
+    },
+    {
+        "id": 2982,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-25T02:34:34Z",
+        "date_display": "June 25, 2026 3:34 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2982 · person2982@example.com"
+    },
+    {
+        "id": 2980,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-24T23:04:20Z",
+        "date_display": "June 25, 2026 12:04 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2980 · person2980@example.com"
+    },
+    {
+        "id": 2979,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-24T21:19:13Z",
+        "date_display": "June 24, 2026 10:19 pm",
+        "status": "new",
+        "starred": true,
+        "summary": "Person 2979 · person2979@example.com"
+    },
+    {
+        "id": 2976,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-24T16:03:52Z",
+        "date_display": "June 24, 2026 5:03 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2976 · person2976@example.com"
+    },
+    {
+        "id": 2972,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-24T09:03:24Z",
+        "date_display": "June 24, 2026 10:03 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2972 · person2972@example.com"
+    },
+    {
+        "id": 2970,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-24T05:33:10Z",
+        "date_display": "June 24, 2026 6:33 am",
+        "status": "new",
+        "starred": true,
+        "summary": "Person 2970 · person2970@example.com"
+    },
+    {
+        "id": 2969,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-24T03:48:03Z",
+        "date_display": "June 24, 2026 4:48 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2969 · person2969@example.com"
+    },
+    {
+        "id": 2966,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-23T22:32:42Z",
+        "date_display": "June 23, 2026 11:32 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2966 · person2966@example.com"
+    },
+    {
+        "id": 2962,
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-06-23T15:32:14Z",
+        "date_display": "June 23, 2026 4:32 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 2962 · person2962@example.com"
+    }
+]
+
+== S6 GET /entries?form=newsletter#1&status=new ==
+x-wp-total: 482
+x-wp-totalpages: 25
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E6}",
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader@example.net"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader@example.net"
+    },
+    {
+        "id": 4200,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-22T00:26:40Z",
+        "date_display": "September 22, 2026 1:26 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4200@example.net"
+    },
+    {
+        "id": 4199,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-21T22:41:33Z",
+        "date_display": "September 21, 2026 11:41 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4199@example.net"
+    },
+    {
+        "id": 4196,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-21T17:26:12Z",
+        "date_display": "September 21, 2026 6:26 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4196@example.net"
+    },
+    {
+        "id": 4192,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-21T10:25:44Z",
+        "date_display": "September 21, 2026 11:25 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4192@example.net"
+    },
+    {
+        "id": 4190,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-21T06:55:30Z",
+        "date_display": "September 21, 2026 7:55 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4190@example.net"
+    },
+    {
+        "id": 4189,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-21T05:10:23Z",
+        "date_display": "September 21, 2026 6:10 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4189@example.net"
+    },
+    {
+        "id": 4186,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-20T23:55:02Z",
+        "date_display": "September 21, 2026 12:55 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4186@example.net"
+    },
+    {
+        "id": 4182,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-20T16:54:34Z",
+        "date_display": "September 20, 2026 5:54 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4182@example.net"
+    },
+    {
+        "id": 4180,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-20T13:24:20Z",
+        "date_display": "September 20, 2026 2:24 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4180@example.net"
+    },
+    {
+        "id": 4179,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-20T11:39:13Z",
+        "date_display": "September 20, 2026 12:39 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4179@example.net"
+    },
+    {
+        "id": 4176,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-20T06:23:52Z",
+        "date_display": "September 20, 2026 7:23 am",
+        "status": "new",
+        "starred": true,
+        "summary": "reader4176@example.net"
+    },
+    {
+        "id": 4172,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-19T23:23:24Z",
+        "date_display": "September 20, 2026 12:23 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4172@example.net"
+    },
+    {
+        "id": 4170,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-19T19:53:10Z",
+        "date_display": "September 19, 2026 8:53 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4170@example.net"
+    },
+    {
+        "id": 4169,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-19T18:08:03Z",
+        "date_display": "September 19, 2026 7:08 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4169@example.net"
+    },
+    {
+        "id": 4166,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-19T12:52:42Z",
+        "date_display": "September 19, 2026 1:52 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4166@example.net"
+    },
+    {
+        "id": 4162,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-19T05:52:14Z",
+        "date_display": "September 19, 2026 6:52 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4162@example.net"
+    },
+    {
+        "id": 4160,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-19T02:22:00Z",
+        "date_display": "September 19, 2026 3:22 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4160@example.net"
+    },
+    {
+        "id": 4159,
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-09-19T00:36:53Z",
+        "date_display": "September 19, 2026 1:36 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader4159@example.net"
+    }
+]
+
+== S6 GET /entries?form=survey#1&status=new ==
+x-wp-total: 322
+x-wp-totalpages: 17
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E7}",
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · news, jobs"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · news, jobs"
+    },
+    {
+        "id": 5000,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 5000 · news, events, offers"
+    },
+    {
+        "id": 4999,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T08:14:53Z",
+        "date_display": "November 19, 2026 8:14 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4999 · partners, news"
+    },
+    {
+        "id": 4996,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T02:59:32Z",
+        "date_display": "November 19, 2026 2:59 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4996 · events, offers"
+    },
+    {
+        "id": 4992,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T19:59:04Z",
+        "date_display": "November 18, 2026 7:59 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4992 · offers"
+    },
+    {
+        "id": 4990,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T16:28:50Z",
+        "date_display": "November 18, 2026 4:28 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4990 · news, events"
+    },
+    {
+        "id": 4989,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T14:43:43Z",
+        "date_display": "November 18, 2026 2:43 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4989 · partners"
+    },
+    {
+        "id": 4986,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T09:28:22Z",
+        "date_display": "November 18, 2026 9:28 am",
+        "status": "new",
+        "starred": true,
+        "summary": "Respondent 4986 · events"
+    },
+    {
+        "id": 4982,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T02:27:54Z",
+        "date_display": "November 18, 2026 2:27 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4982 · offers, jobs, partners"
+    },
+    {
+        "id": 4980,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T22:57:40Z",
+        "date_display": "November 17, 2026 10:57 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4980 · news"
+    },
+    {
+        "id": 4979,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T21:12:33Z",
+        "date_display": "November 17, 2026 9:12 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4979 · partners, news, events"
+    },
+    {
+        "id": 4976,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T15:57:12Z",
+        "date_display": "November 17, 2026 3:57 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4976 · events, offers, jobs"
+    },
+    {
+        "id": 4972,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T08:56:44Z",
+        "date_display": "November 17, 2026 8:56 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4972 · offers, jobs"
+    },
+    {
+        "id": 4970,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T05:26:30Z",
+        "date_display": "November 17, 2026 5:26 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4970 · news, events, offers"
+    },
+    {
+        "id": 4969,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T03:41:23Z",
+        "date_display": "November 17, 2026 3:41 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4969 · partners, news"
+    },
+    {
+        "id": 4966,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T22:26:02Z",
+        "date_display": "November 16, 2026 10:26 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4966 · events, offers"
+    },
+    {
+        "id": 4962,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T15:25:34Z",
+        "date_display": "November 16, 2026 3:25 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4962 · offers"
+    },
+    {
+        "id": 4960,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T11:55:20Z",
+        "date_display": "November 16, 2026 11:55 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4960 · news, events"
+    },
+    {
+        "id": 4959,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T10:10:13Z",
+        "date_display": "November 16, 2026 10:10 am",
+        "status": "new",
+        "starred": true,
+        "summary": "Respondent 4959 · partners"
+    }
+]
+
+== S6 GET /entries?status=new ==
+x-wp-total: 2008
+x-wp-totalpages: 101
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E8}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · news, jobs"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader@example.net"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · news, jobs"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f110002-0000-4000-8000-000000000002",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "reader@example.net"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": 5000,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 5000 · news, events, offers"
+    },
+    {
+        "id": 4999,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T08:14:53Z",
+        "date_display": "November 19, 2026 8:14 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4999 · partners, news"
+    },
+    {
+        "id": 4996,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T02:59:32Z",
+        "date_display": "November 19, 2026 2:59 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4996 · events, offers"
+    },
+    {
+        "id": 4992,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T19:59:04Z",
+        "date_display": "November 18, 2026 7:59 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4992 · offers"
+    },
+    {
+        "id": 4990,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T16:28:50Z",
+        "date_display": "November 18, 2026 4:28 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4990 · news, events"
+    },
+    {
+        "id": 4989,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T14:43:43Z",
+        "date_display": "November 18, 2026 2:43 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4989 · partners"
+    },
+    {
+        "id": 4986,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T09:28:22Z",
+        "date_display": "November 18, 2026 9:28 am",
+        "status": "new",
+        "starred": true,
+        "summary": "Respondent 4986 · events"
+    },
+    {
+        "id": 4982,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T02:27:54Z",
+        "date_display": "November 18, 2026 2:27 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4982 · offers, jobs, partners"
+    },
+    {
+        "id": 4980,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T22:57:40Z",
+        "date_display": "November 17, 2026 10:57 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4980 · news"
+    },
+    {
+        "id": 4979,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T21:12:33Z",
+        "date_display": "November 17, 2026 9:12 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4979 · partners, news, events"
+    },
+    {
+        "id": 4976,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T15:57:12Z",
+        "date_display": "November 17, 2026 3:57 pm",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4976 · events, offers, jobs"
+    },
+    {
+        "id": 4972,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T08:56:44Z",
+        "date_display": "November 17, 2026 8:56 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Respondent 4972 · offers, jobs"
+    }
+]
+
+== S6 GET /entries?status=read ==
+x-wp-total: 2000
+x-wp-totalpages: 100
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": 4998,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T06:29:46Z",
+        "date_display": "November 19, 2026 6:29 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4998 · jobs"
+    },
+    {
+        "id": 4994,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T23:29:18Z",
+        "date_display": "November 18, 2026 11:29 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4994 · partners, news, events"
+    },
+    {
+        "id": 4993,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T21:44:11Z",
+        "date_display": "November 18, 2026 9:44 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4993 · jobs, partners"
+    },
+    {
+        "id": 4991,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T18:13:57Z",
+        "date_display": "November 18, 2026 6:13 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4991 · events, offers, jobs"
+    },
+    {
+        "id": 4988,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T12:58:36Z",
+        "date_display": "November 18, 2026 12:58 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4988 · jobs, partners, news"
+    },
+    {
+        "id": 4984,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T05:58:08Z",
+        "date_display": "November 18, 2026 5:58 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4984 · partners, news"
+    },
+    {
+        "id": 4983,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T04:13:01Z",
+        "date_display": "November 18, 2026 4:13 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4983 · jobs"
+    },
+    {
+        "id": 4981,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T00:42:47Z",
+        "date_display": "November 18, 2026 12:42 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4981 · events, offers"
+    },
+    {
+        "id": 4978,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T19:27:26Z",
+        "date_display": "November 17, 2026 7:27 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4978 · jobs, partners"
+    },
+    {
+        "id": 4974,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T12:26:58Z",
+        "date_display": "November 17, 2026 12:26 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4974 · partners"
+    },
+    {
+        "id": 4973,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T10:41:51Z",
+        "date_display": "November 17, 2026 10:41 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4973 · jobs, partners, news"
+    },
+    {
+        "id": 4971,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T07:11:37Z",
+        "date_display": "November 17, 2026 7:11 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4971 · events"
+    },
+    {
+        "id": 4968,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T01:56:16Z",
+        "date_display": "November 17, 2026 1:56 am",
+        "status": "read",
+        "starred": true,
+        "summary": "Respondent 4968 · jobs"
+    },
+    {
+        "id": 4964,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T18:55:48Z",
+        "date_display": "November 16, 2026 6:55 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4964 · partners, news, events"
+    },
+    {
+        "id": 4963,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T17:10:41Z",
+        "date_display": "November 16, 2026 5:10 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4963 · jobs, partners"
+    },
+    {
+        "id": 4961,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T13:40:27Z",
+        "date_display": "November 16, 2026 1:40 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4961 · events, offers, jobs"
+    },
+    {
+        "id": 4958,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T08:25:06Z",
+        "date_display": "November 16, 2026 8:25 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4958 · jobs, partners, news"
+    },
+    {
+        "id": 4954,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T01:24:38Z",
+        "date_display": "November 16, 2026 1:24 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4954 · partners, news"
+    },
+    {
+        "id": 4953,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-15T23:39:31Z",
+        "date_display": "November 15, 2026 11:39 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4953 · jobs"
+    },
+    {
+        "id": 4951,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-15T20:09:17Z",
+        "date_display": "November 15, 2026 8:09 pm",
+        "status": "read",
+        "starred": false,
+        "summary": "Respondent 4951 · events, offers"
+    }
+]
+
+== S6 GET /entries?status=spam ==
+x-wp-total: 511
+x-wp-totalpages: 26
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E19}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E18}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E17}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E16}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E15}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E14}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E13}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E12}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E11}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E10}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E9}",
+        "form_id": "5f110001-0000-4000-8000-000000000001",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": 4995,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T01:14:25Z",
+        "date_display": "November 19, 2026 1:14 am",
+        "status": "spam",
+        "starred": true,
+        "summary": "Respondent 4995 · news"
+    },
+    {
+        "id": 4985,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T07:43:15Z",
+        "date_display": "November 18, 2026 7:43 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Respondent 4985 · news, events, offers"
+    },
+    {
+        "id": 4975,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T14:12:05Z",
+        "date_display": "November 17, 2026 2:12 pm",
+        "status": "spam",
+        "starred": false,
+        "summary": "Respondent 4975 · news, events"
+    },
+    {
+        "id": 4965,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T20:40:55Z",
+        "date_display": "November 16, 2026 8:40 pm",
+        "status": "spam",
+        "starred": false,
+        "summary": "Respondent 4965 · news"
+    },
+    {
+        "id": 4955,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T03:09:45Z",
+        "date_display": "November 16, 2026 3:09 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Respondent 4955 · news, events, offers"
+    },
+    {
+        "id": 4945,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-15T09:38:35Z",
+        "date_display": "November 15, 2026 9:38 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Respondent 4945 · news, events"
+    },
+    {
+        "id": 4935,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-14T16:07:25Z",
+        "date_display": "November 14, 2026 4:07 pm",
+        "status": "spam",
+        "starred": false,
+        "summary": "Respondent 4935 · news"
+    },
+    {
+        "id": 4925,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-13T22:36:15Z",
+        "date_display": "November 13, 2026 10:36 pm",
+        "status": "spam",
+        "starred": false,
+        "summary": "Respondent 4925 · news, events, offers"
+    },
+    {
+        "id": 4915,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-13T05:05:05Z",
+        "date_display": "November 13, 2026 5:05 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Respondent 4915 · news, events"
+    }
+]
+
+== S6 GET /entries?status=trash ==
+x-wp-total: 500
+x-wp-totalpages: 25
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": 4997,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-19T04:44:39Z",
+        "date_display": "November 19, 2026 4:44 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4997 · offers, jobs, partners"
+    },
+    {
+        "id": 4987,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-18T11:13:29Z",
+        "date_display": "November 18, 2026 11:13 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4987 · offers, jobs"
+    },
+    {
+        "id": 4977,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T17:42:19Z",
+        "date_display": "November 17, 2026 5:42 pm",
+        "status": "trash",
+        "starred": true,
+        "summary": "Respondent 4977 · offers"
+    },
+    {
+        "id": 4967,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-17T00:11:09Z",
+        "date_display": "November 17, 2026 12:11 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4967 · offers, jobs, partners"
+    },
+    {
+        "id": 4957,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-16T06:39:59Z",
+        "date_display": "November 16, 2026 6:39 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4957 · offers, jobs"
+    },
+    {
+        "id": 4947,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-15T13:08:49Z",
+        "date_display": "November 15, 2026 1:08 pm",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4947 · offers"
+    },
+    {
+        "id": 4937,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-14T19:37:39Z",
+        "date_display": "November 14, 2026 7:37 pm",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4937 · offers, jobs, partners"
+    },
+    {
+        "id": 4927,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-14T02:06:29Z",
+        "date_display": "November 14, 2026 2:06 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4927 · offers, jobs"
+    },
+    {
+        "id": 4917,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-13T08:35:19Z",
+        "date_display": "November 13, 2026 8:35 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4917 · offers"
+    },
+    {
+        "id": 4907,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-12T15:04:09Z",
+        "date_display": "November 12, 2026 3:04 pm",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4907 · offers, jobs, partners"
+    },
+    {
+        "id": 4897,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-11T21:32:59Z",
+        "date_display": "November 11, 2026 9:32 pm",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4897 · offers, jobs"
+    },
+    {
+        "id": 4887,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-11T04:01:49Z",
+        "date_display": "November 11, 2026 4:01 am",
+        "status": "trash",
+        "starred": true,
+        "summary": "Respondent 4887 · offers"
+    },
+    {
+        "id": 4877,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-10T10:30:39Z",
+        "date_display": "November 10, 2026 10:30 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4877 · offers, jobs, partners"
+    },
+    {
+        "id": 4867,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-09T16:59:29Z",
+        "date_display": "November 9, 2026 4:59 pm",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4867 · offers, jobs"
+    },
+    {
+        "id": 4857,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-08T23:28:19Z",
+        "date_display": "November 8, 2026 11:28 pm",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4857 · offers"
+    },
+    {
+        "id": 4847,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-08T05:57:09Z",
+        "date_display": "November 8, 2026 5:57 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4847 · offers, jobs, partners"
+    },
+    {
+        "id": 4837,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-07T12:25:59Z",
+        "date_display": "November 7, 2026 12:25 pm",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4837 · offers, jobs"
+    },
+    {
+        "id": 4827,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-06T18:54:49Z",
+        "date_display": "November 6, 2026 6:54 pm",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4827 · offers"
+    },
+    {
+        "id": 4817,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-06T01:23:39Z",
+        "date_display": "November 6, 2026 1:23 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4817 · offers, jobs, partners"
+    },
+    {
+        "id": 4807,
+        "form_id": "5f110003-0000-4000-8000-000000000003",
+        "form_title": "Reader survey",
+        "date_gmt": "2026-11-05T07:52:29Z",
+        "date_display": "November 5, 2026 7:52 am",
+        "status": "trash",
+        "starred": false,
+        "summary": "Respondent 4807 · offers, jobs"
+    }
+]
+
+== S6 GET /entries/{E8} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E8}",
+    "form_id": "5f110001-0000-4000-8000-000000000001",
+    "form_title": "Contact",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "new",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Ada Lovelace",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "ada@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "topic",
+            "label": "Topic",
+            "type": "select",
+            "values": [
+                {
+                    "value": "support",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "details",
+            "label": "Details",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "A new enquiry on top of five thousand old ones.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E8} {"status":"read"} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E8}",
+    "form_id": "5f110001-0000-4000-8000-000000000001",
+    "form_title": "Contact",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Ada Lovelace",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "ada@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "topic",
+            "label": "Topic",
+            "type": "select",
+            "values": [
+                {
+                    "value": "support",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "details",
+            "label": "Details",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "A new enquiry on top of five thousand old ones.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E8} {"starred":true} ==
+status: 200, entry status: read, starred: true
+
+== S6 PATCH /entries/{E8} {"status":"spam"} ==
+status: 200, entry status: spam, starred: true
+
+== S6 PATCH /entries/{E8} {"status":"trash"} ==
+status: 200, entry status: trash, starred: true
+
+== S6 PATCH /entries/{E8} {"status":"new"} ==
+status: 200, entry status: new, starred: true
+
+== S6 PATCH /entries/{E8} {"starred":false} ==
+status: 200, entry status: new, starred: false
+
+== S6 PATCH /entries/{E8} with nothing to change ==
+status: 400
+{
+    "code": "rest_missing_callback_param",
+    "message": "Send a status or starred.",
+    "data": {
+        "status": 400
+    }
+}
+
+== S6 GET /entries/999999999 (no such entry) ==
+status: 404
+{
+    "code": "swiftforms_entry_not_found",
+    "message": "No such entry.",
+    "data": {
+        "status": 404
+    }
+}
+
+== S6 GET /entries as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+
+== S6 PATCH /entries/{id} as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+

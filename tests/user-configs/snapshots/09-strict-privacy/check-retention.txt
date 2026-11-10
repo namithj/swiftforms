@@ -1,0 +1,8 @@
+retention_days: 30
+frozen now: 2026-11-19 10:00:00
+cutoff (entries strictly older are deleted): 2026-10-20 10:00:00
+daily job scheduled: yes
+entries before: 54 (2026-10-10 10:00:00 to 2026-11-19 10:00:00)
+entries after: 44 (2026-10-20 10:00:00 to 2026-11-19 10:00:00)
+deleted: 10 entries, ids 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+oldest entry kept: 2026-10-20 10:00:00

@@ -1,35 +1,28 @@
-# Auto detect text files and perform LF normalization
 * text=auto
 
-# Common binary assets
-*.jpg binary
-*.jpeg binary
-*.png binary
-*.gif binary
-*.webp binary
-*.zip binary
-*.pdf binary
-
-# Keep distribution archives clean
+.gitattributes export-ignore
+.gitignore export-ignore
+.distignore export-ignore
+.editorconfig export-ignore
+composer.json export-ignore
+composer.lock export-ignore
+package.json export-ignore
+package-lock.json export-ignore
+phpunit.xml.dist export-ignore
+phpcs.xml.dist export-ignore
+phpstan.neon.dist export-ignore
+.wp-env.json export-ignore
+playwright.config.js export-ignore
+webpack.config.js export-ignore
+SECURITY.md export-ignore
+/.ai export-ignore
 /.github export-ignore
 /.vscode export-ignore
-/.gitignore export-ignore
-/.gitattributes export-ignore
-/.phpunit.result.cache export-ignore
-/.env.local export-ignore
-/.env.example export-ignore
 /bin export-ignore
-/docs export-ignore
+/src export-ignore
 /tests export-ignore
-/composer.json export-ignore
-/composer.lock export-ignore
-/package.json export-ignore
-/package-lock.json export-ignore
-/phpcs.xml.dist export-ignore
-/phpunit.xml.dist export-ignore
-/webpack.config.js export-ignore
-/wp-tests-config.php export-ignore
-/.wp-env.json export-ignore
-/includes/autoload.php export-ignore
-/includes/class-swiftforms-*.php export-ignore
-/includes/templates export-ignore
+/.cache export-ignore
+/node_modules export-ignore
+
+# Golden-master snapshots hold exact bytes. Never let Git normalise their line endings.
+/tests/user-configs/snapshots/** -text linguist-generated

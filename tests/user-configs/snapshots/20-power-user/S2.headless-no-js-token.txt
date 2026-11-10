@@ -1,0 +1,748 @@
+== S2 contact#1 / c20-code (guest) ==
+request:
+{
+    "_sf_form": "5f200001-0000-4000-8000-000000000001",
+    "_sf_source": "post:contact",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "code": "WELCOME10",
+        "message": "A promo code the hook accepts."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E1}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E1}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+log mail/info 5f200001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E1}","notification":1,"to":["dev@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Hero contact
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+-- mail 2 (wp_mail arguments) --
+to: dev@power-site.example
+subject: [power] Hello from the hook: Ada Lovelace
+header: From: Power Site <forms@power-site.example>
+header: Reply-To: ada@example.com
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 contact#2 / c20-basic (guest) ==
+request:
+{
+    "_sf_form": "5f200002-0000-4000-8000-000000000002",
+    "_sf_source": "post:contact",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Hello from the power site."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E2}",
+    "form_id": "5f200002-0000-4000-8000-000000000002",
+    "schema_hash": "d63bb1d684e4a9bcba8cd123eca273da0feeeebd3b2f091a99c06f151de04e8b",
+    "source": "post:contact",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Hello from the power site."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200002-0000-4000-8000-000000000002: Notification sent. {"entry":"{E2}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Newsletter (no JavaScript)
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Hello from the power site.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 events#1 / c20-visit (guest) ==
+request:
+{
+    "_sf_form": "5f200009-0000-4000-8000-000000000009",
+    "_sf_source": "post:events",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "visit": "2026-12-12",
+        "message": "A visit in December."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E3}",
+    "form_id": "5f200009-0000-4000-8000-000000000009",
+    "schema_hash": "f21f273f308600a318a58f5bfe0e5fdd6fe7bc45739cc9ffbed9eca42cf09981",
+    "source": "post:events",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "A visit in December."
+  value name[0] = "Ada Lovelace"
+  value visit[0] = "2026-12-12"
+log mail/info 5f200009-0000-4000-8000-000000000009: Notification sent. {"entry":"{E3}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Visit booking
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Visit on</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">2026-12-12</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A visit in December.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 events#2 / c20-plan (guest) ==
+request:
+{
+    "_sf_form": "5f200010-0000-4000-8000-000000000010",
+    "_sf_source": "post:events",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "plan": "pro",
+        "message": "The pro plan, please."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E4}",
+    "form_id": "5f200010-0000-4000-8000-000000000010",
+    "schema_hash": "a5f2ac92181a3df881daa489544fd606807c0fe4999454853b1e696372d0f643",
+    "source": "post:events",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "The pro plan, please."
+  value name[0] = "Ada Lovelace"
+  value plan[0] = "pro"
+log mail/info 5f200010-0000-4000-8000-000000000010: Notification sent. {"entry":"{E4}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Plan chooser
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Plan</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">pro</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">The pro plan, please.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 faq#1 / c20-basic (guest) ==
+request:
+{
+    "_sf_form": "5f200003-0000-4000-8000-000000000003",
+    "_sf_source": "post:faq",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Hello from the power site."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E5}",
+    "form_id": "5f200003-0000-4000-8000-000000000003",
+    "schema_hash": "d63bb1d684e4a9bcba8cd123eca273da0feeeebd3b2f091a99c06f151de04e8b",
+    "source": "post:faq",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Hello from the power site."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200003-0000-4000-8000-000000000003: Notification sent. {"entry":"{E5}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Quiet form
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Hello from the power site.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 faq#2 / c20-basic (guest) ==
+request:
+{
+    "_sf_form": "5f200004-0000-4000-8000-000000000004",
+    "_sf_source": "post:faq",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Hello from the power site."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+log mail/info 5f200004-0000-4000-8000-000000000004: Notification sent. {"entry":0,"notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Anonymous poll (no JavaScript)
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Hello from the power site.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 pricing#1 / c20-basic (guest) ==
+request:
+{
+    "_sf_form": "5f200007-0000-4000-8000-000000000007",
+    "_sf_source": "post:pricing",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Hello from the power site."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E6}",
+    "form_id": "5f200007-0000-4000-8000-000000000007",
+    "schema_hash": "d63bb1d684e4a9bcba8cd123eca273da0feeeebd3b2f091a99c06f151de04e8b",
+    "source": "post:pricing",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Hello from the power site."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200007-0000-4000-8000-000000000007: Notification sent. {"entry":"{E6}","notification":0,"to":["sales@power-site.example"]}
+log mail/info 5f200007-0000-4000-8000-000000000007: Notification sent. {"entry":"{E6}","notification":1,"to":["archive@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: sales@power-site.example
+subject: [power] Pricing question from Ada Lovelace
+header: From: Power Site <forms@power-site.example>
+header: Reply-To: ada@example.com
+header: Content-Type: text/plain; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+Hello from the power site.
+
+SwiftForms Test Suite
+-- mail 2 (wp_mail arguments) --
+to: archive@power-site.example
+subject: [power] Archive: Two notifications
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Hello from the power site.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 pricing#2 / c20-basic (guest) ==
+request:
+{
+    "_sf_form": "5f200008-0000-4000-8000-000000000008",
+    "_sf_source": "post:pricing",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Hello from the power site."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E7}",
+    "form_id": "5f200008-0000-4000-8000-000000000008",
+    "schema_hash": "d63bb1d684e4a9bcba8cd123eca273da0feeeebd3b2f091a99c06f151de04e8b",
+    "source": "post:pricing",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Hello from the power site."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200008-0000-4000-8000-000000000008: Notification sent. {"entry":"{E7}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Stored although the site does not store
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Hello from the power site.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 services#1 / c20-basic (guest) ==
+request:
+{
+    "_sf_form": "5f200005-0000-4000-8000-000000000005",
+    "_sf_source": "post:services",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Hello from the power site."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "redirect",
+        "url": "http://example.org/thanks/"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E8}",
+    "form_id": "5f200005-0000-4000-8000-000000000005",
+    "schema_hash": "d63bb1d684e4a9bcba8cd123eca273da0feeeebd3b2f091a99c06f151de04e8b",
+    "source": "post:services",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Hello from the power site."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200005-0000-4000-8000-000000000005: Notification sent. {"entry":"{E8}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Redirect form
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Hello from the power site.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 services#2 / c20-basic (guest) ==
+request:
+{
+    "_sf_form": "5f200006-0000-4000-8000-000000000006",
+    "_sf_source": "post:services",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Hello from the power site."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E9}",
+    "form_id": "5f200006-0000-4000-8000-000000000006",
+    "schema_hash": "d63bb1d684e4a9bcba8cd123eca273da0feeeebd3b2f091a99c06f151de04e8b",
+    "source": "post:services",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Hello from the power site."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200006-0000-4000-8000-000000000006: Notification sent. {"entry":"{E9}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Spam protection off
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Hello from the power site.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 updates#1 / c20-basic (guest) ==
+request:
+{
+    "_sf_form": "5f200011-0000-4000-8000-000000000011",
+    "_sf_source": "post:updates",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "message": "Hello from the power site."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E10}",
+    "form_id": "5f200011-0000-4000-8000-000000000011",
+    "schema_hash": "5a386b19d159c0dcfe77cb713f34b8bf162450bdfdaa613e049ebc4cd4a28d1e",
+    "source": "post:updates",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Hello from the power site."
+  value name[0] = "Ada Lovelace"
+  value page_title[0] = "Updates"
+log mail/info 5f200011-0000-4000-8000-000000000011: Notification sent. {"entry":"{E10}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Where did you read this?
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Page</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Updates</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Hello from the power site.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 updates#2 / c20-topics (guest) ==
+request:
+{
+    "_sf_form": "5f200012-0000-4000-8000-000000000012",
+    "_sf_source": "post:updates",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "name": "Ada Lovelace",
+        "email": "ada@example.com",
+        "topics": [
+            "wp",
+            "php"
+        ],
+        "message": "Two topics."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E11}",
+    "form_id": "5f200012-0000-4000-8000-000000000012",
+    "schema_hash": "79bcc7e7af19a24bb515cce1eb4039571710707475e83473b8f49c4e98e465dd",
+    "source": "post:updates",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Two topics."
+  value name[0] = "Ada Lovelace"
+  value topics[0] = "wp"
+  value topics[1] = "php"
+log mail/info 5f200012-0000-4000-8000-000000000012: Notification sent. {"entry":"{E11}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Topics
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Topics</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">wp, php</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Two topics.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+
+== S2 contact#1 / c20-code (administrator) ==
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Received.</p>"
+    },
+    "entryId": "{E12}"
+}
+left behind:
+entry:
+{
+    "id": "{E12}",
+    "form_id": "5f200001-0000-4000-8000-000000000001",
+    "schema_hash": "2fd585598687bc2b84982c212c36e11ef89c1fa24a2d10ade31c64b29e9c0bb2",
+    "source": "post:contact",
+    "status": "new",
+    "starred": "0",
+    "user_id": "{USER:admin}",
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value code[0] = "WELCOME10"
+  value email[0] = "ada@example.com"
+  value message[0] = "A promo code the hook accepts."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f200001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E12}","notification":0,"to":["dev@power-site.example","ops@power-site.example"]}
+log mail/info 5f200001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E12}","notification":1,"to":["dev@power-site.example"]}
+-- mail 1 (wp_mail arguments) --
+to: dev@power-site.example, ops@power-site.example
+subject: [power] New submission: Hero contact
+header: From: Power Site <forms@power-site.example>
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+-- mail 2 (wp_mail arguments) --
+to: dev@power-site.example
+subject: [power] Hello from the hook: Ada Lovelace
+header: From: Power Site <forms@power-site.example>
+header: Reply-To: ada@example.com
+header: Content-Type: text/html; charset=UTF-8
+header: X-Power-User: 1
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+

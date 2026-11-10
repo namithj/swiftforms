@@ -1,0 +1,127 @@
+name: Tests
+
+# Test gate for everything that merges into main.
+#
+# The user-config regression suite is the safety net for this plugin: it applies
+# 20 realistic stored configurations (options, posts, tables) to a fresh site,
+# one after another, and asserts that what an existing user sees and what is
+# stored in their database never changes by accident. It runs on every change,
+# on every supported PHP version, before the ordinary PHPUnit suite.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  phpunit:
+    name: PHPUnit — PHP ${{ matrix.php }} / WP ${{ matrix.wp }}
+    runs-on: ubuntu-latest
+    # Trunk is reported but never fails the workflow.
+    continue-on-error: ${{ matrix.wp == 'trunk' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+        wp: ['6.8', 'latest', 'trunk']
+        exclude:
+          # WordPress 6.8 does not support PHP 8.5.
+          - php: '8.5'
+            wp: '6.8'
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: swiftforms_tests
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      WP_TESTS_DB_NAME: swiftforms_tests
+      WP_TESTS_DB_USER: root
+      WP_TESTS_DB_PASSWORD: root
+      WP_TESTS_DB_HOST: 127.0.0.1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Strauss 0.31 (which writes vendor-prefixed/ from composer's post-install
+      # hook) and the dev tools need PHP 8.2 or newer, so dependencies are always
+      # installed on PHP 8.3 and PHP is switched to the matrix
+      # version afterwards. Our own code and the test suite then run on the
+      # version under test. The lockfile is installed as committed, never updated.
+      - name: Setup PHP 8.3 (dependency install only)
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: '8.3'
+          tools: composer
+          coverage: none
+
+      # composer.json sets platform-check to false, so no
+      # vendor/composer/platform_check.php refuses to load the autoloader on
+      # PHP 7.4 to 8.1 (the runtime packages need only PHP 7.4).
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Setup PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysqli, zip
+          tools: composer
+          coverage: none
+
+      - name: Confirm the installed autoloader has no PHP-version gate
+        run: test ! -f vendor/composer/platform_check.php
+
+      # wp-phpunit ships the core test library but not WordPress itself, so the
+      # suite needs a core checkout to point WP_TESTS_ABSPATH at. It is a
+      # throwaway copy in the runner's temp folder.
+      - name: Install WordPress core
+        run: |
+          WP_PATH="$(bash bin/install-wp-core.sh "${{ matrix.wp }}" "${RUNNER_TEMP}/wordpress")"
+          echo "WP_TESTS_ABSPATH=${WP_PATH}" >> "${GITHUB_ENV}"
+
+      - name: Wait for MySQL
+        run: |
+          for _ in $(seq 1 30); do
+            if mysqladmin ping -h 127.0.0.1 -u root -proot --silent 2>/dev/null; then
+              echo "MySQL is up."
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "MySQL did not become ready in time." >&2
+          exit 1
+
+      # R00 safety net: every user config applied to a fresh site, one after
+      # another, each against its golden-master snapshots. Any change to what an
+      # existing user sees, or to what is stored in their database, fails here.
+      # Snapshots are never regenerated in CI.
+      - name: User-config regression (all configs, one after another)
+        run: composer test:configs
+
+      - name: PHPUnit
+        run: composer test
+
+      # The multisite group (lazy per-site install, wp_initialize_site, wpmu_drop_tables)
+      # runs the suite as a network, which reinstalls the test tables in network mode.
+      - name: PHPUnit (multisite group)
+        run: composer test:multisite

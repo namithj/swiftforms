@@ -1,0 +1,1024 @@
+== S6 GET /entries (default: new and read, newest first) ==
+x-wp-total: 44
+x-wp-totalpages: 3
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E4}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": 40,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-18T10:00:00Z",
+        "date_display": "November 18, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 40 · person40@eu-example.org"
+    },
+    {
+        "id": 39,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-17T10:00:00Z",
+        "date_display": "November 17, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 39 · person39@eu-example.org"
+    },
+    {
+        "id": 38,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-16T10:00:00Z",
+        "date_display": "November 16, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 38 · person38@eu-example.org"
+    },
+    {
+        "id": 37,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-15T10:00:00Z",
+        "date_display": "November 15, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 37 · person37@eu-example.org"
+    },
+    {
+        "id": 36,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-14T10:00:00Z",
+        "date_display": "November 14, 2026 10:00 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Person 36 · person36@eu-example.org"
+    },
+    {
+        "id": 35,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-13T10:00:00Z",
+        "date_display": "November 13, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 35 · person35@eu-example.org"
+    },
+    {
+        "id": 34,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-12T10:00:00Z",
+        "date_display": "November 12, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 34 · person34@eu-example.org"
+    },
+    {
+        "id": 33,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-11T10:00:00Z",
+        "date_display": "November 11, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 33 · person33@eu-example.org"
+    },
+    {
+        "id": 32,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-10T10:00:00Z",
+        "date_display": "November 10, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 32 · person32@eu-example.org"
+    },
+    {
+        "id": 31,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-09T10:00:00Z",
+        "date_display": "November 9, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 31 · person31@eu-example.org"
+    },
+    {
+        "id": 30,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-08T10:00:00Z",
+        "date_display": "November 8, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 30 · person30@eu-example.org"
+    },
+    {
+        "id": 29,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-07T10:00:00Z",
+        "date_display": "November 7, 2026 10:00 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Person 29 · person29@eu-example.org"
+    },
+    {
+        "id": 28,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-06T10:00:00Z",
+        "date_display": "November 6, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 28 · person28@eu-example.org"
+    },
+    {
+        "id": 27,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-05T10:00:00Z",
+        "date_display": "November 5, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 27 · person27@eu-example.org"
+    },
+    {
+        "id": 26,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-04T10:00:00Z",
+        "date_display": "November 4, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 26 · person26@eu-example.org"
+    },
+    {
+        "id": 25,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-03T10:00:00Z",
+        "date_display": "November 3, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 25 · person25@eu-example.org"
+    }
+]
+
+== S6 GET /forms ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "title": "EU contact",
+        "counts": {
+            "new": 38,
+            "read": 6,
+            "spam": 11,
+            "trash": 0
+        }
+    }
+]
+
+== S6 GET /entries?form=contact#1&status=new ==
+x-wp-total: 38
+x-wp-totalpages: 2
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E4}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": 40,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-18T10:00:00Z",
+        "date_display": "November 18, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 40 · person40@eu-example.org"
+    },
+    {
+        "id": 39,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-17T10:00:00Z",
+        "date_display": "November 17, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 39 · person39@eu-example.org"
+    },
+    {
+        "id": 38,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-16T10:00:00Z",
+        "date_display": "November 16, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 38 · person38@eu-example.org"
+    },
+    {
+        "id": 37,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-15T10:00:00Z",
+        "date_display": "November 15, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 37 · person37@eu-example.org"
+    },
+    {
+        "id": 35,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-13T10:00:00Z",
+        "date_display": "November 13, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 35 · person35@eu-example.org"
+    },
+    {
+        "id": 34,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-12T10:00:00Z",
+        "date_display": "November 12, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 34 · person34@eu-example.org"
+    },
+    {
+        "id": 33,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-11T10:00:00Z",
+        "date_display": "November 11, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 33 · person33@eu-example.org"
+    },
+    {
+        "id": 32,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-10T10:00:00Z",
+        "date_display": "November 10, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 32 · person32@eu-example.org"
+    },
+    {
+        "id": 31,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-09T10:00:00Z",
+        "date_display": "November 9, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 31 · person31@eu-example.org"
+    },
+    {
+        "id": 30,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-08T10:00:00Z",
+        "date_display": "November 8, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 30 · person30@eu-example.org"
+    },
+    {
+        "id": 28,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-06T10:00:00Z",
+        "date_display": "November 6, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 28 · person28@eu-example.org"
+    },
+    {
+        "id": 27,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-05T10:00:00Z",
+        "date_display": "November 5, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 27 · person27@eu-example.org"
+    },
+    {
+        "id": 26,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-04T10:00:00Z",
+        "date_display": "November 4, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 26 · person26@eu-example.org"
+    },
+    {
+        "id": 25,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-03T10:00:00Z",
+        "date_display": "November 3, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 25 · person25@eu-example.org"
+    },
+    {
+        "id": 24,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-02T10:00:00Z",
+        "date_display": "November 2, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 24 · person24@eu-example.org"
+    },
+    {
+        "id": 23,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-01T10:00:00Z",
+        "date_display": "November 1, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 23 · person23@eu-example.org"
+    }
+]
+
+== S6 GET /entries?status=new ==
+x-wp-total: 38
+x-wp-totalpages: 2
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E4}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": 40,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-18T10:00:00Z",
+        "date_display": "November 18, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 40 · person40@eu-example.org"
+    },
+    {
+        "id": 39,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-17T10:00:00Z",
+        "date_display": "November 17, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 39 · person39@eu-example.org"
+    },
+    {
+        "id": 38,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-16T10:00:00Z",
+        "date_display": "November 16, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 38 · person38@eu-example.org"
+    },
+    {
+        "id": 37,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-15T10:00:00Z",
+        "date_display": "November 15, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 37 · person37@eu-example.org"
+    },
+    {
+        "id": 35,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-13T10:00:00Z",
+        "date_display": "November 13, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 35 · person35@eu-example.org"
+    },
+    {
+        "id": 34,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-12T10:00:00Z",
+        "date_display": "November 12, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 34 · person34@eu-example.org"
+    },
+    {
+        "id": 33,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-11T10:00:00Z",
+        "date_display": "November 11, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 33 · person33@eu-example.org"
+    },
+    {
+        "id": 32,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-10T10:00:00Z",
+        "date_display": "November 10, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 32 · person32@eu-example.org"
+    },
+    {
+        "id": 31,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-09T10:00:00Z",
+        "date_display": "November 9, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 31 · person31@eu-example.org"
+    },
+    {
+        "id": 30,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-08T10:00:00Z",
+        "date_display": "November 8, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 30 · person30@eu-example.org"
+    },
+    {
+        "id": 28,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-06T10:00:00Z",
+        "date_display": "November 6, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 28 · person28@eu-example.org"
+    },
+    {
+        "id": 27,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-05T10:00:00Z",
+        "date_display": "November 5, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 27 · person27@eu-example.org"
+    },
+    {
+        "id": 26,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-04T10:00:00Z",
+        "date_display": "November 4, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 26 · person26@eu-example.org"
+    },
+    {
+        "id": 25,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-03T10:00:00Z",
+        "date_display": "November 3, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 25 · person25@eu-example.org"
+    },
+    {
+        "id": 24,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-02T10:00:00Z",
+        "date_display": "November 2, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 24 · person24@eu-example.org"
+    },
+    {
+        "id": 23,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-01T10:00:00Z",
+        "date_display": "November 1, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Person 23 · person23@eu-example.org"
+    }
+]
+
+== S6 GET /entries?status=read ==
+x-wp-total: 6
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": 36,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-14T10:00:00Z",
+        "date_display": "November 14, 2026 10:00 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Person 36 · person36@eu-example.org"
+    },
+    {
+        "id": 29,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-07T10:00:00Z",
+        "date_display": "November 7, 2026 10:00 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Person 29 · person29@eu-example.org"
+    },
+    {
+        "id": 22,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-10-31T10:00:00Z",
+        "date_display": "October 31, 2026 10:00 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Person 22 · person22@eu-example.org"
+    },
+    {
+        "id": 15,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-10-24T10:00:00Z",
+        "date_display": "October 24, 2026 11:00 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Person 15 · person15@eu-example.org"
+    },
+    {
+        "id": 8,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-10-17T10:00:00Z",
+        "date_display": "October 17, 2026 11:00 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Person 08 · person08@eu-example.org"
+    },
+    {
+        "id": 1,
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-10-10T10:00:00Z",
+        "date_display": "October 10, 2026 11:00 am",
+        "status": "read",
+        "starred": false,
+        "summary": "Person 01 · person01@eu-example.org"
+    }
+]
+
+== S6 GET /entries?status=spam ==
+x-wp-total: 11
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E15}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E14}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E13}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E12}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E11}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E10}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E9}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E8}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f090001-0000-4000-8000-000000000001",
+        "form_title": "EU contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Lena Schmidt · lena@eu-example.org"
+    }
+]
+
+== S6 GET /entries?status=trash ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries/{E4} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E4}",
+    "form_id": "5f090001-0000-4000-8000-000000000001",
+    "form_title": "EU contact",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "new",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Lena Schmidt",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "lena@eu-example.org",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "Please send me my data sheet.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "gdpr",
+            "label": "Consent",
+            "type": "consent",
+            "values": [
+                {
+                    "value": "1",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E4} {"status":"read"} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E4}",
+    "form_id": "5f090001-0000-4000-8000-000000000001",
+    "form_title": "EU contact",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Lena Schmidt",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "lena@eu-example.org",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        },
+        {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "values": [
+                {
+                    "value": "Please send me my data sheet.",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "gdpr",
+            "label": "Consent",
+            "type": "consent",
+            "values": [
+                {
+                    "value": "1",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Contact",
+        "link": "http://example.org/contact/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E4} {"starred":true} ==
+status: 200, entry status: read, starred: true
+
+== S6 PATCH /entries/{E4} {"status":"spam"} ==
+status: 200, entry status: spam, starred: true
+
+== S6 PATCH /entries/{E4} {"status":"trash"} ==
+status: 200, entry status: trash, starred: true
+
+== S6 PATCH /entries/{E4} {"status":"new"} ==
+status: 200, entry status: new, starred: true
+
+== S6 PATCH /entries/{E4} {"starred":false} ==
+status: 200, entry status: new, starred: false
+
+== S6 PATCH /entries/{E4} with nothing to change ==
+status: 400
+{
+    "code": "rest_missing_callback_param",
+    "message": "Send a status or starred.",
+    "data": {
+        "status": 400
+    }
+}
+
+== S6 GET /entries/999999999 (no such entry) ==
+status: 404
+{
+    "code": "swiftforms_entry_not_found",
+    "message": "No such entry.",
+    "data": {
+        "status": 404
+    }
+}
+
+== S6 GET /entries as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+
+== S6 PATCH /entries/{id} as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+

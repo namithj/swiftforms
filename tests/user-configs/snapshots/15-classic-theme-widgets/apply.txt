@@ -1,0 +1,59 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-classic
+template = sf-test-classic
+timezone_string = America/New_York
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_notification_to = webmaster@classic-site.example
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- columns (page/publish, slug visit, title Visit us)
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>Opening hours: every day, 9 to 5.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:swiftforms/form {"formId":"5f150003-0000-4000-8000-000000000003","title":"Book a visit"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-date {"label":"Day","name":"day","min":"2026-11-20"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Book"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>See you soon.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+-- featured (post/publish, slug join-the-club, title Join the club)
+<!-- wp:paragraph -->
+<p>Tell us who you are and we will keep you posted.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f150004-0000-4000-8000-000000000004","title":"Club membership"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Join the club"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Welcome to the club.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- plain (post/publish, slug just-news, title Just news)
+<!-- wp:paragraph -->
+<p>A post with no form.</p>
+<!-- /wp:paragraph -->

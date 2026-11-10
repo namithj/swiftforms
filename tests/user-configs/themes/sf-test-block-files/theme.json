@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"color": {
+			"palette": [
+				{ "slug": "sf-ink", "name": "SF Ink", "color": "#111111" },
+				{ "slug": "sf-paper", "name": "SF Paper", "color": "#fafafa" }
+			]
+		},
+		"spacing": {
+			"spacingSizes": [
+				{ "slug": "sf-small", "name": "SF Small", "size": "0.5rem" },
+				{ "slug": "sf-large", "name": "SF Large", "size": "2rem" }
+			]
+		}
+	}
+}

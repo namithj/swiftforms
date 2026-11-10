@@ -1,29 +1,36 @@
 {
 	"name": "swiftforms",
-	"version": "1.0.0",
 	"private": true,
-	"description": "Build tooling for the SwiftForms WordPress plugin.",
+	"description": "Build and test tooling for the SwiftForms WordPress plugin. Never published.",
+	"license": "GPL-2.0-or-later",
 	"scripts": {
-		"build": "wp-scripts build",
-		"format": "wp-scripts format",
-		"lint:js": "wp-scripts lint-js src --max-warnings=0",
-		"start": "wp-scripts start",
-		"test": "composer test",
-		"test:php": "composer test",
-		"test:js": "wp-scripts test-unit-js",
-		"wp-env": "cross-env NODE_OPTIONS=--no-network-family-autoselection wp-env",
-		"env:start": "cross-env NODE_OPTIONS=--no-network-family-autoselection wp-env start",
-		"env:stop": "wp-env stop",
-		"env:destroy": "wp-env destroy",
-		"makepot": "npm run wp-env -- run cli --env-cwd=wp-content/plugins/swiftforms wp i18n make-pot . languages/swiftforms.pot --exclude=vendor,node_modules,tests,artifacts,bin,build",
-		"package:release": "bin/package-release.sh"
+		"build": "wp-scripts build --experimental-modules",
+		"start": "wp-scripts start --experimental-modules",
+		"lint:js": "wp-scripts lint-js src tests/js tests/e2e bin playwright.config.js webpack.config.js vitest.config.mjs",
+		"lint:css": "wp-scripts lint-style \"src/**/*.{css,scss}\" --allow-empty-input",
+		"test": "wp-scripts test-unit-js",
+		"test:e2e": "playwright test",
+		"test:e2e:configs": "node bin/run-e2e-configs.mjs",
+		"perf:budget": "node bin/check-perf-budget.mjs",
+		"wp-env": "wp-env"
 	},
 	"devDependencies": {
-		"@wordpress/env": "^10.39.0",
-		"@wordpress/scripts": "^30.24.0",
-		"cross-env": "^7.0.3"
+		"@axe-core/playwright": "4.14.0",
+		"@playwright/test": "1.64.1",
+		"@wordpress/block-editor": "19.0.0",
+		"@wordpress/compose": "9.0.0",
+		"@wordpress/data": "11.0.0",
+		"@wordpress/e2e-test-utils-playwright": "3.1.0",
+		"@wordpress/element": "10.0.0",
+		"@wordpress/env": "12.0.0",
+		"@wordpress/hooks": "5.0.0",
+		"@wordpress/i18n": "7.0.0",
+		"@wordpress/scripts": "37.0.0",
+		"vite": "8.3.5",
+		"vitest": "5.0.5"
 	},
-	"overrides": {
-		"typescript": "5.7.3"
+	"dependencies": {
+		"@wordpress/components": "43.0.0",
+		"@wordpress/interactivity": "8.0.0"
 	}
 }

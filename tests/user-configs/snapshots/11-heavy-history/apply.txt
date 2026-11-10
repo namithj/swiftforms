@@ -1,0 +1,61 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_notification_to = ops@busy-site.example
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- contact (page/publish, slug contact, title Contact)
+<!-- wp:swiftforms/form {"formId":"5f110001-0000-4000-8000-000000000001","title":"Contact"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-select {"label":"Topic","name":"topic","placeholderOption":"Choose a topic","options":[{"value":"sales","label":"Sales"},{"value":"support","label":"Support"},{"value":"press","label":"Press"}]} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Details","name":"details","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you. We will reply soon.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- newsletter (page/publish, slug newsletter, title Newsletter)
+<!-- wp:swiftforms/form {"formId":"5f110002-0000-4000-8000-000000000002","title":"Newsletter"} -->
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Subscribe"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>You are on the list.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- survey (page/publish, slug survey, title Survey)
+<!-- wp:swiftforms/form {"formId":"5f110003-0000-4000-8000-000000000003","title":"Reader survey"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true} /-->
+
+<!-- wp:swiftforms/field-checkboxes {"label":"What would you like to hear about?","name":"interests","required":true,"minChoices":1,"maxChoices":3,"options":[{"value":"news","label":"News"},{"value":"events","label":"Events"},{"value":"offers","label":"Offers"},{"value":"jobs","label":"Jobs"},{"value":"partners","label":"Partners"}]} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Comment","name":"comment"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send answers"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks for your answers.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

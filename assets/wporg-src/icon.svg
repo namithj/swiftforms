@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- SwiftForms icon: original artwork. A form card (two fields and a button) with a forward mark. -->
+  <rect width="256" height="256" rx="48" fill="#2b4acb"/>
+  <rect x="48" y="52" width="160" height="152" rx="18" fill="#ffffff"/>
+  <rect x="68" y="76" width="120" height="16" rx="8" fill="#c9d3f5"/>
+  <rect x="68" y="106" width="120" height="16" rx="8" fill="#c9d3f5"/>
+  <rect x="68" y="146" width="76" height="34" rx="12" fill="#2b4acb"/>
+  <path d="M96 156l16 11-16 11" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

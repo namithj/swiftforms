@@ -1,0 +1,111 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_from_name = Partial Site
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- control (page/publish, slug control, title Control)
+<!-- wp:swiftforms/form {"formId":"5f180001-0000-4000-8000-000000000001","title":"Control form"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- nameless (page/publish, slug nameless, title Nameless)
+<!-- wp:swiftforms/form {"title":"Form without an id"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- orig (page/publish, slug original, title Original)
+<!-- wp:swiftforms/form {"formId":"5f180003-0000-4000-8000-000000000003","title":"Shared id"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- copy (page/publish, slug original-copy, title Original (copy))
+<!-- wp:swiftforms/form {"formId":"5f180003-0000-4000-8000-000000000003","title":"Shared id"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- dupes (page/publish, slug duplicate-names, title Duplicate names)
+<!-- wp:swiftforms/form {"formId":"5f180004-0000-4000-8000-000000000004","title":"Duplicate field names"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Confirm email","name":"email","required":true} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- future (page/publish, slug from-the-future, title From the future)
+<!-- wp:swiftforms/form {"formId":"5f180005-0000-4000-8000-000000000005","title":"Written by a newer release","futureFlag":{"mode":"x","deep":[1,2]}} -->
+<!-- wp:swiftforms/step {"title":"Step one","index":1} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"futureAttr":"kept"} /-->
+<!-- /wp:swiftforms/step -->
+
+<!-- wp:swiftforms/field-rating {"label":"How did we do?","name":"rating","max":5} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

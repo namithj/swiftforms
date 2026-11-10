@@ -1,0 +1,136 @@
+name: E2E
+
+# Browser checks against a real WordPress (wp-env, Docker).
+#
+# Every environment cell runs five jobs in parallel (the matrix is env x suite), so a failure points at one job:
+# 1. "Feature specs": the editor, front-end, admin and settings specs, one step per spec file. The front-end spec
+#    moves the plugin's clock (an old page, an expired token): the clock mu-plugin reads tests/e2e/.state/now on
+#    every request and the spec writes to it (SF_E2E_NOW_FILE), the plugin folder being mounted into the container.
+#    A failing spec does not skip the next ones.
+# 2. "Configs": the user configs in four shards (01-05, 06-10, 11-15, 16-20), the configs of a shard one after
+#    another. A config is applied to a freshly reset site and Playwright checks that each stored post, template and
+#    part opens in the block editor without a validation warning and saves without changing its content (S12), and
+#    that the forms work on the front end, with axe (S13). Config 19 is multisite, the runner skips it.
+#
+# Rerun one config locally: npm run test:e2e:configs -- 05
+# Rerun one spec locally:   npm run test:e2e -- tests/e2e/editor.spec.js
+#
+# Two cells: the lowest supported WordPress and PHP, and the latest of both.
+# The first cell is the floor of the plugin header: PHP 7.4 and WordPress 6.8.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    name: E2E ${{ matrix.env.name }} — ${{ matrix.suite.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - name: PHP 7.4 / WP 6.8
+            php: '7.4'
+            core: 'WordPress/WordPress#6.8'
+          - name: PHP latest / WP latest
+            php: '8.4'
+            core: ''
+        suite:
+          - { name: 'Feature specs', kind: 'features' }
+          - { name: 'Configs 01–05', kind: 'configs', configs: '01 02 03 04 05' }
+          - { name: 'Configs 06–10', kind: 'configs', configs: '06 07 08 09 10' }
+          - { name: 'Configs 11–15', kind: 'configs', configs: '11 12 13 14 15' }
+          - { name: 'Configs 16–20', kind: 'configs', configs: '16 17 18 20' }
+    env:
+      WP_ENV_PHP_VERSION: ${{ matrix.env.php }}
+      WP_ENV_CORE: ${{ matrix.env.core }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: '8.3'
+          tools: composer
+          coverage: none
+
+      # vendor-prefixed/ (written by Strauss) is part of the plugin that wp-env mounts.
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Start wp-env
+        id: wpenv
+        run: npm run wp-env -- start
+
+      # The clock file lives in the plugin folder, which wp-env mounts into the container.
+      - name: Prepare the clock folder
+        if: matrix.suite.kind == 'features'
+        run: mkdir -p tests/e2e/.state
+
+      - name: Spec — editor
+        if: matrix.suite.kind == 'features'
+        env:
+          SF_E2E_NOW_FILE: ${{ github.workspace }}/tests/e2e/.state/now
+        run: npm run test:e2e -- tests/e2e/editor.spec.js
+
+      - name: Spec — front end
+        if: matrix.suite.kind == 'features' && !cancelled() && steps.wpenv.outcome == 'success'
+        env:
+          SF_E2E_NOW_FILE: ${{ github.workspace }}/tests/e2e/.state/now
+        run: npm run test:e2e -- tests/e2e/front-end.spec.js
+
+      - name: Spec — admin
+        if: matrix.suite.kind == 'features' && !cancelled() && steps.wpenv.outcome == 'success'
+        env:
+          SF_E2E_NOW_FILE: ${{ github.workspace }}/tests/e2e/.state/now
+        run: npm run test:e2e -- tests/e2e/admin.spec.js
+
+      - name: Spec — settings
+        if: matrix.suite.kind == 'features' && !cancelled() && steps.wpenv.outcome == 'success'
+        env:
+          SF_E2E_NOW_FILE: ${{ github.workspace }}/tests/e2e/.state/now
+        run: npm run test:e2e -- tests/e2e/settings.spec.js
+
+      - name: User-config e2e (S12 and S13, ${{ matrix.suite.name }})
+        if: matrix.suite.kind == 'configs'
+        run: npm run test:e2e:configs -- ${{ matrix.suite.configs }}
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report-${{ strategy.job-index }}
+          path: |
+            playwright-report/
+            artifacts/
+          if-no-files-found: ignore
+          retention-days: 7

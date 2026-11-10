@@ -1,0 +1,6 @@
+contact (page): unchanged
+faq (page): unchanged
+services (page): unchanged
+pricing (page): unchanged
+events (page): unchanged
+updates (page): unchanged

@@ -1,0 +1,383 @@
+== S5 control: a clean submission of the same values ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E4}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f070001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E4}","notification":0,"to":["owner@oldschool.example"]}
+log mail/info 5f070001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E4}","notification":1,"to":["shop@oldschool.example"]}
+-- mail 1 (phpmailer_init) --
+from: Old School Shop (relay) <relay@smtp-sim.example>
+sender: bounces@smtp-sim.example
+mailer: smtp
+to: owner@oldschool.example
+cc:
+bcc:
+reply-to:
+subject: New submission: Shop enquiry
+content-type: text/html; charset=UTF-8
+header: X-Mailer-Sim: smtp-plugin
+-- body --
+<table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you stock vinyl?<br>
+I am after a first pressing.</td></tr></table>
+-- alt body --
+Name: Ada Lovelace
+Email: ada@example.com
+Message: Do you stock vinyl?
+I am after a first pressing.
+-- mail 2 (phpmailer_init) --
+from: Old School Shop (relay) <relay@smtp-sim.example>
+sender: bounces@smtp-sim.example
+mailer: smtp
+to: shop@oldschool.example
+cc:
+bcc:
+reply-to: ada@example.com
+subject: Enquiry from Ada Lovelace
+content-type: text/plain; charset=UTF-8
+header: X-Mailer-Sim: smtp-plugin
+-- body --
+Name: Ada Lovelace
+Email: ada@example.com
+
+Do you stock vinyl?
+I am after a first pressing.
+-- alt body --
+(none)
+
+== S5 shop#1 / honeypot filled ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E5}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+
+== S5 shop#1 / too fast (js.500) ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E6}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+
+== S5 shop#1 / forged token ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E7}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+
+== S5 shop#1 / no token ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E8}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+
+== S5 shop#1 / no browser-measured time ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E9}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+
+== S5 shop#1 / signed time over REST (no js token) ==
+answered exactly like the clean submission
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Message sent. Thank you.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E10}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Do you stock vinyl?\nI am after a first pressing."
+  value name[0] = "Ada Lovelace"
+
+== S5 shop#1 / per-form rate limit ==
+limit 5 per minute; statuses of requests 1 to 6: 200, 200, 200, 200, 200, 429
+last response:
+status: 429
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+retry-after: 60
+{
+    "status": "rate_limited"
+}
+left behind:
+entry:
+{
+    "id": "{E11}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 1"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E12}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 2"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E13}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 3"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E14}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 4"
+  value name[0] = "Ada Lovelace"
+entry:
+{
+    "id": "{E15}",
+    "form_id": "5f070001-0000-4000-8000-000000000001",
+    "schema_hash": "8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4",
+    "source": "post:shop",
+    "status": "spam",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "ada@example.com"
+  value message[0] = "Rate limit probe 5"
+  value name[0] = "Ada Lovelace"
+
+== S5 coarse limiter (61 requests in one minute) ==
+statuses of requests 1 to 60: 403
+request 61:
+status: 429
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+retry-after: 60
+{
+    "status": "rate_limited"
+}
+
+== S5 locations that are not live ==
+-- unknown formId, real source --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+-- real formId, source that is not --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+-- real formId, malformed source --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+-- malformed formId --
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+

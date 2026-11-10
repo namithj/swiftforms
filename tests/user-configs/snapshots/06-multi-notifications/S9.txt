@@ -1,0 +1,758 @@
+== S9 registered ==
+exporter: SwiftForms entries
+eraser: SwiftForms entries
+
+== S9 export for ada@bigco.example ==
+[
+    {
+        "data": [
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E1}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E2}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "support"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "A second enquiry from the same address."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E3}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E4}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E5}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E6}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E7}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E8}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E9}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E10}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E11}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "We need a new site.\nBudget is flexible."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E13}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "Rate limit probe 1"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E14}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "Rate limit probe 2"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E15}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "Rate limit probe 3"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E16}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "Rate limit probe 4"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E17}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Agency lead"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Work email",
+                        "value": "ada@bigco.example"
+                    },
+                    {
+                        "name": "Company",
+                        "value": "BigCo"
+                    },
+                    {
+                        "name": "Department",
+                        "value": "sales"
+                    },
+                    {
+                        "name": "Project brief",
+                        "value": "Rate limit probe 5"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            }
+        ],
+        "done": true
+    }
+]
+
+== S9 export for an address with no entries ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase ada@bigco.example ==
+[
+    {
+        "items_removed": true,
+        "items_retained": false,
+        "messages": [
+            "Removed 16 SwiftForms entries.",
+            "Removed 3 rows from the SwiftForms mail log."
+        ],
+        "done": true
+    }
+]
+
+== S9 rows before and after the erasure ==
+before:
+{
+    "entries with the address": 16,
+    "entries": 17,
+    "value rows": 85,
+    "mail log rows naming it": 3
+}
+after:
+{
+    "entries with the address": 0,
+    "entries": 1,
+    "value rows": 5,
+    "orphan value rows": 0,
+    "orphan meta rows": 0,
+    "mail log rows naming it": 0
+}
+
+== S9 export again after the erasure ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase an address with no entries ==
+[
+    {
+        "items_removed": false,
+        "items_retained": false,
+        "messages": [],
+        "done": true
+    }
+]
+

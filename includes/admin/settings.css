@@ -1,0 +1,25 @@
+/*
+ * Forms -> Settings. The framework's composite fields (upload, colour)
+ * render without Gutenberg's emotion styles, so these rules mirror core's
+ * BaseControl label and help text to match the native controls. The extra
+ * .cassette-cmf-composite step outranks the framework's own stylesheet,
+ * which loads after this one.
+ */
+
+.cassette-cmf-settings-app .cassette-cmf-composite .cassette-cmf-composite__help {
+	font-size: 12px;
+	line-height: 1.5;
+	color: #757575;
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+
+.cassette-cmf-settings-app .cassette-cmf-composite .cassette-cmf-composite__label {
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+/* Five tabs do not fit a 390px phone in one row. */
+.cassette-cmf-settings-app .components-tab-panel__tabs {
+	flex-wrap: wrap;
+}

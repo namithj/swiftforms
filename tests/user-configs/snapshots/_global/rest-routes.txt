@@ -1,0 +1,8 @@
+/swiftforms/v1 GET public
+/swiftforms/v1/entries GET private
+/swiftforms/v1/entries/(?P<id>\d+) DELETE private
+/swiftforms/v1/entries/(?P<id>\d+) GET private
+/swiftforms/v1/entries/(?P<id>\d+) PATCH private
+/swiftforms/v1/forms GET private
+/swiftforms/v1/submit POST public
+/swiftforms/v1/token GET public

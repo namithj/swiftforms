@@ -1,0 +1,48 @@
+== Registered pattern swiftforms/callback-request ==
+form 1: in the index as live: no
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+
+== Registered pattern swiftforms/contact ==
+form 1: in the index as live: no
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+
+== Registered pattern swiftforms/event-rsvp ==
+form 1: in the index as live: no
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+
+== Registered pattern swiftforms/feedback ==
+form 1: in the index as live: no
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+
+== Registered pattern swiftforms/newsletter-signup ==
+form 1: in the index as live: no
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+
+== Registered pattern swiftforms/quote-request ==
+form 1: in the index as live: no
+status: 403
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "closed"
+}
+

@@ -1,0 +1,47 @@
+== S3 contact#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- without message --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "message": "This field is required."
+    }
+}
+-- without gdpr --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "gdpr": "Please tick this box to continue."
+    }
+}
+-- payload c09-no-consent --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "gdpr": "Please tick this box to continue."
+    }
+}
+

@@ -1,0 +1,164 @@
+== S2 lettre#1 / c13-lettre (guest) ==
+request:
+{
+    "_sf_form": "5f130002-0000-4000-8000-000000000002",
+    "_sf_source": "post:lettre",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "email": "camille@example.fr"
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Merci. Votre message a bien été envoyé.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E1}",
+    "form_id": "5f130002-0000-4000-8000-000000000002",
+    "schema_hash": "ad64d451f999f91f51737537d0e66025a1aa77261ef1efec37d3ee4c9bc7bc7d",
+    "source": "post:lettre",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "camille@example.fr"
+log mail/info 5f130002-0000-4000-8000-000000000002: Notification sent. {"entry":"{E1}","notification":0,"to":["commandes@boutique-soleil.example"]}
+-- mail 1 (wp_mail arguments) --
+to: commandes@boutique-soleil.example
+subject: Nouvelle demande : Lettre d’information
+header: From: Boutique Soleil <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="fr-FR" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Votre e-mail</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">camille@example.fr</td></tr></table></td></tr></table></td></tr></table></body></html>
+
+== S2 livraison#1 / c13-camille (guest) ==
+request:
+{
+    "_sf_form": "5f130001-0000-4000-8000-000000000001",
+    "_sf_source": "post:livraison",
+    "_sf_token": "{TOKEN}",
+    "_sf_hp": "",
+    "_sf_t": "js.10000",
+    "_sf_v": "{VERSION}",
+    "_sf_i": "1",
+    "sf": {
+        "nom": "Camille Durand",
+        "email": "camille@example.fr",
+        "date_livraison": "2026-12-05",
+        "creneau": "matin",
+        "consentement": "1",
+        "message": "Livraison avant Noël, merci."
+    }
+}
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Merci ! Nous confirmons la date par e-mail.</p>"
+    }
+}
+left behind:
+entry:
+{
+    "id": "{E2}",
+    "form_id": "5f130001-0000-4000-8000-000000000001",
+    "schema_hash": "23504079905a698ecf81e28d5bb37b0e1e31c63211f9c43fdc68ac7201e044ec",
+    "source": "post:livraison",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value consentement[0] = "1"
+  value creneau[0] = "matin"
+  value date_livraison[0] = "2026-12-05"
+  value email[0] = "camille@example.fr"
+  value message[0] = "Livraison avant Noël, merci."
+  value nom[0] = "Camille Durand"
+log mail/info 5f130001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E2}","notification":0,"to":["commandes@boutique-soleil.example"]}
+log mail/info 5f130001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E2}","notification":1,"to":["logistique@boutique-soleil.example"]}
+-- mail 1 (wp_mail arguments) --
+to: commandes@boutique-soleil.example
+subject: Nouvelle demande : Demande de livraison
+header: From: Boutique Soleil <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="fr-FR" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Nom et prénom</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Camille Durand</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Adresse e-mail</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">camille@example.fr</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Date de livraison souhaitée</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">2026-12-05</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Créneau</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">matin</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Consentement</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">1</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Précisions</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Livraison avant Noël, merci.</td></tr></table></td></tr></table></td></tr></table></body></html>
+-- mail 2 (wp_mail arguments) --
+to: logistique@boutique-soleil.example
+subject: Livraison demandée par Camille Durand le 19/11/2026 15:30
+header: From: Boutique Soleil <wordpress@example.org>
+header: Reply-To: camille@example.fr
+header: Content-Type: text/plain; charset=UTF-8
+attachments: (none)
+-- body --
+Date souhaitée : 2026-12-05
+Créneau : matin
+
+Livraison avant Noël, merci.
+
+== S2 lettre#1 / c13-lettre (administrator) ==
+response:
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "success",
+    "confirmation": {
+        "type": "message",
+        "html": "<p>Merci. Votre message a bien été envoyé.</p>"
+    },
+    "entryId": "{E3}"
+}
+left behind:
+entry:
+{
+    "id": "{E3}",
+    "form_id": "5f130002-0000-4000-8000-000000000002",
+    "schema_hash": "ad64d451f999f91f51737537d0e66025a1aa77261ef1efec37d3ee4c9bc7bc7d",
+    "source": "post:lettre",
+    "status": "new",
+    "starred": "0",
+    "user_id": "{USER:admin}",
+    "ip": null,
+    "user_agent": null,
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value email[0] = "camille@example.fr"
+log mail/info 5f130002-0000-4000-8000-000000000002: Notification sent. {"entry":"{E3}","notification":0,"to":["commandes@boutique-soleil.example"]}
+-- mail 1 (wp_mail arguments) --
+to: commandes@boutique-soleil.example
+subject: Nouvelle demande : Lettre d’information
+header: From: Boutique Soleil <wordpress@example.org>
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="fr-FR" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Votre e-mail</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">camille@example.fr</td></tr></table></td></tr></table></td></tr></table></body></html>
+

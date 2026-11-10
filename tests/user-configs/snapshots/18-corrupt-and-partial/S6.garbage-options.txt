@@ -1,0 +1,906 @@
+== S6 GET /entries (default: new and read, newest first) ==
+x-wp-total: 17
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E14}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E13}",
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E12}",
+        "form_id": "{FORM:nameless#1}",
+        "form_title": "Form without an id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E11}",
+        "form_id": "5f180005-0000-4000-8000-000000000005",
+        "form_title": "Written by a newer release",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E10}",
+        "form_id": "5f180004-0000-4000-8000-000000000004",
+        "form_title": "Duplicate field names",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E9}",
+        "form_id": "{FORM:copy#1}",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E8}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "{FORM:nameless#1}",
+        "form_title": "Form without an id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f180005-0000-4000-8000-000000000005",
+        "form_title": "Written by a newer release",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f180004-0000-4000-8000-000000000004",
+        "form_title": "Duplicate field names",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "{FORM:copy#1}",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": 1,
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-10T09:00:00Z",
+        "date_display": "November 10, 2026 9:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Linus Torvalds · linus@example.org"
+    },
+    {
+        "id": 2,
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-09T09:00:00Z",
+        "date_display": "November 9, 2026 9:00 am",
+        "status": "read",
+        "starred": true,
+        "summary": "margaret@example.org · +1 555 0100"
+    },
+    {
+        "id": 3,
+        "form_id": "5f18dead-0000-4000-8000-00000000dead",
+        "form_title": "Deleted form",
+        "date_gmt": "2026-08-01T09:00:00Z",
+        "date_display": "August 1, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Dennis Ritchie · dennis@example.org"
+    }
+]
+
+== S6 GET /forms ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "title": "Control form",
+        "counts": {
+            "new": 4,
+            "read": 0,
+            "spam": 11,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "5f180004-0000-4000-8000-000000000004",
+        "title": "Duplicate field names",
+        "counts": {
+            "new": 2,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "{FORM:nameless#1}",
+        "title": "Form without an id",
+        "counts": {
+            "new": 2,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "title": "Shared id",
+        "counts": {
+            "new": 3,
+            "read": 1,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "{FORM:copy#1}",
+        "title": "Shared id",
+        "counts": {
+            "new": 2,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "5f180005-0000-4000-8000-000000000005",
+        "title": "Written by a newer release",
+        "counts": {
+            "new": 2,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "5f18dead-0000-4000-8000-00000000dead",
+        "title": "",
+        "counts": {
+            "new": 1,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    }
+]
+
+== S6 GET /entries?form=control#1&status=new ==
+x-wp-total: 4
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E14}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E8}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /entries?form=copy#1&status=new ==
+x-wp-total: 2
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E9}",
+        "form_id": "{FORM:copy#1}",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "{FORM:copy#1}",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /entries?form=dupes#1&status=new ==
+x-wp-total: 2
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E10}",
+        "form_id": "5f180004-0000-4000-8000-000000000004",
+        "form_title": "Duplicate field names",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f180004-0000-4000-8000-000000000004",
+        "form_title": "Duplicate field names",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /entries?form=future#1&status=new ==
+x-wp-total: 2
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E11}",
+        "form_id": "5f180005-0000-4000-8000-000000000005",
+        "form_title": "Written by a newer release",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f180005-0000-4000-8000-000000000005",
+        "form_title": "Written by a newer release",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /entries?form=nameless#1&status=new ==
+x-wp-total: 2
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E12}",
+        "form_id": "{FORM:nameless#1}",
+        "form_title": "Form without an id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "{FORM:nameless#1}",
+        "form_title": "Form without an id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /entries?form=orig#1&status=new ==
+x-wp-total: 3
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E13}",
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": 1,
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-10T09:00:00Z",
+        "date_display": "November 10, 2026 9:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Linus Torvalds · linus@example.org"
+    }
+]
+
+== S6 GET /entries?status=new ==
+x-wp-total: 16
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E14}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E13}",
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E12}",
+        "form_id": "{FORM:nameless#1}",
+        "form_title": "Form without an id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E11}",
+        "form_id": "5f180005-0000-4000-8000-000000000005",
+        "form_title": "Written by a newer release",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E10}",
+        "form_id": "5f180004-0000-4000-8000-000000000004",
+        "form_title": "Duplicate field names",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E9}",
+        "form_id": "{FORM:copy#1}",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E8}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "{FORM:nameless#1}",
+        "form_title": "Form without an id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f180005-0000-4000-8000-000000000005",
+        "form_title": "Written by a newer release",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f180004-0000-4000-8000-000000000004",
+        "form_title": "Duplicate field names",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "{FORM:copy#1}",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": 1,
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-10T09:00:00Z",
+        "date_display": "November 10, 2026 9:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Linus Torvalds · linus@example.org"
+    },
+    {
+        "id": 3,
+        "form_id": "5f18dead-0000-4000-8000-00000000dead",
+        "form_title": "Deleted form",
+        "date_gmt": "2026-08-01T09:00:00Z",
+        "date_display": "August 1, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Dennis Ritchie · dennis@example.org"
+    }
+]
+
+== S6 GET /entries?status=read ==
+x-wp-total: 1
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": 2,
+        "form_id": "5f180003-0000-4000-8000-000000000003",
+        "form_title": "Shared id",
+        "date_gmt": "2026-11-09T09:00:00Z",
+        "date_display": "November 9, 2026 9:00 am",
+        "status": "read",
+        "starred": true,
+        "summary": "margaret@example.org · +1 555 0100"
+    }
+]
+
+== S6 GET /entries?status=spam ==
+x-wp-total: 11
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E25}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E24}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E23}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E22}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E21}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E20}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E19}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E18}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E17}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E16}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    },
+    {
+        "id": "{E15}",
+        "form_id": "5f180001-0000-4000-8000-000000000001",
+        "form_title": "Control form",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Ada Lovelace · ada@example.com"
+    }
+]
+
+== S6 GET /entries?status=trash ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries/{E14} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E14}",
+    "form_id": "5f180001-0000-4000-8000-000000000001",
+    "form_title": "Control form",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "new",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Ada Lovelace",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "ada@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Control",
+        "link": "http://example.org/control/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E14} {"status":"read"} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E14}",
+    "form_id": "5f180001-0000-4000-8000-000000000001",
+    "form_title": "Control form",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Ada Lovelace",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "email",
+            "label": "Email",
+            "type": "email",
+            "values": [
+                {
+                    "value": "ada@example.com",
+                    "is_link": false,
+                    "is_email": true
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Control",
+        "link": "http://example.org/control/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E14} {"starred":true} ==
+status: 200, entry status: read, starred: true
+
+== S6 PATCH /entries/{E14} {"status":"spam"} ==
+status: 200, entry status: spam, starred: true
+
+== S6 PATCH /entries/{E14} {"status":"trash"} ==
+status: 200, entry status: trash, starred: true
+
+== S6 PATCH /entries/{E14} {"status":"new"} ==
+status: 200, entry status: new, starred: true
+
+== S6 PATCH /entries/{E14} {"starred":false} ==
+status: 200, entry status: new, starred: false
+
+== S6 PATCH /entries/{E14} with nothing to change ==
+status: 400
+{
+    "code": "rest_missing_callback_param",
+    "message": "Send a status or starred.",
+    "data": {
+        "status": 400
+    }
+}
+
+== S6 GET /entries/999999999 (no such entry) ==
+status: 404
+{
+    "code": "swiftforms_entry_not_found",
+    "message": "No such entry.",
+    "data": {
+        "status": 404
+    }
+}
+
+== S6 GET /entries as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+
+== S6 PATCH /entries/{id} as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+

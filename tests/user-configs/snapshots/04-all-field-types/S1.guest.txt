@@ -1,0 +1,61 @@
+== everything (page) ==
+<h2 class="wp-block-heading">Book a stay</h2>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f040001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;post:everything&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-50 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f040001-full_name-1">Full name<span class="swiftforms-required"> (required)</span></label><input class="swiftforms-input" type="text" id="sf-5f040001-full_name-1" name="sf[full_name]" placeholder="Ada Lovelace" minlength="2" maxlength="60" autocomplete="name" required aria-required="true" aria-describedby="sf-5f040001-full_name-1-help sf-5f040001-full_name-1-error"><p class="swiftforms-help" id="sf-5f040001-full_name-1-help">As on your ID.</p><p class="swiftforms-error" id="sf-5f040001-full_name-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-50 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f040001-email-1">Email<span class="swiftforms-required"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f040001-email-1" name="sf[email]" placeholder="you@example.com" autocomplete="email" required aria-required="true" aria-describedby="sf-5f040001-email-1-help sf-5f040001-email-1-error"><p class="swiftforms-help" id="sf-5f040001-email-1-help">We never share it.</p><p class="swiftforms-error" id="sf-5f040001-email-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-w-25 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f040001-ref_code-1">Reference</label><input class="swiftforms-input" type="text" id="sf-5f040001-ref_code-1" name="sf[ref_code]" placeholder="ABC-1234" pattern="[A-Z]{3}-[0-9]{4}" title="Use the format ABC-1234." aria-describedby="sf-5f040001-ref_code-1-error"><p class="swiftforms-error" id="sf-5f040001-ref_code-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--tel swiftforms-w-75 wp-block-swiftforms-field-tel"><label class="swiftforms-label" for="sf-5f040001-phone-1">Phone</label><input class="swiftforms-input" type="tel" id="sf-5f040001-phone-1" name="sf[phone]" placeholder="+44 20 7946 0000" autocomplete="tel" aria-describedby="sf-5f040001-phone-1-error"><p class="swiftforms-error" id="sf-5f040001-phone-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--url swiftforms-w-100 wp-block-swiftforms-field-url"><label class="swiftforms-label" for="sf-5f040001-website-1">Website</label><input class="swiftforms-input" type="url" id="sf-5f040001-website-1" name="sf[website]" placeholder="https://" autocomplete="url" aria-describedby="sf-5f040001-website-1-error"><p class="swiftforms-error" id="sf-5f040001-website-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--number swiftforms-field--required swiftforms-w-33 wp-block-swiftforms-field-number"><label class="swiftforms-label" for="sf-5f040001-guests-1">Guests<span class="swiftforms-required"> (required)</span></label><input class="swiftforms-input" type="number" id="sf-5f040001-guests-1" name="sf[guests]" value="2" min="1" max="12" step="1" required aria-required="true" aria-describedby="sf-5f040001-guests-1-error"><p class="swiftforms-error" id="sf-5f040001-guests-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--date swiftforms-w-33 wp-block-swiftforms-field-date"><label class="swiftforms-label" for="sf-5f040001-arrival-1">Arrival</label><input class="swiftforms-input" type="date" id="sf-5f040001-arrival-1" name="sf[arrival]" min="2026-11-20" max="2027-12-31" aria-describedby="sf-5f040001-arrival-1-error"><p class="swiftforms-error" id="sf-5f040001-arrival-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--select swiftforms-field--required swiftforms-w-33 wp-block-swiftforms-field-select"><label class="swiftforms-label" for="sf-5f040001-room-1">Room<span class="swiftforms-required"> (required)</span></label><select class="swiftforms-select" id="sf-5f040001-room-1" name="sf[room]" required aria-required="true" aria-describedby="sf-5f040001-room-1-error"><option value="">Choose a room</option><option value="single">Single</option><option value="double">Double</option><option value="suite">Suite</option></select><p class="swiftforms-error" id="sf-5f040001-room-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--select swiftforms-w-66 wp-block-swiftforms-field-select"><label class="swiftforms-label" for="sf-5f040001-extras-1">Extras</label><select class="swiftforms-select" id="sf-5f040001-extras-1" name="sf[extras][]" multiple aria-describedby="sf-5f040001-extras-1-error"><option value="breakfast">Breakfast</option><option value="parking">Parking</option><option value="late-checkout">Late checkout</option></select><p class="swiftforms-error" id="sf-5f040001-extras-1-error" hidden></p></div>
+<fieldset class="swiftforms-field swiftforms-field--radio swiftforms-w-66 wp-block-swiftforms-field-radio" aria-describedby="sf-5f040001-contact_pref-1-error" role="radiogroup"><legend class="swiftforms-label">Contact me by</legend><div class="swiftforms-choices swiftforms-choices--inline"><label class="swiftforms-choice"><input type="radio" id="sf-5f040001-contact_pref-1-1" name="sf[contact_pref]" value="email" checked><span>Email</span></label><label class="swiftforms-choice"><input type="radio" id="sf-5f040001-contact_pref-1-2" name="sf[contact_pref]" value="phone"><span>Phone</span></label></div><p class="swiftforms-error" id="sf-5f040001-contact_pref-1-error" hidden></p></fieldset>
+<fieldset class="swiftforms-field swiftforms-field--checkboxes swiftforms-w-100 wp-block-swiftforms-field-checkboxes" aria-describedby="sf-5f040001-interests-1-help sf-5f040001-interests-1-error" data-sf-min-choices="1" data-sf-max-choices="2"><legend class="swiftforms-label">Interests</legend><div class="swiftforms-choices swiftforms-choices--stack"><label class="swiftforms-choice"><input type="checkbox" id="sf-5f040001-interests-1-1" name="sf[interests][]" value="food"><span>Food</span></label><label class="swiftforms-choice"><input type="checkbox" id="sf-5f040001-interests-1-2" name="sf[interests][]" value="hiking"><span>Hiking</span></label><label class="swiftforms-choice"><input type="checkbox" id="sf-5f040001-interests-1-3" name="sf[interests][]" value="museums"><span>Museums</span></label><label class="swiftforms-choice"><input type="checkbox" id="sf-5f040001-interests-1-4" name="sf[interests][]" value="nightlife"><span>Nightlife</span></label></div><p class="swiftforms-help" id="sf-5f040001-interests-1-help">Pick one or two.</p><p class="swiftforms-error" id="sf-5f040001-interests-1-error" hidden></p></fieldset>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f040001-notes-1">Notes</label><textarea class="swiftforms-textarea" id="sf-5f040001-notes-1" name="sf[notes]" rows="6" placeholder="Allergies, arrival time..." maxlength="500" aria-describedby="sf-5f040001-notes-1-help sf-5f040001-notes-1-error"></textarea><p class="swiftforms-help" id="sf-5f040001-notes-1-help">Anything we should know?</p><p class="swiftforms-error" id="sf-5f040001-notes-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--consent swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-consent"><label class="swiftforms-choice swiftforms-label swiftforms-consent" for="sf-5f040001-terms-1"><input type="checkbox" id="sf-5f040001-terms-1" name="sf[terms]" value="1" required aria-required="true" aria-describedby="sf-5f040001-terms-1-error"><span>I agree to the <a href="https://example.org/terms">terms</a>.<span class="swiftforms-required"> (required)</span></span></label><p class="swiftforms-error" id="sf-5f040001-terms-1-error" hidden></p></div>
+<input type="hidden" class="swiftforms-field swiftforms-field--hidden" id="sf-5f040001-source_page-1" name="sf[source_page]" value="900001">
+<input type="hidden" class="swiftforms-field swiftforms-field--hidden" id="sf-5f040001-submitter-1" name="sf[submitter]" value="">
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Book now</button></div>
+<input type="hidden" name="_sf_form" value="5f040001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="post:everything"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+-- assets: style swiftforms-form, module @swiftforms/view
+-- client state --
+{
+    "state": {
+        "swiftforms": {
+            "restUrl": "http://example.org/wp-json/",
+            "submitUrl": "http://example.org/wp-json/swiftforms/v1/submit",
+            "tokenUrl": "http://example.org/wp-json/swiftforms/v1/token",
+            "ajaxUrl": "http://example.org/wp-admin/admin-ajax.php",
+            "messages": {
+                "required": "This field is required.",
+                "email": "Please enter a valid email address.",
+                "url": "Please enter a valid web address starting with http:// or https://.",
+                "number": "Please enter a number.",
+                "number_min": "Please enter a number that is at least {min}.",
+                "number_max": "Please enter a number that is at most {max}.",
+                "number_step": "Please enter a multiple of {step}.",
+                "date": "Please enter a valid date as YYYY-MM-DD.",
+                "date_min": "Please enter a date on or after {min}.",
+                "date_max": "Please enter a date on or before {max}.",
+                "max_length": "Please use at most {max} characters.",
+                "min_length": "Please use at least {min} characters.",
+                "pattern": "Please match the requested format.",
+                "option": "Please choose one of the available options.",
+                "min_choices": "Please choose at least {min}.",
+                "max_choices": "Please choose at most {max}.",
+                "consent": "Please tick this box to continue.",
+                "invalid": "Please check this field."
+            },
+            "i18n": {
+                "summary": "Please fix the following:",
+                "summaryItem": "%1$s: %2$s",
+                "network": "The form could not be sent. Please check your connection and try again.",
+                "closed": "This form is no longer accepting submissions.",
+                "rateLimited": "Too many attempts. Please wait a moment and try again.",
+                "blocked": "Your submission could not be accepted. Please reload the page and try again."
+            }
+        }
+    }
+}
+

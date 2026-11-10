@@ -1,0 +1,60 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_notification_to = abuse-desk@example.org
+swiftforms_general_store_ip = 1
+swiftforms_general_store_user_agent = 1
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+swiftforms_spam_blocked_words = casino
+viagra
+free money
+seo services
+swiftforms_spam_honeypot = 1
+swiftforms_spam_js_token = 1
+swiftforms_spam_min_seconds = 8
+swiftforms_spam_rate_limit_per_minute = 2
+swiftforms_spam_spam_action = store
+
+== posts ==
+-- contact (page/publish, slug contact, title Contact)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Contact us</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f120001-0000-4000-8000-000000000001","title":"Contact (protected)"} -->
+<!-- wp:swiftforms/field-text {"label":"Name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you. We read every message.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- quick (page/publish, slug quick, title Quick question)
+<!-- wp:swiftforms/form {"formId":"5f120002-0000-4000-8000-000000000002","title":"Quick question (protection off)","spamProtection":"off"} -->
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true} /-->
+
+<!-- wp:swiftforms/field-text {"label":"Question","name":"question","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Ask"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thanks, we will answer by email.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

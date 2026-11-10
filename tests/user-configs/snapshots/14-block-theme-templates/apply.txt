@@ -1,0 +1,79 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block-files
+template = sf-test-block-files
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_notification_to = editor@fse-site.example
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- footer-part (wp_template_part/publish, slug footer, title Footer)
+<!-- wp:group {"tagName":"footer"} -->
+<footer class="wp-block-group"><!-- wp:paragraph -->
+<p>Stay in touch.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f140001-0000-4000-8000-000000000001","title":"Footer newsletter"} -->
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Subscribe"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>You are subscribed.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form --></footer>
+<!-- /wp:group -->
+-- single-template (wp_template/publish, slug single, title Single Post)
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main"} -->
+<main class="wp-block-group"><!-- wp:post-title /-->
+
+<!-- wp:post-content /-->
+
+<!-- wp:swiftforms/form {"formId":"5f140002-0000-4000-8000-000000000002","title":"Reader feedback"} -->
+<!-- wp:swiftforms/field-text {"label":"Your name","name":"name","required":true} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Feedback","name":"feedback","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send feedback"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you for your feedback.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+-- about (page/publish, slug about, title About)
+<!-- wp:paragraph -->
+<p>We are a small restaurant.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f140003-0000-4000-8000-000000000003","title":"Ask us"} -->
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Question","name":"question","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Ask"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>We will answer soon.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->
+-- hello (post/publish, slug hello-world, title Hello world)
+<!-- wp:paragraph -->
+<p>A post without a form of its own; its single template carries one.</p>
+<!-- /wp:paragraph -->

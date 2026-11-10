@@ -1,59 +1,82 @@
 <?xml version="1.0"?>
-<ruleset name="SwiftForms">
-    <description>WordPress coding standards for SwiftForms.</description>
+<ruleset name="SwiftForms WordPress Coding Standards">
+	<description>Apply WordPress Coding Standards to first-party plugin PHP.</description>
+	<arg name="extensions" value="php"/>
+	<arg name="cache" value=".cache/phpcs.cache"/>
+	<arg name="basepath" value="./"/>
+	<arg name="parallel" value="20"/>
+	<arg value="ps"/>
+	<ini name="memory_limit" value="1024M"/>
+	<!-- Our own code is PHP 7.4 syntax and the plugin header declares PHP 7.4 too. -->
+	<config name="testVersion" value="7.4-"/>
+	<file>.</file>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/vendor-prefixed/*</exclude-pattern>
+	<exclude-pattern>/.cache/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/build/*</exclude-pattern>
+	<!-- Listing and demo sources (a Playground runPHP snippet, artwork, capture scripts): never shipped. -->
+	<exclude-pattern>/assets/wporg-src/*</exclude-pattern>
 
-    <file>swiftforms.php</file>
-    <file>uninstall.php</file>
-    <file>includes</file>
-    <file>tests</file>
-
-    <exclude-pattern>*/vendor/*</exclude-pattern>
-    <exclude-pattern>*/node_modules/*</exclude-pattern>
-    <exclude-pattern>*/build/*</exclude-pattern>
-
-    <arg name="basepath" value="."/>
-    <arg name="colors"/>
-    <arg name="extensions" value="php"/>
-    <arg name="parallel" value="4"/>
-
-    <config name="testVersion" value="8.2-"/>
-
-    <!-- WordPress-Docs is intentionally not used: this codebase follows a
-         no-comments-unless-non-obvious style, so docblocks are only added
-         where they carry information a signature doesn't already give. -->
-    <rule ref="WordPress-Core"/>
-    <rule ref="WordPress-Extra"/>
-    <rule ref="PHPCompatibilityWP"/>
-
-    <!-- WordPress.NamingConventions.PrefixAllGlobals requires a >=4 char
-         prefix; "swf" (3 chars) is a deliberate, verified-unique choice for
-         this codebase (a verified-unique prefix for this codebase),
-         so the sniff is disabled rather than adopting a padded prefix. -->
-    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-        <severity>0</severity>
-    </rule>
-
-    <!-- Namespaced PSR-4 classes: filenames match class names (PascalCase),
-         not the procedural class-foo-bar.php convention this sniff expects. -->
-    <rule ref="WordPress.Files.FileName">
-        <exclude-pattern>*/includes/*</exclude-pattern>
-        <exclude-pattern>*/tests/*</exclude-pattern>
-    </rule>
-
-    <!-- Test-harness patterns: simulated requests, direct filesystem fixtures, test doubles sharing a file. -->
-    <rule ref="WordPress.NamingConventions.ValidVariableName">
-        <exclude-pattern>*/tests/*</exclude-pattern>
-    </rule>
-    <rule ref="WordPress.Security.NonceVerification">
-        <exclude-pattern>*/tests/*</exclude-pattern>
-    </rule>
-    <rule ref="WordPress.WP.AlternativeFunctions">
-        <exclude-pattern>*/tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Generic.Files.OneObjectStructurePerFile">
-        <exclude-pattern>*/tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Squiz.PHP.CommentedOutCode">
-        <exclude-pattern>*/tests/*</exclude-pattern>
-    </rule>
+	<rule ref="WordPress-Extra">
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
+		<!-- Public helper signatures predate PHP named arguments. -->
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames"/>
+	</rule>
+	<rule ref="PHPCompatibilityWP"/>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="swiftforms"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="swiftforms"/>
+				<element value="SwiftForms"/>
+				<element value="sf_test"/>
+			</property>
+			<!-- Test cases that extend our shared base class count as test classes (no prefix needed). -->
+			<property name="custom_test_classes" type="array">
+				<element value="SF_Storage_Test_Case"/>
+				<element value="SF_Resolver_Test_Case"/>
+				<element value="SF_Render_Test_Case"/>
+				<element value="SF_Submission_Test_Case"/>
+				<element value="SF_Admin_Test_Case"/>
+			</property>
+		</properties>
+	</rule>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound">
+		<!-- The WordPress test config must define core's own constants (DB_NAME, AUTH_KEY, ...). -->
+		<exclude-pattern>/tests/phpunit/wp-tests-config.php</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
+		<exclude-pattern>/tests/phpunit/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<exclude-pattern>/tests/phpunit/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
+		<exclude-pattern>/tests/phpunit/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.EnqueuedResources">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+	<!-- SwiftForms capabilities are meta capabilities mapped by Access (C-8.4); no role holds them. -->
+	<rule ref="WordPress.WP.Capabilities">
+		<properties>
+			<property name="custom_capabilities" type="array">
+				<element value="swiftforms_manage_settings"/>
+				<element value="swiftforms_view_entries"/>
+				<element value="swiftforms_edit_entries"/>
+				<element value="swiftforms_delete_entries"/>
+				<element value="swiftforms_export_entries"/>
+				<element value="swiftforms_manage_integrations"/>
+			</property>
+		</properties>
+	</rule>
 </ruleset>

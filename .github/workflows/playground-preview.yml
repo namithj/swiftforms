@@ -1,0 +1,99 @@
+name: Playground Preview
+
+# Posts a one-click WordPress Playground link on every pull request.
+#
+# pull_request_target is used so the comment step has a token that can write to
+# PRs from forks. It therefore deliberately does NOT check out the repository or
+# run any pull request code, and it uses no secrets beyond the automatic token.
+# The link is built only from two trusted values: the base repository name and
+# the pull request number (never from the branch name, title or any other text a
+# contributor controls).
+#
+# Playground installs the pull request's merge ref straight from GitHub
+# (git:directory, refs/pull/<number>/head). The repository holds no build
+# output (vendor-prefixed/ and build/ are generated), so this preview shows the
+# source only; a built preview needs the CI-built ZIP and is left to R01.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: playground-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    name: Post preview link
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Comment preview link on the pull request
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+
+            const blueprint = {
+              $schema: 'https://playground.wordpress.net/blueprint-schema.json',
+              landingPage: '/wp-admin/',
+              preferredVersions: { php: '8.2', wp: 'latest' },
+              login: true,
+              steps: [
+                {
+                  step: 'installPlugin',
+                  pluginData: {
+                    resource: 'git:directory',
+                    url: `https://github.com/${owner}/${repo}`,
+                    ref: `refs/pull/${issue_number}/head`,
+                    refType: 'refname',
+                  },
+                  options: { activate: true, targetFolderName: 'swiftforms' },
+                },
+              ],
+            };
+            const url = `https://playground.wordpress.net/#${Buffer.from(JSON.stringify(blueprint)).toString('base64')}`;
+
+            const marker = '<!-- swiftforms-playground-preview -->';
+            const body = [
+              marker,
+              '### Live preview',
+              '',
+              `[Open this pull request in WordPress Playground](${url})`,
+              '',
+              '<sub>Source-only preview: the build output (vendor-prefixed/, build/) is not in the repository, so the plugin may show its dependency notice.</sub>',
+            ].join('\n');
+
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              { owner, repo, issue_number, per_page: 100 },
+            );
+            const existing = comments.find(
+              (comment) =>
+                comment.user?.type === 'Bot' && comment.body?.includes(marker),
+            );
+
+            // Updated in place so a long-running PR does not accumulate one
+            // preview comment per push.
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body,
+              });
+              return;
+            }
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body,
+            });

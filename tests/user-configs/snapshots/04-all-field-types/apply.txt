@@ -1,0 +1,58 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- everything (page/publish, slug everything, title Everything)
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Book a stay</h2>
+<!-- /wp:heading -->
+
+<!-- wp:swiftforms/form {"formId":"5f040001-0000-4000-8000-000000000001","title":"Kitchen sink","requiredIndicator":"text"} -->
+<!-- wp:swiftforms/field-text {"label":"Full name","name":"full_name","required":true,"help":"As on your ID.","placeholder":"Ada Lovelace","minLength":2,"maxLength":60,"width":"50","autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"help":"We never share it.","placeholder":"you@example.com","width":"50","autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-text {"label":"Reference","name":"ref_code","placeholder":"ABC-1234","width":"25","pattern":"[A-Z]{3}-[0-9]{4}","patternMessage":"Use the format ABC-1234."} /-->
+
+<!-- wp:swiftforms/field-tel {"label":"Phone","name":"phone","placeholder":"+44 20 7946 0000","width":"75","autocomplete":"tel"} /-->
+
+<!-- wp:swiftforms/field-url {"label":"Website","name":"website","placeholder":"https://","autocomplete":"url"} /-->
+
+<!-- wp:swiftforms/field-number {"label":"Guests","name":"guests","required":true,"defaultValue":"2","min":"1","max":"12","step":"1","width":"33"} /-->
+
+<!-- wp:swiftforms/field-date {"label":"Arrival","name":"arrival","min":"2026-11-20","max":"2027-12-31","width":"33"} /-->
+
+<!-- wp:swiftforms/field-select {"label":"Room","name":"room","required":true,"placeholderOption":"Choose a room","options":[{"value":"single","label":"Single"},{"value":"double","label":"Double"},{"value":"suite","label":"Suite"}],"width":"33"} /-->
+
+<!-- wp:swiftforms/field-select {"label":"Extras","name":"extras","multiple":true,"options":[{"value":"breakfast","label":"Breakfast"},{"value":"parking","label":"Parking"},{"value":"late-checkout","label":"Late checkout"}],"width":"66"} /-->
+
+<!-- wp:swiftforms/field-radio {"label":"Contact me by","name":"contact_pref","defaultValue":"email","layout":"inline","options":[{"value":"email","label":"Email"},{"value":"phone","label":"Phone"}],"width":"66"} /-->
+
+<!-- wp:swiftforms/field-checkboxes {"label":"Interests","name":"interests","help":"Pick one or two.","minChoices":1,"maxChoices":2,"options":[{"value":"food","label":"Food"},{"value":"hiking","label":"Hiking"},{"value":"museums","label":"Museums"},{"value":"nightlife","label":"Nightlife"}]} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"Notes","name":"notes","help":"Anything we should know?","placeholder":"Allergies, arrival time...","maxLength":500,"rows":6} /-->
+
+<!-- wp:swiftforms/field-consent {"label":"Terms","name":"terms","text":"I agree to the \u003ca href=\u0022https://example.org/terms\u0022\u003eterms\u003c/a\u003e."} /-->
+
+<!-- wp:swiftforms/field-hidden {"label":"Page","name":"source_page","value":"{post:id}"} /-->
+
+<!-- wp:swiftforms/field-hidden {"label":"User","name":"submitter","value":"{user:id}"} /-->
+
+<!-- wp:swiftforms/submit {"label":"Book now"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Booking request received.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

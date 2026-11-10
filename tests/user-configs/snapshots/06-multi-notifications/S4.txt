@@ -1,0 +1,102 @@
+== S4 start#1 ==
+-- valid --
+redirect 303 Location: http://example.org/start/?sf_result={RESULT}
+left behind:
+entry:
+{
+    "id": "{E4}",
+    "form_id": "5f060001-0000-4000-8000-000000000001",
+    "schema_hash": "eef05adf1c399ffa636bd10c78658bf1f2833da430301c77eff668026682fe23",
+    "source": "post:start",
+    "status": "new",
+    "starred": "0",
+    "user_id": 0,
+    "ip": "CB007107",
+    "user_agent": "SwiftForms-Regression/1.0",
+    "created_gmt": "2026-11-19 10:00:00",
+    "updated_gmt": "2026-11-19 10:00:00"
+}
+  value company[0] = "BigCo"
+  value department[0] = "sales"
+  value email[0] = "ada@bigco.example"
+  value message[0] = "We need a new site.\nBudget is flexible."
+  value name[0] = "Ada Lovelace"
+log mail/info 5f060001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E4}","notification":0,"to":["sales@agency.example","leads@agency.example","manager@agency.example","ops@agency.example","archive@agency.example"]}
+log mail/info 5f060001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E4}","notification":1,"to":["ada@bigco.example"]}
+log mail/warning 5f060001-0000-4000-8000-000000000001: 1 recipient entries were not usable addresses and were dropped. {"entry":"{E4}","notification":2}
+log mail/info 5f060001-0000-4000-8000-000000000001: Notification sent. {"entry":"{E4}","notification":2,"to":["support@agency.example"]}
+-- mail 1 (wp_mail arguments) --
+to: sales@agency.example, leads@agency.example
+subject: New lead: Ada Lovelace
+header: From: Agency Leads <leads@agency.example>
+header: Reply-To: ada@bigco.example
+header: Cc: manager@agency.example, ops@agency.example
+header: Bcc: archive@agency.example
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/sf-uploads/2026/11/agency-logo.png" alt="SwiftForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Work email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@bigco.example</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Company</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">BigCo</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Department</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">sales</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Project brief</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">We need a new site.<br>
+Budget is flexible.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p></td></tr></table></td></tr></table></body></html>
+-- mail 2 (wp_mail arguments) --
+to: ada@bigco.example
+subject: Thanks Ada Lovelace, we got your enquiry
+header: From: Agency Leads <leads@agency.example>
+header: Reply-To: sales@agency.example
+header: Content-Type: text/html; charset=UTF-8
+attachments: (none)
+-- body --
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/sf-uploads/2026/11/agency-logo.png" alt="SwiftForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><p>Hello Ada Lovelace,</p>
+<p>Thank you for your enquiry. A member of the team will contact you within one working day.</p>
+</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p></td></tr></table></td></tr></table></body></html>
+-- mail 3 (wp_mail arguments) --
+to: support@agency.example
+subject: Lead from BigCo
+header: From: Agency Leads <leads@agency.example>
+header: Content-Type: text/plain; charset=UTF-8
+attachments: (none)
+-- body --
+Company: BigCo
+Department: sales
+
+We need a new site.
+Budget is flexible.
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<h2 class="wp-block-heading">Start a project</h2>
+<div class="swiftforms-form swiftforms-form--labels-top swiftforms-form--submitted wp-block-swiftforms-form"><div class="swiftforms-confirmation" role="status">
+<p>Thanks. We will be in touch shortly.</p>
+</div></div>
+
+-- invalid --
+redirect 303 Location: http://example.org/start/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<h2 class="wp-block-heading">Start a project</h2>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f060001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;post:start&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Please fix the following:</p><ul><li><a href="#sf-5f060001-department-1">Department: Please choose one of the available options.</a></li><li><a href="#sf-5f060001-message-1">Project brief: This field is required.</a></li></ul></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f060001-name-1">Name<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="text" id="sf-5f060001-name-1" name="sf[name]" value="Ada Lovelace" autocomplete="name" required aria-required="true" aria-describedby="sf-5f060001-name-1-error"><p class="swiftforms-error" id="sf-5f060001-name-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f060001-email-1">Work email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f060001-email-1" name="sf[email]" value="ada@bigco.example" autocomplete="email" required aria-required="true" aria-describedby="sf-5f060001-email-1-error"><p class="swiftforms-error" id="sf-5f060001-email-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f060001-company-1">Company</label><input class="swiftforms-input" type="text" id="sf-5f060001-company-1" name="sf[company]" value="BigCo" autocomplete="organization" aria-describedby="sf-5f060001-company-1-error"><p class="swiftforms-error" id="sf-5f060001-company-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--select swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-select"><label class="swiftforms-label" for="sf-5f060001-department-1">Department<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><select class="swiftforms-select" id="sf-5f060001-department-1" name="sf[department]" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f060001-department-1-error"><option value="">Choose a department</option><option value="sales">Sales</option><option value="support">Support</option><option value="billing">Billing</option></select><p class="swiftforms-error" id="sf-5f060001-department-1-error">Please choose one of the available options.</p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f060001-message-1">Project brief<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><textarea class="swiftforms-textarea" id="sf-5f060001-message-1" name="sf[message]" rows="4" required aria-required="true" aria-invalid="true" aria-describedby="sf-5f060001-message-1-error"></textarea><p class="swiftforms-error" id="sf-5f060001-message-1-error">This field is required.</p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Request a proposal</button></div>
+<input type="hidden" name="_sf_form" value="5f060001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="post:start"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+
+-- expired token --
+redirect 303 Location: http://example.org/start/?sf_result={RESULT}
+left behind:
+(nothing stored, nothing logged, nothing mailed)
+result page (uncacheable, headers: Expires: Wed, 11 Jan 1984 05:00:00 GMT | Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private | Referrer-Policy: no-referrer):
+<h2 class="wp-block-heading">Start a project</h2>
+<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="{&quot;formId&quot;:&quot;5f060001-0000-4000-8000-000000000001&quot;,&quot;source&quot;:&quot;post:start&quot;,&quot;instance&quot;:1,&quot;ajax&quot;:true,&quot;issued&quot;:498634}" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible"><div class="swiftforms-errors-summary" tabindex="-1" hidden></div><div class="swiftforms-notice swiftforms-notice--info" role="status">Please submit again.</div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f060001-name-1">Name<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="text" id="sf-5f060001-name-1" name="sf[name]" value="Ada Lovelace" autocomplete="name" required aria-required="true" aria-describedby="sf-5f060001-name-1-error"><p class="swiftforms-error" id="sf-5f060001-name-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--email swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-email"><label class="swiftforms-label" for="sf-5f060001-email-1">Work email<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><input class="swiftforms-input" type="email" id="sf-5f060001-email-1" name="sf[email]" value="ada@bigco.example" autocomplete="email" required aria-required="true" aria-describedby="sf-5f060001-email-1-error"><p class="swiftforms-error" id="sf-5f060001-email-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--text swiftforms-w-100 wp-block-swiftforms-field-text"><label class="swiftforms-label" for="sf-5f060001-company-1">Company</label><input class="swiftforms-input" type="text" id="sf-5f060001-company-1" name="sf[company]" value="BigCo" autocomplete="organization" aria-describedby="sf-5f060001-company-1-error"><p class="swiftforms-error" id="sf-5f060001-company-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--select swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-select"><label class="swiftforms-label" for="sf-5f060001-department-1">Department<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><select class="swiftforms-select" id="sf-5f060001-department-1" name="sf[department]" required aria-required="true" aria-describedby="sf-5f060001-department-1-error"><option value="">Choose a department</option><option value="sales" selected>Sales</option><option value="support">Support</option><option value="billing">Billing</option></select><p class="swiftforms-error" id="sf-5f060001-department-1-error" hidden></p></div>
+<div class="swiftforms-field swiftforms-field--textarea swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-textarea"><label class="swiftforms-label" for="sf-5f060001-message-1">Project brief<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label><textarea class="swiftforms-textarea" id="sf-5f060001-message-1" name="sf[message]" rows="4" required aria-required="true" aria-describedby="sf-5f060001-message-1-error">We need a new site.
+Budget is flexible.</textarea><p class="swiftforms-error" id="sf-5f060001-message-1-error" hidden></p></div>
+<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Request a proposal</button></div>
+<input type="hidden" name="_sf_form" value="5f060001-0000-4000-8000-000000000001"><input type="hidden" name="_sf_source" value="post:start"><input type="hidden" name="_sf_v" value="{VERSION}"><input type="hidden" name="_sf_token" value="{TOKEN}"><input type="hidden" name="_sf_t" value="{T}"><input type="hidden" name="_sf_i" value="1"><div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>
+
+

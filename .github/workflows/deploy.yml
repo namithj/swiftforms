@@ -1,0 +1,152 @@
+name: Deploy to WordPress.org
+
+# Publishes a released tag to the WordPress.org SVN repository.
+#
+# Manual by design: WordPress.org treats SVN as a release repository, so a push
+# there is public and awkward to undo. Runs as a dry run unless explicitly told
+# otherwise, and the job waits for a manual approval on the "wordpress-org"
+# environment (required reviewers are configured in the repository settings).
+# The SVN credentials are secrets of that environment, so no other job can read
+# them.
+#
+# Being manual does not mean the version is guessed. release.yml has already
+# rewritten the version into the plugin header, the SWIFTFORMS_VERSION constant
+# and readme.txt and moved the tag onto that commit, so checking out the tag
+# yields the synced tree. This workflow asserts that before touching SVN: if the
+# tag's files do not read the tag's version, it fails instead of publishing a
+# release WordPress.org would serve under the wrong number.
+#
+# The deployed files are built by bin/build-release.sh (the same ZIP the GitHub
+# release carries), not taken from the checkout: vendor-prefixed/ and build/ only
+# exist after the build.
+#
+# Requires the environment secrets SVN_USERNAME and SVN_PASSWORD.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to publish, for example v1.0.0'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run (skip the SVN commit)'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Publish to WordPress.org
+    runs-on: ubuntu-latest
+    environment: wordpress-org
+
+    steps:
+      # The tag, not a branch: release.yml points it at the commit whose files
+      # carry this version.
+      - name: Checkout the release tag
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+
+      # PHP 8.3: Strauss needs PHP 8.2 or newer.
+      - name: Setup PHP
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
+        with:
+          php-version: '8.3'
+          tools: composer
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      # WordPress.org serves whatever Stable tag says, so a tree whose three
+      # version values disagree — with each other or with the tag — must never
+      # reach SVN.
+      - name: Verify the tag's files carry the tag's version
+        shell: bash
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          VERSION="${TAG#v}"
+
+          if ! bash bin/set-version.sh --check "${VERSION}"; then
+            echo "::error::${TAG} does not carry version ${VERSION}. Re-run the Release workflow for ${TAG} to sync it, then deploy again." >&2
+            exit 1
+          fi
+
+          echo "DEPLOY_VERSION=${VERSION}" >> "${GITHUB_ENV}"
+          echo "Deploying version ${VERSION} from ${TAG}."
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      # Never ship a release that fails its own standards gate.
+      - name: Verify coding standards
+        run: composer lint:release
+
+      - name: Build release ZIP
+        shell: bash
+        run: |
+          bash bin/build-release.sh "${RUNNER_TEMP}/dist"
+          mkdir -p "${RUNNER_TEMP}/deploy"
+          unzip -q "${RUNNER_TEMP}/dist/swiftforms.zip" -d "${RUNNER_TEMP}/deploy"
+
+      # The live preview on wordpress.org installs the plugin from the directory, so the SVN copy of the
+      # blueprint (assets/blueprints/blueprint.json in SVN) swaps the GitHub ZIP for the directory slug.
+      # The images in .wordpress-org/ are committed; the blueprint is generated here and not committed.
+      - name: Prepare the wordpress.org blueprint
+        shell: bash
+        run: |
+          mkdir -p .wordpress-org/blueprints
+          node -e '
+            const fs = require( "fs" );
+            const blueprint = JSON.parse( fs.readFileSync( "assets/blueprints/blueprint.json", "utf8" ) );
+            let swapped = 0;
+            for ( const step of blueprint.steps ) {
+              if ( step.step === "installPlugin" ) {
+                step.pluginData = { resource: "wordpress.org/plugins", slug: "swiftforms" };
+                swapped++;
+              }
+            }
+            if ( swapped !== 1 ) {
+              throw new Error( "Expected exactly one installPlugin step." );
+            }
+            fs.writeFileSync( ".wordpress-org/blueprints/blueprint.json", JSON.stringify( blueprint, null, 2 ) + "\n" );
+          '
+
+      - name: Deploy to WordPress.org
+        uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: swiftforms
+          VERSION: ${{ env.DEPLOY_VERSION }}
+          BUILD_DIR: ${{ runner.temp }}/deploy/swiftforms
+        with:
+          dry-run: ${{ inputs.dry_run }}
+
+      - name: Summary
+        shell: bash
+        env:
+          TAG: ${{ inputs.tag }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          {
+            echo "### WordPress.org deploy"
+            echo
+            echo "- Tag: \`${TAG}\`"
+            echo "- Version: \`${DEPLOY_VERSION}\`"
+            echo "- Dry run: \`${DRY_RUN}\`"
+            if [[ "${DRY_RUN}" == 'true' ]]; then
+              echo
+              echo "Nothing was committed to SVN. Re-run with *Dry run* unticked to publish."
+            fi
+          } >> "${GITHUB_STEP_SUMMARY}"

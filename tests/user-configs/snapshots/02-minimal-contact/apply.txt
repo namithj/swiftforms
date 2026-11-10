@@ -1,0 +1,35 @@
+== site ==
+home = http://example.org
+siteurl = http://example.org
+stylesheet = sf-test-block
+template = sf-test-block
+timezone_string = Europe/London
+permalink_structure = /%postname%/
+WPLANG =
+
+== options ==
+swiftforms_db_version = 1
+swiftforms_email_notification_to = owner@example.org
+swiftforms_installed = a:2:{s:7:"version";s:5:"1.0.0";s:4:"time";i:1795082400;}
+
+== posts ==
+-- contact (page/publish, slug contact, title Contact)
+<!-- wp:paragraph -->
+<p>Get in touch with us below.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:swiftforms/form {"formId":"5f020001-0000-4000-8000-000000000001","title":"Contact us"} -->
+<!-- wp:swiftforms/field-text {"label":"Your name","name":"name","required":true,"autocomplete":"name"} /-->
+
+<!-- wp:swiftforms/field-email {"label":"Email","name":"email","required":true,"autocomplete":"email"} /-->
+
+<!-- wp:swiftforms/field-textarea {"label":"How can we help?","name":"message","required":true} /-->
+
+<!-- wp:swiftforms/submit {"label":"Send message"} /-->
+
+<!-- wp:swiftforms/confirmation -->
+<!-- wp:paragraph -->
+<p>Thank you. We reply within one working day.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:swiftforms/confirmation -->
+<!-- /wp:swiftforms/form -->

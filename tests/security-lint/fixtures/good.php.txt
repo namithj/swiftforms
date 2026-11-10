@@ -1,0 +1,16 @@
+<?php
+// expect: none
+// A comment that mentions wp_ajax_nopriv_ and __return_true and $wpdb->query( 'x' ) is ignored.
+register_rest_route( 'x/v1', '/ok', [ 'methods' => 'GET', 'callback' => 'f', 'permission_callback' => [ Access::class, 'can' ] ] );
+add_action( 'wp_ajax_swiftforms_rest_nonce', 'f' );
+add_action( 'wp_ajax_swiftforms_other', 'g' );
+function g() {
+	check_ajax_referer( 'x' );
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	global $wpdb;
+	$wpdb->get_var( $wpdb->prepare( 'SELECT 1 WHERE a = %d', 1 ) );
+	// sf-allow-unprepared: no input.
+	$wpdb->get_results( 'SELECT 1' );
+}

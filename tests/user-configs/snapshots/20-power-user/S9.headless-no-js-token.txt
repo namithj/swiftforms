@@ -1,0 +1,2062 @@
+== S9 registered ==
+exporter: SwiftForms entries
+eraser: SwiftForms entries
+
+== S9 export for ada@example.com ==
+[
+    {
+        "data": [
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E1}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E2}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Newsletter (no JavaScript)"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E3}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Visit booking"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Visit on",
+                        "value": "2026-12-12"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A visit in December."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E4}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Plan chooser"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Plan",
+                        "value": "pro"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "The pro plan, please."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E5}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Quiet form"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E6}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Two notifications"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E7}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Stored although the site does not store"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E8}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Redirect form"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E9}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Spam protection off"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E10}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Where did you read this?"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Page",
+                        "value": "Updates"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E11}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Topics"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Topics",
+                        "value": "wp, php"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Two topics."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E12}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E13}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E14}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Newsletter (no JavaScript)"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E15}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Visit booking"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Visit on",
+                        "value": "2026-12-12"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A visit in December."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E16}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Plan chooser"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Plan",
+                        "value": "pro"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "The pro plan, please."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E17}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Quiet form"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E18}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Two notifications"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E19}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Stored although the site does not store"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E20}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Redirect form"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E21}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Spam protection off"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E22}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Where did you read this?"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Page",
+                        "value": "Updates"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Hello from the power site."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E23}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Topics"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Topics",
+                        "value": "wp, php"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Two topics."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E24}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E25}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E26}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E27}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E28}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E29}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E30}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E32}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E33}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "A promo code the hook accepts."
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E34}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 1"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E35}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 2"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E36}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 3"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E37}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 4"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E38}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 5"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E39}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 6"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E40}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 7"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E41}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 8"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E42}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 9"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E43}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 10"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E44}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 11"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E45}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 12"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E46}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 13"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E47}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 14"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E48}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 15"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E49}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 16"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E50}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 17"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E51}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 18"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            }
+        ],
+        "done": false
+    },
+    {
+        "data": [
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E52}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 19"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            },
+            {
+                "group_id": "swiftforms-entries",
+                "group_label": "SwiftForms entries",
+                "item_id": "swiftforms-entry-{E53}",
+                "data": [
+                    {
+                        "name": "Form",
+                        "value": "Hero contact"
+                    },
+                    {
+                        "name": "Submitted (UTC)",
+                        "value": "2026-11-19 10:00:00"
+                    },
+                    {
+                        "name": "Name",
+                        "value": "Ada Lovelace"
+                    },
+                    {
+                        "name": "Email",
+                        "value": "ada@example.com"
+                    },
+                    {
+                        "name": "Promo code",
+                        "value": "WELCOME10"
+                    },
+                    {
+                        "name": "Message",
+                        "value": "Rate limit probe 20"
+                    },
+                    {
+                        "name": "IP address",
+                        "value": "203.0.113.7"
+                    },
+                    {
+                        "name": "User agent",
+                        "value": "SwiftForms-Regression/1.0"
+                    }
+                ]
+            }
+        ],
+        "done": true
+    }
+]
+
+== S9 export for an address with no entries ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase ada@example.com ==
+[
+    {
+        "items_removed": true,
+        "items_retained": false,
+        "messages": [
+            "Removed 50 SwiftForms entries."
+        ],
+        "done": false
+    },
+    {
+        "items_removed": true,
+        "items_retained": false,
+        "messages": [
+            "Removed 2 SwiftForms entries."
+        ],
+        "done": true
+    }
+]
+
+== S9 rows before and after the erasure ==
+before:
+{
+    "entries with the address": 52,
+    "entries": 53,
+    "value rows": 201,
+    "mail log rows naming it": 0
+}
+after:
+{
+    "entries with the address": 0,
+    "entries": 1,
+    "value rows": 3,
+    "orphan value rows": 0,
+    "orphan meta rows": 0,
+    "mail log rows naming it": 0
+}
+
+== S9 export again after the erasure ==
+[
+    {
+        "data": [],
+        "done": true
+    }
+]
+
+== S9 erase an address with no entries ==
+[
+    {
+        "items_removed": false,
+        "items_retained": false,
+        "messages": [],
+        "done": true
+    }
+]
+

@@ -1,0 +1,230 @@
+/*
+ * SwiftForms front-end stylesheet (budget: 4 KB gzipped).
+ *
+ * A reset-free baseline: fonts and colours are inherited from the theme and
+ * borders use currentColor. Class names are an API (data contract C-7.1).
+ * Logical properties keep the layout right in RTL; the build adds a -rtl.css
+ * twin for the few physical rules.
+ */
+.swiftforms-form {
+	--sf-gap: var(--wp--style--block-gap, 1rem);
+	--sf-error: #b32d2e;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sf-gap);
+	align-items: flex-start;
+	box-sizing: border-box;
+}
+
+.swiftforms-form > * {
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0;
+}
+
+.swiftforms-form *,
+.swiftforms-form *::before,
+.swiftforms-form *::after {
+	box-sizing: border-box;
+}
+
+.swiftforms-field {
+	display: block;
+	min-width: 0;
+}
+
+.swiftforms-field--hidden {
+	display: none;
+}
+
+.swiftforms-label,
+legend.swiftforms-label {
+	display: block;
+	margin-block-end: 0.35em;
+	padding: 0;
+	font-weight: 600;
+}
+
+.swiftforms-input,
+.swiftforms-textarea,
+.swiftforms-select {
+	display: block;
+	width: 100%;
+	min-height: 2.5rem;
+	margin: 0;
+	padding: 0.5em 0.75em;
+	border: 1px solid;
+	border-radius: 2px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	transition: border-color 0.15s ease-in-out;
+}
+
+.swiftforms-select[multiple] {
+	min-height: 6rem;
+}
+
+.swiftforms-form :is(input, textarea, select, button, a):focus-visible {
+	outline: 2px solid currentcolor;
+	outline-offset: 2px;
+}
+
+.swiftforms-form [aria-invalid="true"] {
+	border-color: var(--sf-error);
+}
+
+fieldset.swiftforms-field {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.swiftforms-choices {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+
+.swiftforms-choices--inline {
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.5em 1.5em;
+}
+
+.swiftforms-choice {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	min-height: 1.5rem;
+}
+
+.swiftforms-choice input {
+	flex: none;
+	width: 1.5rem;
+	height: 1.5rem;
+	min-width: 24px;
+	min-height: 24px;
+	margin: 0;
+}
+
+.swiftforms-help {
+	margin: 0.35em 0 0;
+	font-size: 0.875em;
+	opacity: 0.8;
+}
+
+.swiftforms-error {
+	margin: 0.35em 0 0;
+	color: var(--sf-error);
+	font-size: 0.875em;
+}
+
+.swiftforms-error[hidden],
+.swiftforms-errors-summary[hidden] {
+	display: none;
+}
+
+.swiftforms-errors-summary,
+.swiftforms-notice {
+	padding: 0.75em 1em;
+	border: 2px solid var(--sf-error);
+}
+
+.swiftforms-errors-summary ul {
+	margin: 0.5em 0 0;
+	padding-inline-start: 1.25em;
+}
+
+.swiftforms-errors-summary a {
+	color: inherit;
+}
+
+.swiftforms-notice--info {
+	border-color: currentcolor;
+}
+
+.swiftforms-required {
+	margin-inline-start: 0.2em;
+}
+
+.swiftforms-submit__button {
+	min-width: 24px;
+	min-height: 24px;
+	cursor: pointer;
+	font: inherit;
+}
+
+.swiftforms-submit__button[aria-disabled="true"] {
+	cursor: progress;
+	opacity: 0.7;
+}
+
+.swiftforms-confirmation {
+	padding: 0.75em 1em;
+	border-inline-start: 4px solid currentcolor;
+}
+
+.swiftforms-sr-only,
+.swiftforms-hp {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* Label beside the control. */
+@media (min-width: 600px) {
+
+	.swiftforms-form--labels-inline .swiftforms-field:not(fieldset) {
+		display: grid;
+		grid-template-columns: minmax(7rem, 30%) 1fr;
+		column-gap: 1em;
+		align-items: start;
+	}
+
+	.swiftforms-form--labels-inline .swiftforms-field:not(fieldset) > :is(.swiftforms-help, .swiftforms-error) {
+		grid-column: 2;
+	}
+}
+
+/* Widths (C-2.4): the gap comes out of each share, so a row is 100%. */
+.swiftforms-w-75 {
+	width: calc(75% - var(--sf-gap, 1rem) * 0.25);
+}
+
+.swiftforms-w-66 {
+	width: calc(66.66% - var(--sf-gap, 1rem) * 0.34);
+}
+
+.swiftforms-w-50 {
+	width: calc(50% - var(--sf-gap, 1rem) * 0.5);
+}
+
+.swiftforms-w-33 {
+	width: calc(33.33% - var(--sf-gap, 1rem) * 0.67);
+}
+
+.swiftforms-w-25 {
+	width: calc(25% - var(--sf-gap, 1rem) * 0.75);
+}
+
+@media (max-width: 599px) {
+
+	.swiftforms-form .swiftforms-field {
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.swiftforms-form * {
+		transition: none !important;
+		animation: none !important;
+	}
+}

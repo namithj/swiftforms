@@ -1,0 +1,71 @@
+== S3 columns#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- payload c15-visit-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required.",
+        "day": "Please enter a date on or after 2026-11-20."
+    }
+}
+
+== S3 featured#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- payload c15-club-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required.",
+        "email": "Please enter a valid email address."
+    }
+}
+
+== S3 widget:block-2#1 ==
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- payload c15-signup-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "Please enter a valid email address."
+    }
+}
+

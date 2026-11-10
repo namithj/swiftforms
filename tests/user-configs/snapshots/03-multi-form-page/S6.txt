@@ -1,0 +1,615 @@
+== S6 GET /entries (default: new and read, newest first) ==
+x-wp-total: 8
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E8}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f030001-0000-4000-8000-000000000001",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f030003-0000-4000-8000-000000000003",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Alan Turing · alan@example.net"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f030001-0000-4000-8000-000000000001",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f030003-0000-4000-8000-000000000003",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Alan Turing · alan@example.net"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    }
+]
+
+== S6 GET /forms ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "form_id": "5f030003-0000-4000-8000-000000000003",
+        "title": "Contact",
+        "counts": {
+            "new": 2,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "5f030001-0000-4000-8000-000000000001",
+        "title": "Newsletter",
+        "counts": {
+            "new": 2,
+            "read": 0,
+            "spam": 0,
+            "trash": 0
+        }
+    },
+    {
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "title": "Request a callback",
+        "counts": {
+            "new": 4,
+            "read": 0,
+            "spam": 11,
+            "trash": 0
+        }
+    }
+]
+
+== S6 GET /entries?form=landing#1&status=new ==
+x-wp-total: 4
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E8}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    }
+]
+
+== S6 GET /entries?form=landing#2&status=new ==
+x-wp-total: 2
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E6}",
+        "form_id": "5f030003-0000-4000-8000-000000000003",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Alan Turing · alan@example.net"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f030003-0000-4000-8000-000000000003",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Alan Turing · alan@example.net"
+    }
+]
+
+== S6 GET /entries?form=newsletter-pattern#1&status=new ==
+x-wp-total: 2
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E7}",
+        "form_id": "5f030001-0000-4000-8000-000000000001",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f030001-0000-4000-8000-000000000001",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com"
+    }
+]
+
+== S6 GET /entries?status=new ==
+x-wp-total: 8
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E8}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E7}",
+        "form_id": "5f030001-0000-4000-8000-000000000001",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com"
+    },
+    {
+        "id": "{E6}",
+        "form_id": "5f030003-0000-4000-8000-000000000003",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Alan Turing · alan@example.net"
+    },
+    {
+        "id": "{E5}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E4}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E3}",
+        "form_id": "5f030001-0000-4000-8000-000000000001",
+        "form_title": "Newsletter",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "ada@example.com"
+    },
+    {
+        "id": "{E2}",
+        "form_id": "5f030003-0000-4000-8000-000000000003",
+        "form_title": "Contact",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Alan Turing · alan@example.net"
+    },
+    {
+        "id": "{E1}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "new",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    }
+]
+
+== S6 GET /entries?status=read ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries?status=spam ==
+x-wp-total: 11
+x-wp-totalpages: 1
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[
+    {
+        "id": "{E19}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E18}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E17}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E16}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E15}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E14}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E13}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E12}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E11}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E10}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    },
+    {
+        "id": "{E9}",
+        "form_id": "5f030002-0000-4000-8000-000000000002",
+        "form_title": "Request a callback",
+        "date_gmt": "2026-11-19T10:00:00Z",
+        "date_display": "November 19, 2026 10:00 am",
+        "status": "spam",
+        "starred": false,
+        "summary": "Grace Hopper · +44 20 7946 0000"
+    }
+]
+
+== S6 GET /entries?status=trash ==
+x-wp-total: 0
+x-wp-totalpages: 0
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+[]
+
+== S6 GET /entries/{E8} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E8}",
+    "form_id": "5f030002-0000-4000-8000-000000000002",
+    "form_title": "Request a callback",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "new",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Grace Hopper",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "phone",
+            "label": "Phone",
+            "type": "tel",
+            "values": [
+                {
+                    "value": "+44 20 7946 0000",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "time",
+            "label": "Best time to call",
+            "type": "select",
+            "values": [
+                {
+                    "value": "afternoon",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Landing",
+        "link": "http://example.org/landing/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E8} {"status":"read"} ==
+status: 200
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "id": "{E8}",
+    "form_id": "5f030002-0000-4000-8000-000000000002",
+    "form_title": "Request a callback",
+    "date_gmt": "2026-11-19T10:00:00Z",
+    "date_display": "November 19, 2026 10:00 am",
+    "status": "read",
+    "starred": false,
+    "fields": [
+        {
+            "name": "name",
+            "label": "Name",
+            "type": "text",
+            "values": [
+                {
+                    "value": "Grace Hopper",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "phone",
+            "label": "Phone",
+            "type": "tel",
+            "values": [
+                {
+                    "value": "+44 20 7946 0000",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        },
+        {
+            "name": "time",
+            "label": "Best time to call",
+            "type": "select",
+            "values": [
+                {
+                    "value": "afternoon",
+                    "is_link": false,
+                    "is_email": false
+                }
+            ]
+        }
+    ],
+    "source": {
+        "title": "Landing",
+        "link": "http://example.org/landing/"
+    },
+    "user": null
+}
+
+== S6 PATCH /entries/{E8} {"starred":true} ==
+status: 200, entry status: read, starred: true
+
+== S6 PATCH /entries/{E8} {"status":"spam"} ==
+status: 200, entry status: spam, starred: true
+
+== S6 PATCH /entries/{E8} {"status":"trash"} ==
+status: 200, entry status: trash, starred: true
+
+== S6 PATCH /entries/{E8} {"status":"new"} ==
+status: 200, entry status: new, starred: true
+
+== S6 PATCH /entries/{E8} {"starred":false} ==
+status: 200, entry status: new, starred: false
+
+== S6 PATCH /entries/{E8} with nothing to change ==
+status: 400
+{
+    "code": "rest_missing_callback_param",
+    "message": "Send a status or starred.",
+    "data": {
+        "status": 400
+    }
+}
+
+== S6 GET /entries/999999999 (no such entry) ==
+status: 404
+{
+    "code": "swiftforms_entry_not_found",
+    "message": "No such entry.",
+    "data": {
+        "status": 404
+    }
+}
+
+== S6 GET /entries as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+
+== S6 PATCH /entries/{id} as a guest ==
+status: 401
+{
+    "code": "rest_forbidden",
+    "message": "Sorry, you are not allowed to do that.",
+    "data": {
+        "status": 401
+    }
+}
+

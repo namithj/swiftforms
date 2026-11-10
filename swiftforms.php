@@ -1,68 +1,110 @@
 <?php
 /**
- * Plugin Name: SwiftForms
- * Plugin URI: https://github.com/smartlogix/swiftforms
- * Description: A streamlined, block-based form builder for WordPress with per-form Settings/Entries screens, layered spam protection, conditional logic, and a themeable design system.
- * Version: 1.0.0
- * Author: Smartlogix
- * Author URI: https://smartlogix.co.in
- * License: GPLv2 or later
+ * Plugin Name: SwiftForms – Contact Form Builder for the Block Editor
+ * Plugin URI: https://github.com/namithj/swiftforms
+ * Description: Build contact forms with blocks, right in the editor. Fast, accessible and free, with no upsells.
+ * Author: namithjawahar
+ * Author URI: https://smartlogix.co.in/
+ * Version: 0.1.0
+ * Requires at least: 6.8
+ * Requires PHP: 7.4
+ * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Requires at least: 6.6
- * Requires PHP: 8.2
  * Text Domain: swiftforms
  * Domain Path: /languages
- *
- * @package SwiftForms
  */
-
-declare(strict_types=1);
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function smartlogix_swiftforms_meets_requirements( ?string $wordpress_version = null, ?string $php_version = null ): bool {
-	$wordpress_version = null === $wordpress_version ? get_bloginfo( 'version' ) : $wordpress_version;
-	$php_version       = null === $php_version ? PHP_VERSION : $php_version;
+/**
+ * Plugin version.
+ *
+ * Kept in step with the plugin header and the readme Stable tag by
+ * bin/set-version.sh, which the release pipeline runs from the pushed tag.
+ */
+define( 'SWIFTFORMS_VERSION', '0.1.0' );
 
-	return version_compare( $wordpress_version, '6.6', '>=' ) && version_compare( $php_version, '8.2', '>=' );
+/**
+ * Main plugin file, for plugin_dir_path() / plugin_dir_url() and activation hooks.
+ */
+define( 'SWIFTFORMS_FILE', __FILE__ );
+
+/**
+ * Floors checked by the bootstrap guard below.
+ *
+ * SWIFTFORMS_MIN_PHP is the floor of SwiftForms' own code and of the bundled
+ * frameworks (phpcs testVersion 7.4-), and it matches the "Requires PHP" header.
+ * WordPress enforces the header; this guard is the last line of defence when the
+ * header was bypassed.
+ */
+define( 'SWIFTFORMS_MIN_PHP', '7.4' );
+define( 'SWIFTFORMS_MIN_WP', '6.8' );
+
+/**
+ * Print an admin notice and leave the plugin switched off.
+ *
+ * Written for PHP 5.6+ on purpose (no short closures, no typed properties, no
+ * namespaces) so that this file parses on any PHP and never fatals.
+ *
+ * @param string $message Already-translated, plain-text message.
+ * @return void
+ */
+function swiftforms_bootstrap_notice( $message ) {
+	add_action(
+		'admin_notices',
+		function () use ( $message ) {
+			printf(
+				'<div class="notice notice-error"><p>%s</p></div>',
+				esc_html( $message )
+			);
+		}
+	);
 }
 
-function smartlogix_swiftforms_requirements_notice(): void {
-	echo '<div class="notice notice-error"><p>' . esc_html__( 'SwiftForms requires WordPress 6.6 or newer and PHP 8.2 or newer. The plugin has not started.', 'swiftforms' ) . '</p></div>';
-}
-
-function smartlogix_swiftforms_reject_unsupported_activation(): void {
-	deactivate_plugins( plugin_basename( __FILE__ ) );
-	wp_die( esc_html__( 'SwiftForms requires WordPress 6.6 or newer and PHP 8.2 or newer.', 'swiftforms' ), esc_html__( 'Plugin requirements not met', 'swiftforms' ), array( 'back_link' => true ) );
-}
-
-if ( ! smartlogix_swiftforms_meets_requirements() ) {
-	add_action( 'admin_notices', 'smartlogix_swiftforms_requirements_notice' );
-	register_activation_hook( __FILE__, 'smartlogix_swiftforms_reject_unsupported_activation' );
+if ( version_compare( PHP_VERSION, SWIFTFORMS_MIN_PHP, '<' ) ) {
+	swiftforms_bootstrap_notice(
+		sprintf(
+			/* translators: 1: required PHP version, 2: current PHP version. */
+			__( 'SwiftForms needs PHP %1$s or newer. You are running PHP %2$s, so the plugin is switched off.', 'swiftforms' ),
+			SWIFTFORMS_MIN_PHP,
+			PHP_VERSION
+		)
+	);
 	return;
 }
 
-define( 'SMARTLOGIX_SWIFTFORMS_VERSION', '1.0.0' );
-define( 'SMARTLOGIX_SWIFTFORMS_PLUGIN_FILE', __FILE__ );
-define( 'SMARTLOGIX_SWIFTFORMS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-define( 'SMARTLOGIX_SWIFTFORMS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-
-$smartlogix_swiftforms_autoload = SMARTLOGIX_SWIFTFORMS_PLUGIN_PATH . 'vendor/autoload.php';
-if ( file_exists( $smartlogix_swiftforms_autoload ) ) {
-	require_once $smartlogix_swiftforms_autoload;
-}
-unset( $smartlogix_swiftforms_autoload );
-
-/**
- * Returns the plugin singleton, booting it on first access.
- */
-function smartlogix_swiftforms(): SwiftForms\Plugin {
-	return SwiftForms\Plugin::instance();
+if ( version_compare( get_bloginfo( 'version' ), SWIFTFORMS_MIN_WP, '<' ) ) {
+	swiftforms_bootstrap_notice(
+		sprintf(
+			/* translators: 1: required WordPress version, 2: current WordPress version. */
+			__( 'SwiftForms needs WordPress %1$s or newer. You are running WordPress %2$s, so the plugin is switched off.', 'swiftforms' ),
+			SWIFTFORMS_MIN_WP,
+			get_bloginfo( 'version' )
+		)
+	);
+	return;
 }
 
-register_activation_hook( SMARTLOGIX_SWIFTFORMS_PLUGIN_FILE, array( SwiftForms\Activation::class, 'activate' ) );
-register_deactivation_hook( SMARTLOGIX_SWIFTFORMS_PLUGIN_FILE, array( SwiftForms\Activation::class, 'deactivate' ) );
+// Strauss output (the namespaced frameworks) and Composer's own autoloader (our classes).
+if ( ! is_readable( __DIR__ . '/vendor-prefixed/autoload.php' ) || ! is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+	swiftforms_bootstrap_notice(
+		__( 'SwiftForms is missing its dependencies. Install the plugin from a release ZIP, or run "composer install" in the plugin folder.', 'swiftforms' )
+	);
+	return;
+}
 
-add_action( 'plugins_loaded', array( smartlogix_swiftforms(), 'boot' ) );
+require_once __DIR__ . '/vendor-prefixed/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Registered here, not in Plugin::boot(): activation runs before plugins_loaded fires.
+register_activation_hook( SWIFTFORMS_FILE, [ \SwiftForms\Activator::class, 'activate' ] );
+register_deactivation_hook( SWIFTFORMS_FILE, [ \SwiftForms\Activator::class, 'deactivate' ] );
+
+add_action(
+	'plugins_loaded',
+	function () {
+		\SwiftForms\Plugin::instance()->boot();
+	}
+);

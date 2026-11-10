@@ -1,0 +1,90 @@
+== S3 contact#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- without details --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "details": "This field is required."
+    }
+}
+-- payload c11-contact-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required.",
+        "email": "Please enter a valid email address.",
+        "topic": "Please choose one of the available options.",
+        "details": "This field is required."
+    }
+}
+
+== S3 newsletter#1 ==
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- payload c11-news-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "Please enter a valid email address."
+    }
+}
+
+== S3 survey#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without interests --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "interests": "This field is required."
+    }
+}
+-- payload c11-survey-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "interests": "Please choose at most 3."
+    }
+}
+

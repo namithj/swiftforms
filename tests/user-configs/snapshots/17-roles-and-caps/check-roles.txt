@@ -1,0 +1,132 @@
+== Capability map (after the swiftforms_capability_map filter) ==
+{
+    "swiftforms_manage_settings": "manage_options",
+    "swiftforms_view_entries": "sf_support_desk",
+    "swiftforms_edit_entries": "sf_support_desk",
+    "swiftforms_delete_entries": "manage_options",
+    "swiftforms_export_entries": "manage_options",
+    "swiftforms_manage_integrations": "manage_options"
+}
+
+== Roles in the database before the check ==
+administrator, editor, author, contributor, subscriber, sf_support
+
+== User admin (administrator) ==
+swiftforms_manage_settings        yes
+swiftforms_view_entries           yes
+swiftforms_edit_entries           yes
+swiftforms_delete_entries         yes
+swiftforms_export_entries         yes
+swiftforms_manage_integrations    yes
+
+GET /entries                      200
+GET /forms                        200
+GET /entries/3                    200
+PATCH /entries/3 starred          200
+PATCH /entries/3 unstar           200
+DELETE /entries/999999            404 swiftforms_entry_not_found
+GET /settings                     200
+POST /settings (same payload)     200
+
+submission: 200, entryId returned, entry stored by user "{USER:admin}"
+
+== User editor (editor) ==
+swiftforms_manage_settings        no
+swiftforms_view_entries           no
+swiftforms_edit_entries           no
+swiftforms_delete_entries         no
+swiftforms_export_entries         no
+swiftforms_manage_integrations    no
+
+GET /entries                      403 rest_forbidden
+GET /forms                        403 rest_forbidden
+GET /entries/3                    403 rest_forbidden
+PATCH /entries/3 starred          403 rest_forbidden
+PATCH /entries/3 unstar           403 rest_forbidden
+DELETE /entries/999999            403 rest_forbidden
+GET /settings                     403 rest_forbidden
+POST /settings (same payload)     403 rest_forbidden
+
+submission: 200, entryId not returned, entry stored by user "{USER:editor}"
+
+== User author (author) ==
+swiftforms_manage_settings        no
+swiftforms_view_entries           no
+swiftforms_edit_entries           no
+swiftforms_delete_entries         no
+swiftforms_export_entries         no
+swiftforms_manage_integrations    no
+
+GET /entries                      403 rest_forbidden
+GET /forms                        403 rest_forbidden
+GET /entries/3                    403 rest_forbidden
+PATCH /entries/3 starred          403 rest_forbidden
+PATCH /entries/3 unstar           403 rest_forbidden
+DELETE /entries/999999            403 rest_forbidden
+GET /settings                     403 rest_forbidden
+POST /settings (same payload)     403 rest_forbidden
+
+submission: 200, entryId not returned, entry stored by user "{USER:author}"
+
+== User contributor (contributor) ==
+swiftforms_manage_settings        no
+swiftforms_view_entries           no
+swiftforms_edit_entries           no
+swiftforms_delete_entries         no
+swiftforms_export_entries         no
+swiftforms_manage_integrations    no
+
+GET /entries                      403 rest_forbidden
+GET /forms                        403 rest_forbidden
+GET /entries/3                    403 rest_forbidden
+PATCH /entries/3 starred          403 rest_forbidden
+PATCH /entries/3 unstar           403 rest_forbidden
+DELETE /entries/999999            403 rest_forbidden
+GET /settings                     403 rest_forbidden
+POST /settings (same payload)     403 rest_forbidden
+
+submission: 200, entryId not returned, entry stored by user "{USER:contributor}"
+
+== User support (sf_support) ==
+swiftforms_manage_settings        no
+swiftforms_view_entries           yes
+swiftforms_edit_entries           yes
+swiftforms_delete_entries         no
+swiftforms_export_entries         no
+swiftforms_manage_integrations    no
+
+GET /entries                      200
+GET /forms                        200
+GET /entries/3                    200
+PATCH /entries/3 starred          200
+PATCH /entries/3 unstar           200
+DELETE /entries/999999            403 rest_forbidden
+GET /settings                     403 rest_forbidden
+POST /settings (same payload)     403 rest_forbidden
+
+submission: 200, entryId returned, entry stored by user "{USER:support}"
+
+== User guest (no role) ==
+swiftforms_manage_settings        no
+swiftforms_view_entries           no
+swiftforms_edit_entries           no
+swiftforms_delete_entries         no
+swiftforms_export_entries         no
+swiftforms_manage_integrations    no
+
+GET /entries                      401 rest_forbidden
+GET /forms                        401 rest_forbidden
+GET /entries/3                    401 rest_forbidden
+PATCH /entries/3 starred          401 rest_forbidden
+PATCH /entries/3 unstar           401 rest_forbidden
+DELETE /entries/999999            401 rest_forbidden
+GET /settings                     401 rest_forbidden
+POST /settings (same payload)     401 rest_forbidden
+
+submission: 200, entryId not returned, entry stored by user 0
+
+== Stored roles and capabilities ==
+wp_user_roles unchanged: yes
+user capabilities unchanged: yes
+wp_user_roles mentions swiftforms_: no
+

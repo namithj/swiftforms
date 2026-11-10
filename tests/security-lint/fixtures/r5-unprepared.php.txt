@@ -1,0 +1,5 @@
+<?php
+// expect: R5
+global $wpdb;
+$wpdb->query( "DELETE FROM x WHERE id = $id" );
+$wpdb->get_row( $sql );

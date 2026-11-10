@@ -1,0 +1,90 @@
+== S3 never#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- payload c10-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required.",
+        "email": "Please enter a valid email address."
+    }
+}
+
+== S3 stored#1 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- payload c10-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required.",
+        "email": "Please enter a valid email address."
+    }
+}
+
+== S3 stored#2 ==
+-- without name --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required."
+    }
+}
+-- without email --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "email": "This field is required."
+    }
+}
+-- payload c10-bad --
+status: 422
+cache-control: no-store, no-cache, must-revalidate, max-age=0
+{
+    "status": "invalid",
+    "errors": {
+        "name": "This field is required.",
+        "email": "Please enter a valid email address."
+    }
+}
+
