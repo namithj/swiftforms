@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Author-supplied `pattern` regexes are compiled with a fixed delimiter and flags and are anchored
  * like the HTML `pattern` attribute. They only ever run on a value already capped at the field's
- * maxLength (default 5,000 characters). A runtime PCRE error (backtrack limit and the like) makes the
+ * maxLength (default 5,000 characters). A runtime PCRE error (match limit exceeded and the like) makes the
  * value INVALID and is logged; a pattern that does not compile is ignored and logged.
  */
 class Validator {
@@ -46,7 +46,7 @@ class Validator {
 	const MAX_LIST = 200;
 
 	/**
-	 * Backtrack limit while an author pattern runs.
+	 * Match limit written into every compiled author pattern as (*LIMIT_MATCH=n).
 	 */
 	const PATTERN_BACKTRACK_LIMIT = 100000;
 
@@ -591,7 +591,8 @@ class Validator {
 			}
 		}
 
-		$regex = '#^(?:' . $escaped . ')$#uD';
+		// The leading (*LIMIT_MATCH=n) verb bounds the work the pattern may do; PCRE only ever lowers the ini limit with it.
+		$regex = '#(*LIMIT_MATCH=' . self::PATTERN_BACKTRACK_LIMIT . ')^(?:' . $escaped . ')$#uD';
 		$ok    = self::run( $regex, '' );
 
 		self::$compiled[ $pattern ] = null === $ok ? false : $regex;
@@ -599,29 +600,22 @@ class Validator {
 	}
 
 	/**
-	 * Run a regex under a bounded backtrack limit, without letting PHP warnings escape.
+	 * Run a regex built by compile() (it carries its own match limit), without letting PHP warnings escape.
 	 *
 	 * @param string $regex Full regular expression.
 	 * @param string $value Subject.
 	 * @return bool|null True or false for a match result, null for a PCRE error (compile or run time).
 	 */
 	private static function run( $regex, $value ) {
-		$previous_limit = ini_get( 'pcre.backtrack_limit' );
-		$limit          = is_numeric( $previous_limit ) ? min( (int) $previous_limit, self::PATTERN_BACKTRACK_LIMIT ) : self::PATTERN_BACKTRACK_LIMIT;
-
 		set_error_handler( // phpcs:ignore WordPress.PHP.DevelopmentFunctions.prevent_path_disclosure_error_reporting, WordPress.PHP.DevelopmentFunctions.error_log_set_error_handler -- A bad author pattern must not raise a warning.
 			static function () {
 				return true;
 			}
 		);
-		// phpcs:ignore WordPress.PHP.IniSet.Risky -- Bounds the work an author pattern may do; restored below.
-		ini_set( 'pcre.backtrack_limit', (string) $limit );
 		try {
 			$result = preg_match( $regex, $value );
 			$error  = preg_last_error();
 		} finally {
-			// phpcs:ignore WordPress.PHP.IniSet.Risky -- Restores the value above.
-			ini_set( 'pcre.backtrack_limit', false === $previous_limit ? '1000000' : (string) $previous_limit );
 			restore_error_handler();
 		}
 

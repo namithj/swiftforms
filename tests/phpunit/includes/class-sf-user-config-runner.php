@@ -61,6 +61,11 @@ class SF_User_Config_Runner {
 	const CLIENT_USER_AGENT = 'SwiftForms-Regression/1.0';
 
 	/**
+	 * Network sites of the "multisite" check whose tables and install marker (frozen version "1.0.0") the runner writes itself.
+	 */
+	const MULTISITE_SEEDED_SITES = [ 'alpha', 'beta' ];
+
+	/**
 	 * The test case, for go_to() and the user factory.
 	 *
 	 * @var WP_UnitTestCase_Base
@@ -2321,9 +2326,15 @@ class SF_User_Config_Runner {
 			$text    = 'tables: ' . ( $missing ? count( $missing ) . ' of ' . count( SwiftForms\Database::TABLES ) . ' missing' : 'all ' . count( SwiftForms\Database::TABLES ) . ' present' ) . "\n";
 			$text   .= 'table prefix: ' . $label_of( $wpdb->prefix ) . "\n";
 			$text   .= 'swiftforms_db_version: ' . ( null === $raw( 'swiftforms_db_version' ) ? '(absent)' : $raw( 'swiftforms_db_version' ) ) . "\n";
-			$text   .= 'swiftforms_installed: ' . ( null === $raw( 'swiftforms_installed' ) ? '(absent)' : str_replace( SWIFTFORMS_VERSION, '{VERSION}', (string) $raw( 'swiftforms_installed' ) ) ) . "\n";
-			$stored  = Settings::stored_options();
-			$text   .= 'settings options: ' . ( $stored ? count( $stored ) : '(none)' ) . "\n";
+			$marker  = $raw( 'swiftforms_installed' );
+			// Only a marker the plugin wrote carries the running version; the seeded sites keep their frozen "1.0.0" as stored, so the
+			// snapshot does not change when SWIFTFORMS_VERSION happens to be 1.0.0.
+			if ( null !== $marker && ! in_array( $label, self::MULTISITE_SEEDED_SITES, true ) ) {
+				$marker = str_replace( SWIFTFORMS_VERSION, '{VERSION}', (string) $marker );
+			}
+			$text  .= 'swiftforms_installed: ' . ( null === $marker ? '(absent)' : $marker ) . "\n";
+			$stored = Settings::stored_options();
+			$text  .= 'settings options: ' . ( $stored ? count( $stored ) : '(none)' ) . "\n";
 			foreach ( $stored as $name => $value ) {
 				$text .= '  ' . $name . ' = ' . maybe_serialize( $value ) . "\n";
 			}
@@ -2450,7 +2461,7 @@ class SF_User_Config_Runner {
 		global $wpdb;
 
 		switch_to_blog( $blog_id );
-		if ( 'alpha' === $label || 'beta' === $label ) {
+		if ( in_array( $label, self::MULTISITE_SEEDED_SITES, true ) ) {
 			SwiftForms\Database::install();
 			update_option( 'swiftforms_db_version', 1 );
 			update_option(

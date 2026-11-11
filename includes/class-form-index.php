@@ -640,7 +640,8 @@ class Form_Index {
 
 		if ( ! is_array( $existing ) ) {
 			$now = Clock::gmt_mysql();
-			$ok  = $wpdb->insert(
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Own table; no WordPress API for custom tables.
+			$ok = $wpdb->insert(
 				$table,
 				array_merge(
 					$row,
@@ -757,6 +758,7 @@ class Form_Index {
 			return false;
 		}
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Own table; no WordPress API for custom tables.
 		return false !== $wpdb->update(
 			$table,
 			[
@@ -765,7 +767,7 @@ class Form_Index {
 				'updated_gmt' => Clock::gmt_mysql(),
 			],
 			[ 'form_id' => $form_id ]
-		); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		);
 	}
 
 	/**
@@ -1268,14 +1270,12 @@ class Form_Index {
 	private static function scan() {
 		global $wpdb;
 
-		$conditions = [];
-		$args       = [];
+		$args = [];
 		foreach ( self::MARKERS as $marker ) {
-			$conditions[] = 'post_content LIKE %s';
-			$args[]       = '%' . $wpdb->esc_like( $marker ) . '%';
+			$args[] = '%' . $wpdb->esc_like( $marker ) . '%';
 		}
-		$excluded = "'revision', 'nav_menu_item', 'wp_navigation', 'customize_changeset', 'oembed_cache', 'user_request'";
-		$ids      = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_status NOT IN ('auto-draft', 'inherit') AND post_type NOT IN ({$excluded}) AND (" . implode( ' OR ', $conditions ) . ") ORDER BY (post_status <> 'publish' OR post_date_gmt = '0000-00-00 00:00:00') ASC, post_date_gmt ASC, ID ASC", $args ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Markers are fixed strings, the rest is built from constants.
+		$conditions = implode( ' OR ', array_fill( 0, count( $args ), 'post_content LIKE %s' ) );
+		$ids        = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_status NOT IN ('auto-draft', 'inherit') AND post_type NOT IN ('revision', 'nav_menu_item', 'wp_navigation', 'customize_changeset', 'oembed_cache', 'user_request') AND (" . $conditions . ") ORDER BY (post_status <> 'publish' OR post_date_gmt = '0000-00-00 00:00:00') ASC, post_date_gmt ASC, ID ASC", $args ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Markers are fixed strings, the rest is built from constants.
 
 		$done = [];
 		foreach ( array_chunk( array_map( 'intval', (array) $ids ), self::BATCH ) as $chunk ) {
