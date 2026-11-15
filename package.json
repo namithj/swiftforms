@@ -26,7 +26,7 @@
 		"@wordpress/hooks": "5.1.0",
 		"@wordpress/i18n": "7.1.0",
 		"@wordpress/scripts": "37.1.0",
-		"vite": "8.3.6",
+		"vite": "8.3.8",
 		"vitest": "5.1.0"
 	},
 	"dependencies": {
