@@ -227,7 +227,24 @@ class Rest_Entries {
 		if ( ! Entries_Repository::update( $id, $changes ) ) {
 			return self::not_found();
 		}
-		return self::read_entry( $request );
+		if ( Access::can( 'swiftforms_view_entries' ) ) {
+			return self::read_entry( $request );
+		}
+
+		// Edit without view: confirm the change only; never echo the submitted values.
+		$entry = Entries_Repository::get( $id );
+		if ( null === $entry ) {
+			return self::not_found();
+		}
+		$response = new \WP_REST_Response(
+			[
+				'id'      => $id,
+				'status'  => (string) $entry['status'],
+				'starred' => 1 === (int) $entry['starred'],
+			]
+		);
+		Rest_Public::no_store( $response );
+		return $response;
 	}
 
 	/**

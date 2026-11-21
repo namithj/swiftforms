@@ -266,7 +266,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->assertStringContainsString( 'This field is required.', $html );
 		$this->assertStringContainsString( 'Please enter a valid email address.', $html );
 		$this->assertStringContainsString( 'value="not-an-email"', $html );
-		$this->assertStringContainsString( 'Keep &lt;b&gt;this&lt;/b&gt; &amp; that', $html, 'The value comes back escaped.' );
+		$this->assertStringContainsString( 'Keep this &amp; that', $html, 'The value comes back sanitised (tags stripped) and escaped.' );
 		$this->assertStringNotContainsString( 'Keep <b>', $html );
 		$this->assertStringContainsString( 'aria-invalid="true"', $html );
 	}
@@ -602,5 +602,70 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->assertStringNotContainsString( 'First', wp_json_encode( $data ) );
 		$this->assertStringNotContainsString( 'first@example.com', wp_json_encode( $data ) );
 		$this->assertSame( 'Second', $data['state']['values']['name'] );
+	}
+
+	/**
+	 * Field values are sanitised by type as they are read: tags leave a text field, a textarea keeps its line
+	 * breaks, and a choice keeps an exact option value of the form even when it holds a "<".
+	 *
+	 * @return void
+	 */
+	public function test_field_values_are_sanitised_by_type() {
+		$inner = $this->field_markup(
+			'text',
+			[
+				'name'  => 'name',
+				'label' => 'Name',
+			]
+		)
+			. $this->field_markup(
+				'email',
+				[
+					'name'     => 'email',
+					'label'    => 'Email',
+					'required' => true,
+				]
+			)
+			. $this->field_markup(
+				'textarea',
+				[
+					'name'  => 'message',
+					'label' => 'Message',
+				]
+			)
+			. $this->field_markup(
+				'select',
+				[
+					'name'    => 'budget',
+					'label'   => 'Budget',
+					'options' => [
+						[
+							'value' => '<$1,000',
+							'label' => 'Under 1,000',
+						],
+						[
+							'value' => '$1,000+',
+							'label' => 'Over 1,000',
+						],
+					],
+				]
+			)
+			. '<!-- wp:swiftforms/submit /-->'
+			. '<!-- wp:swiftforms/confirmation --><p>Thanks!</p><!-- /wp:swiftforms/confirmation -->';
+		$this->page( [], $inner );
+
+		$exit = $this->post(
+			[
+				'name'    => 'Ann <b>Lee</b>',
+				'email'   => 'bad',
+				'message' => "Line <i>one</i>\nLine two",
+				'budget'  => '<$1,000',
+			]
+		);
+		$data = get_transient( Nojs_Handler::TRANSIENT_PREFIX . $this->key( $exit ) );
+		$this->assertSame( 'Ann Lee', $data['state']['values']['name'] );
+		$this->assertSame( "Line one\nLine two", $data['state']['values']['message'] );
+		$this->assertSame( '<$1,000', $data['state']['values']['budget'] );
+		$this->assertArrayNotHasKey( 'budget', $data['state']['errors'] ?? [], 'The exact option is valid.' );
 	}
 }

@@ -612,11 +612,64 @@ class ValidatorTest extends SF_Storage_Test_Case {
 		$ctx    = $this->ctx( $schema );
 
 		$values = Validator::collect( $schema, [ 't' => '<script>alert(1)</script> & "q" ' . "\x07\x08caf\xC3\xA9 \xFF\xFE ok" ], $ctx );
-		$this->assertSame( '<script>alert(1)</script> & "q" café  ok', $values['t'] );
+		$this->assertSame( '& "q" café ok', $values['t'], 'A single-line field goes through sanitize_text_field().' );
+
+		$area   = $this->schema( [ $this->field( 'textarea', [ 'name' => 'm' ] ) ] );
+		$values = Validator::collect( $area, [ 'm' => "<b>Line one</b>\r\nLine  two" ], $this->ctx( $area ) );
+		$this->assertSame( "Line one\nLine  two", $values['m'], 'A textarea goes through sanitize_textarea_field(): tags go, line breaks stay.' );
 
 		$this->assertSame( [ 't' => '123' ], Validator::collect( $schema, [ 't' => 123 ], $ctx ) );
 		$this->assertSame( [ 't' => '' ], Validator::collect( $schema, [ 't' => true ], $ctx ) );
 		$this->assertSame( [ 't' => '' ], Validator::collect( $schema, [ 't' => [ 'a' ] ], $ctx ), 'An array for a single value is dropped.' );
+	}
+
+	/**
+	 * A choice keeps an exact option value of the form even when sanitize_text_field() would change it.
+	 *
+	 * @return void
+	 */
+	public function test_collect_keeps_exact_option_values() {
+		$options = [
+			[
+				'value' => '<$1,000',
+				'label' => 'Under 1,000',
+			],
+			[
+				'value' => 'tom<b>',
+				'label' => 'Tom',
+			],
+		];
+		$schema  = $this->schema(
+			[
+				$this->field(
+					'select',
+					[
+						'name'    => 's',
+						'options' => $options,
+					]
+				),
+				$this->field(
+					'checkboxes',
+					[
+						'name'    => 'c',
+						'options' => $options,
+					]
+				),
+			]
+		);
+		$ctx     = $this->ctx( $schema );
+
+		$values = Validator::collect(
+			$schema,
+			[
+				's' => '<$1,000',
+				'c' => [ 'tom<b>', '<$1,000', 'x<i>y</i>' ],
+			],
+			$ctx
+		);
+		$this->assertSame( '<$1,000', $values['s'] );
+		$this->assertSame( [ 'tom<b>', '<$1,000', 'xy' ], $values['c'], 'Option values are kept; anything else is sanitised text.' );
+		$this->assertSame( 'option', Validator::rule_options( $schema->fields[1], $values['c'] ), 'A value that is not an option still fails.' );
 	}
 
 	/**

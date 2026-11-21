@@ -84,12 +84,13 @@ class Nojs_Handler {
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended -- Public form post: no nonce exists for a guest; logged-in users are checked in handle_post().
-		if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] && isset( $_POST['_sf_form'] ) ) {
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) && is_string( $_SERVER['REQUEST_METHOD'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : '';
+		if ( 'POST' === $method && isset( $_POST['_sf_form'] ) ) {
 			self::handle_post();
 			return;
 		}
-		if ( isset( $_GET[ self::RESULT_PARAM ] ) ) {
-			self::show_result( wp_unslash( $_GET[ self::RESULT_PARAM ] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Validated as 32 hex characters in show_result().
+		if ( isset( $_GET[ self::RESULT_PARAM ] ) && is_string( $_GET[ self::RESULT_PARAM ] ) ) {
+			self::show_result( sanitize_key( wp_unslash( $_GET[ self::RESULT_PARAM ] ) ) );
 		}
 		// phpcs:enable
 	}
@@ -112,15 +113,14 @@ class Nojs_Handler {
 	 * @return void
 	 */
 	private static function handle_post() {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing -- See maybe_handle(); the nonce of a logged-in user is verified below.
-		$post = wp_unslash( $_POST ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Every value is type-checked and cleaned by the pipeline.
-		// phpcs:enable
-
-		$sf      = isset( $post['sf'] ) && is_array( $post['sf'] ) ? $post['sf'] : [];
-		$form_id = isset( $post['_sf_form'] ) && is_string( $post['_sf_form'] ) ? $post['_sf_form'] : '';
-		$source  = isset( $post['_sf_source'] ) && is_string( $post['_sf_source'] ) ? $post['_sf_source'] : '';
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- See maybe_handle(); a guest posts no nonce (the Gate, token, time trap and honeypot protect the route); the nonce of a logged-in user is verified below.
+		// Each control is read on its own and sanitised as it is read; the field values are read per field of the
+		// form's schema in posted_fields(), after the Gate has checked the size of the post.
+		$shape   = isset( $_POST['sf'] ) && is_array( $_POST['sf'] ) ? map_deep( wp_unslash( $_POST['sf'] ), 'absint' ) : []; // Structure only, for counting.
+		$form_id = self::posted_text( '_sf_form' );
+		$source  = self::posted_text( '_sf_source' );
 		$length  = isset( $_SERVER['CONTENT_LENGTH'] ) ? (int) $_SERVER['CONTENT_LENGTH'] : 0;
-		$count   = Gate::count_fields( $sf ) + max( 0, count( $post ) - 1 );
+		$count   = Gate::count_fields( $shape ) + max( 0, count( $_POST ) - 1 );
 
 		$refused = Gate::check( $form_id, $source, $count, $length );
 		if ( null !== $refused ) {
@@ -128,20 +128,34 @@ class Nojs_Handler {
 			return;
 		}
 
-		$user = null;
-		if ( is_user_logged_in() && isset( $post['_wpnonce'] ) && is_string( $post['_wpnonce'] ) && false !== wp_verify_nonce( $post['_wpnonce'], 'wp_rest' ) ) {
+		$schema = Schema_Resolver::resolve( $form_id, $source );
+		$sf     = null === $schema ? [] : self::posted_fields( $schema );
+
+		$nonce = self::posted_text( '_wpnonce' );
+		$user  = null;
+		if ( is_user_logged_in() && '' !== $nonce && false !== wp_verify_nonce( $nonce, 'wp_rest' ) ) {
 			$user = wp_get_current_user();
 		}
 
-		$instance = isset( $post['_sf_i'] ) && is_string( $post['_sf_i'] ) && 1 === preg_match( '/^[1-9][0-9]{0,2}$/D', $post['_sf_i'] ) ? (int) $post['_sf_i'] : 1;
+		$instance_raw = self::posted_text( '_sf_i' );
+		$instance     = 1 === preg_match( '/^[1-9][0-9]{0,2}$/D', $instance_raw ) ? absint( $instance_raw ) : 1;
+
+		// A honeypot value that is not a plain string, or that cleans to nothing, still counts as filled in.
+		$hp = isset( $_POST['_sf_hp'] ) ? self::posted_text( '_sf_hp' ) : '';
+		if ( isset( $_POST['_sf_hp'] ) && '' === $hp && ( ! is_string( $_POST['_sf_hp'] ) || '' !== $_POST['_sf_hp'] ) ) {
+			$hp = '1';
+		}
+		$token = isset( $_POST['_sf_token'] ) ? self::posted_text( '_sf_token' ) : null;
+		$t     = isset( $_POST['_sf_t'] ) ? self::posted_text( '_sf_t' ) : null;
+		// phpcs:enable
 
 		$result = Submission::handle(
 			[
 				'form_id'   => $form_id,
 				'source'    => $source,
-				'token'     => $post['_sf_token'] ?? null,
-				'hp'        => $post['_sf_hp'] ?? '',
-				't'         => $post['_sf_t'] ?? null,
+				'token'     => $token,
+				'hp'        => $hp,
+				't'         => $t,
 				'sf'        => $sf,
 				'page_hint' => self::request_url( false ),
 			],
@@ -150,6 +164,75 @@ class Nojs_Handler {
 		);
 
 		self::finish( $result, $form_id, $source, $instance );
+	}
+
+	/**
+	 * The posted values of the schema's fields, each sanitised as it is read: a choice keeps an exact option
+	 * value of the form, a textarea goes through sanitize_textarea_field(), every other field through
+	 * sanitize_text_field(). Validator::collect() then applies the same rules on every transport.
+	 *
+	 * @param Form_Schema $schema Schema of the posted form.
+	 * @return array<string, string|string[]>
+	 */
+	private static function posted_fields( Form_Schema $schema ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- See handle_post().
+		$sf = [];
+		if ( ! isset( $_POST['sf'] ) || ! is_array( $_POST['sf'] ) ) {
+			return $sf;
+		}
+		foreach ( $schema->fields as $field ) {
+			$name = (string) $field['name'];
+			if ( ! isset( $_POST['sf'][ $name ] ) ) {
+				continue;
+			}
+			$options   = Validator::option_values( $field ) ?? [];
+			$multiline = 'textarea' === (string) $field['type'];
+
+			if ( is_array( $_POST['sf'][ $name ] ) ) {
+				$list = [];
+				$keys = array_keys( map_deep( wp_unslash( $_POST['sf'][ $name ] ), 'absint' ) ); // Structure only.
+				foreach ( array_slice( $keys, 0, Validator::MAX_LIST ) as $key ) {
+					if ( ! isset( $_POST['sf'][ $name ][ $key ] ) || ! is_string( $_POST['sf'][ $name ][ $key ] ) ) {
+						continue;
+					}
+					$item = sanitize_text_field( wp_unslash( $_POST['sf'][ $name ][ $key ] ) );
+					foreach ( $options as $option ) {
+						if ( in_array( $option, (array) wp_unslash( $_POST['sf'][ $name ][ $key ] ), true ) ) {
+							$item = $option;
+							break;
+						}
+					}
+					$list[] = $item;
+				}
+				$sf[ $name ] = $list;
+				continue;
+			}
+
+			if ( ! is_string( $_POST['sf'][ $name ] ) ) {
+				continue;
+			}
+			$value = $multiline ? sanitize_textarea_field( wp_unslash( $_POST['sf'][ $name ] ) ) : sanitize_text_field( wp_unslash( $_POST['sf'][ $name ] ) );
+			foreach ( $options as $option ) {
+				if ( in_array( $option, (array) wp_unslash( $_POST['sf'][ $name ] ), true ) ) {
+					$value = $option;
+					break;
+				}
+			}
+			$sf[ $name ] = $value;
+		}
+		// phpcs:enable
+		return $sf;
+	}
+
+	/**
+	 * One posted control as a sanitised string, or an empty string when it is missing or not a string.
+	 *
+	 * @param string $key Key in $_POST.
+	 * @return string
+	 */
+	private static function posted_text( $key ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- See handle_post().
+		return isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
 	}
 
 	/**
@@ -292,16 +375,25 @@ class Nojs_Handler {
 	 * Redirect with a 303 and stop.
 	 *
 	 * @param string $url       Target.
-	 * @param bool   $same_site Whether the target is on this site (wp_safe_redirect) or admin-configured (wp_redirect).
+	 * @param bool   $same_site Whether the target is on this site, or the form author's redirect URL (its host is allowed for this redirect).
 	 * @return void
 	 */
 	private static function redirect( $url, $same_site ) {
 		nocache_headers();
-		if ( $same_site ) {
-			wp_safe_redirect( $url, 303, 'SwiftForms' );
-		} else {
-			wp_redirect( $url, 303, 'SwiftForms' ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- The target is the form author's redirectUrl or page, validated as http(s) by Merge_Tags::redirect_url(); visitor values sit in the query only.
+		if ( ! $same_site ) {
+			// The form author's redirectUrl (validated as http(s) by Merge_Tags::redirect_url()): allow its host for this redirect only.
+			$host = wp_parse_url( $url, PHP_URL_HOST );
+			if ( is_string( $host ) && '' !== $host ) {
+				add_filter(
+					'allowed_redirect_hosts',
+					static function ( $hosts ) use ( $host ) {
+						$hosts[] = $host;
+						return $hosts;
+					}
+				);
+			}
 		}
+		wp_safe_redirect( $url, 303, 'SwiftForms' );
 		exit;
 	}
 
@@ -312,7 +404,7 @@ class Nojs_Handler {
 	 * @return string
 	 */
 	private static function request_url( $without_result ) {
-		$uri = isset( $_SERVER['REQUEST_URI'] ) && is_string( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '/'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Appended to this site's own origin and sanitised by the redirect functions.
+		$uri = isset( $_SERVER['REQUEST_URI'] ) && is_string( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
 		$uri = (string) preg_replace( '/[\x00-\x1F\x7F]/', '', $uri );
 		if ( '' === $uri || '/' !== $uri[0] || 0 === strpos( $uri, '//' ) ) {
 			$uri = '/';

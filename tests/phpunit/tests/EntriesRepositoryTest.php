@@ -124,6 +124,21 @@ class EntriesRepositoryTest extends SF_Storage_Test_Case {
 	}
 
 	/**
+	 * A user agent carrying HTML is stored without the tags.
+	 *
+	 * @return void
+	 */
+	public function test_user_agent_is_stored_without_tags() {
+		$_SERVER['HTTP_USER_AGENT'] = '<script>x</script> Foo/1.0';
+		$this->set_settings( [ 'general' => [ 'store_user_agent' => true ] ] );
+
+		$entry = Entries_Repository::get( Entries_Repository::insert( $this->ctx( [ 'a' => 'b' ] ) ) );
+		$this->assertStringNotContainsString( '<', $entry['user_agent'] );
+		$this->assertStringNotContainsString( '>', $entry['user_agent'] );
+		$this->assertStringEndsWith( 'Foo/1.0', $entry['user_agent'] );
+	}
+
+	/**
 	 * IP and user agent are stored only when the settings say so.
 	 *
 	 * @return void
@@ -147,7 +162,7 @@ class EntriesRepositoryTest extends SF_Storage_Test_Case {
 		$on = Entries_Repository::get( Entries_Repository::insert( $this->ctx( [ 'a' => 'b' ] ) ) );
 		$this->assertSame( '203.0.113.7', $on['ip'] );
 		$this->assertSame( 255, mb_strlen( $on['user_agent'] ) );
-		$this->assertStringStartsWith( 'Mozilla/5.0  (Test) xxx', $on['user_agent'] );
+		$this->assertStringStartsWith( 'Mozilla/5.0 (Test) xxx', $on['user_agent'] );
 
 		global $wpdb;
 		$raw = $wpdb->get_var( $wpdb->prepare( 'SELECT HEX(ip) FROM `' . SwiftForms\Database::table( 'entries' ) . '` WHERE id = %d', $on['id'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared

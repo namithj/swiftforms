@@ -308,6 +308,37 @@ class AdminEntriesRestTest extends SF_Admin_Test_Case {
 	}
 
 	/**
+	 * A user with the edit capability but not the view capability changes an entry and gets no entry data back.
+	 *
+	 * @return void
+	 */
+	public function test_patch_without_view_returns_only_the_change() {
+		$id = $this->add_entry();
+		$this->map_caps( [ 'swiftforms_edit_entries' => 'edit_posts' ] );
+		$this->be_role( 'contributor' );
+		$this->assertFalse( SwiftForms\Access::can( 'swiftforms_view_entries' ), 'Precondition: no view capability.' );
+
+		$response = $this->call( 'PATCH', '/entries/' . $id, [ 'starred' => true ] );
+		$this->assertSame( 200, $response->get_status() );
+		$data = $response->get_data();
+		$this->assertSame(
+			[
+				'id'      => $id,
+				'status'  => 'new',
+				'starred' => true,
+			],
+			$data
+		);
+		$this->assertArrayNotHasKey( 'fields', $data );
+		$this->assertArrayNotHasKey( 'values', $data );
+
+		$read = $this->call( 'PATCH', '/entries/' . $id, [ 'status' => 'read' ] )->get_data();
+		$this->assertSame( 'read', $read['status'] );
+		$this->assertTrue( $read['starred'] );
+		$this->assertSame( 403, $this->call( 'GET', '/entries/' . $id )->get_status() );
+	}
+
+	/**
 	 * The forms list: minimal fields and counts per status.
 	 *
 	 * @return void

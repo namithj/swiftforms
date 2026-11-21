@@ -12,7 +12,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E4}",
@@ -22,7 +22,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E3}",
@@ -32,7 +32,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E2}",
@@ -42,7 +42,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "\"><svg onload=alert(1)> · mallory@example.com"
+        "summary": "\"> · mallory@example.com"
     },
     {
         "id": "{E1}",
@@ -52,7 +52,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     }
 ]
 
@@ -86,7 +86,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E4}",
@@ -96,7 +96,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E3}",
@@ -106,7 +106,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E2}",
@@ -116,7 +116,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "\"><svg onload=alert(1)> · mallory@example.com"
+        "summary": "\"> · mallory@example.com"
     },
     {
         "id": "{E1}",
@@ -126,7 +126,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     }
 ]
 
@@ -144,7 +144,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E4}",
@@ -154,7 +154,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E3}",
@@ -164,7 +164,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E2}",
@@ -174,7 +174,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "\"><svg onload=alert(1)> · mallory@example.com"
+        "summary": "\"> · mallory@example.com"
     },
     {
         "id": "{E1}",
@@ -184,7 +184,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "new",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     }
 ]
 
@@ -209,7 +209,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E15}",
@@ -219,7 +219,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E14}",
@@ -229,7 +229,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E13}",
@@ -239,7 +239,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E12}",
@@ -249,7 +249,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E11}",
@@ -259,7 +259,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E10}",
@@ -269,7 +269,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E9}",
@@ -279,7 +279,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E8}",
@@ -289,7 +289,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E7}",
@@ -299,7 +299,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     },
     {
         "id": "{E6}",
@@ -309,7 +309,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
         "date_display": "November 19, 2026 10:00 am",
         "status": "spam",
         "starred": false,
-        "summary": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script> · zoe@example.com"
+        "summary": "Zoë ünï 漢字 🚀 · zoe@example.com"
     }
 ]
 
@@ -338,7 +338,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
             "type": "text",
             "values": [
                 {
-                    "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>",
+                    "value": "Zoë ünï 漢字 🚀",
                     "is_link": false,
                     "is_email": false
                 }
@@ -432,7 +432,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
             "type": "textarea",
             "values": [
                 {
-                    "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}",
+                    "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}",
                     "is_link": false,
                     "is_email": false
                 }
@@ -476,7 +476,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
             "type": "text",
             "values": [
                 {
-                    "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>",
+                    "value": "Zoë ünï 漢字 🚀",
                     "is_link": false,
                     "is_email": false
                 }
@@ -570,7 +570,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
             "type": "textarea",
             "values": [
                 {
-                    "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}",
+                    "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}",
                     "is_link": false,
                     "is_email": false
                 }

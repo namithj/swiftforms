@@ -383,7 +383,7 @@ class Entries_Screen {
 		}
 
 		$previous = 'read' === $entry['status'] ? 'read' : 'new';
-		$restore  = isset( $_GET['sf_to'] ) && 'read' === $_GET['sf_to'] ? 'read' : 'new'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Covered by check_admin_referer() above.
+		$restore  = isset( $_GET['sf_to'] ) && is_string( $_GET['sf_to'] ) && 'read' === sanitize_key( wp_unslash( $_GET['sf_to'] ) ) ? 'read' : 'new';
 		$extra    = [];
 
 		switch ( $action ) {
@@ -422,7 +422,7 @@ class Entries_Screen {
 				break;
 		}
 
-		$stay = isset( $_GET['from'] ) && 'view' === $_GET['from'] && ! in_array( $action, [ 'trash', 'delete' ], true ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Covered by check_admin_referer() above.
+		$stay = isset( $_GET['from'] ) && is_string( $_GET['from'] ) && 'view' === sanitize_key( wp_unslash( $_GET['from'] ) ) && ! in_array( $action, [ 'trash', 'delete' ], true );
 		if ( $stay ) {
 			$target = add_query_arg( 'message', $action, self::view_url( $id ) );
 		} else {
@@ -480,7 +480,7 @@ class Entries_Screen {
 		$undo = '';
 		$id   = isset( $_GET['sf_undo'] ) ? absint( wp_unslash( $_GET['sf_undo'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- The link it builds has its own nonce.
 		if ( $id > 0 && in_array( $code, [ 'trash', 'spam' ], true ) && Access::can( 'swiftforms_edit_entries' ) ) {
-			$to   = isset( $_GET['sf_to'] ) && 'read' === $_GET['sf_to'] ? 'read' : 'new'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Whitelisted.
+			$to   = isset( $_GET['sf_to'] ) && is_string( $_GET['sf_to'] ) && 'read' === sanitize_key( wp_unslash( $_GET['sf_to'] ) ) ? 'read' : 'new'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Whitelisted.
 			$undo = ' <a href="' . esc_url( self::action_url( 'trash' === $code ? 'untrash' : 'unspam', $id, [ 'sf_to' => $to ] ) ) . '">' . esc_html__( 'Undo', 'swiftforms' ) . '</a>';
 		}
 
@@ -501,7 +501,7 @@ class Entries_Screen {
 		<div class="wrap swiftforms-entries">
 			<h1 class="wp-heading-inline"><?php esc_html_e( 'Entries', 'swiftforms' ); ?></h1>
 			<hr class="wp-header-end">
-			<?php echo self::notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from fixed strings and escaped URLs in notice(). ?>
+			<?php echo wp_kses_post( self::notice() ); ?>
 			<?php $table->views(); ?>
 			<form id="swiftforms-entries-filter" method="get">
 				<input type="hidden" name="page" value="<?php echo esc_attr( self::PAGE ); ?>">
@@ -534,7 +534,7 @@ class Entries_Screen {
 				?>
 			</h1>
 			<hr class="wp-header-end">
-			<?php echo self::notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from fixed strings and escaped URLs in notice(). ?>
+			<?php echo wp_kses_post( self::notice() ); ?>
 			<p class="swiftforms-back"><a href="<?php echo esc_url( self::list_url() ); ?>">&larr; <?php esc_html_e( 'Back to Entries', 'swiftforms' ); ?></a></p>
 
 			<div id="poststuff">
@@ -546,7 +546,7 @@ class Entries_Screen {
 								<?php foreach ( $detail['fields'] as $field ) : ?>
 									<tr>
 										<th scope="row"><?php echo esc_html( Entry_Presenter::visible_text( $field['label'] ) ); ?></th>
-										<td><?php echo self::values_html( $field ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Every part is escaped in values_html(). ?></td>
+										<td><?php echo wp_kses_post( self::values_html( $field ) ); ?></td>
 									</tr>
 								<?php endforeach; ?>
 								<?php if ( ! $detail['fields'] ) : ?>

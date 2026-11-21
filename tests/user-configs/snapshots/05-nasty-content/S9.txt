@@ -21,7 +21,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -49,7 +49,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -72,7 +72,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -100,7 +100,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -123,7 +123,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -151,7 +151,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -174,7 +174,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -202,7 +202,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -225,7 +225,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -253,7 +253,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -276,7 +276,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -304,7 +304,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -327,7 +327,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -355,7 +355,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -378,7 +378,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -406,7 +406,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -429,7 +429,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -457,7 +457,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -480,7 +480,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -508,7 +508,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text Long label text ",
-                        "value": "Line one &amp; <b>two</b> \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
+                        "value": "Line one &amp; two \"quoted\"\nمرحبا بالعالم\n[gallery ids=\"1\"] {field:x}"
                     },
                     {
                         "name": "Marker",
@@ -531,7 +531,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -582,7 +582,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -633,7 +633,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -684,7 +684,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",
@@ -735,7 +735,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "Näme ünï 漢字 🚀 </textarea><script>alert('l')</script>",
-                        "value": "Zoë ünï 漢字 🚀 </textarea><script>alert('v')</script>"
+                        "value": "Zoë ünï 漢字 🚀"
                     },
                     {
                         "name": "E-mail — \"quoted\" & 'single' &amp; &lt;b&gt;",

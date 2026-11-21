@@ -520,8 +520,9 @@ test.describe( 'Forms admin: Entries', () => {
 
 		await admin.visitAdminPage( 'admin.php', 'page=swiftforms' );
 		await expect( row( page, 'Link person' ) ).toBeVisible();
-		// The script text is shown as text.
-		await expect( page.getByText( NASTY.script ).first() ).toBeVisible();
+		// Markup is stripped when the entry is saved (sanitize_text_field), so none of it reaches the list.
+		await expect( row( page, 'nasty@example.com' ) ).toBeVisible();
+		await expect( page.getByText( NASTY.script ) ).toHaveCount( 0 );
 		await assertClean();
 
 		// The entry screen of each nasty entry, then its print view.

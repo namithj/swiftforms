@@ -133,13 +133,14 @@ class Validator {
 				continue;
 			}
 
-			$raw = array_key_exists( $name, $posted ) ? $posted[ $name ] : null;
+			$raw     = array_key_exists( $name, $posted ) ? $posted[ $name ] : null;
+			$options = self::option_values( $field );
 
 			if ( Field_Types::is_multi( $type, $field ) ) {
 				$list = is_array( $raw ) ? $raw : ( null === $raw ? [] : [ $raw ] );
 				$kept = [];
 				foreach ( array_slice( array_values( $list ), 0, self::MAX_LIST ) as $item ) {
-					$text = self::scalar_text( $item, false );
+					$text = self::scalar_text( $item, false, $options );
 					if ( '' !== $text ) {
 						$kept[ $text ] = $text;
 					}
@@ -153,7 +154,7 @@ class Validator {
 				continue;
 			}
 
-			$values[ $name ] = self::scalar_text( $raw, 'textarea' === $type );
+			$values[ $name ] = self::scalar_text( $raw, 'textarea' === $type, $options );
 		}
 
 		return $values;
@@ -192,17 +193,46 @@ class Validator {
 	}
 
 	/**
-	 * Text of a posted scalar; anything else (arrays, null, false) is the empty string.
+	 * Text of a posted scalar; anything else (arrays, null, false) is the empty string. A multi-line field is
+	 * sanitised with sanitize_textarea_field() (line breaks kept), every other field with sanitize_text_field().
 	 *
-	 * @param mixed $value     Posted value.
-	 * @param bool  $multiline Whether line breaks are kept.
+	 * @param mixed         $value     Posted value.
+	 * @param bool          $multiline Whether line breaks are kept.
+	 * @param string[]|null $options   Option values of a choice field; null for other fields.
 	 * @return string
 	 */
-	private static function scalar_text( $value, $multiline ) {
+	private static function scalar_text( $value, $multiline, $options = null ) {
 		if ( is_int( $value ) || is_float( $value ) ) {
 			$value = (string) $value;
 		}
-		return is_string( $value ) ? self::clean_text( $value, $multiline ) : '';
+		if ( ! is_string( $value ) ) {
+			return '';
+		}
+		$text = self::clean_text( $value, $multiline );
+		// A choice that is exactly one of the form's own option values is kept as that value (whitelisted).
+		if ( null !== $options && in_array( $text, $options, true ) ) {
+			return $text;
+		}
+		return $multiline ? sanitize_textarea_field( $text ) : sanitize_text_field( $text );
+	}
+
+	/**
+	 * The option values of a choice field (select, radio, checkboxes), or null for a field without options.
+	 *
+	 * @param array<string, mixed> $field Field.
+	 * @return string[]|null
+	 */
+	public static function option_values( array $field ) {
+		if ( ! isset( $field['options'] ) || ! is_array( $field['options'] ) ) {
+			return null;
+		}
+		$values = [];
+		foreach ( $field['options'] as $option ) {
+			if ( is_array( $option ) && isset( $option['value'] ) ) {
+				$values[] = (string) $option['value'];
+			}
+		}
+		return $values;
 	}
 
 	/**

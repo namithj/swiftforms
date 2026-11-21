@@ -250,7 +250,8 @@ test.describe( 'Front end', () => {
 			// An option the form does not have: the client does not know the options.
 			await form.getByLabel( 'Topic' ).evaluate( ( select ) => {
 				const option = document.createElement( 'option' );
-				option.value = '<img src=x onerror=window.__xss=1>';
+				// The server strips the tag (sanitize_text_field), leaving "Bogus", which is not an option.
+				option.value = 'Bogus<img src=x onerror=window.__xss=1>';
 				option.textContent = 'Other';
 				select.append( option );
 				select.value = option.value;

@@ -428,7 +428,7 @@ class Entries_Repository {
 		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) || ! is_string( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			return '';
 		}
-		$agent = Validator::clean_text( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ), false ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Cleaned by clean_text().
+		$agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 		return function_exists( 'mb_substr' ) ? mb_substr( $agent, 0, 255, 'UTF-8' ) : substr( $agent, 0, 255 );
 	}
 }

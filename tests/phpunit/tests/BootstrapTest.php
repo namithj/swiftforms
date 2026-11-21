@@ -87,4 +87,34 @@ class BootstrapTest extends WP_UnitTestCase {
 		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/field-text' ) );
 		$this->assertTrue( has_action( 'enqueue_block_assets', [ Builder_Adapter::instance(), 'strip_front_end_style' ] ) !== false );
 	}
+
+	/**
+	 * The "plugin switched off" notice is shown to users who can activate plugins and to nobody else.
+	 *
+	 * @return void
+	 */
+	public function test_bootstrap_notice_is_for_plugin_managers_only() {
+		global $wp_filter;
+		$saved = $wp_filter['admin_notices'] ?? null;
+		remove_all_actions( 'admin_notices' );
+		swiftforms_bootstrap_notice( 'Plugin is off.' );
+
+		wp_set_current_user( self::factory()->user->create( [ 'role' => 'subscriber' ] ) );
+		ob_start();
+		do_action( 'admin_notices' );
+		$subscriber = ob_get_clean();
+
+		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+		ob_start();
+		do_action( 'admin_notices' );
+		$admin = ob_get_clean();
+
+		unset( $wp_filter['admin_notices'] );
+		if ( null !== $saved ) {
+			$wp_filter['admin_notices'] = $saved;
+		}
+
+		$this->assertSame( '', $subscriber );
+		$this->assertStringContainsString( 'Plugin is off.', $admin );
+	}
 }

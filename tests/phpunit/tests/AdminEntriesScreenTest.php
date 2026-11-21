@@ -770,7 +770,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 				'entry'  => $link,
 			]
 		);
-		$this->assertStringContainsString( '<a href="https://example.com/path?a=b&#038;c=d" rel="noopener noreferrer" target="_blank">https://example.com/path?a=b&amp;c=d</a>', $view );
+		$this->assertStringContainsString( '<a href="https://example.com/path?a=b&amp;c=d" rel="noopener noreferrer" target="_blank">https://example.com/path?a=b&amp;c=d</a>', $view, 'wp_kses_post() normalises the escaped ampersand.' );
 		$this->assertStringContainsString( '<a href="mailto:link@example.com">link@example.com</a>', $view );
 	}
 

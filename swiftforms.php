@@ -55,6 +55,9 @@ function swiftforms_bootstrap_notice( $message ) {
 	add_action(
 		'admin_notices',
 		function () use ( $message ) {
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				return;
+			}
 			printf(
 				'<div class="notice notice-error"><p>%s</p></div>',
 				esc_html( $message )

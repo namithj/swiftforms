@@ -51,7 +51,7 @@ class Client_Ip {
 	public static function address() {
 		$remote = '';
 		if ( isset( $_SERVER['REMOTE_ADDR'] ) && is_string( $_SERVER['REMOTE_ADDR'] ) ) {
-			$remote = trim( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Validated with FILTER_VALIDATE_IP below.
+			$remote = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
 		}
 		if ( false === filter_var( $remote, FILTER_VALIDATE_IP ) ) {
 			$remote = '';
@@ -94,7 +94,7 @@ class Client_Ip {
 	 * @return string
 	 */
 	public static function normalise( $ip ) {
-		$packed = is_string( $ip ) ? @inet_pton( $ip ) : false; // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- inet_pton() warns on invalid text.
+		$packed = is_string( $ip ) && false !== filter_var( $ip, FILTER_VALIDATE_IP ) ? inet_pton( $ip ) : false;
 		if ( false === $packed ) {
 			return 'unknown';
 		}
