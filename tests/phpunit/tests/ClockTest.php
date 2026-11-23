@@ -1,11 +1,11 @@
 <?php
 /**
- * Tests for SwiftForms\Clock.
+ * Tests for BlockForms\Clock.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Clock;
+use BlockForms\Clock;
 
 /**
  * Class ClockTest

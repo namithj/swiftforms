@@ -5,14 +5,14 @@
  * For every tests/user-configs/NN-slug.php in numeric order (slugs starting "19-" are skipped: multisite is
  * not set up in the browser tests and runs in PHPUnit only) it resets the test site, installs core, applies the
  * config with tests/user-configs/apply-cli.php, dumps what the config stored to tests/e2e/.state/<slug>.json
- * and runs tests/e2e/user-configs.spec.js with SF_CONFIG=<slug>. Prints PASS or FAIL per config and exits 1 on any failure.
+ * and runs tests/e2e/user-configs.spec.js with BF_CONFIG=<slug>. Prints PASS or FAIL per config and exits 1 on any failure.
  *
  *   node bin/run-e2e-configs.mjs [slug-or-number-prefix ...]
  *
  * Two ways to reach the site's WP-CLI:
  *
  *   wp-env (CI, needs Docker, a running `npx wp-env start`): the default. WP_BASE_URL defaults to http://localhost:8889.
- *   a local WordPress (no Docker): set SF_E2E_WP_PATH to the folder of a WordPress install that has the plugin,
+ *   a local WordPress (no Docker): set BF_E2E_WP_PATH to the folder of a WordPress install that has the plugin,
  *     the three fixture themes and the clock mu-plugin linked in (bin/setup-e2e-local-site.sh builds one), that is
  *     served at WP_BASE_URL (for example `wp server --port=8889` run in that folder) and uses its own database. The script
  *     resets that database for every config, so never point it at a site you care about.
@@ -34,9 +34,9 @@ const stateDir = path.join( root, 'tests/e2e/.state' );
 const clockFile = path.join( stateDir, 'now' );
 const FROZEN_TIME = 1795082400;
 const baseUrl = process.env.WP_BASE_URL || 'http://localhost:8889';
-const localPath = process.env.SF_E2E_WP_PATH || '';
+const localPath = process.env.BF_E2E_WP_PATH || '';
 // Where the plugin sits for the WP-CLI that runs eval-file: inside the container, or the real path.
-const pluginDir = localPath ? root : 'wp-content/plugins/swiftforms';
+const pluginDir = localPath ? root : 'wp-content/plugins/blockforms';
 
 function run( command, args, options = {} ) {
 	return spawnSync( command, args, {
@@ -100,14 +100,14 @@ for ( const slug of slugs ) {
 					'core',
 					'install',
 					`--url=${ baseUrl }`,
-					'--title=SwiftForms tests',
+					'--title=BlockForms tests',
 					'--admin_user=admin',
 					'--admin_password=password',
 					'--admin_email=admin@example.org',
 					'--skip-email'
 				),
 		],
-		[ 'activate plugin', () => wp( 'plugin', 'activate', 'swiftforms' ) ],
+		[ 'activate plugin', () => wp( 'plugin', 'activate', 'blockforms' ) ],
 		[
 			'apply config',
 			() =>
@@ -134,7 +134,7 @@ for ( const slug of slugs ) {
 			'eval-file',
 			`${ pluginDir }/tests/e2e/dump-posts.php`
 		);
-		const match = /SF_STATE_BEGIN\s*([\s\S]*?)\s*SF_STATE_END/.exec(
+		const match = /BF_STATE_BEGIN\s*([\s\S]*?)\s*BF_STATE_END/.exec(
 			dump.stdout || ''
 		);
 		if ( dump.status !== 0 || ! match ) {
@@ -152,8 +152,8 @@ for ( const slug of slugs ) {
 					encoding: undefined,
 					env: {
 						...process.env,
-						SF_CONFIG: slug,
-						SF_E2E_NOW_FILE: clockFile,
+						BF_CONFIG: slug,
+						BF_E2E_NOW_FILE: clockFile,
 						WP_BASE_URL: baseUrl,
 					},
 				}

@@ -2,10 +2,10 @@
 /**
  * Time seam.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Clock
  *
- * Every "what time is it" question in SwiftForms goes through here, so tests
+ * Every "what time is it" question in BlockForms goes through here, so tests
  * can freeze time. Production code only ever calls now() and gmt_mysql().
  */
 class Clock {
@@ -45,7 +45,7 @@ class Clock {
 	}
 
 	/**
-	 * Freeze time. Tests only: needs SWIFTFORMS_TESTS or SWIFTFORMS_TEST_NOW.
+	 * Freeze time. Tests only: needs BLOCKFORMS_TESTS or BLOCKFORMS_TEST_NOW.
 	 *
 	 * @param int $timestamp UTC unix timestamp.
 	 * @return void
@@ -73,6 +73,6 @@ class Clock {
 	 * @return bool
 	 */
 	private static function testing_allowed() {
-		return ( defined( 'SWIFTFORMS_TESTS' ) && SWIFTFORMS_TESTS ) || defined( 'SWIFTFORMS_TEST_NOW' );
+		return ( defined( 'BLOCKFORMS_TESTS' ) && BLOCKFORMS_TESTS ) || defined( 'BLOCKFORMS_TEST_NOW' );
 	}
 }

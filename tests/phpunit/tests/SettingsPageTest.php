@@ -2,14 +2,14 @@
 /**
  * Tests for the Settings screen: the cassette-cmf settings page and its REST route (P10).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Settings;
-use SwiftForms\Settings_Page;
-use SwiftForms\Vendor\PedalCMS\CassetteCMF\Core\Manager;
+use BlockForms\Settings;
+use BlockForms\Settings_Page;
+use BlockForms\Vendor\PedalCMS\CassetteCMF\Core\Manager;
 
 /**
  * Class SettingsPageTest
@@ -17,9 +17,9 @@ use SwiftForms\Vendor\PedalCMS\CassetteCMF\Core\Manager;
  * @group settings
  * @group admin
  */
-class SettingsPageTest extends SF_Storage_Test_Case {
+class SettingsPageTest extends BF_Storage_Test_Case {
 
-	const ROUTE = '/swiftforms-cmf/v1/settings/swiftforms';
+	const ROUTE = '/blockforms-cmf/v1/settings/blockforms';
 
 	/**
 	 * A clean REST server, a clean menu and an administrator.
@@ -56,7 +56,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 	/**
 	 * The registered page object of cassette-cmf.
 	 *
-	 * @return \SwiftForms\Vendor\PedalCMS\CassetteCMF\Settings\Settings_Page
+	 * @return \BlockForms\Vendor\PedalCMS\CassetteCMF\Settings\Settings_Page
 	 */
 	private function page() {
 		$page = Manager::init()->get_new_settings_handler()->get_page( Settings_Page::PAGE_ID );
@@ -111,17 +111,17 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 	public function test_page_registration() {
 		$page = $this->page();
 
-		$this->assertSame( 'swiftforms', $page->get_page_id() );
-		$this->assertSame( 'swiftforms-settings', $page->get_config( 'menu_slug' ) );
-		$this->assertSame( 'swiftforms', $page->get_config( 'parent_slug' ) );
-		$this->assertSame( 'swiftforms_manage_settings', $page->get_config( 'capability' ) );
+		$this->assertSame( 'blockforms', $page->get_page_id() );
+		$this->assertSame( 'blockforms-settings', $page->get_config( 'menu_slug' ) );
+		$this->assertSame( 'blockforms', $page->get_config( 'parent_slug' ) );
+		$this->assertSame( 'blockforms_manage_settings', $page->get_config( 'capability' ) );
 		$this->assertSame( 'react', $page->get_render_mode() );
 		$this->assertTrue( $page->is_rest_enabled() );
 		$this->assertNull( $page->get_config( 'schema_version' ), 'No schema_version: cassette-cmf writes nothing besides the field options.' );
 
-		$this->assertSame( 'swiftforms-cmf', Manager::asset_handle() );
-		$this->assertSame( 'SwiftFormsCMFFields', Manager::js_global() );
-		$this->assertSame( 'swiftforms-cmf/v1', Manager::rest_namespace() );
+		$this->assertSame( 'blockforms-cmf', Manager::asset_handle() );
+		$this->assertSame( 'BlockFormsCMFFields', Manager::js_global() );
+		$this->assertSame( 'blockforms-cmf/v1', Manager::rest_namespace() );
 	}
 
 	/**
@@ -170,9 +170,9 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 			$found[ $name ] = $field->get_type();
 			$path           = preg_replace( '/_/', '.', $name, 1 );
 			// The logo field shows '' (not 0) so the upload control does not offer "Remove logo"; Settings keeps 0.
-			$expected = 'email_logo_id' === $name ? '' : Settings::defaults( SwiftForms\Install_Marker::installed_version() )[ explode( '.', $path )[0] ][ explode( '.', $path, 2 )[1] ];
+			$expected = 'email_logo_id' === $name ? '' : Settings::defaults( BlockForms\Install_Marker::installed_version() )[ explode( '.', $path )[0] ][ explode( '.', $path, 2 )[1] ];
 			$this->assertSame( $expected, $field->get_config( 'default' ), $name . ' default' );
-			$this->assertSame( 'swiftforms_' . $name, $field->get_option_name( Settings_Page::PAGE_ID ), $name . ' option' );
+			$this->assertSame( 'blockforms_' . $name, $field->get_option_name( Settings_Page::PAGE_ID ), $name . ' option' );
 		}
 		ksort( $expect );
 		ksort( $found );
@@ -180,13 +180,13 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 
 		$option_names = array_map( [ Settings::class, 'option_name' ], Settings::paths() );
 		$this->assertSame(
-			[ 'swiftforms_advanced_delete_on_uninstall' ],
+			[ 'blockforms_advanced_delete_on_uninstall' ],
 			array_values(
 				array_diff(
 					$option_names,
 					array_map(
 						static function ( $name ) {
-							return 'swiftforms_' . $name;
+							return 'blockforms_' . $name;
 						},
 						array_keys( $found )
 					)
@@ -197,14 +197,14 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 	}
 
 	/**
-	 * The page hangs under Forms (slug "swiftforms") as "Settings", behind the mapped capability.
+	 * The page hangs under Forms (slug "blockforms") as "Settings", behind the mapped capability.
 	 *
 	 * @return void
 	 */
 	public function test_menu_entry() {
 		global $submenu;
 
-		add_menu_page( 'Entries', 'Forms', 'swiftforms_view_entries', 'swiftforms', '__return_empty_string' );
+		add_menu_page( 'Entries', 'Forms', 'blockforms_view_entries', 'blockforms', '__return_empty_string' );
 		$page = $this->page();
 		$prop = new ReflectionProperty( $page, 'registered' );
 		if ( PHP_VERSION_ID < 80100 ) {
@@ -214,26 +214,26 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		Manager::init()->get_new_settings_handler()->register_pages();
 
 		$slugs = [];
-		foreach ( $submenu['swiftforms'] as $item ) {
-			if ( 'swiftforms-settings' === $item[2] ) {
+		foreach ( $submenu['blockforms'] as $item ) {
+			if ( 'blockforms-settings' === $item[2] ) {
 				$slugs[] = [ $item[0], $item[1] ];
 			}
 		}
-		$this->assertSame( [ [ 'Settings', 'swiftforms_manage_settings' ] ], $slugs );
-		$this->assertSame( get_plugin_page_hookname( 'swiftforms-settings', 'swiftforms' ), $page->get_hook_suffix() );
-		$this->assertStringContainsString( 'swiftforms', $page->get_hook_suffix(), 'The screen id contains "swiftforms" (Mail_Notice relies on it).' );
-		$this->assertStringContainsString( 'admin.php?page=swiftforms-settings', menu_page_url( 'swiftforms-settings', false ) );
+		$this->assertSame( [ [ 'Settings', 'blockforms_manage_settings' ] ], $slugs );
+		$this->assertSame( get_plugin_page_hookname( 'blockforms-settings', 'blockforms' ), $page->get_hook_suffix() );
+		$this->assertStringContainsString( 'blockforms', $page->get_hook_suffix(), 'The screen id contains "blockforms" (Mail_Notice relies on it).' );
+		$this->assertStringContainsString( 'admin.php?page=blockforms-settings', menu_page_url( 'blockforms-settings', false ) );
 	}
 
 	/**
-	 * The route is cassette-cmf's; SwiftForms has no settings route of its own.
+	 * The route is cassette-cmf's; BlockForms has no settings route of its own.
 	 *
 	 * @return void
 	 */
 	public function test_route_namespace() {
 		$routes = rest_get_server()->get_routes();
-		$this->assertArrayHasKey( '/swiftforms-cmf/v1/settings/(?P<page>swiftforms)', $routes );
-		$this->assertArrayNotHasKey( '/swiftforms/v1/settings', $routes );
+		$this->assertArrayHasKey( '/blockforms-cmf/v1/settings/(?P<page>blockforms)', $routes );
+		$this->assertArrayNotHasKey( '/blockforms/v1/settings', $routes );
 	}
 
 	/**
@@ -287,7 +287,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		$this->assertSame( $values, $response->get_data()['values'] );
 		$this->assertSame( [ 0, 0, 0 ], [ $writes['update'], $writes['add'], $added ] );
 		$this->assertSame( [], Settings::stored_options(), 'Absent options stay absent.' );
-		$this->assertNull( get_option( 'cassette_cmf_schema_version_swiftforms', null ), 'cassette-cmf writes nothing else.' );
+		$this->assertNull( get_option( 'cassette_cmf_schema_version_blockforms', null ), 'cassette-cmf writes nothing else.' );
 	}
 
 	/**
@@ -297,19 +297,19 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 	 */
 	public function test_noop_post_with_present_options() {
 		$this->clear_options();
-		update_option( 'swiftforms_general_store_entries', '0' );
-		update_option( 'swiftforms_general_store_ip', true );             // Stored as "1".
-		update_option( 'swiftforms_general_retention_days', 30 );        // Stored as "30".
-		update_option( 'swiftforms_general_default_success_message', '<script>x</script> unclean, saved by an older tool' );
-		update_option( 'swiftforms_email_notification_to', 'a@example.org, b@example.org' );
-		update_option( 'swiftforms_email_logo_id', '' );
-		update_option( 'swiftforms_email_accent_color', '#12F' );
-		update_option( 'swiftforms_email_footer_text', '<b>Hi</b>' );
-		update_option( 'swiftforms_spam_min_seconds', '3' );             // Equals the default but is present.
-		update_option( 'swiftforms_spam_spam_action', 'discard' );
-		update_option( 'swiftforms_spam_blocked_words', " foo\nbar " );
+		update_option( 'blockforms_general_store_entries', '0' );
+		update_option( 'blockforms_general_store_ip', true );             // Stored as "1".
+		update_option( 'blockforms_general_retention_days', 30 );        // Stored as "30".
+		update_option( 'blockforms_general_default_success_message', '<script>x</script> unclean, saved by an older tool' );
+		update_option( 'blockforms_email_notification_to', 'a@example.org, b@example.org' );
+		update_option( 'blockforms_email_logo_id', '' );
+		update_option( 'blockforms_email_accent_color', '#12F' );
+		update_option( 'blockforms_email_footer_text', '<b>Hi</b>' );
+		update_option( 'blockforms_spam_min_seconds', '3' );             // Equals the default but is present.
+		update_option( 'blockforms_spam_spam_action', 'discard' );
+		update_option( 'blockforms_spam_blocked_words', " foo\nbar " );
 		$before = Settings::stored_options();
-		$this->assertSame( '1', $before['swiftforms_general_store_ip'] );
+		$this->assertSame( '1', $before['blockforms_general_store_ip'] );
 
 		$writes = $this->counter();
 		$this->count_settings_writes( $writes );
@@ -320,7 +320,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		$this->assertSame( 200, $response->get_status() );
 		$this->assertSame( [ 0, 0 ], [ $writes['update'], $writes['add'] ], 'No update_option() call at all.' );
 		$this->assertSame( $before, Settings::stored_options() );
-		$this->assertSame( '<script>x</script> unclean, saved by an older tool', $this->raw_option( 'swiftforms_general_default_success_message' ) );
+		$this->assertSame( '<script>x</script> unclean, saved by an older tool', $this->raw_option( 'blockforms_general_default_success_message' ) );
 	}
 
 	/**
@@ -330,11 +330,11 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 	 */
 	public function test_noop_post_with_corrupt_options() {
 		$this->clear_options();
-		update_option( 'swiftforms_general_store_entries', 'banana' );
-		update_option( 'swiftforms_general_retention_days', 'thirty' );
-		update_option( 'swiftforms_spam_spam_action', 'delete' );
-		update_option( 'swiftforms_email_notification_to', [ 'a@example.org' ] );
-		update_option( 'swiftforms_email_accent_color', 'red' );
+		update_option( 'blockforms_general_store_entries', 'banana' );
+		update_option( 'blockforms_general_retention_days', 'thirty' );
+		update_option( 'blockforms_spam_spam_action', 'delete' );
+		update_option( 'blockforms_email_notification_to', [ 'a@example.org' ] );
+		update_option( 'blockforms_email_accent_color', 'red' );
 		$before = Settings::stored_options();
 		$writes = $this->counter();
 		$this->count_settings_writes( $writes );
@@ -374,10 +374,10 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		$this->assertSame( 200, $response->get_status() );
 		$this->assertSame(
 			[
-				'swiftforms_email_from_name'        => 'Acme',
-				'swiftforms_general_retention_days' => '30',
-				'swiftforms_spam_honeypot'          => '0',
-				'swiftforms_spam_min_seconds'       => '7',
+				'blockforms_email_from_name'        => 'Acme',
+				'blockforms_general_retention_days' => '30',
+				'blockforms_spam_honeypot'          => '0',
+				'blockforms_spam_min_seconds'       => '7',
 			],
 			Settings::stored_options()
 		);
@@ -390,7 +390,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 
 		// Back to the default: the option is present, so the change is written.
 		$this->call( 'POST', [ 'spam_honeypot' => true ] );
-		$this->assertSame( '1', $this->raw_option( 'swiftforms_spam_honeypot' ) );
+		$this->assertSame( '1', $this->raw_option( 'blockforms_spam_honeypot' ) );
 		$this->assertTrue( Settings::get_value( 'spam.honeypot' ) );
 
 		// The same value again writes nothing.
@@ -455,7 +455,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		$response = $this->call( 'POST', [ 'email_logo_id' => $attachment ] );
 		$this->assertSame( 'Choose an image from the media library.', $response->get_data()['data']['params']['email_logo_id'] );
 
-		$response = $this->call( 'POST', [ 'swiftforms_secret_thing' => 'x' ] );
+		$response = $this->call( 'POST', [ 'blockforms_secret_thing' => 'x' ] );
 		$this->assertSame( 400, $response->get_status(), 'An unknown key is refused.' );
 		$response = $this->call( 'POST', [ 'advanced_delete_on_uninstall' => true ] );
 		$this->assertSame( 400, $response->get_status(), 'delete_on_uninstall is not on the page.' );
@@ -493,7 +493,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		$this->assertSame( "foo\nbar baz", Settings::get_value( 'spam.blocked_words' ), 'Line breaks are kept.' );
 		$this->assertSame( 2, Settings::get_value( 'general.retention_days' ) );
 		$this->assertFalse( Settings::get_value( 'general.store_entries' ) );
-		$this->assertSame( '0', $this->raw_option( 'swiftforms_general_store_entries' ) );
+		$this->assertSame( '0', $this->raw_option( 'blockforms_general_store_entries' ) );
 
 		// Clearing the optional ones works and an empty colour or address is valid.
 		$this->assertSame(
@@ -547,18 +547,18 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		add_user_to_blog( $blog_id, $user_id, 'administrator' );
 		wp_set_current_user( $user_id );
 		$this->assertFalse( current_user_can( 'unfiltered_html' ) );
-		$this->assertTrue( current_user_can( 'swiftforms_manage_settings' ) );
+		$this->assertTrue( current_user_can( 'blockforms_manage_settings' ) );
 
 		$response = $this->call( 'POST', [ 'email_footer_text' => '<b>Hi</b><script>alert(1)</script><img src=x onerror=alert(2)>' ] );
 
 		$this->assertSame( 200, $response->get_status() );
-		$this->assertStringNotContainsString( '<script', $this->raw_option( 'swiftforms_email_footer_text' ) );
-		$this->assertStringNotContainsString( 'onerror', $this->raw_option( 'swiftforms_email_footer_text' ) );
+		$this->assertStringNotContainsString( '<script', $this->raw_option( 'blockforms_email_footer_text' ) );
+		$this->assertStringNotContainsString( 'onerror', $this->raw_option( 'blockforms_email_footer_text' ) );
 		restore_current_blog();
 	}
 
 	/**
-	 * Who may use the route: guests 401, other roles 403, administrators and a role mapped to swiftforms_manage_settings 200.
+	 * Who may use the route: guests 401, other roles 403, administrators and a role mapped to blockforms_manage_settings 200.
 	 *
 	 * @return void
 	 */
@@ -581,23 +581,23 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'editor' ] ) );
 		$this->assertSame( 200, $this->call( 'GET' )->get_status(), 'A role mapped to the capability may.' );
 		$this->assertSame( 200, $this->call( 'POST', [ 'spam_honeypot' => false ] )->get_status() );
-		$this->assertSame( '0', $this->raw_option( 'swiftforms_spam_honeypot' ) );
+		$this->assertSame( '0', $this->raw_option( 'blockforms_spam_honeypot' ) );
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'subscriber' ] ) );
 		$this->assertSame( 403, $this->call( 'GET' )->get_status(), 'Another role still may not.' );
 	}
 
 	/**
-	 * Map swiftforms_manage_settings to another capability for the rest of the test.
+	 * Map blockforms_manage_settings to another capability for the rest of the test.
 	 *
 	 * @param string $cap Primitive capability.
 	 * @return void
 	 */
 	private function map_settings_cap( $cap ) {
 		add_filter(
-			'swiftforms_capability_map',
+			'blockforms_capability_map',
 			static function ( $map ) use ( $cap ) {
-				return array_merge( $map, [ 'swiftforms_manage_settings' => $cap ] );
+				return array_merge( $map, [ 'blockforms_manage_settings' => $cap ] );
 			}
 		);
 	}
@@ -622,7 +622,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 	 * @return void
 	 */
 	public function test_assets_only_on_the_settings_screen() {
-		add_menu_page( 'Entries', 'Forms', 'swiftforms_view_entries', 'swiftforms', '__return_empty_string' );
+		add_menu_page( 'Entries', 'Forms', 'blockforms_view_entries', 'blockforms', '__return_empty_string' );
 		$page = $this->page();
 		$prop = new ReflectionProperty( $page, 'registered' );
 		if ( PHP_VERSION_ID < 80100 ) {
@@ -638,7 +638,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 				array_filter(
 					array_merge( wp_scripts()->queue, wp_styles()->queue ),
 					static function ( $handle ) {
-						return 0 === strpos( $handle, 'swiftforms-cmf' );
+						return 0 === strpos( $handle, 'blockforms-cmf' );
 					}
 				)
 			);
@@ -657,18 +657,18 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 		// The settings screen: the React app and nothing of the classic assets.
 		set_current_screen( $hook );
 		$handler->enqueue_assets();
-		$this->assertContains( 'swiftforms-cmf-settings-app', $ours() );
-		$this->assertNotContains( 'swiftforms-cmf', $ours(), 'The classic common script and style are not loaded.' );
-		$inline = implode( '', (array) wp_scripts()->get_data( 'swiftforms-cmf-settings-app', 'before' ) );
-		$this->assertStringContainsString( 'window.SwiftFormsCMFFieldsSettingsApp', $inline );
-		$this->assertSame( plugins_url( 'vendor-prefixed/pedalcms/cassette-cmf/build/settings-app.js', SWIFTFORMS_FILE ), strtok( wp_scripts()->registered['swiftforms-cmf-settings-app']->src, '?' ) );
-		$this->assertStringContainsString( '"restPath":"\/swiftforms-cmf\/v1\/settings\/swiftforms"', $inline );
+		$this->assertContains( 'blockforms-cmf-settings-app', $ours() );
+		$this->assertNotContains( 'blockforms-cmf', $ours(), 'The classic common script and style are not loaded.' );
+		$inline = implode( '', (array) wp_scripts()->get_data( 'blockforms-cmf-settings-app', 'before' ) );
+		$this->assertStringContainsString( 'window.BlockFormsCMFFieldsSettingsApp', $inline );
+		$this->assertSame( plugins_url( 'vendor-prefixed/pedalcms/cassette-cmf/build/settings-app.js', BLOCKFORMS_FILE ), strtok( wp_scripts()->registered['blockforms-cmf-settings-app']->src, '?' ) );
+		$this->assertStringContainsString( '"restPath":"\/blockforms-cmf\/v1\/settings\/blockforms"', $inline );
 
 		ob_start();
 		$page->get_config( 'callback' )();
 		$html = ob_get_clean();
-		$this->assertStringContainsString( 'id="cassette-cmf-settings-swiftforms"', $html );
-		$this->assertStringContainsString( 'data-config-global="SwiftFormsCMFFieldsSettingsApp"', $html );
+		$this->assertStringContainsString( 'id="cassette-cmf-settings-blockforms"', $html );
+		$this->assertStringContainsString( 'data-config-global="BlockFormsCMFFieldsSettingsApp"', $html );
 	}
 
 	/**
@@ -677,12 +677,12 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 	 * @return void
 	 */
 	public function test_the_built_app_exists() {
-		$build = \SwiftForms\Vendor\PedalCMS\CassetteCMF\Settings\React_Renderer::build_path();
+		$build = \BlockForms\Vendor\PedalCMS\CassetteCMF\Settings\React_Renderer::build_path();
 		foreach ( [ 'settings-app.js', 'settings-app.asset.php', 'settings-app.css', 'settings-app-rtl.css' ] as $file ) {
 			$this->assertFileExists( $build . '/' . $file );
 		}
 		$this->assertStringContainsString( 'vendor-prefixed/pedalcms/cassette-cmf/build', str_replace( '\\', '/', $build ) );
-		$this->assertNull( \SwiftForms\Vendor\PedalCMS\CassetteCMF\Settings\React_Renderer::unavailable_reason() );
+		$this->assertNull( \BlockForms\Vendor\PedalCMS\CassetteCMF\Settings\React_Renderer::unavailable_reason() );
 	}
 
 	/**
@@ -692,7 +692,7 @@ class SettingsPageTest extends SF_Storage_Test_Case {
 	 */
 	public function test_the_banner_link_lands_on_the_page() {
 		$url = admin_url( 'admin.php?page=' . Settings_Page::MENU_SLUG );
-		$this->assertStringContainsString( 'admin.php?page=swiftforms-settings', $url );
-		$this->assertSame( 'swiftforms-settings', Settings_Page::MENU_SLUG );
+		$this->assertStringContainsString( 'admin.php?page=blockforms-settings', $url );
+		$this->assertSame( 'blockforms-settings', Settings_Page::MENU_SLUG );
 	}
 }

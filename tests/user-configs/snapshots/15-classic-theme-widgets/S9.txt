@@ -1,15 +1,15 @@
 == S9 registered ==
-exporter: SwiftForms entries
-eraser: SwiftForms entries
+exporter: BlockForms entries
+eraser: BlockForms entries
 
 == S9 export for ada@example.com ==
 [
     {
         "data": [
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E2}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E2}",
                 "data": [
                     {
                         "name": "Form",
@@ -30,9 +30,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E3}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E3}",
                 "data": [
                     {
                         "name": "Form",
@@ -49,9 +49,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E6}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E6}",
                 "data": [
                     {
                         "name": "Form",
@@ -72,9 +72,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E7}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E7}",
                 "data": [
                     {
                         "name": "Form",
@@ -109,7 +109,7 @@ eraser: SwiftForms entries
         "items_removed": true,
         "items_retained": false,
         "messages": [
-            "Removed 4 SwiftForms entries."
+            "Removed 4 BlockForms entries."
         ],
         "done": true
     }

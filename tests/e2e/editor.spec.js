@@ -7,7 +7,7 @@
  * six patterns.
  *
  * The exact serialized markup of a freshly inserted form is printed between
- * SF_DEFAULT_FORM_BEGIN and SF_DEFAULT_FORM_END and written to SF_DEFAULT_FORM_OUT when that
+ * BF_DEFAULT_FORM_BEGIN and BF_DEFAULT_FORM_END and written to BF_DEFAULT_FORM_OUT when that
  * variable is set (it becomes fixture form-default for config 01).
  */
 const fs = require( 'fs' );
@@ -16,13 +16,13 @@ const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 const UUID_V4 =
 	/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
-const FORM = 'swiftforms/form';
+const FORM = 'blockforms/form';
 const DEFAULT_CHILDREN = [
-	'swiftforms/field-text',
-	'swiftforms/field-email',
-	'swiftforms/field-textarea',
-	'swiftforms/submit',
-	'swiftforms/confirmation',
+	'blockforms/field-text',
+	'blockforms/field-email',
+	'blockforms/field-textarea',
+	'blockforms/submit',
+	'blockforms/confirmation',
 ];
 
 /**
@@ -105,7 +105,7 @@ async function newPostWithForm( { admin, editor, page } ) {
 	return form;
 }
 
-test.describe( 'SwiftForms editor', () => {
+test.describe( 'BlockForms editor', () => {
 	let problems;
 
 	test.beforeEach( ( { page } ) => {
@@ -128,7 +128,7 @@ test.describe( 'SwiftForms editor', () => {
 		const requests = [];
 		page.on( 'request', ( request ) => {
 			if (
-				/block-renderer|swiftforms-blocks\/v1|swiftforms\/v1/.test(
+				/block-renderer|blockforms-blocks\/v1|blockforms\/v1/.test(
 					request.url()
 				)
 			) {
@@ -170,22 +170,22 @@ test.describe( 'SwiftForms editor', () => {
 		const markup = await editorApi( page ).content();
 		// eslint-disable-next-line no-console
 		console.log(
-			`SF_DEFAULT_FORM_BEGIN\n${ markup }\nSF_DEFAULT_FORM_END`
+			`BF_DEFAULT_FORM_BEGIN\n${ markup }\nSF_DEFAULT_FORM_END`
 		);
 		fs.writeFileSync( testInfo.outputPath( 'form-default.html' ), markup );
-		if ( process.env.SF_DEFAULT_FORM_OUT ) {
-			fs.writeFileSync( process.env.SF_DEFAULT_FORM_OUT, markup );
+		if ( process.env.BF_DEFAULT_FORM_OUT ) {
+			fs.writeFileSync( process.env.BF_DEFAULT_FORM_OUT, markup );
 		}
 		expect( markup ).toContain(
-			`<!-- wp:swiftforms/form {"formId":"${ form.attributes.formId }"} -->`
+			`<!-- wp:blockforms/form {"formId":"${ form.attributes.formId }"} -->`
 		);
-		expect( markup.endsWith( '<!-- /wp:swiftforms/form -->' ) ).toBe(
+		expect( markup.endsWith( '<!-- /wp:blockforms/form -->' ) ).toBe(
 			true
 		);
-		expect( markup ).toContain( '<!-- wp:swiftforms/submit /-->' );
+		expect( markup ).toContain( '<!-- wp:blockforms/submit /-->' );
 
 		// Real, disabled inputs in the canvas, and not one request for the preview.
-		const canvasForm = editor.canvas.locator( '.swiftforms-form' ).first();
+		const canvasForm = editor.canvas.locator( '.blockforms-form' ).first();
 		await expect( canvasForm.locator( 'input[disabled]' ) ).toHaveCount(
 			2
 		);
@@ -203,7 +203,7 @@ test.describe( 'SwiftForms editor', () => {
 				.getCategories()
 				.map( ( category ) => category.slug )
 		);
-		expect( categories ).toContain( 'swiftforms' );
+		expect( categories ).toContain( 'blockforms' );
 	} );
 
 	test( 'a new field derives its name from the label and repairs a bad one', async ( {
@@ -214,7 +214,7 @@ test.describe( 'SwiftForms editor', () => {
 		const form = await newPostWithForm( { admin, editor, page } );
 		const api = editorApi( page );
 		const fieldId = await api.insertInto(
-			'swiftforms/field-text',
+			'blockforms/field-text',
 			form.clientId,
 			3
 		);
@@ -255,7 +255,7 @@ test.describe( 'SwiftForms editor', () => {
 				const tree = await api.tree();
 				return tree[ 0 ].innerBlocks
 					.filter(
-						( block ) => block.name === 'swiftforms/field-text'
+						( block ) => block.name === 'blockforms/field-text'
 					)
 					.map( ( block ) => block.attributes.name );
 			} )
@@ -356,7 +356,7 @@ test.describe( 'SwiftForms editor', () => {
 				} )
 			).content.raw;
 		const before = await readRaw();
-		expect( before ).toContain( '<!-- wp:swiftforms/form ' );
+		expect( before ).toContain( '<!-- wp:blockforms/form ' );
 
 		await admin.visitAdminPage(
 			'post.php',
@@ -404,7 +404,7 @@ test.describe( 'SwiftForms editor', () => {
 		await editor.saveDraft();
 		const api = editorApi( page );
 		const confirmation = editor.canvas.locator(
-			'[data-type="swiftforms/confirmation"]'
+			'[data-type="blockforms/confirmation"]'
 		);
 		const contentBefore = await api.content();
 
@@ -492,13 +492,13 @@ test.describe( 'SwiftForms editor', () => {
 			path: '/wp/v2/block-patterns/categories',
 		} );
 		const ours = patterns.filter( ( pattern ) =>
-			( pattern.categories || [] ).includes( 'swiftforms' )
+			( pattern.categories || [] ).includes( 'blockforms' )
 		);
 		expect( ours.map( ( pattern ) => pattern.title ).sort() ).toEqual(
 			[ ...titles ].sort()
 		);
 		expect(
-			categories.find( ( category ) => 'swiftforms' === category.name )
+			categories.find( ( category ) => 'blockforms' === category.name )
 				.label
 		).toBe( 'Forms' );
 		for ( const pattern of ours ) {
@@ -552,8 +552,8 @@ test.describe( 'SwiftForms editor', () => {
 		expect( new Set( ids ).size ).toBe( 6 );
 		for ( const form of forms ) {
 			const names = form.innerBlocks.map( ( block ) => block.name );
-			expect( names ).toContain( 'swiftforms/submit' );
-			expect( names ).toContain( 'swiftforms/confirmation' );
+			expect( names ).toContain( 'blockforms/submit' );
+			expect( names ).toContain( 'blockforms/confirmation' );
 		}
 	} );
 } );

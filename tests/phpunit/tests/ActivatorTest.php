@@ -1,27 +1,27 @@
 <?php
 /**
- * Tests for SwiftForms\Activator and SwiftForms\Cron.
+ * Tests for BlockForms\Activator and BlockForms\Cron.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Activator;
-use SwiftForms\Backups;
-use SwiftForms\Clock;
-use SwiftForms\Cron;
-use SwiftForms\Database;
-use SwiftForms\Install_Marker;
-use SwiftForms\Migrations;
-use SwiftForms\Settings;
+use BlockForms\Activator;
+use BlockForms\Backups;
+use BlockForms\Clock;
+use BlockForms\Cron;
+use BlockForms\Database;
+use BlockForms\Install_Marker;
+use BlockForms\Migrations;
+use BlockForms\Settings;
 
 /**
  * Class ActivatorTest
  *
  * @group activator
  */
-class ActivatorTest extends SF_Storage_Test_Case {
+class ActivatorTest extends BF_Storage_Test_Case {
 
 	/**
 	 * Start as a site that has not run the plugin.
@@ -47,9 +47,9 @@ class ActivatorTest extends SF_Storage_Test_Case {
 		$this->assertSame( 10, has_action( 'init', [ Cron::class, 'maybe_schedule' ] ) );
 		$this->assertSame( 10, has_action( Cron::DAILY, [ Cron::class, 'run_daily' ] ) );
 
-		$hook = 'activate_' . plugin_basename( SWIFTFORMS_FILE );
+		$hook = 'activate_' . plugin_basename( BLOCKFORMS_FILE );
 		$this->assertSame( 10, has_action( $hook, [ Activator::class, 'activate' ] ) );
-		$this->assertSame( 10, has_action( 'deactivate_' . plugin_basename( SWIFTFORMS_FILE ), [ Activator::class, 'deactivate' ] ) );
+		$this->assertSame( 10, has_action( 'deactivate_' . plugin_basename( BLOCKFORMS_FILE ), [ Activator::class, 'deactivate' ] ) );
 	}
 
 	/**
@@ -62,7 +62,7 @@ class ActivatorTest extends SF_Storage_Test_Case {
 
 		$this->assertSame(
 			[
-				'version' => SWIFTFORMS_VERSION,
+				'version' => BLOCKFORMS_VERSION,
 				'time'    => 1795082400,
 			],
 			get_option( Install_Marker::OPTION )
@@ -99,7 +99,7 @@ class ActivatorTest extends SF_Storage_Test_Case {
 	 */
 	public function test_deactivation_leaves_data_and_clears_cron() {
 		Activator::activate( false );
-		add_option( 'swiftforms_spam_honeypot', '0' );
+		add_option( 'blockforms_spam_honeypot', '0' );
 		Cron::maybe_schedule();
 		$this->assertNotFalse( wp_next_scheduled( Cron::DAILY ) );
 
@@ -108,7 +108,7 @@ class ActivatorTest extends SF_Storage_Test_Case {
 		$this->assertFalse( wp_next_scheduled( Cron::DAILY ) );
 		$this->assertSame( 1, (int) get_option( Migrations::OPTION_DB_VERSION ) );
 		$this->assertNotNull( get_option( Install_Marker::OPTION, null ) );
-		$this->assertSame( '0', get_option( 'swiftforms_spam_honeypot' ) );
+		$this->assertSame( '0', get_option( 'blockforms_spam_honeypot' ) );
 		$this->assertSame( [], Database::missing() );
 	}
 
@@ -136,7 +136,7 @@ class ActivatorTest extends SF_Storage_Test_Case {
 	 */
 	public function test_lazy_install_does_not_invent_a_marker_for_an_existing_site() {
 		add_option( Migrations::OPTION_DB_VERSION, 0 );
-		add_option( 'swiftforms_general_store_ip', '1' );
+		add_option( 'blockforms_general_store_ip', '1' );
 
 		Activator::maybe_install();
 

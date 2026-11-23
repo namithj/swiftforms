@@ -1,28 +1,28 @@
 <?php
 /**
- * Tests for SwiftForms\Migrations (scenario S11 at unit level).
+ * Tests for BlockForms\Migrations (scenario S11 at unit level).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Backups;
-use SwiftForms\Clock;
-use SwiftForms\Database;
-use SwiftForms\Install_Marker;
-use SwiftForms\Migrations;
-use SwiftForms\Settings;
+use BlockForms\Backups;
+use BlockForms\Clock;
+use BlockForms\Database;
+use BlockForms\Install_Marker;
+use BlockForms\Migrations;
+use BlockForms\Settings;
 
 /**
  * Class MigrationsTest
  *
  * @group migrations
  */
-class MigrationsTest extends SF_Storage_Test_Case {
+class MigrationsTest extends BF_Storage_Test_Case {
 
 	/**
-	 * Start every test as a site that has not run the plugin, with no SwiftForms tables.
+	 * Start every test as a site that has not run the plugin, with no BlockForms tables.
 	 *
 	 * @return void
 	 */
@@ -84,7 +84,7 @@ class MigrationsTest extends SF_Storage_Test_Case {
 			'',
 			false
 		);
-		add_option( 'swiftforms_spam_honeypot', '0' );
+		add_option( 'blockforms_spam_honeypot', '0' );
 
 		$this->assertTrue( Migrations::maybe_run() );
 		$marker  = $this->raw_option( Install_Marker::OPTION );
@@ -106,7 +106,7 @@ class MigrationsTest extends SF_Storage_Test_Case {
 	 * @return void
 	 */
 	public function test_existing_site_is_backed_up_once() {
-		add_option( 'swiftforms_email_notification_to', 'owner@example.org' );
+		add_option( 'blockforms_email_notification_to', 'owner@example.org' );
 		add_option( Migrations::OPTION_DB_VERSION, 0 );
 
 		$this->assertTrue( Migrations::maybe_run() );
@@ -116,14 +116,14 @@ class MigrationsTest extends SF_Storage_Test_Case {
 		$this->assertSame( 'migration-1', $backups[0]['reason'] );
 		$this->assertSame(
 			[
-				'swiftforms_email_notification_to' => 'owner@example.org',
+				'blockforms_email_notification_to' => 'owner@example.org',
 				Migrations::OPTION_DB_VERSION      => '0', // WordPress hands scalar options back as strings.
 			],
 			$backups[0]['options'],
 			'The backup holds the options as they were before the migration.'
 		);
 		$this->assertSame( 1, (int) get_option( Migrations::OPTION_DB_VERSION ) );
-		$this->assertSame( 'owner@example.org', get_option( 'swiftforms_email_notification_to' ), 'The settings are not rewritten.' );
+		$this->assertSame( 'owner@example.org', get_option( 'blockforms_email_notification_to' ), 'The settings are not rewritten.' );
 	}
 
 	/**
@@ -134,7 +134,7 @@ class MigrationsTest extends SF_Storage_Test_Case {
 	public function test_version_changed_action() {
 		$calls = [];
 		add_action(
-			'swiftforms_db_version_changed',
+			'blockforms_db_version_changed',
 			static function ( $from, $to ) use ( &$calls ) {
 				$calls[] = [ $from, $to ];
 			},
@@ -187,7 +187,7 @@ class MigrationsTest extends SF_Storage_Test_Case {
 		global $wpdb;
 
 		$block = static function ( $query ) {
-			return 0 === stripos( trim( $query ), 'CREATE TABLE' ) ? 'SELECT 1 FROM sftests_no_such_table_for_swiftforms' : $query;
+			return 0 === stripos( trim( $query ), 'CREATE TABLE' ) ? 'SELECT 1 FROM bftests_no_such_table_for_blockforms' : $query;
 		};
 		add_filter( 'query', $block, 1 );
 		$suppress = $wpdb->suppress_errors();

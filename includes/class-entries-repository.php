@@ -2,10 +2,10 @@
 /**
  * Entry storage.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Entries_Repository
  *
- * Reads and writes the swiftforms_entries and swiftforms_entry_values tables (ADR-003, C-4). Every query goes
+ * Reads and writes the blockforms_entries and blockforms_entry_values tables (ADR-003, C-4). Every query goes
  * through $wpdb->prepare() or $wpdb->insert(). It also lists, filters, updates and deletes entries for the admin screens.
  *
  * What insert() stores:
@@ -265,7 +265,7 @@ class Entries_Repository {
 		global $wpdb;
 
 		$table = esc_sql( Database::table( 'entries' ) );
-		// sf-allow-unprepared: no input.
+		// bf-allow-unprepared: no input.
 		$rows = $wpdb->get_results( "SELECT form_id, status, COUNT(*) AS total FROM {$table} GROUP BY form_id, status", ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Own table; no variable input.
 
 		$counts = [];
@@ -284,7 +284,7 @@ class Entries_Repository {
 		global $wpdb;
 
 		$table = esc_sql( Database::table( 'entries' ) );
-		// sf-allow-unprepared: no input.
+		// bf-allow-unprepared: no input.
 		$rows = $wpdb->get_results( "SELECT form_id, status, COUNT(*) AS total, SUM(starred) AS starred FROM {$table} GROUP BY form_id, status", ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Own table; no variable input.
 
 		$counts = [];

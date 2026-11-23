@@ -1,15 +1,15 @@
 <?php
 /**
- * Tests for SwiftForms\Form_Id_Writer.
+ * Tests for BlockForms\Form_Id_Writer.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-resolver-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-resolver-test-case.php';
 
-use SwiftForms\Form_Id_Writer;
-use SwiftForms\Form_Index;
-use SwiftForms\Uuid;
+use BlockForms\Form_Id_Writer;
+use BlockForms\Form_Index;
+use BlockForms\Uuid;
 
 /**
  * Class FormIdWriterTest
@@ -17,7 +17,7 @@ use SwiftForms\Uuid;
  * @group index
  * @group resolver
  */
-class FormIdWriterTest extends SF_Resolver_Test_Case {
+class FormIdWriterTest extends BF_Resolver_Test_Case {
 
 	/**
 	 * Save as a user who may post unfiltered HTML, so kses does not touch the fixtures.
@@ -114,13 +114,13 @@ class FormIdWriterTest extends SF_Resolver_Test_Case {
 	 */
 	public function test_missing_id_is_inserted() {
 		$cases = [
-			'plain'        => [ '<!-- wp:swiftforms/form --><!-- /wp:swiftforms/form -->', '<!-- wp:swiftforms/form {"formId":"%s"} --><!-- /wp:swiftforms/form -->' ],
-			'attributes'   => [ '<!-- wp:swiftforms/form {"title":"T","ajax":false} --><!-- /wp:swiftforms/form -->', '<!-- wp:swiftforms/form {"formId":"%s","title":"T","ajax":false} --><!-- /wp:swiftforms/form -->' ],
-			'empty object' => [ '<!-- wp:swiftforms/form {} --><!-- /wp:swiftforms/form -->', '<!-- wp:swiftforms/form {"formId":"%s"} --><!-- /wp:swiftforms/form -->' ],
-			'self closing' => [ '<!-- wp:swiftforms/form /-->', '<!-- wp:swiftforms/form {"formId":"%s"} /-->' ],
-			'self + attrs' => [ '<!-- wp:swiftforms/form {"title":"T"} /-->', '<!-- wp:swiftforms/form {"formId":"%s","title":"T"} /-->' ],
-			'empty id'     => [ '<!-- wp:swiftforms/form {"formId":""} --><!-- /wp:swiftforms/form -->', '<!-- wp:swiftforms/form {"formId":"%s"} --><!-- /wp:swiftforms/form -->' ],
-			'invalid id'   => [ '<!-- wp:swiftforms/form {"formId":"abc","title":"T"} --><!-- /wp:swiftforms/form -->', '<!-- wp:swiftforms/form {"formId":"%s","title":"T"} --><!-- /wp:swiftforms/form -->' ],
+			'plain'        => [ '<!-- wp:blockforms/form --><!-- /wp:blockforms/form -->', '<!-- wp:blockforms/form {"formId":"%s"} --><!-- /wp:blockforms/form -->' ],
+			'attributes'   => [ '<!-- wp:blockforms/form {"title":"T","ajax":false} --><!-- /wp:blockforms/form -->', '<!-- wp:blockforms/form {"formId":"%s","title":"T","ajax":false} --><!-- /wp:blockforms/form -->' ],
+			'empty object' => [ '<!-- wp:blockforms/form {} --><!-- /wp:blockforms/form -->', '<!-- wp:blockforms/form {"formId":"%s"} --><!-- /wp:blockforms/form -->' ],
+			'self closing' => [ '<!-- wp:blockforms/form /-->', '<!-- wp:blockforms/form {"formId":"%s"} /-->' ],
+			'self + attrs' => [ '<!-- wp:blockforms/form {"title":"T"} /-->', '<!-- wp:blockforms/form {"formId":"%s","title":"T"} /-->' ],
+			'empty id'     => [ '<!-- wp:blockforms/form {"formId":""} --><!-- /wp:blockforms/form -->', '<!-- wp:blockforms/form {"formId":"%s"} --><!-- /wp:blockforms/form -->' ],
+			'invalid id'   => [ '<!-- wp:blockforms/form {"formId":"abc","title":"T"} --><!-- /wp:blockforms/form -->', '<!-- wp:blockforms/form {"formId":"%s","title":"T"} --><!-- /wp:blockforms/form -->' ],
 		];
 		foreach ( $cases as $label => $case ) {
 			$page = $this->make_post( 'before ' . $case[0] . ' after' );
@@ -163,7 +163,7 @@ class FormIdWriterTest extends SF_Resolver_Test_Case {
 	 */
 	public function test_two_matches_leave_content_untouched_and_log() {
 		$this->make_post( $this->form_markup( self::ID_A ) );
-		$tricky = '<!-- wp:swiftforms/form {"formId":"' . self::ID_A . '","formId":"' . self::ID_A . '"} --><!-- /wp:swiftforms/form -->';
+		$tricky = '<!-- wp:blockforms/form {"formId":"' . self::ID_A . '","formId":"' . self::ID_A . '"} --><!-- /wp:blockforms/form -->';
 		$copy   = $this->make_post( 'seed' );
 
 		$this->assertSame( 0, $this->error_rows() );
@@ -172,7 +172,7 @@ class FormIdWriterTest extends SF_Resolver_Test_Case {
 		$this->assertSame( 1, $this->error_rows() );
 
 		// A non-string formId is not touched either.
-		$odd = '<!-- wp:swiftforms/form {"formId":5} --><!-- /wp:swiftforms/form -->';
+		$odd = '<!-- wp:blockforms/form {"formId":5} --><!-- /wp:blockforms/form -->';
 		$this->save( $copy, $odd );
 		$this->assertSame( $odd, $this->stored_content( $copy ) );
 		$this->assertSame( 2, $this->error_rows() );
@@ -184,7 +184,7 @@ class FormIdWriterTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_skipped_posts() {
-		$content = '<!-- wp:swiftforms/form --><!-- /wp:swiftforms/form -->';
+		$content = '<!-- wp:blockforms/form --><!-- /wp:blockforms/form -->';
 		$base    = [
 			'post_content' => wp_slash( $content ),
 			'post_type'    => 'page',
@@ -240,18 +240,18 @@ class FormIdWriterTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_template_posts() {
-		$this->make_theme( 'sf-w3' );
+		$this->make_theme( 'bf-w3' );
 		$this->make_post( $this->form_markup( self::ID_A ) );
-		$template = $this->make_template_post( 'wp_template', 'sf-w3', 'single', 'seed' );
+		$template = $this->make_template_post( 'wp_template', 'bf-w3', 'single', 'seed' );
 
 		$this->save( $template, $this->form_markup( self::ID_A ) . $this->form_markup( '' ) );
 
-		$copy_id = Form_Index::copy_id( self::ID_A, 'template:sf-w3//single' );
+		$copy_id = Form_Index::copy_id( self::ID_A, 'template:bf-w3//single' );
 		$this->assertSame(
-			$this->form_markup( $copy_id ) . $this->form_markup( Uuid::v5( 'missing|template:sf-w3//single|2' ) ),
+			$this->form_markup( $copy_id ) . $this->form_markup( Uuid::v5( 'missing|template:bf-w3//single|2' ) ),
 			$this->stored_content( $template )
 		);
-		$this->assertTrue( SwiftForms\Form_Index::is_live( $copy_id, 'template:sf-w3//single' ) );
+		$this->assertTrue( BlockForms\Form_Index::is_live( $copy_id, 'template:bf-w3//single' ) );
 	}
 
 	/**

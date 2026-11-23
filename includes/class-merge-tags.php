@@ -2,10 +2,10 @@
 /**
  * Merge tags.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Tags: {field:NAME}, {all_fields}, {form:title}, {form:id}, {entry:id}, {entry:date}, {site:name},
  * {site:url}, {page:url}, {page:title}, {user:id}, {user:email}, {user:display_name}, plus whatever the
- * swiftforms_merge_tags filter adds. A tag the engine does not know (including {field:x} for a field the
+ * blockforms_merge_tags filter adds. A tag the engine does not know (including {field:x} for a field the
  * form does not have) is left exactly as written; tags are never removed.
  *
  * Substitution is SINGLE-PASS: one regular-expression pass with a callback. What a tag turns into is
@@ -138,7 +138,7 @@ class Merge_Tags {
 	 * Merge tags in a recipient field resolve ONLY to values of email-type fields of the same form (the
 	 * field must be an email field in the current form and in the schema the value was validated against),
 	 * and only as a whole entry ("{field:email}" between the commas); every other tag, and a tag with text
-	 * around it, gives nothing. The swiftforms_merge_tags filter does not apply here.
+	 * around it, gives nothing. The blockforms_merge_tags filter does not apply here.
 	 *
 	 * @param string             $template Comma-separated addresses and tags.
 	 * @param Submission_Context $ctx      Submission.
@@ -202,7 +202,7 @@ class Merge_Tags {
 		$rows = self::field_rows( $ctx, $visitor );
 
 		if ( 'html' === $mode ) {
-			$html = '<table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse">';
+			$html = '<table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse">';
 			foreach ( $rows as $row ) {
 				$html .= '<tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">' . self::esc_text( $row[0] )
 					. '</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">' . nl2br( self::esc_text( $row[1] ), false ) . '</td></tr>';
@@ -260,7 +260,7 @@ class Merge_Tags {
 	private static function replace_in_html( $html, Submission_Context $ctx, array $tags, $visitor ) {
 		// {all_fields} is markup, so it cannot go through set_modifiable_text(); a random marker stands in and is swapped at the end.
 		// Visitor text is inserted before the swap and cannot contain a marker it never saw.
-		$marker = 'sf-all-fields-' . Random::token( 8 );
+		$marker = 'bf-all-fields-' . Random::token( 8 );
 		$has_af = false;
 
 		$text_tags = $tags;
@@ -419,7 +419,7 @@ class Merge_Tags {
 	}
 
 	/**
-	 * The plain-text value of every tag (all_fields excluded), after the swiftforms_merge_tags filter.
+	 * The plain-text value of every tag (all_fields excluded), after the blockforms_merge_tags filter.
 	 *
 	 * @param Submission_Context $ctx     Submission.
 	 * @param string             $mode    Mode the tags are used in.
@@ -462,7 +462,7 @@ class Merge_Tags {
 		 * @param Submission_Context    $context The submission.
 		 * @param string                $mode    html, attr, plain, header or url: where the result is used.
 		 */
-		$filtered = apply_filters( 'swiftforms_merge_tags', $tags, $ctx, $mode );
+		$filtered = apply_filters( 'blockforms_merge_tags', $tags, $ctx, $mode );
 		if ( ! is_array( $filtered ) ) {
 			return $tags;
 		}

@@ -1,14 +1,14 @@
 == S2 start#1 / c06-lead-a (guest) ==
 request:
 {
-    "_sf_form": "5f060001-0000-4000-8000-000000000001",
-    "_sf_source": "post:start",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f060001-0000-4000-8000-000000000001",
+    "_bf_source": "post:start",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@bigco.example",
         "company": "BigCo",
@@ -37,7 +37,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -61,7 +61,7 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/sf-uploads/2026/11/agency-logo.png" alt="SwiftForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Work email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@bigco.example</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Company</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">BigCo</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Department</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">sales</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Project brief</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">We need a new site.<br>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/bf-uploads/2026/11/agency-logo.png" alt="BlockForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Work email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@bigco.example</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Company</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">BigCo</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Department</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">sales</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Project brief</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">We need a new site.<br>
 Budget is flexible.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p></td></tr></table></td></tr></table></body></html>
 -- mail 2 (wp_mail arguments) --
 to: ada@bigco.example
@@ -72,7 +72,7 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/sf-uploads/2026/11/agency-logo.png" alt="SwiftForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><p>Hello Ada Lovelace,</p>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/bf-uploads/2026/11/agency-logo.png" alt="BlockForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><p>Hello Ada Lovelace,</p>
 <p>Thank you for your enquiry. A member of the team will contact you within one working day.</p>
 </td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p></td></tr></table></td></tr></table></body></html>
 -- mail 3 (wp_mail arguments) --
@@ -91,14 +91,14 @@ Budget is flexible.
 == S2 start#1 / c06-lead-b (guest) ==
 request:
 {
-    "_sf_form": "5f060001-0000-4000-8000-000000000001",
-    "_sf_source": "post:start",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f060001-0000-4000-8000-000000000001",
+    "_bf_source": "post:start",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@bigco.example",
         "company": "BigCo",
@@ -127,7 +127,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -151,7 +151,7 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/sf-uploads/2026/11/agency-logo.png" alt="SwiftForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Work email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@bigco.example</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Company</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">BigCo</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Department</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">support</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Project brief</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A second enquiry from the same address.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/bf-uploads/2026/11/agency-logo.png" alt="BlockForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Work email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@bigco.example</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Company</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">BigCo</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Department</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">support</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Project brief</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A second enquiry from the same address.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p></td></tr></table></td></tr></table></body></html>
 -- mail 2 (wp_mail arguments) --
 to: support@agency.example
 subject: Lead from BigCo
@@ -187,7 +187,7 @@ entry:
     "starred": "0",
     "user_id": "{USER:admin}",
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -211,7 +211,7 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/sf-uploads/2026/11/agency-logo.png" alt="SwiftForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Work email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@bigco.example</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Company</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">BigCo</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Department</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">sales</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Project brief</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">We need a new site.<br>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><img src="http://example.org/bf-uploads/2026/11/agency-logo.png" alt="BlockForms Test Suite" style="display:block;max-width:240px;height:auto;border:0;margin:0 0 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Work email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@bigco.example</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Company</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">BigCo</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Department</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">sales</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Project brief</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">We need a new site.<br>
 Budget is flexible.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p></td></tr></table></td></tr></table></body></html>
 -- mail 2 (wp_mail arguments) --
 to: support@agency.example

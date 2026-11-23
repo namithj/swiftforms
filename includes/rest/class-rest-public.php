@@ -2,10 +2,10 @@
 /**
  * Public REST routes.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Rest_Public
  *
- * The only place SwiftForms registers a route without a capability check. A public route must be named in
+ * The only place BlockForms registers a route without a capability check. A public route must be named in
  * ROUTES; register() refuses anything else, so adding a public endpoint takes a visible change to this list
  * (and a line in the global route snapshot and the route-inventory test).
  *
@@ -26,7 +26,7 @@ class Rest_Public {
 	/**
 	 * REST namespace.
 	 */
-	const REST_NAMESPACE = 'swiftforms/v1';
+	const REST_NAMESPACE = 'blockforms/v1';
 
 	/**
 	 * The allow-list of routes anybody may call.

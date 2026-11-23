@@ -4,7 +4,7 @@
  *
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 return [
@@ -13,14 +13,14 @@ return [
 	'guards'        => [ 'C-2.3', 'C-3.4' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_db_version' => 1,
-		'swiftforms_installed'  => [
+		'blockforms_db_version' => 1,
+		'blockforms_installed'  => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -32,7 +32,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'Thanks',
 			'slug'      => 'thanks',
-			'content'   => SF_FX( 'page-thanks' ),
+			'content'   => BF_FX( 'page-thanks' ),
 		],
 		[
 			'key'       => 'funnel',
@@ -40,7 +40,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'Funnel',
 			'slug'      => 'funnel',
-			'content'   => SF_FX( 'page-funnel' ),
+			'content'   => BF_FX( 'page-funnel' ),
 		],
 	],
 	'users'         => [ 'admin' ],

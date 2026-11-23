@@ -1,26 +1,26 @@
 <?php
 /**
- * Tests for SwiftForms\Field_Renderer: markup per input family, label positions,
+ * Tests for BlockForms\Field_Renderer: markup per input family, label positions,
  * required indicators, form state, escaping, ids.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-render-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-render-test-case.php';
 
-use SwiftForms\Form_State;
+use BlockForms\Form_State;
 
 /**
  * Class FieldRendererTest
  *
  * @group blocks
  */
-class FieldRendererTest extends SF_Render_Test_Case {
+class FieldRendererTest extends BF_Render_Test_Case {
 
 	/**
 	 * Prefix of the element ids of the first form on the page.
 	 */
-	const P = 'sf-11111111-';
+	const P = 'bf-11111111-';
 
 	/**
 	 * Text input with every optional attribute.
@@ -47,11 +47,11 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		);
 
 		$this->assertSame(
-			'<div class="swiftforms-field swiftforms-field--text swiftforms-field--required swiftforms-w-50 wp-block-swiftforms-field-text">'
-			. '<label class="swiftforms-label" for="' . self::P . 'company-1">Company<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></label>'
-			. '<input class="swiftforms-input" type="text" id="' . self::P . 'company-1" name="sf[company]" value="Acme Ltd" placeholder="Acme" minlength="2" maxlength="40" pattern="^[A-Z]" title="Start with a capital" autocomplete="organization" required aria-required="true" aria-describedby="' . self::P . 'company-1-help ' . self::P . 'company-1-error">'
-			. '<p class="swiftforms-help" id="' . self::P . 'company-1-help">As on the invoice</p>'
-			. '<p class="swiftforms-error" id="' . self::P . 'company-1-error" hidden></p>'
+			'<div class="blockforms-field blockforms-field--text blockforms-field--required blockforms-w-50 wp-block-blockforms-field-text">'
+			. '<label class="blockforms-label" for="' . self::P . 'company-1">Company<span class="blockforms-required" aria-hidden="true">*</span><span class="blockforms-sr-only"> (required)</span></label>'
+			. '<input class="blockforms-input" type="text" id="' . self::P . 'company-1" name="bf[company]" value="Acme Ltd" placeholder="Acme" minlength="2" maxlength="40" pattern="^[A-Z]" title="Start with a capital" autocomplete="organization" required aria-required="true" aria-describedby="' . self::P . 'company-1-help ' . self::P . 'company-1-error">'
+			. '<p class="blockforms-help" id="' . self::P . 'company-1-help">As on the invoice</p>'
+			. '<p class="blockforms-error" id="' . self::P . 'company-1-error" hidden></p>'
 			. '</div>',
 			$html
 		);
@@ -108,10 +108,10 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		);
 
 		$this->assertSame(
-			'<div class="swiftforms-field swiftforms-field--textarea swiftforms-w-100 wp-block-swiftforms-field-textarea">'
-			. '<label class="swiftforms-label" for="' . self::P . 'message-1">Message</label>'
-			. '<textarea class="swiftforms-textarea" id="' . self::P . 'message-1" name="sf[message]" rows="6" maxlength="500" aria-describedby="' . self::P . 'message-1-error">Line 1' . "\n" . 'Line 2</textarea>'
-			. '<p class="swiftforms-error" id="' . self::P . 'message-1-error" hidden></p>'
+			'<div class="blockforms-field blockforms-field--textarea blockforms-w-100 wp-block-blockforms-field-textarea">'
+			. '<label class="blockforms-label" for="' . self::P . 'message-1">Message</label>'
+			. '<textarea class="blockforms-textarea" id="' . self::P . 'message-1" name="bf[message]" rows="6" maxlength="500" aria-describedby="' . self::P . 'message-1-error">Line 1' . "\n" . 'Line 2</textarea>'
+			. '<p class="blockforms-error" id="' . self::P . 'message-1-error" hidden></p>'
 			. '</div>',
 			$html
 		);
@@ -145,11 +145,11 @@ class FieldRendererTest extends SF_Render_Test_Case {
 			]
 		);
 		$this->assertSame(
-			'<div class="swiftforms-field swiftforms-field--select swiftforms-w-100 wp-block-swiftforms-field-select">'
-			. '<label class="swiftforms-label" for="' . self::P . 'pick-1">Pick</label>'
-			. '<select class="swiftforms-select" id="' . self::P . 'pick-1" name="sf[pick]" aria-describedby="' . self::P . 'pick-1-error">'
+			'<div class="blockforms-field blockforms-field--select blockforms-w-100 wp-block-blockforms-field-select">'
+			. '<label class="blockforms-label" for="' . self::P . 'pick-1">Pick</label>'
+			. '<select class="blockforms-select" id="' . self::P . 'pick-1" name="bf[pick]" aria-describedby="' . self::P . 'pick-1-error">'
 			. '<option value="">Choose</option><option value="a,b|c" selected>A, B | C</option><option value="plain">Plain</option></select>'
-			. '<p class="swiftforms-error" id="' . self::P . 'pick-1-error" hidden></p>'
+			. '<p class="blockforms-error" id="' . self::P . 'pick-1-error" hidden></p>'
 			. '</div>',
 			$single
 		);
@@ -164,7 +164,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 				'defaultValue'      => "a,b|c\nplain",
 			]
 		);
-		$this->assertStringContainsString( 'name="sf[pick][]" multiple', $multiple );
+		$this->assertStringContainsString( 'name="bf[pick][]" multiple', $multiple );
 		$this->assertStringNotContainsString( '<option value="">', $multiple, 'A multiple select has no empty first option.' );
 		$this->assertStringContainsString( '<option value="a,b|c" selected>', $multiple );
 		$this->assertStringContainsString( '<option value="plain" selected>', $multiple );
@@ -199,13 +199,13 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		);
 
 		$this->assertSame(
-			'<fieldset class="swiftforms-field swiftforms-field--radio swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-radio" aria-describedby="' . self::P . 'plan-1-error" role="radiogroup">'
-			. '<legend class="swiftforms-label">Plan<span class="swiftforms-required"> (required)</span></legend>'
-			. '<div class="swiftforms-choices swiftforms-choices--inline">'
-			. '<label class="swiftforms-choice"><input type="radio" id="' . self::P . 'plan-1-1" name="sf[plan]" value="a" required aria-required="true"><span>Small</span></label>'
-			. '<label class="swiftforms-choice"><input type="radio" id="' . self::P . 'plan-1-2" name="sf[plan]" value="b" checked required aria-required="true"><span>Large</span></label>'
+			'<fieldset class="blockforms-field blockforms-field--radio blockforms-field--required blockforms-w-100 wp-block-blockforms-field-radio" aria-describedby="' . self::P . 'plan-1-error" role="radiogroup">'
+			. '<legend class="blockforms-label">Plan<span class="blockforms-required"> (required)</span></legend>'
+			. '<div class="blockforms-choices blockforms-choices--inline">'
+			. '<label class="blockforms-choice"><input type="radio" id="' . self::P . 'plan-1-1" name="bf[plan]" value="a" required aria-required="true"><span>Small</span></label>'
+			. '<label class="blockforms-choice"><input type="radio" id="' . self::P . 'plan-1-2" name="bf[plan]" value="b" checked required aria-required="true"><span>Large</span></label>'
 			. '</div>'
-			. '<p class="swiftforms-error" id="' . self::P . 'plan-1-error" hidden></p>'
+			. '<p class="blockforms-error" id="' . self::P . 'plan-1-error" hidden></p>'
 			. '</fieldset>',
 			$html
 		);
@@ -243,15 +243,15 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		);
 
 		$this->assertSame(
-			'<fieldset class="swiftforms-field swiftforms-field--checkboxes swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-checkboxes" aria-describedby="' . self::P . 'topics-1-help ' . self::P . 'topics-1-error">'
-			. '<legend class="swiftforms-label">Topics<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></legend>'
-			. '<div class="swiftforms-choices swiftforms-choices--stack">'
-			. '<label class="swiftforms-choice"><input type="checkbox" id="' . self::P . 'topics-1-1" name="sf[topics][]" value="x,y" checked><span>X and Y</span></label>'
-			. '<label class="swiftforms-choice"><input type="checkbox" id="' . self::P . 'topics-1-2" name="sf[topics][]" value="z|w" checked><span>Z or W</span></label>'
-			. '<label class="swiftforms-choice"><input type="checkbox" id="' . self::P . 'topics-1-3" name="sf[topics][]" value="q"><span>Q</span></label>'
+			'<fieldset class="blockforms-field blockforms-field--checkboxes blockforms-field--required blockforms-w-100 wp-block-blockforms-field-checkboxes" aria-describedby="' . self::P . 'topics-1-help ' . self::P . 'topics-1-error">'
+			. '<legend class="blockforms-label">Topics<span class="blockforms-required" aria-hidden="true">*</span><span class="blockforms-sr-only"> (required)</span></legend>'
+			. '<div class="blockforms-choices blockforms-choices--stack">'
+			. '<label class="blockforms-choice"><input type="checkbox" id="' . self::P . 'topics-1-1" name="bf[topics][]" value="x,y" checked><span>X and Y</span></label>'
+			. '<label class="blockforms-choice"><input type="checkbox" id="' . self::P . 'topics-1-2" name="bf[topics][]" value="z|w" checked><span>Z or W</span></label>'
+			. '<label class="blockforms-choice"><input type="checkbox" id="' . self::P . 'topics-1-3" name="bf[topics][]" value="q"><span>Q</span></label>'
 			. '</div>'
-			. '<p class="swiftforms-help" id="' . self::P . 'topics-1-help">Pick some</p>'
-			. '<p class="swiftforms-error" id="' . self::P . 'topics-1-error" hidden></p>'
+			. '<p class="blockforms-help" id="' . self::P . 'topics-1-help">Pick some</p>'
+			. '<p class="blockforms-error" id="' . self::P . 'topics-1-error" hidden></p>'
 			. '</fieldset>',
 			$html
 		);
@@ -273,10 +273,10 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		);
 
 		$this->assertSame(
-			'<div class="swiftforms-field swiftforms-field--consent swiftforms-field--required swiftforms-w-100 wp-block-swiftforms-field-consent">'
-			. '<label class="swiftforms-choice swiftforms-label swiftforms-consent" for="' . self::P . 'agree-1"><input type="checkbox" id="' . self::P . 'agree-1" name="sf[agree]" value="1" required aria-required="true" aria-describedby="' . self::P . 'agree-1-error">'
-			. '<span>I accept the <a href="https://example.org/terms" rel="noopener" target="_blank">terms</a> <strong>now</strong><span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span></span></label>'
-			. '<p class="swiftforms-error" id="' . self::P . 'agree-1-error" hidden></p>'
+			'<div class="blockforms-field blockforms-field--consent blockforms-field--required blockforms-w-100 wp-block-blockforms-field-consent">'
+			. '<label class="blockforms-choice blockforms-label blockforms-consent" for="' . self::P . 'agree-1"><input type="checkbox" id="' . self::P . 'agree-1" name="bf[agree]" value="1" required aria-required="true" aria-describedby="' . self::P . 'agree-1-error">'
+			. '<span>I accept the <a href="https://example.org/terms" rel="noopener" target="_blank">terms</a> <strong>now</strong><span class="blockforms-required" aria-hidden="true">*</span><span class="blockforms-sr-only"> (required)</span></span></label>'
+			. '<p class="blockforms-error" id="' . self::P . 'agree-1-error" hidden></p>'
 			. '</div>',
 			$html
 		);
@@ -296,7 +296,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 			]
 		);
 		$this->assertSame(
-			'<input type="hidden" class="swiftforms-field swiftforms-field--hidden" id="' . self::P . 'campaign-1" name="sf[campaign]" value="spring-2026">',
+			'<input type="hidden" class="blockforms-field blockforms-field--hidden" id="' . self::P . 'campaign-1" name="bf[campaign]" value="spring-2026">',
 			$html
 		);
 	}
@@ -307,7 +307,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 	 * @return void
 	 */
 	public function test_hidden_tokens_in_markup() {
-		$_POST['sf']['pid'] = 'forged';
+		$_POST['bf']['pid'] = 'forged';
 		$markup             = $this->form_markup(
 			self::ID_A,
 			$this->field_markup(
@@ -320,7 +320,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		);
 		$post_id            = 0;
 		$html               = $this->render_page( $markup, $post_id, [ 'post_title' => 'My <b>page</b>' ] );
-		unset( $_POST['sf'] );
+		unset( $_POST['bf'] );
 
 		$expected = 'post ' . $post_id . ': My page (' . get_permalink( $post_id ) . ') by ';
 		$this->assertStringContainsString( 'value="' . esc_attr( $expected ) . '"', $html, 'Visitor: the user token is empty and the posted value is ignored.' );
@@ -339,7 +339,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 				'label' => 'Alpha',
 			]
 		);
-		$this->assertStringContainsString( '<label class="swiftforms-label" for=', $top );
+		$this->assertStringContainsString( '<label class="blockforms-label" for=', $top );
 
 		$hidden = $this->render_field(
 			'text',
@@ -349,11 +349,11 @@ class FieldRendererTest extends SF_Render_Test_Case {
 			],
 			[ 'labelPosition' => 'hidden' ]
 		);
-		$this->assertStringContainsString( '<label class="swiftforms-label swiftforms-sr-only" for=', $hidden );
+		$this->assertStringContainsString( '<label class="blockforms-label blockforms-sr-only" for=', $hidden );
 		$this->assertStringContainsString( '>Alpha</label>', $hidden );
 
 		$html = $this->render_form( $this->field_markup( 'text', [ 'name' => 'a' ] ), [ 'labelPosition' => 'inline' ] );
-		$this->assertStringContainsString( 'swiftforms-form--labels-inline', $html );
+		$this->assertStringContainsString( 'blockforms-form--labels-inline', $html );
 
 		$legend = $this->render_field(
 			'radio',
@@ -369,7 +369,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 			],
 			[ 'labelPosition' => 'hidden' ]
 		);
-		$this->assertStringContainsString( '<legend class="swiftforms-label swiftforms-sr-only">Choose</legend>', $legend );
+		$this->assertStringContainsString( '<legend class="blockforms-label blockforms-sr-only">Choose</legend>', $legend );
 
 		$consent = $this->render_field(
 			'consent',
@@ -379,7 +379,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 			],
 			[ 'labelPosition' => 'hidden' ]
 		);
-		$this->assertStringNotContainsString( 'swiftforms-sr-only">I agree', $consent, 'A consent text is never hidden.' );
+		$this->assertStringNotContainsString( 'blockforms-sr-only">I agree', $consent, 'A consent text is never hidden.' );
 	}
 
 	/**
@@ -395,14 +395,14 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		];
 
 		$asterisk = $this->render_field( 'text', $attrs );
-		$this->assertStringContainsString( '<span class="swiftforms-required" aria-hidden="true">*</span><span class="swiftforms-sr-only"> (required)</span>', $asterisk );
+		$this->assertStringContainsString( '<span class="blockforms-required" aria-hidden="true">*</span><span class="blockforms-sr-only"> (required)</span>', $asterisk );
 
 		$text = $this->render_field( 'text', $attrs, [ 'requiredIndicator' => 'text' ] );
-		$this->assertStringContainsString( '<span class="swiftforms-required"> (required)</span>', $text );
+		$this->assertStringContainsString( '<span class="blockforms-required"> (required)</span>', $text );
 		$this->assertStringNotContainsString( 'aria-hidden="true">*', $text );
 
 		$none = $this->render_field( 'text', $attrs, [ 'requiredIndicator' => 'none' ] );
-		$this->assertStringNotContainsString( 'swiftforms-required', $none );
+		$this->assertStringNotContainsString( 'blockforms-required', $none );
 		$this->assertStringNotContainsString( '(required)', $none );
 
 		foreach ( [ $asterisk, $text, $none ] as $html ) {
@@ -483,11 +483,11 @@ class FieldRendererTest extends SF_Render_Test_Case {
 		$this->assertStringContainsString( 'value="typed"', $html );
 		$this->assertStringNotContainsString( 'value="default"', $html );
 		$this->assertStringContainsString( 'aria-invalid="true"', $html );
-		$this->assertStringContainsString( '<p class="swiftforms-error" id="' . self::P . 'who-1-error">Please enter a &lt;b&gt;name&lt;/b&gt;.</p>', $html );
-		$this->assertStringContainsString( '<input type="checkbox" id="' . self::P . 'topics-1-2" name="sf[topics][]" value="q" checked>', $html );
-		$this->assertStringContainsString( '<input type="checkbox" id="' . self::P . 'topics-1-1" name="sf[topics][]" value="x">', $html );
+		$this->assertStringContainsString( '<p class="blockforms-error" id="' . self::P . 'who-1-error">Please enter a &lt;b&gt;name&lt;/b&gt;.</p>', $html );
+		$this->assertStringContainsString( '<input type="checkbox" id="' . self::P . 'topics-1-2" name="bf[topics][]" value="q" checked>', $html );
+		$this->assertStringContainsString( '<input type="checkbox" id="' . self::P . 'topics-1-1" name="bf[topics][]" value="x">', $html );
 		$this->assertStringContainsString( ' value="1" checked', $html );
-		$this->assertStringContainsString( '<div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>Please fix the following:</p><ul><li><a href="#' . self::P . 'who-1">Who: Please enter a &lt;b&gt;name&lt;/b&gt;.</a></li></ul></div>', $html );
+		$this->assertStringContainsString( '<div class="blockforms-errors-summary" tabindex="-1" role="alert"><p>Please fix the following:</p><ul><li><a href="#' . self::P . 'who-1">Who: Please enter a &lt;b&gt;name&lt;/b&gt;.</a></li></ul></div>', $html );
 		$this->assertStringNotContainsString( 'errors-summary" tabindex="-1" hidden', $html );
 	}
 
@@ -584,10 +584,10 @@ class FieldRendererTest extends SF_Render_Test_Case {
 			. $this->field_markup( 'text', [ 'name' => '2 Nd' ] )
 		);
 
-		$this->assertStringContainsString( 'name="sf[dup]"', $html );
-		$this->assertStringContainsString( 'name="sf[dup-2]"', $html );
-		$this->assertStringContainsString( 'name="sf[email]"', $html );
-		$this->assertStringContainsString( 'name="sf[f-2-nd]"', $html );
+		$this->assertStringContainsString( 'name="bf[dup]"', $html );
+		$this->assertStringContainsString( 'name="bf[dup-2]"', $html );
+		$this->assertStringContainsString( 'name="bf[email]"', $html );
+		$this->assertStringContainsString( 'name="bf[f-2-nd]"', $html );
 	}
 
 	/**
@@ -596,10 +596,10 @@ class FieldRendererTest extends SF_Render_Test_Case {
 	 * @return void
 	 */
 	public function test_outside_a_form_nothing_renders() {
-		$this->assertSame( '', do_blocks( '<!-- wp:swiftforms/field-text {"name":"x"} /-->' ) );
-		$this->assertSame( '', do_blocks( '<!-- wp:swiftforms/field-hidden {"name":"x"} /-->' ) );
-		$this->assertSame( '', do_blocks( '<!-- wp:swiftforms/submit /-->' ) );
-		$this->assertSame( '', do_blocks( '<!-- wp:swiftforms/confirmation --><!-- wp:paragraph --><p>x</p><!-- /wp:paragraph --><!-- /wp:swiftforms/confirmation -->' ) );
+		$this->assertSame( '', do_blocks( '<!-- wp:blockforms/field-text {"name":"x"} /-->' ) );
+		$this->assertSame( '', do_blocks( '<!-- wp:blockforms/field-hidden {"name":"x"} /-->' ) );
+		$this->assertSame( '', do_blocks( '<!-- wp:blockforms/submit /-->' ) );
+		$this->assertSame( '', do_blocks( '<!-- wp:blockforms/confirmation --><!-- wp:paragraph --><p>x</p><!-- /wp:paragraph --><!-- /wp:blockforms/confirmation -->' ) );
 	}
 
 	/**
@@ -615,7 +615,7 @@ class FieldRendererTest extends SF_Render_Test_Case {
 			. '</div><!-- /wp:column --></div><!-- /wp:columns -->';
 		$html    = $this->render_form( $columns );
 
-		$this->assertGreaterThan( strpos( $html, 'sf[left]' ), strpos( $html, 'sf[right]' ) );
+		$this->assertGreaterThan( strpos( $html, 'bf[left]' ), strpos( $html, 'bf[right]' ) );
 		$this->assertStringContainsString( 'wp-block-column', $html );
 	}
 
@@ -625,24 +625,24 @@ class FieldRendererTest extends SF_Render_Test_Case {
 	 * @return void
 	 */
 	public function test_submit_block() {
-		$default = $this->render_form( '<!-- wp:swiftforms/submit /-->' );
-		$this->assertStringContainsString( '<div class="swiftforms-submit wp-block-swiftforms-submit"><button type="submit" class="swiftforms-submit__button wp-element-button">Submit</button></div>', $default );
+		$default = $this->render_form( '<!-- wp:blockforms/submit /-->' );
+		$this->assertStringContainsString( '<div class="blockforms-submit wp-block-blockforms-submit"><button type="submit" class="blockforms-submit__button wp-element-button">Submit</button></div>', $default );
 
-		$typed = $this->render_form( '<!-- wp:swiftforms/submit {"label":"Send <it> & go"} /-->' );
+		$typed = $this->render_form( '<!-- wp:blockforms/submit {"label":"Send <it> & go"} /-->' );
 		$this->assertStringContainsString( '>Send &lt;it&gt; &amp; go</button>', $typed );
 
 		add_filter(
 			'gettext',
 			static function ( $translation, $text, $domain ) {
-				return ( 'swiftforms' === $domain && 'Submit' === $text ) ? 'Absenden' : $translation;
+				return ( 'blockforms' === $domain && 'Submit' === $text ) ? 'Absenden' : $translation;
 			},
 			10,
 			3
 		);
 		Form_State::reset();
-		$german = $this->render_form( '<!-- wp:swiftforms/submit /-->' );
+		$german = $this->render_form( '<!-- wp:blockforms/submit /-->' );
 		$this->assertStringContainsString( '>Absenden</button>', $german );
-		$typed_again = $this->render_form( '<!-- wp:swiftforms/submit {"label":"Submit now"} /-->' );
+		$typed_again = $this->render_form( '<!-- wp:blockforms/submit {"label":"Submit now"} /-->' );
 		$this->assertStringContainsString( '>Submit now</button>', $typed_again );
 	}
 }

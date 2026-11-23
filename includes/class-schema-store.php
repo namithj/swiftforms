@@ -2,10 +2,10 @@
 /**
  * Schema snapshots.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Schema_Store
  *
- * The swiftforms_schemas table: one row per schema hash, written once and kept
+ * The blockforms_schemas table: one row per schema hash, written once and kept
  * forever (C-4.4), so an entry stays readable after its form changes or is deleted
  * and a cached page can still be validated against the schema it showed (C-3.8).
  * A row is never updated; two forms that happen to share a field list have different
@@ -26,7 +26,7 @@ class Schema_Store {
 	/**
 	 * Object cache group. Snapshots never change, so cached copies never go stale.
 	 */
-	const CACHE_GROUP = 'swiftforms_schemas';
+	const CACHE_GROUP = 'blockforms_schemas';
 
 	/**
 	 * Store a snapshot unless its hash is already there.

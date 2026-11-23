@@ -1,23 +1,23 @@
 <?php
 /**
- * Tests for SwiftForms\Log.
+ * Tests for BlockForms\Log.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Database;
-use SwiftForms\Log;
-use SwiftForms\Settings;
+use BlockForms\Clock;
+use BlockForms\Database;
+use BlockForms\Log;
+use BlockForms\Settings;
 
 /**
  * Class LogTest
  *
  * @group log
  */
-class LogTest extends SF_Storage_Test_Case {
+class LogTest extends BF_Storage_Test_Case {
 
 	/**
 	 * Rows go to the log table with JSON context and the clock's time.
@@ -76,13 +76,13 @@ class LogTest extends SF_Storage_Test_Case {
 	public function test_debug_rows_need_the_debug_setting() {
 		$this->use_scratch_prefix();
 		Database::install();
-		delete_option( 'swiftforms_advanced_debug_log' );
+		delete_option( 'blockforms_advanced_debug_log' );
 		Settings::flush_cache();
 
 		$this->assertFalse( Log::add( 'error', 'debug', 'Hidden.' ) );
 		$this->assertCount( 0, $this->rows( 'log' ) );
 
-		update_option( 'swiftforms_advanced_debug_log', '1' );
+		update_option( 'blockforms_advanced_debug_log', '1' );
 		$this->assertIsInt( Log::add( 'error', 'debug', 'Shown.' ) );
 		$this->assertCount( 1, $this->rows( 'log' ) );
 	}

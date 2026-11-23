@@ -1,14 +1,14 @@
 <?php
 /**
- * Tests for SwiftForms\Render_Token.
+ * Tests for BlockForms\Render_Token.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Render_Token;
+use BlockForms\Clock;
+use BlockForms\Render_Token;
 
 /**
  * Class RenderTokenTest
@@ -16,7 +16,7 @@ use SwiftForms\Render_Token;
  * @group submission
  * @group security
  */
-class RenderTokenTest extends SF_Storage_Test_Case {
+class RenderTokenTest extends BF_Storage_Test_Case {
 
 	const FORM   = '11111111-1111-4111-8111-111111111111';
 	const SOURCE = 'post:42';
@@ -45,7 +45,7 @@ class RenderTokenTest extends SF_Storage_Test_Case {
 		list( , $issued, $mac ) = explode( '.', $token );
 		$this->assertSame( intdiv( 1900000000, 3600 ), (int) base_convert( $issued, 36, 10 ), 'Hours since the epoch in base 36.' );
 
-		$expected = substr( hash_hmac( 'sha256', 'v1|' . self::FORM . '|' . self::SOURCE . '|' . self::HASH . '|' . $issued, wp_salt( 'auth' ) . 'swiftforms' ), 0, 32 );
+		$expected = substr( hash_hmac( 'sha256', 'v1|' . self::FORM . '|' . self::SOURCE . '|' . self::HASH . '|' . $issued, wp_salt( 'auth' ) . 'blockforms' ), 0, 32 );
 		$this->assertSame( $expected, $mac );
 	}
 

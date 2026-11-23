@@ -2,12 +2,12 @@
 /**
  * Colour settings field.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
-use SwiftForms\Vendor\PedalCMS\CassetteCMF\Field\Fields\Color_Field;
+use BlockForms\Vendor\PedalCMS\CassetteCMF\Field\Fields\Color_Field;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -25,7 +25,7 @@ class Settings_Color_Field extends Color_Field {
 	/**
 	 * Field type the page registers this class under.
 	 */
-	const TYPE = 'swiftforms_color';
+	const TYPE = 'blockforms_color';
 
 	/**
 	 * The type the settings app sees.
@@ -66,7 +66,7 @@ class Settings_Color_Field extends Color_Field {
 		];
 		if ( is_string( $input ) && '' !== $input && sanitize_hex_color( $input ) !== $input ) {
 			$result['valid']    = false;
-			$result['errors'][] = __( 'Enter a colour such as #1d4ed8, or leave it empty.', 'swiftforms' );
+			$result['errors'][] = __( 'Enter a colour such as #1d4ed8, or leave it empty.', 'blockforms' );
 		}
 		return $result;
 	}

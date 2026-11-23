@@ -2,10 +2,10 @@
 /**
  * Confirmation block renderer.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Confirmation_Renderer {
 
 	/**
-	 * Render callback of swiftforms/confirmation: nothing on a normal render.
+	 * Render callback of blockforms/confirmation: nothing on a normal render.
 	 *
 	 * @param array<string, mixed> $attributes Attributes (none).
 	 * @param string               $content    Rendered inner blocks (discarded here).
@@ -57,6 +57,6 @@ class Confirmation_Renderer {
 			}
 		}
 
-		return '<div class="swiftforms-confirmation" role="status">' . $html . '</div>';
+		return '<div class="blockforms-confirmation" role="status">' . $html . '</div>';
 	}
 }

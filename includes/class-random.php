@@ -2,10 +2,10 @@
 /**
  * Randomness seam.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -98,7 +98,7 @@ class Random {
 	 * @return void
 	 */
 	public static function seed( $seed ) {
-		if ( ! ( ( defined( 'SWIFTFORMS_TESTS' ) && SWIFTFORMS_TESTS ) || defined( 'SWIFTFORMS_TEST_NOW' ) ) ) {
+		if ( ! ( ( defined( 'BLOCKFORMS_TESTS' ) && BLOCKFORMS_TESTS ) || defined( 'BLOCKFORMS_TEST_NOW' ) ) ) {
 			_doing_it_wrong( __METHOD__, 'Random::seed() is for tests only.', '0.1.0' );
 			return;
 		}

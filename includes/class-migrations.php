@@ -2,10 +2,10 @@
 /**
  * Schema version tracking and the numbered migration runner.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Migrations
  *
- * swiftforms_db_version only ever goes up (C-4.6). Every migration is idempotent,
+ * blockforms_db_version only ever goes up (C-4.6). Every migration is idempotent,
  * runs under a lock, is preceded by one backup of the options (when the site has
  * any data to lose) and is logged.
  *
@@ -33,12 +33,12 @@ class Migrations {
 	/**
 	 * Option that holds the schema version.
 	 */
-	const OPTION_DB_VERSION = 'swiftforms_db_version';
+	const OPTION_DB_VERSION = 'blockforms_db_version';
 
 	/**
 	 * Option that holds the lock: "<expiry unix time>:<owner token>". Autoload "no".
 	 */
-	const OPTION_LOCK = 'swiftforms_migration_lock';
+	const OPTION_LOCK = 'blockforms_migration_lock';
 
 	/**
 	 * Seconds a lock is honoured. A crashed run frees itself after this.
@@ -144,7 +144,7 @@ class Migrations {
 			 * @param int $from Version before this run.
 			 * @param int $to   Version after this run.
 			 */
-			do_action( 'swiftforms_db_version_changed', $from, self::stored_version() );
+			do_action( 'blockforms_db_version_changed', $from, self::stored_version() );
 		}
 
 		return $ran;

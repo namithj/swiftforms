@@ -8,7 +8,7 @@
  * date) and trashed (with the trash meta WordPress adds). Only the published page and the password page for a visitor who has
  * the post-password cookie accept submissions; the others answer "closed" (C-3.4, C-3.11).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 return [
@@ -17,15 +17,15 @@ return [
 	'guards'        => [ 'ADR-001', 'C-3.4', 'C-3.11' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_email_notification_to' => 'pages@states.example',
-		'swiftforms_db_version'            => 1,
-		'swiftforms_installed'             => [
+		'blockforms_email_notification_to' => 'pages@states.example',
+		'blockforms_db_version'            => 1,
+		'blockforms_installed'             => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -38,13 +38,13 @@ return [
 			'title'     => 'Open page',
 			'slug'      => 'published',
 			'date'      => '2026-10-01 09:00:00',
-			'content'   => SF_PARAGRAPH( 'This page is published (control).' ) . "\n\n" . SF_FORM(
+			'content'   => BF_PARAGRAPH( 'This page is published (control).' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f160001-0000-4000-8000-000000000001',
 					'title'  => 'Published (control)',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Name',
@@ -53,7 +53,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'        => 'Email',
@@ -74,13 +74,13 @@ return [
 			'title'     => 'Draft page',
 			'slug'      => 'draft',
 			'date'      => '2026-10-02 09:00:00',
-			'content'   => SF_PARAGRAPH( 'This page is draft.' ) . "\n\n" . SF_FORM(
+			'content'   => BF_PARAGRAPH( 'This page is draft.' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f160002-0000-4000-8000-000000000002',
 					'title'  => 'Draft',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Name',
@@ -89,7 +89,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'        => 'Email',
@@ -110,13 +110,13 @@ return [
 			'title'     => 'Private page',
 			'slug'      => 'private',
 			'date'      => '2026-10-03 09:00:00',
-			'content'   => SF_PARAGRAPH( 'This page is private.' ) . "\n\n" . SF_FORM(
+			'content'   => BF_PARAGRAPH( 'This page is private.' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f160003-0000-4000-8000-000000000003',
 					'title'  => 'Private',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Name',
@@ -125,7 +125,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'        => 'Email',
@@ -147,13 +147,13 @@ return [
 			'slug'      => 'locked',
 			'date'      => '2026-10-04 09:00:00',
 			'password'  => 'letmein',
-			'content'   => SF_PARAGRAPH( 'This page is password protected.' ) . "\n\n" . SF_FORM(
+			'content'   => BF_PARAGRAPH( 'This page is password protected.' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f160004-0000-4000-8000-000000000004',
 					'title'  => 'Password protected',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Name',
@@ -162,7 +162,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'        => 'Email',
@@ -183,13 +183,13 @@ return [
 			'title'     => 'Scheduled page',
 			'slug'      => 'scheduled',
 			'date'      => '2099-01-01 09:00:00',
-			'content'   => SF_PARAGRAPH( 'This page is scheduled.' ) . "\n\n" . SF_FORM(
+			'content'   => BF_PARAGRAPH( 'This page is scheduled.' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f160005-0000-4000-8000-000000000005',
 					'title'  => 'Scheduled',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Name',
@@ -198,7 +198,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'        => 'Email',
@@ -223,13 +223,13 @@ return [
 				'_wp_trash_meta_status' => 'publish',
 				'_wp_trash_meta_time'   => 1794000000,
 			],
-			'content'   => SF_PARAGRAPH( 'This page is trashed.' ) . "\n\n" . SF_FORM(
+			'content'   => BF_PARAGRAPH( 'This page is trashed.' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f160006-0000-4000-8000-000000000006',
 					'title'  => 'Trashed',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Name',
@@ -238,7 +238,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'        => 'Email',

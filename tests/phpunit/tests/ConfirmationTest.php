@@ -1,21 +1,21 @@
 <?php
 /**
- * Tests for SwiftForms\Confirmation.
+ * Tests for BlockForms\Confirmation.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-submission-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-submission-test-case.php';
 
-use SwiftForms\Confirmation;
-use SwiftForms\Submission_Context;
+use BlockForms\Confirmation;
+use BlockForms\Submission_Context;
 
 /**
  * Class ConfirmationTest
  *
  * @group submission
  */
-class ConfirmationTest extends SF_Submission_Test_Case {
+class ConfirmationTest extends BF_Submission_Test_Case {
 
 	/**
 	 * A context for the current form.

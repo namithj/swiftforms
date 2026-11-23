@@ -32,7 +32,7 @@ fi
 cd "${REPO_ROOT}"
 
 mkdir -p "$(dirname "${OUTPUT_BUNDLE}")"
-cp "${PLUGIN_ZIP}" "${BUILD_ROOT}/swiftforms.zip"
+cp "${PLUGIN_ZIP}" "${BUILD_ROOT}/blockforms.zip"
 
 node -e '
 	const fs = require( "fs" );
@@ -40,8 +40,8 @@ node -e '
 	let swapped = 0;
 	for ( const step of blueprint.steps ) {
 		if ( step.step === "installPlugin" ) {
-			step.pluginData = { resource: "bundled", path: "/swiftforms.zip" };
-			step.options = { ...step.options, targetFolderName: "swiftforms" };
+			step.pluginData = { resource: "bundled", path: "/blockforms.zip" };
+			step.options = { ...step.options, targetFolderName: "blockforms" };
 			swapped++;
 		}
 	}
@@ -52,10 +52,10 @@ node -e '
 ' "${BUILD_ROOT}/blueprint.json"
 
 rm -f "${OUTPUT_BUNDLE}"
-(cd "${BUILD_ROOT}" && zip -rq "${OUTPUT_BUNDLE}" blueprint.json swiftforms.zip)
+(cd "${BUILD_ROOT}" && zip -rq "${OUTPUT_BUNDLE}" blueprint.json blockforms.zip)
 ZIP_ENTRIES="$(unzip -Z1 "${OUTPUT_BUNDLE}")"
 
-for required_file in blueprint.json swiftforms.zip; do
+for required_file in blueprint.json blockforms.zip; do
 	if ! grep -qxF "${required_file}" <<< "${ZIP_ENTRIES}"; then
 		echo "Playground bundle is missing ${required_file}." >&2
 		exit 1

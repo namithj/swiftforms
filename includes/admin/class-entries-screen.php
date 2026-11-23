@@ -2,10 +2,10 @@
 /**
  * The Entries screen: the list table, the single-entry screen and the actions on an entry.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Entries_Screen
  *
  * Forms → Entries is a standard WordPress list table (Entries_List_Table) and, behind a link, one screen per entry
- * (admin.php?page=swiftforms&action=view&entry=ID) laid out like an edit screen. The controller is hooked to
+ * (admin.php?page=blockforms&action=view&entry=ID) laid out like an edit screen. The controller is hooked to
  * "load-{hook}" so an action runs before any output: every action is a GET link with a nonce of its own
- * (swiftforms-{action}-entry_{id}), asks Access::can() for the capability it needs, changes the entry through
+ * (blockforms-{action}-entry_{id}), asks Access::can() for the capability it needs, changes the entry through
  * Entries_Repository and redirects back with a "message" query argument that becomes a dismissible notice.
  * Trash and spam notices carry an Undo link.
  *
@@ -30,12 +30,12 @@ class Entries_Screen {
 	/**
 	 * The page (menu slug).
 	 */
-	const PAGE = 'swiftforms';
+	const PAGE = 'blockforms';
 
 	/**
 	 * The user option behind "Number of items per page".
 	 */
-	const PER_PAGE_OPTION = 'swiftforms_entries_per_page';
+	const PER_PAGE_OPTION = 'blockforms_entries_per_page';
 
 	/**
 	 * Entries per page unless the user chose otherwise.
@@ -51,15 +51,15 @@ class Entries_Screen {
 	 * The actions on an entry: the capability each needs.
 	 */
 	const ACTIONS = [
-		'read'    => 'swiftforms_edit_entries',
-		'unread'  => 'swiftforms_edit_entries',
-		'star'    => 'swiftforms_edit_entries',
-		'unstar'  => 'swiftforms_edit_entries',
-		'spam'    => 'swiftforms_edit_entries',
-		'unspam'  => 'swiftforms_edit_entries',
-		'trash'   => 'swiftforms_edit_entries',
-		'untrash' => 'swiftforms_edit_entries',
-		'delete'  => 'swiftforms_delete_entries',
+		'read'    => 'blockforms_edit_entries',
+		'unread'  => 'blockforms_edit_entries',
+		'star'    => 'blockforms_edit_entries',
+		'unstar'  => 'blockforms_edit_entries',
+		'spam'    => 'blockforms_edit_entries',
+		'unspam'  => 'blockforms_edit_entries',
+		'trash'   => 'blockforms_edit_entries',
+		'untrash' => 'blockforms_edit_entries',
+		'delete'  => 'blockforms_delete_entries',
 	];
 
 	/**
@@ -107,8 +107,8 @@ class Entries_Screen {
 	 */
 	public static function removable_query_args( $args ) {
 		$args   = is_array( $args ) ? $args : [];
-		$args[] = 'sf_undo';
-		$args[] = 'sf_to';
+		$args[] = 'bf_undo';
+		$args[] = 'bf_to';
 		return $args;
 	}
 
@@ -155,9 +155,9 @@ class Entries_Screen {
 	 * @return void
 	 */
 	public static function enqueue() {
-		$path = plugin_dir_path( SWIFTFORMS_FILE ) . 'includes/admin/entries.css';
-		wp_enqueue_style( 'swiftforms-admin-entries', plugins_url( 'includes/admin/entries.css', SWIFTFORMS_FILE ), [ 'dashicons' ], is_readable( $path ) ? (string) filemtime( $path ) : SWIFTFORMS_VERSION );
-		wp_style_add_data( 'swiftforms-admin-entries', 'rtl', 'replace' );
+		$path = plugin_dir_path( BLOCKFORMS_FILE ) . 'includes/admin/entries.css';
+		wp_enqueue_style( 'blockforms-admin-entries', plugins_url( 'includes/admin/entries.css', BLOCKFORMS_FILE ), [ 'dashicons' ], is_readable( $path ) ? (string) filemtime( $path ) : BLOCKFORMS_VERSION );
+		wp_style_add_data( 'blockforms-admin-entries', 'rtl', 'replace' );
 	}
 
 	/**
@@ -224,7 +224,7 @@ class Entries_Screen {
 	 * @return string
 	 */
 	private static function nonce_action( $action, $id ) {
-		return 'swiftforms-' . $action . '-entry_' . (int) $id;
+		return 'blockforms-' . $action . '-entry_' . (int) $id;
 	}
 
 	/**
@@ -236,29 +236,29 @@ class Entries_Screen {
 	 */
 	public static function available_actions( $status, $starred ) {
 		$out  = [];
-		$edit = Access::can( 'swiftforms_edit_entries' );
+		$edit = Access::can( 'blockforms_edit_entries' );
 
 		if ( $edit ) {
 			if ( 'new' === $status ) {
-				$out['read'] = __( 'Mark as read', 'swiftforms' );
+				$out['read'] = __( 'Mark as read', 'blockforms' );
 			} elseif ( 'read' === $status ) {
-				$out['unread'] = __( 'Mark as unread', 'swiftforms' );
+				$out['unread'] = __( 'Mark as unread', 'blockforms' );
 			}
 			if ( 'new' === $status || 'read' === $status ) {
-				$out[ $starred ? 'unstar' : 'star' ] = $starred ? __( 'Unstar', 'swiftforms' ) : __( 'Star', 'swiftforms' );
-				$out['spam']                         = __( 'Spam', 'swiftforms' );
+				$out[ $starred ? 'unstar' : 'star' ] = $starred ? __( 'Unstar', 'blockforms' ) : __( 'Star', 'blockforms' );
+				$out['spam']                         = __( 'Spam', 'blockforms' );
 			}
 			if ( 'spam' === $status ) {
-				$out['unspam'] = __( 'Not spam', 'swiftforms' );
+				$out['unspam'] = __( 'Not spam', 'blockforms' );
 			}
 			if ( 'trash' === $status ) {
-				$out['untrash'] = __( 'Restore', 'swiftforms' );
+				$out['untrash'] = __( 'Restore', 'blockforms' );
 			} else {
-				$out['trash'] = __( 'Trash', 'swiftforms' );
+				$out['trash'] = __( 'Trash', 'blockforms' );
 			}
 		}
-		if ( 'trash' === $status && Access::can( 'swiftforms_delete_entries' ) ) {
-			$out['delete'] = __( 'Delete permanently', 'swiftforms' );
+		if ( 'trash' === $status && Access::can( 'blockforms_delete_entries' ) ) {
+			$out['delete'] = __( 'Delete permanently', 'blockforms' );
 		}
 		return $out;
 	}
@@ -293,7 +293,7 @@ class Entries_Screen {
 		add_screen_option(
 			'per_page',
 			[
-				'label'   => __( 'Number of items per page:', 'swiftforms' ),
+				'label'   => __( 'Number of items per page:', 'blockforms' ),
 				'default' => self::PER_PAGE_DEFAULT,
 				'option'  => self::PER_PAGE_OPTION,
 			]
@@ -317,14 +317,14 @@ class Entries_Screen {
 
 		// An action's redirect carries a message: opening again after "Mark as unread" must not undo it.
 		$after_action = isset( $_GET['message'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only routing.
-		if ( 'new' === $entry['status'] && ! $after_action && Access::can( 'swiftforms_edit_entries' ) ) {
+		if ( 'new' === $entry['status'] && ! $after_action && Access::can( 'blockforms_edit_entries' ) ) {
 			Entries_Repository::update( $entry['id'], [ 'status' => 'read' ] );
 			$entry['status'] = 'read';
 		}
 
 		self::$entry = $entry;
 		self::help_tab();
-		wp_add_inline_script( 'common', 'document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".swiftforms-print");if(b){e.preventDefault();window.print();}});' );
+		wp_add_inline_script( 'common', 'document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".blockforms-print");if(b){e.preventDefault();window.print();}});' );
 	}
 
 	/**
@@ -334,12 +334,12 @@ class Entries_Screen {
 	 */
 	private static function not_found() {
 		wp_die(
-			esc_html__( 'There is no such entry. It may have been deleted.', 'swiftforms' ),
-			esc_html__( 'Entry not found', 'swiftforms' ),
+			esc_html__( 'There is no such entry. It may have been deleted.', 'blockforms' ),
+			esc_html__( 'Entry not found', 'blockforms' ),
 			[
 				'response'  => 404,
 				'link_url'  => esc_url( self::list_url() ),
-				'link_text' => esc_html__( 'Back to Entries', 'swiftforms' ),
+				'link_text' => esc_html__( 'Back to Entries', 'blockforms' ),
 			]
 		);
 	}
@@ -356,9 +356,9 @@ class Entries_Screen {
 		}
 		$screen->add_help_tab(
 			[
-				'id'      => 'swiftforms-entries-overview',
-				'title'   => __( 'Overview', 'swiftforms' ),
-				'content' => '<p>' . esc_html__( 'Every submission of your forms is listed here, newest first. Opening an entry marks it as read. Entries moved to the Trash stay there until you delete them permanently or the retention period in the privacy settings removes them.', 'swiftforms' ) . '</p>',
+				'id'      => 'blockforms-entries-overview',
+				'title'   => __( 'Overview', 'blockforms' ),
+				'content' => '<p>' . esc_html__( 'Every submission of your forms is listed here, newest first. Opening an entry marks it as read. Entries moved to the Trash stay there until you delete them permanently or the retention period in the privacy settings removes them.', 'blockforms' ) . '</p>',
 			]
 		);
 	}
@@ -373,7 +373,7 @@ class Entries_Screen {
 		$id = self::request_entry();
 
 		if ( ! Access::can( self::ACTIONS[ $action ] ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'swiftforms' ), '', [ 'response' => 403 ] );
+			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'blockforms' ), '', [ 'response' => 403 ] );
 		}
 		check_admin_referer( self::nonce_action( $action, $id ) );
 
@@ -383,7 +383,7 @@ class Entries_Screen {
 		}
 
 		$previous = 'read' === $entry['status'] ? 'read' : 'new';
-		$restore  = isset( $_GET['sf_to'] ) && is_string( $_GET['sf_to'] ) && 'read' === sanitize_key( wp_unslash( $_GET['sf_to'] ) ) ? 'read' : 'new';
+		$restore  = isset( $_GET['bf_to'] ) && is_string( $_GET['bf_to'] ) && 'read' === sanitize_key( wp_unslash( $_GET['bf_to'] ) ) ? 'read' : 'new';
 		$extra    = [];
 
 		switch ( $action ) {
@@ -402,15 +402,15 @@ class Entries_Screen {
 			case 'spam':
 				Entries_Repository::update( $id, [ 'status' => 'spam' ] );
 				$extra = [
-					'sf_undo' => $id,
-					'sf_to'   => $previous,
+					'bf_undo' => $id,
+					'bf_to'   => $previous,
 				];
 				break;
 			case 'trash':
 				Entries_Repository::update( $id, [ 'status' => 'trash' ] );
 				$extra = [
-					'sf_undo' => $id,
-					'sf_to'   => $previous,
+					'bf_undo' => $id,
+					'bf_to'   => $previous,
 				];
 				break;
 			case 'unspam':
@@ -463,25 +463,25 @@ class Entries_Screen {
 	private static function notice() {
 		$code = isset( $_GET['message'] ) && is_string( $_GET['message'] ) ? sanitize_key( wp_unslash( $_GET['message'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Shows a fixed message; nothing is changed.
 		$text = [
-			'read'    => __( 'Entry marked as read.', 'swiftforms' ),
-			'unread'  => __( 'Entry marked as unread.', 'swiftforms' ),
-			'star'    => __( 'Entry starred.', 'swiftforms' ),
-			'unstar'  => __( 'Star removed.', 'swiftforms' ),
-			'spam'    => __( 'Entry marked as spam.', 'swiftforms' ),
-			'unspam'  => __( 'Entry marked as not spam.', 'swiftforms' ),
-			'trash'   => __( 'Entry moved to the Trash.', 'swiftforms' ),
-			'untrash' => __( 'Entry restored from the Trash.', 'swiftforms' ),
-			'delete'  => __( 'Entry deleted permanently.', 'swiftforms' ),
+			'read'    => __( 'Entry marked as read.', 'blockforms' ),
+			'unread'  => __( 'Entry marked as unread.', 'blockforms' ),
+			'star'    => __( 'Entry starred.', 'blockforms' ),
+			'unstar'  => __( 'Star removed.', 'blockforms' ),
+			'spam'    => __( 'Entry marked as spam.', 'blockforms' ),
+			'unspam'  => __( 'Entry marked as not spam.', 'blockforms' ),
+			'trash'   => __( 'Entry moved to the Trash.', 'blockforms' ),
+			'untrash' => __( 'Entry restored from the Trash.', 'blockforms' ),
+			'delete'  => __( 'Entry deleted permanently.', 'blockforms' ),
 		];
 		if ( ! isset( $text[ $code ] ) ) {
 			return '';
 		}
 
 		$undo = '';
-		$id   = isset( $_GET['sf_undo'] ) ? absint( wp_unslash( $_GET['sf_undo'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- The link it builds has its own nonce.
-		if ( $id > 0 && in_array( $code, [ 'trash', 'spam' ], true ) && Access::can( 'swiftforms_edit_entries' ) ) {
-			$to   = isset( $_GET['sf_to'] ) && is_string( $_GET['sf_to'] ) && 'read' === sanitize_key( wp_unslash( $_GET['sf_to'] ) ) ? 'read' : 'new'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Whitelisted.
-			$undo = ' <a href="' . esc_url( self::action_url( 'trash' === $code ? 'untrash' : 'unspam', $id, [ 'sf_to' => $to ] ) ) . '">' . esc_html__( 'Undo', 'swiftforms' ) . '</a>';
+		$id   = isset( $_GET['bf_undo'] ) ? absint( wp_unslash( $_GET['bf_undo'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- The link it builds has its own nonce.
+		if ( $id > 0 && in_array( $code, [ 'trash', 'spam' ], true ) && Access::can( 'blockforms_edit_entries' ) ) {
+			$to   = isset( $_GET['bf_to'] ) && is_string( $_GET['bf_to'] ) && 'read' === sanitize_key( wp_unslash( $_GET['bf_to'] ) ) ? 'read' : 'new'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Whitelisted.
+			$undo = ' <a href="' . esc_url( self::action_url( 'trash' === $code ? 'untrash' : 'unspam', $id, [ 'bf_to' => $to ] ) ) . '">' . esc_html__( 'Undo', 'blockforms' ) . '</a>';
 		}
 
 		return '<div id="message" class="notice notice-success is-dismissible"><p>' . esc_html( $text[ $code ] ) . $undo . '</p></div>';
@@ -498,12 +498,12 @@ class Entries_Screen {
 		}
 		$table = self::$table;
 		?>
-		<div class="wrap swiftforms-entries">
-			<h1 class="wp-heading-inline"><?php esc_html_e( 'Entries', 'swiftforms' ); ?></h1>
+		<div class="wrap blockforms-entries">
+			<h1 class="wp-heading-inline"><?php esc_html_e( 'Entries', 'blockforms' ); ?></h1>
 			<hr class="wp-header-end">
 			<?php echo wp_kses_post( self::notice() ); ?>
 			<?php $table->views(); ?>
-			<form id="swiftforms-entries-filter" method="get">
+			<form id="blockforms-entries-filter" method="get">
 				<input type="hidden" name="page" value="<?php echo esc_attr( self::PAGE ); ?>">
 				<?php
 				foreach ( $table->kept_arguments() as $name => $value ) {
@@ -526,22 +526,22 @@ class Entries_Screen {
 		$detail = Entry_Presenter::detail( $entry );
 		$id     = (int) $detail['id'];
 		?>
-		<div class="wrap swiftforms-entry">
+		<div class="wrap blockforms-entry">
 			<h1 class="wp-heading-inline">
 				<?php
 				/* translators: %d: entry number. */
-				echo esc_html( sprintf( __( 'Entry #%d', 'swiftforms' ), $id ) );
+				echo esc_html( sprintf( __( 'Entry #%d', 'blockforms' ), $id ) );
 				?>
 			</h1>
 			<hr class="wp-header-end">
 			<?php echo wp_kses_post( self::notice() ); ?>
-			<p class="swiftforms-back"><a href="<?php echo esc_url( self::list_url() ); ?>">&larr; <?php esc_html_e( 'Back to Entries', 'swiftforms' ); ?></a></p>
+			<p class="blockforms-back"><a href="<?php echo esc_url( self::list_url() ); ?>">&larr; <?php esc_html_e( 'Back to Entries', 'blockforms' ); ?></a></p>
 
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
 					<div id="post-body-content">
-						<table class="widefat striped swiftforms-entry-fields">
-							<caption class="screen-reader-text"><?php esc_html_e( 'Submitted values', 'swiftforms' ); ?></caption>
+						<table class="widefat striped blockforms-entry-fields">
+							<caption class="screen-reader-text"><?php esc_html_e( 'Submitted values', 'blockforms' ); ?></caption>
 							<tbody>
 								<?php foreach ( $detail['fields'] as $field ) : ?>
 									<tr>
@@ -550,7 +550,7 @@ class Entries_Screen {
 									</tr>
 								<?php endforeach; ?>
 								<?php if ( ! $detail['fields'] ) : ?>
-									<tr><td><?php esc_html_e( 'This entry has no values.', 'swiftforms' ); ?></td></tr>
+									<tr><td><?php esc_html_e( 'This entry has no values.', 'blockforms' ); ?></td></tr>
 								<?php endif; ?>
 							</tbody>
 						</table>
@@ -576,41 +576,41 @@ class Entries_Screen {
 		$status  = (string) $detail['status'];
 		$starred = (bool) $detail['starred'];
 		$labels  = [
-			'new'   => __( 'Unread', 'swiftforms' ),
-			'read'  => __( 'Read', 'swiftforms' ),
-			'spam'  => __( 'Spam', 'swiftforms' ),
-			'trash' => __( 'Trash', 'swiftforms' ),
+			'new'   => __( 'Unread', 'blockforms' ),
+			'read'  => __( 'Read', 'blockforms' ),
+			'spam'  => __( 'Spam', 'blockforms' ),
+			'trash' => __( 'Trash', 'blockforms' ),
 		];
 		$actions = self::available_actions( $status, $starred );
 		$keys    = array_keys( $actions );
-		$title   = '' !== (string) $detail['form_title'] ? Entry_Presenter::visible_text( $detail['form_title'] ) : __( '(no title)', 'swiftforms' );
+		$title   = '' !== (string) $detail['form_title'] ? Entry_Presenter::visible_text( $detail['form_title'] ) : __( '(no title)', 'blockforms' );
 		?>
-		<div id="swiftforms-entry-box" class="postbox">
-			<div class="postbox-header"><h2 class="hndle"><?php esc_html_e( 'Entry', 'swiftforms' ); ?></h2></div>
+		<div id="blockforms-entry-box" class="postbox">
+			<div class="postbox-header"><h2 class="hndle"><?php esc_html_e( 'Entry', 'blockforms' ); ?></h2></div>
 			<div class="inside">
 				<div class="submitbox">
 					<div id="minor-publishing">
-						<div class="misc-pub-section misc-pub-post-status swiftforms-meta-status">
-							<?php esc_html_e( 'Status:', 'swiftforms' ); ?>
-							<strong class="swiftforms-entry-status"><?php echo esc_html( $labels[ $status ] ?? $status ); ?></strong>
+						<div class="misc-pub-section misc-pub-post-status blockforms-meta-status">
+							<?php esc_html_e( 'Status:', 'blockforms' ); ?>
+							<strong class="blockforms-entry-status"><?php echo esc_html( $labels[ $status ] ?? $status ); ?></strong>
 							<?php self::inline_link( $actions, [ 'read', 'unread', 'unspam' ], $id ); ?>
 						</div>
-						<div class="misc-pub-section <?php echo $starred ? 'swiftforms-meta-starred' : 'swiftforms-meta-unstarred'; ?>">
-							<?php esc_html_e( 'Starred:', 'swiftforms' ); ?>
-							<strong><?php echo $starred ? esc_html__( 'Yes', 'swiftforms' ) : esc_html__( 'No', 'swiftforms' ); ?></strong>
+						<div class="misc-pub-section <?php echo $starred ? 'blockforms-meta-starred' : 'blockforms-meta-unstarred'; ?>">
+							<?php esc_html_e( 'Starred:', 'blockforms' ); ?>
+							<strong><?php echo $starred ? esc_html__( 'Yes', 'blockforms' ) : esc_html__( 'No', 'blockforms' ); ?></strong>
 							<?php self::inline_link( $actions, [ 'star', 'unstar' ], $id ); ?>
 						</div>
-						<div class="misc-pub-section misc-pub-curtime swiftforms-meta-date">
-							<?php esc_html_e( 'Submitted:', 'swiftforms' ); ?>
+						<div class="misc-pub-section misc-pub-curtime blockforms-meta-date">
+							<?php esc_html_e( 'Submitted:', 'blockforms' ); ?>
 							<strong><time datetime="<?php echo esc_attr( $detail['date_gmt'] ); ?>"><?php echo esc_html( $detail['date_display'] ); ?></time></strong>
 						</div>
-						<div class="misc-pub-section swiftforms-meta-form">
-							<?php esc_html_e( 'Form:', 'swiftforms' ); ?>
+						<div class="misc-pub-section blockforms-meta-form">
+							<?php esc_html_e( 'Form:', 'blockforms' ); ?>
 							<strong><a href="<?php echo esc_url( self::list_url( [ 'form' => (string) $detail['form_id'] ] ) ); ?>"><?php echo esc_html( $title ); ?></a></strong>
 						</div>
 						<?php if ( ! empty( $detail['source'] ) ) : ?>
-							<div class="misc-pub-section swiftforms-meta-source">
-								<?php esc_html_e( 'Sent from:', 'swiftforms' ); ?>
+							<div class="misc-pub-section blockforms-meta-source">
+								<?php esc_html_e( 'Sent from:', 'blockforms' ); ?>
 								<strong>
 									<?php if ( '' !== $detail['source']['link'] ) : ?>
 										<a href="<?php echo esc_url( $detail['source']['link'] ); ?>"><?php echo esc_html( Entry_Presenter::visible_text( $detail['source']['title'] ) ); ?></a>
@@ -621,20 +621,20 @@ class Entries_Screen {
 							</div>
 						<?php endif; ?>
 						<?php if ( ! empty( $detail['user'] ) ) : ?>
-							<div class="misc-pub-section swiftforms-meta-user">
-								<?php esc_html_e( 'User:', 'swiftforms' ); ?>
+							<div class="misc-pub-section blockforms-meta-user">
+								<?php esc_html_e( 'User:', 'blockforms' ); ?>
 								<strong><?php echo esc_html( Entry_Presenter::visible_text( $detail['user'] ) ); ?></strong>
 							</div>
 						<?php endif; ?>
 						<?php if ( ! empty( $detail['ip'] ) ) : ?>
-							<div class="misc-pub-section swiftforms-meta-ip">
-								<?php esc_html_e( 'IP address:', 'swiftforms' ); ?>
+							<div class="misc-pub-section blockforms-meta-ip">
+								<?php esc_html_e( 'IP address:', 'blockforms' ); ?>
 								<strong><?php echo esc_html( Entry_Presenter::visible_text( $detail['ip'] ) ); ?></strong>
 							</div>
 						<?php endif; ?>
 						<?php if ( ! empty( $detail['user_agent'] ) ) : ?>
-							<div class="misc-pub-section swiftforms-meta-browser swiftforms-user-agent">
-								<?php esc_html_e( 'Browser:', 'swiftforms' ); ?>
+							<div class="misc-pub-section blockforms-meta-browser blockforms-user-agent">
+								<?php esc_html_e( 'Browser:', 'blockforms' ); ?>
 								<strong><?php echo esc_html( Entry_Presenter::visible_text( $detail['user_agent'] ) ); ?></strong>
 							</div>
 						<?php endif; ?>
@@ -650,7 +650,7 @@ class Entries_Screen {
 							?>
 						</div>
 						<div id="publishing-action">
-							<button type="button" class="button swiftforms-print"><?php esc_html_e( 'Print', 'swiftforms' ); ?></button>
+							<button type="button" class="button blockforms-print"><?php esc_html_e( 'Print', 'blockforms' ); ?></button>
 						</div>
 						<div class="clear"></div>
 					</div>
@@ -671,7 +671,7 @@ class Entries_Screen {
 	private static function inline_link( array $actions, array $group, $id ) {
 		foreach ( $group as $key ) {
 			if ( isset( $actions[ $key ] ) ) {
-				echo '<a class="swiftforms-inline-action" href="' . esc_url( self::action_url( $key, $id, [ 'from' => 'view' ] ) ) . '">' . esc_html( $actions[ $key ] ) . '</a> ';
+				echo '<a class="blockforms-inline-action" href="' . esc_url( self::action_url( $key, $id, [ 'from' => 'view' ] ) ) . '">' . esc_html( $actions[ $key ] ) . '</a> ';
 				return;
 			}
 		}
@@ -700,11 +700,11 @@ class Entries_Screen {
 		}
 
 		if ( ! $items ) {
-			return '<span aria-hidden="true">&mdash;</span><span class="screen-reader-text">' . esc_html__( 'No answer', 'swiftforms' ) . '</span>';
+			return '<span aria-hidden="true">&mdash;</span><span class="screen-reader-text">' . esc_html__( 'No answer', 'blockforms' ) . '</span>';
 		}
 		if ( 1 === count( $items ) ) {
 			return $items[0];
 		}
-		return '<ul class="swiftforms-values"><li>' . implode( '</li><li>', $items ) . '</li></ul>';
+		return '<ul class="blockforms-values"><li>' . implode( '</li><li>', $items ) . '</li></ul>';
 	}
 }

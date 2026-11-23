@@ -32,7 +32,7 @@ before:
     "migration log rows": 0,
     "migration lock row": false
 }
-first run returned true (swiftforms_db_version_changed fired 1 time(s))
+first run returned true (blockforms_db_version_changed fired 1 time(s))
 after the first run:
 {
     "db_version row": "1",
@@ -44,18 +44,18 @@ after the first run:
         "reason": "migration-1",
         "version": "{VERSION}",
         "options": {
-            "swiftforms_advanced_debug_log": "true",
-            "swiftforms_email_accent_color": "blue",
-            "swiftforms_email_notification_to": "owner@broken-site.example",
-            "swiftforms_general_load_styles": "sometimes",
-            "swiftforms_general_retention_days": "thirty",
-            "swiftforms_general_store_entries": "yes",
-            "swiftforms_privacy_exporter": "5",
-            "swiftforms_spam_honeypot": "no",
-            "swiftforms_spam_min_seconds": "-5",
-            "swiftforms_spam_rate_limit_per_minute": "2",
-            "swiftforms_spam_spam_action": "delete",
-            "swiftforms_installed": {
+            "blockforms_advanced_debug_log": "true",
+            "blockforms_email_accent_color": "blue",
+            "blockforms_email_notification_to": "owner@broken-site.example",
+            "blockforms_general_load_styles": "sometimes",
+            "blockforms_general_retention_days": "thirty",
+            "blockforms_general_store_entries": "yes",
+            "blockforms_privacy_exporter": "5",
+            "blockforms_spam_honeypot": "no",
+            "blockforms_spam_min_seconds": "-5",
+            "blockforms_spam_rate_limit_per_minute": "2",
+            "blockforms_spam_spam_action": "delete",
+            "blockforms_installed": {
                 "version": "1.0.0",
                 "time": 1795082400
             }
@@ -76,18 +76,18 @@ after the second run:
         "reason": "migration-1",
         "version": "{VERSION}",
         "options": {
-            "swiftforms_advanced_debug_log": "true",
-            "swiftforms_email_accent_color": "blue",
-            "swiftforms_email_notification_to": "owner@broken-site.example",
-            "swiftforms_general_load_styles": "sometimes",
-            "swiftforms_general_retention_days": "thirty",
-            "swiftforms_general_store_entries": "yes",
-            "swiftforms_privacy_exporter": "5",
-            "swiftforms_spam_honeypot": "no",
-            "swiftforms_spam_min_seconds": "-5",
-            "swiftforms_spam_rate_limit_per_minute": "2",
-            "swiftforms_spam_spam_action": "delete",
-            "swiftforms_installed": {
+            "blockforms_advanced_debug_log": "true",
+            "blockforms_email_accent_color": "blue",
+            "blockforms_email_notification_to": "owner@broken-site.example",
+            "blockforms_general_load_styles": "sometimes",
+            "blockforms_general_retention_days": "thirty",
+            "blockforms_general_store_entries": "yes",
+            "blockforms_privacy_exporter": "5",
+            "blockforms_spam_honeypot": "no",
+            "blockforms_spam_min_seconds": "-5",
+            "blockforms_spam_rate_limit_per_minute": "2",
+            "blockforms_spam_spam_action": "delete",
+            "blockforms_installed": {
                 "version": "1.0.0",
                 "time": 1795082400
             }

@@ -1,6 +1,6 @@
 {
-    "name": "namithj/swiftforms",
-    "description": "SwiftForms: contact forms built with blocks in the WordPress block editor.",
+    "name": "namithj/blockforms",
+    "description": "BlockForms: contact forms built with blocks in the WordPress block editor.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "require": {
@@ -30,9 +30,9 @@
     "extra": {
         "strauss": {
             "target_directory": "vendor-prefixed",
-            "namespace_prefix": "SwiftForms\\Vendor\\",
-            "classmap_prefix": "SwiftForms_Vendor_",
-            "constant_prefix": "SWIFTFORMS_VENDOR_",
+            "namespace_prefix": "BlockForms\\Vendor\\",
+            "classmap_prefix": "BlockForms_Vendor_",
+            "constant_prefix": "BLOCKFORMS_VENDOR_",
             "packages": [
                 "pedalcms/cassette-cmf",
                 "pedalcms/cassette-cmf-block-builder"

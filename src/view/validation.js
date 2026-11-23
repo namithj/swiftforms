@@ -289,12 +289,12 @@ export function messageFor( key, field, messages ) {
 // DOM.
 // ---------------------------------------------------------------------
 
-const TYPE_PREFIX = 'swiftforms-field--';
+const TYPE_PREFIX = 'blockforms-field--';
 
 /**
  * Describe a rendered field wrapper and read its value.
  *
- * @param {Element} wrapper A `.swiftforms-field` element.
+ * @param {Element} wrapper A `.blockforms-field` element.
  * @return {{field: Object, value: string|string[], bad: boolean}|null} Null for hidden or unknown markup.
  */
 export function readField( wrapper ) {
@@ -321,8 +321,8 @@ export function readField( wrapper ) {
 		min: attr( 'min' ),
 		max: attr( 'max' ),
 		step: attr( 'step' ),
-		minChoices: wrapper.getAttribute( 'data-sf-min-choices' ) || '',
-		maxChoices: wrapper.getAttribute( 'data-sf-max-choices' ) || '',
+		minChoices: wrapper.getAttribute( 'data-bf-min-choices' ) || '',
+		maxChoices: wrapper.getAttribute( 'data-bf-max-choices' ) || '',
 		multiple: control.multiple === true,
 	};
 
@@ -361,7 +361,7 @@ export function readField( wrapper ) {
 /**
  * Validate one field wrapper.
  *
- * @param {Element} wrapper  A `.swiftforms-field` element.
+ * @param {Element} wrapper  A `.blockforms-field` element.
  * @param {Object}  messages Templates from the server.
  * @return {{message: string, control: Element}|null} The problem, or null when valid or not checkable.
  */

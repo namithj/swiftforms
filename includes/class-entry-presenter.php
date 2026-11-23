@@ -2,10 +2,10 @@
 /**
  * Entries as the admin screens and the REST API show them.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

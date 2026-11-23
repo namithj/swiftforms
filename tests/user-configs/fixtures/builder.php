@@ -1,4 +1,4 @@
-<?php // phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound, WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid -- Short fixture helpers SF_BLOCK() and friends used inside config files.
+<?php // phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound, WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid -- Short fixture helpers BF_BLOCK() and friends used inside config files.
 /**
  * Block-markup builders for the configs that generate their content (many forms, or forms in a loop).
  *
@@ -8,19 +8,19 @@
  * the confirmation as the last inner block. Hand-written fixtures (fixtures/blocks.php) stay the reference
  * for the shape; these helpers only repeat it.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-if ( ! function_exists( 'SF_BLOCK' ) ) {
+if ( ! function_exists( 'BF_BLOCK' ) ) {
 	/**
 	 * One block: self-closing without inner content, otherwise wrapped.
 	 *
-	 * @param string               $name  Block name, for example "swiftforms/field-text" or "core/paragraph".
+	 * @param string               $name  Block name, for example "blockforms/field-text" or "core/paragraph".
 	 * @param array<string, mixed> $attrs Attributes in the order the editor writes them.
 	 * @param string|null          $inner Inner markup, or null for a self-closing block.
 	 * @return string
 	 */
-	function SF_BLOCK( $name, array $attrs = [], $inner = null ) {
+	function BF_BLOCK( $name, array $attrs = [], $inner = null ) {
 		$json = $attrs ? ' ' . serialize_block_attributes( $attrs ) : '';
 		if ( null === $inner ) {
 			return '<!-- wp:' . $name . $json . ' /-->';
@@ -34,8 +34,8 @@ if ( ! function_exists( 'SF_BLOCK' ) ) {
 	 * @param string $text Paragraph HTML.
 	 * @return string
 	 */
-	function SF_PARAGRAPH( $text ) {
-		return SF_BLOCK( 'paragraph', [], '<p>' . $text . '</p>' );
+	function BF_PARAGRAPH( $text ) {
+		return BF_BLOCK( 'paragraph', [], '<p>' . $text . '</p>' );
 	}
 
 	/**
@@ -44,8 +44,8 @@ if ( ! function_exists( 'SF_BLOCK' ) ) {
 	 * @param string $text Heading text.
 	 * @return string
 	 */
-	function SF_HEADING( $text ) {
-		return SF_BLOCK( 'heading', [], '<h2 class="wp-block-heading">' . $text . '</h2>' );
+	function BF_HEADING( $text ) {
+		return BF_BLOCK( 'heading', [], '<h2 class="wp-block-heading">' . $text . '</h2>' );
 	}
 
 	/**
@@ -55,8 +55,8 @@ if ( ! function_exists( 'SF_BLOCK' ) ) {
 	 * @param array<string, mixed> $attrs Attributes.
 	 * @return string
 	 */
-	function SF_FIELD( $type, array $attrs ) {
-		return SF_BLOCK( 'swiftforms/field-' . $type, $attrs );
+	function BF_FIELD( $type, array $attrs ) {
+		return BF_BLOCK( 'blockforms/field-' . $type, $attrs );
 	}
 
 	/**
@@ -68,12 +68,12 @@ if ( ! function_exists( 'SF_BLOCK' ) ) {
 	 * @param string|null          $confirmation Confirmation paragraph text, or null for no confirmation block.
 	 * @return string
 	 */
-	function SF_FORM( array $attrs, array $fields, $submit_label = '', $confirmation = 'Thank you.' ) {
+	function BF_FORM( array $attrs, array $fields, $submit_label = '', $confirmation = 'Thank you.' ) {
 		$children   = $fields;
-		$children[] = SF_BLOCK( 'swiftforms/submit', '' === $submit_label ? [] : [ 'label' => $submit_label ] );
+		$children[] = BF_BLOCK( 'blockforms/submit', '' === $submit_label ? [] : [ 'label' => $submit_label ] );
 		if ( null !== $confirmation ) {
-			$children[] = SF_BLOCK( 'swiftforms/confirmation', [], SF_PARAGRAPH( $confirmation ) );
+			$children[] = BF_BLOCK( 'blockforms/confirmation', [], BF_PARAGRAPH( $confirmation ) );
 		}
-		return SF_BLOCK( 'swiftforms/form', $attrs, implode( "\n\n", $children ) );
+		return BF_BLOCK( 'blockforms/form', $attrs, implode( "\n\n", $children ) );
 	}
 }

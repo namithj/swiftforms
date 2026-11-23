@@ -2,10 +2,10 @@
 /**
  * Scripts, styles and the view module.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,9 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Assets
  *
- * Registers SwiftForms' assets and decides where they print (ADR-002):
+ * Registers BlockForms' assets and decides where they print (ADR-002):
  *
- * - The front-end stylesheet `swiftforms-form` and the view module `@swiftforms/view` are
+ * - The front-end stylesheet `blockforms-form` and the view module `@blockforms/view` are
  *   attached to the form block with viewStyle / viewScriptModule, never with `style`, which
  *   a classic theme would enqueue on every page. WordPress enqueues them when a form renders,
  *   so a page without a form carries nothing of ours.
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   for a singular view whose post holds a form (also through a synced pattern it references)
  *   or when an active block widget holds one. A form in a template, part or archive loop
  *   prints its stylesheet when it renders.
- * - `general.load_styles` off: no SwiftForms front-end CSS anywhere. The handle stays
+ * - `general.load_styles` off: no BlockForms front-end CSS anywhere. The handle stays
  *   registered (the editor needs it) and is dropped from every front-end print.
  * - Editor: the editor script (toolbar toggle, notices) and the editor stylesheet are
  *   attached with editorScript / editorStyle.
@@ -35,22 +35,22 @@ class Assets {
 	/**
 	 * Front-end stylesheet handle (also loaded in the editor).
 	 */
-	const STYLE = 'swiftforms-form';
+	const STYLE = 'blockforms-form';
 
 	/**
 	 * Editor-only stylesheet handle.
 	 */
-	const EDITOR_STYLE = 'swiftforms-editor';
+	const EDITOR_STYLE = 'blockforms-editor';
 
 	/**
 	 * Editor script handle.
 	 */
-	const EDITOR_SCRIPT = 'swiftforms-editor';
+	const EDITOR_SCRIPT = 'blockforms-editor';
 
 	/**
 	 * View script module ID.
 	 */
-	const VIEW_MODULE = '@swiftforms/view';
+	const VIEW_MODULE = '@blockforms/view';
 
 	/**
 	 * Most synced patterns the prescan looks into.
@@ -85,7 +85,7 @@ class Assets {
 
 		$script = self::asset_data( 'editor/index' );
 		wp_register_script( self::EDITOR_SCRIPT, self::url( 'editor/index.js' ), $script['dependencies'], $script['version'], true );
-		wp_set_script_translations( self::EDITOR_SCRIPT, 'swiftforms', plugin_dir_path( SWIFTFORMS_FILE ) . 'languages' );
+		wp_set_script_translations( self::EDITOR_SCRIPT, 'blockforms', plugin_dir_path( BLOCKFORMS_FILE ) . 'languages' );
 
 		$view = self::asset_data( 'view/index' );
 		wp_register_script_module( self::VIEW_MODULE, self::url( 'view/index.js' ), $view['dependencies'], $view['version'] );
@@ -119,7 +119,7 @@ class Assets {
 	}
 
 	/**
-	 * Whether the site wants SwiftForms' front-end CSS (Settings: general.load_styles).
+	 * Whether the site wants BlockForms' front-end CSS (Settings: general.load_styles).
 	 *
 	 * @return bool
 	 */
@@ -194,7 +194,7 @@ class Assets {
 	 * @return string
 	 */
 	private static function url( $file ) {
-		return plugins_url( 'build/' . $file, SWIFTFORMS_FILE );
+		return plugins_url( 'build/' . $file, BLOCKFORMS_FILE );
 	}
 
 	/**
@@ -204,12 +204,12 @@ class Assets {
 	 * @return array{dependencies: array<int, mixed>, version: string}
 	 */
 	private static function asset_data( $entry ) {
-		$file = plugin_dir_path( SWIFTFORMS_FILE ) . 'build/' . $entry . '.asset.php';
+		$file = plugin_dir_path( BLOCKFORMS_FILE ) . 'build/' . $entry . '.asset.php';
 		$data = is_readable( $file ) ? include $file : [];
 
 		return [
 			'dependencies' => isset( $data['dependencies'] ) && is_array( $data['dependencies'] ) ? $data['dependencies'] : [],
-			'version'      => isset( $data['version'] ) && is_string( $data['version'] ) ? $data['version'] : SWIFTFORMS_VERSION,
+			'version'      => isset( $data['version'] ) && is_string( $data['version'] ) ? $data['version'] : BLOCKFORMS_VERSION,
 		];
 	}
 }

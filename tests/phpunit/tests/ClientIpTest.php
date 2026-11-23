@@ -1,13 +1,13 @@
 <?php
 /**
- * Tests for SwiftForms\Client_Ip.
+ * Tests for BlockForms\Client_Ip.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Client_Ip;
+use BlockForms\Client_Ip;
 
 /**
  * Class ClientIpTest
@@ -15,7 +15,7 @@ use SwiftForms\Client_Ip;
  * @group submission
  * @group security
  */
-class ClientIpTest extends SF_Storage_Test_Case {
+class ClientIpTest extends BF_Storage_Test_Case {
 
 	/**
 	 * Clean server variables.
@@ -58,29 +58,29 @@ class ClientIpTest extends SF_Storage_Test_Case {
 	}
 
 	/**
-	 * The swiftforms_client_ip filter can supply the address; an invalid value falls back to REMOTE_ADDR.
+	 * The blockforms_client_ip filter can supply the address; an invalid value falls back to REMOTE_ADDR.
 	 *
 	 * @return void
 	 */
 	public function test_filter_and_invalid_filter_value() {
 		add_filter(
-			'swiftforms_client_ip',
+			'blockforms_client_ip',
 			static function () {
 				return '198.51.100.99';
 			}
 		);
 		$this->assertSame( '198.51.100.99', Client_Ip::address() );
-		remove_all_filters( 'swiftforms_client_ip' );
+		remove_all_filters( 'blockforms_client_ip' );
 
 		foreach ( [ 'garbage', '198.51.100.1, 198.51.100.2', '', false, null, [ '1.2.3.4' ], 12345 ] as $bad ) {
 			add_filter(
-				'swiftforms_client_ip',
+				'blockforms_client_ip',
 				static function () use ( $bad ) {
 					return $bad;
 				}
 			);
 			$this->assertSame( '203.0.113.7', Client_Ip::address(), 'Invalid filter value falls back to REMOTE_ADDR.' );
-			remove_all_filters( 'swiftforms_client_ip' );
+			remove_all_filters( 'blockforms_client_ip' );
 		}
 	}
 
@@ -92,7 +92,7 @@ class ClientIpTest extends SF_Storage_Test_Case {
 	public function test_filter_receives_remote_addr() {
 		$seen = null;
 		add_filter(
-			'swiftforms_client_ip',
+			'blockforms_client_ip',
 			static function ( $ip ) use ( &$seen ) {
 				$seen = $ip;
 				return $ip;

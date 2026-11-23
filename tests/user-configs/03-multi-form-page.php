@@ -4,7 +4,7 @@
  *
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 return [
@@ -13,14 +13,14 @@ return [
 	'guards'        => [ 'C-2.7', 'C-7.3', 'ADR-001' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_db_version' => 1,
-		'swiftforms_installed'  => [
+		'blockforms_db_version' => 1,
+		'blockforms_installed'  => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -32,7 +32,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'Newsletter signup',
 			'slug'      => 'newsletter-signup',
-			'content'   => SF_FX( 'form-newsletter' ),
+			'content'   => BF_FX( 'form-newsletter' ),
 		],
 		[
 			'key'       => 'landing',
@@ -40,7 +40,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'Landing',
 			'slug'      => 'landing',
-			'content'   => SF_FX( 'page-landing' ),
+			'content'   => BF_FX( 'page-landing' ),
 		],
 		[
 			'key'       => 'news-a',
@@ -48,7 +48,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'News A',
 			'slug'      => 'news-a',
-			'content'   => SF_FX( 'page-pattern-embed' ),
+			'content'   => BF_FX( 'page-pattern-embed' ),
 		],
 		[
 			'key'       => 'news-b',
@@ -56,7 +56,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'News B',
 			'slug'      => 'news-b',
-			'content'   => SF_FX( 'page-pattern-embed' ),
+			'content'   => BF_FX( 'page-pattern-embed' ),
 		],
 	],
 	'users'         => [ 'admin' ],

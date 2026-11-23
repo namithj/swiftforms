@@ -2,10 +2,10 @@
 /**
  * Tests for the Forms menu.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Admin_Menu;
+use BlockForms\Admin_Menu;
 
 /**
  * Class AdminMenuTest
@@ -34,7 +34,7 @@ class AdminMenuTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Forms with Entries and Settings, behind the SwiftForms capabilities, screen IDs with "swiftforms".
+	 * Forms with Entries and Settings, behind the BlockForms capabilities, screen IDs with "blockforms".
 	 *
 	 * @return void
 	 */
@@ -45,19 +45,19 @@ class AdminMenuTest extends WP_UnitTestCase {
 			array_filter(
 				$menu,
 				static function ( $item ) {
-					return 'swiftforms' === $item[2];
+					return 'blockforms' === $item[2];
 				}
 			)
 		);
 		$this->assertCount( 1, $top );
 		$this->assertSame( 'Forms', $top[0][0] );
-		$this->assertSame( 'swiftforms_view_entries', $top[0][1] );
+		$this->assertSame( 'blockforms_view_entries', $top[0][1] );
 		$this->assertSame( 'dashicons-feedback', $top[0][6] );
 
-		$items = $submenu['swiftforms'];
-		$this->assertSame( [ 'Entries', 'swiftforms_view_entries', 'swiftforms' ], [ $items[0][0], $items[0][1], $items[0][2] ] );
+		$items = $submenu['blockforms'];
+		$this->assertSame( [ 'Entries', 'blockforms_view_entries', 'blockforms' ], [ $items[0][0], $items[0][1], $items[0][2] ] );
 		$this->assertCount( 1, $items, 'Admin_Menu adds only Entries; Settings_Page adds Settings.' );
-		$this->assertStringContainsString( 'swiftforms', get_plugin_page_hookname( 'swiftforms', '' ) );
+		$this->assertStringContainsString( 'blockforms', get_plugin_page_hookname( 'blockforms', '' ) );
 	}
 
 	/**
@@ -66,17 +66,17 @@ class AdminMenuTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_entries_screen_is_php() {
-		$hook = get_plugin_page_hookname( 'swiftforms', '' );
-		$this->assertNotFalse( has_action( 'load-' . $hook, [ \SwiftForms\Entries_Screen::class, 'load' ] ) );
+		$hook = get_plugin_page_hookname( 'blockforms', '' );
+		$this->assertNotFalse( has_action( 'load-' . $hook, [ \BlockForms\Entries_Screen::class, 'load' ] ) );
 
 		Admin_Menu::enqueue( 'edit.php' );
-		$this->assertFalse( wp_style_is( 'swiftforms-admin-entries', 'enqueued' ) );
+		$this->assertFalse( wp_style_is( 'blockforms-admin-entries', 'enqueued' ) );
 
 		Admin_Menu::enqueue( $hook );
-		$this->assertTrue( wp_style_is( 'swiftforms-admin-entries', 'enqueued' ) );
-		$this->assertFalse( wp_script_is( 'swiftforms-admin-entries', 'enqueued' ), 'The DataViews app is gone.' );
-		$this->assertFalse( wp_script_is( 'swiftforms-admin-settings', 'enqueued' ) );
-		$this->assertFalse( method_exists( Admin_Menu::class, 'config' ), 'window.swiftformsAdmin is gone.' );
+		$this->assertTrue( wp_style_is( 'blockforms-admin-entries', 'enqueued' ) );
+		$this->assertFalse( wp_script_is( 'blockforms-admin-entries', 'enqueued' ), 'The DataViews app is gone.' );
+		$this->assertFalse( wp_script_is( 'blockforms-admin-settings', 'enqueued' ) );
+		$this->assertFalse( method_exists( Admin_Menu::class, 'config' ), 'window.blockformsAdmin is gone.' );
 	}
 
 	/**
@@ -85,9 +85,9 @@ class AdminMenuTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_settings_screen_hides_screen_options() {
-		$settings = WP_Screen::get( get_plugin_page_hookname( 'swiftforms-settings', 'swiftforms' ) );
+		$settings = WP_Screen::get( get_plugin_page_hookname( 'blockforms-settings', 'blockforms' ) );
 		$this->assertFalse( Admin_Menu::hide_settings_screen_options( true, $settings ) );
-		$this->assertTrue( Admin_Menu::hide_settings_screen_options( true, WP_Screen::get( get_plugin_page_hookname( 'swiftforms', '' ) ) ) );
+		$this->assertTrue( Admin_Menu::hide_settings_screen_options( true, WP_Screen::get( get_plugin_page_hookname( 'blockforms', '' ) ) ) );
 		$this->assertTrue( Admin_Menu::hide_settings_screen_options( true, WP_Screen::get( 'edit-post' ) ) );
 		$this->assertNotFalse( has_filter( 'screen_options_show_screen', [ Admin_Menu::class, 'hide_settings_screen_options' ] ) );
 	}
@@ -104,7 +104,7 @@ class AdminMenuTest extends WP_UnitTestCase {
 			static function ( $item ) {
 				return $item[0];
 			},
-			$submenu['swiftforms']
+			$submenu['blockforms']
 		);
 		$this->assertSame( [ 'Entries', 'Settings' ], array_values( array_unique( $titles ) ) );
 	}

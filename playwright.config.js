@@ -1,5 +1,5 @@
 /**
- * Playwright config for the SwiftForms e2e suite.
+ * Playwright config for the BlockForms e2e suite.
  *
  * Builds on the `@wordpress/scripts` defaults (admin login through
  * `@wordpress/e2e-test-utils-playwright`, storage state, one worker). The site
@@ -15,8 +15,8 @@ module.exports = defineConfig( {
 	...baseConfig,
 	testDir: path.join( __dirname, 'tests/e2e' ),
 	testMatch: '**/*.spec.js',
-	// The per-config specs run through bin/run-e2e-configs.mjs (it sets SF_CONFIG); a plain `playwright test` leaves them out.
-	testIgnore: process.env.SF_CONFIG ? [] : [ '**/user-configs.spec.js' ],
+	// The per-config specs run through bin/run-e2e-configs.mjs (it sets BF_CONFIG); a plain `playwright test` leaves them out.
+	testIgnore: process.env.BF_CONFIG ? [] : [ '**/user-configs.spec.js' ],
 	webServer: undefined,
 	use: {
 		...baseConfig.use,

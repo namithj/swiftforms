@@ -2,10 +2,10 @@
 /**
  * Plugin service wiring.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -96,10 +96,10 @@ class Plugin {
 	 */
 	public function block_configs() {
 		/**
-		 * Filters SwiftForms' internal block configuration (not a public extension point).
+		 * Filters BlockForms' internal block configuration (not a public extension point).
 		 *
 		 * @param array<string, mixed> $config Block builder configuration array.
 		 */
-		return (array) apply_filters( 'swiftforms_block_configs', Block_Configs::all() );
+		return (array) apply_filters( 'blockforms_block_configs', Block_Configs::all() );
 	}
 }

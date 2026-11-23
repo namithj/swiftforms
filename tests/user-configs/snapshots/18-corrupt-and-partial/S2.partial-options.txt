@@ -1,14 +1,14 @@
 == S2 control#1 / c18-ada (guest) ==
 request:
 {
-    "_sf_form": "5f180001-0000-4000-8000-000000000001",
-    "_sf_source": "post:control",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f180001-0000-4000-8000-000000000001",
+    "_bf_source": "post:control",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@example.com"
     }
@@ -49,19 +49,19 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 copy#1 / c18-ada-message (guest) ==
 request:
 {
-    "_sf_form": "{FORM:copy#1}",
-    "_sf_source": "post:copy",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "{FORM:copy#1}",
+    "_bf_source": "post:copy",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@example.com",
         "message": "Which of the two pages did you mean?"
@@ -104,19 +104,19 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Which of the two pages did you mean?</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Which of the two pages did you mean?</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 dupes#1 / c18-ada-dupes (guest) ==
 request:
 {
-    "_sf_form": "5f180004-0000-4000-8000-000000000004",
-    "_sf_source": "post:dupes",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f180004-0000-4000-8000-000000000004",
+    "_bf_source": "post:dupes",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@example.com",
         "email-2": "ada@example.com",
@@ -161,19 +161,19 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Confirm email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Two email fields share one name.</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Confirm email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Two email fields share one name.</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 future#1 / c18-ada-future (guest) ==
 request:
 {
-    "_sf_form": "5f180005-0000-4000-8000-000000000005",
-    "_sf_source": "post:future",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f180005-0000-4000-8000-000000000005",
+    "_bf_source": "post:future",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@example.com",
         "rating": "5"
@@ -215,19 +215,19 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 nameless#1 / c18-ada (guest) ==
 request:
 {
-    "_sf_form": "{FORM:nameless#1}",
-    "_sf_source": "post:nameless",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "{FORM:nameless#1}",
+    "_bf_source": "post:nameless",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@example.com"
     }
@@ -268,19 +268,19 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 orig#1 / c18-ada-message (guest) ==
 request:
 {
-    "_sf_form": "5f180003-0000-4000-8000-000000000003",
-    "_sf_source": "post:orig",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f180003-0000-4000-8000-000000000003",
+    "_bf_source": "post:orig",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@example.com",
         "message": "Which of the two pages did you mean?"
@@ -323,7 +323,7 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Which of the two pages did you mean?</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Which of the two pages did you mean?</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 control#1 / c18-ada (administrator) ==
 response:
@@ -363,5 +363,5 @@ header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
 

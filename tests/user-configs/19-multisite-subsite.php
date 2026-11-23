@@ -5,22 +5,22 @@
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag. Needs WP_TESTS_MULTISITE=1
  * (bin/test-user-configs.sh sets it for this config) and is not run in the browser.
  *
- * The main site is an ordinary SwiftForms site (one contact page, two entries) in a network where the plugin is network-activated.
+ * The main site is an ordinary BlockForms site (one contact page, two entries) in a network where the plugin is network-activated.
  * The check "multisite" then builds the other sites: "alpha" and "beta" (plugin on before the network activation, each with its
  * own tables, settings and entries), "legacy" (never had the plugin: no tables until its first request) and "fresh" (created after
  * the activation: installed on wp_initialize_site); then submits to alpha and deletes fresh and legacy.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-$sf_c19_form = static function ( $form_id, $title, $thanks ) {
-	return SF_FORM(
+$bf_c19_form = static function ( $form_id, $title, $thanks ) {
+	return BF_FORM(
 		[
 			'formId' => $form_id,
 			'title'  => $title,
 		],
 		[
-			SF_FIELD(
+			BF_FIELD(
 				'text',
 				[
 					'label'        => 'Name',
@@ -29,7 +29,7 @@ $sf_c19_form = static function ( $form_id, $title, $thanks ) {
 					'autocomplete' => 'name',
 				]
 			),
-			SF_FIELD(
+			BF_FIELD(
 				'email',
 				[
 					'label'        => 'Email',
@@ -50,16 +50,16 @@ return [
 	'guards'        => [ 'ADR-003', 'C-1.4', 'C-4.1', 'C-5.2' ],
 	'site'          => [
 		'locale'         => 'en_US',
-		'theme'          => 'sf-test-block',
+		'theme'          => 'bf-test-block',
 		'multisite'      => true,
 		'network_active' => true,
 		'timezone'       => 'Europe/London',
 		'permalinks'     => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_email_notification_to' => 'network-admin@network.example',
-		'swiftforms_db_version'            => 1,
-		'swiftforms_installed'             => [
+		'blockforms_email_notification_to' => 'network-admin@network.example',
+		'blockforms_db_version'            => 1,
+		'blockforms_installed'             => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -72,7 +72,7 @@ return [
 			'title'     => 'Contact',
 			'slug'      => 'contact',
 			'date'      => '2026-10-01 09:00:00',
-			'content'   => $sf_c19_form( '5f190001-0000-4000-8000-000000000001', 'Main site contact', 'Thanks from the main site.' ),
+			'content'   => $bf_c19_form( '5f190001-0000-4000-8000-000000000001', 'Main site contact', 'Thanks from the main site.' ),
 		],
 	],
 	'users'         => [ 'admin' ],
@@ -85,9 +85,9 @@ return [
 	'subsites'      => [
 		'alpha'  => [
 			'settings'   => [
-				'swiftforms_email_notification_to' => 'alpha@network.example',
+				'blockforms_email_notification_to' => 'alpha@network.example',
 			],
-			'page'       => $sf_c19_form( '5f190011-0000-4000-8000-000000000011', 'Alpha contact', 'Thanks from alpha.' ),
+			'page'       => $bf_c19_form( '5f190011-0000-4000-8000-000000000011', 'Alpha contact', 'Thanks from alpha.' ),
 			'entries'    => [
 				[
 					'status'  => 'new',
@@ -121,11 +121,11 @@ return [
 		],
 		'beta'   => [
 			'settings' => [
-				'swiftforms_general_store_ip'       => '1',
-				'swiftforms_general_retention_days' => 30,
-				'swiftforms_email_notification_to'  => 'beta@network.example',
+				'blockforms_general_store_ip'       => '1',
+				'blockforms_general_retention_days' => 30,
+				'blockforms_email_notification_to'  => 'beta@network.example',
 			],
-			'page'     => $sf_c19_form( '5f190012-0000-4000-8000-000000000012', 'Beta contact', 'Thanks from beta.' ),
+			'page'     => $bf_c19_form( '5f190012-0000-4000-8000-000000000012', 'Beta contact', 'Thanks from beta.' ),
 			'entries'  => [
 				[
 					'status'  => 'new',
@@ -139,7 +139,7 @@ return [
 		],
 		'legacy' => [],
 		'fresh'  => [
-			'page'    => $sf_c19_form( '5f190013-0000-4000-8000-000000000013', 'Fresh contact', 'Thanks from fresh.' ),
+			'page'    => $bf_c19_form( '5f190013-0000-4000-8000-000000000013', 'Fresh contact', 'Thanks from fresh.' ),
 			'entries' => [
 				[
 					'status'  => 'new',

@@ -3,11 +3,11 @@
  * Config 07: what an SMTP plugin does to mail, as a snippet.
  *
  * It forces the From address and name through wp_mail_from and wp_mail_from_name, and on phpmailer_init it
- * sets a Sender (return path), switches the mailer to SMTP and adds a header. SwiftForms must keep working
+ * sets a Sender (return path), switches the mailer to SMTP and adds a header. BlockForms must keep working
  * through wp_mail() and its own From header may be overridden by the plugin without anything breaking.
  * The config captures mail with mail_capture "phpmailer", so these hooks really run.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 add_filter(

@@ -35,33 +35,33 @@ export function isStale( issued, nowMs ) {
 }
 
 /**
- * Build the JSON payload from the form's entries. `sf[x]` becomes sf.x, `sf[x][]` becomes a list, and the
- * `_sf_*` controls are copied; `_sf_t` is replaced by the time measured in the browser (`js.{ms}`).
+ * Build the JSON payload from the form's entries. `bf[x]` becomes bf.x, `bf[x][]` becomes a list, and the
+ * `_bf_*` controls are copied; `_bf_t` is replaced by the time measured in the browser (`js.{ms}`).
  *
  * @param {Iterable<[string, *]>} entries   FormData entries.
  * @param {number}                elapsedMs Milliseconds since the view module hydrated the form.
  * @return {Object} Payload.
  */
 export function buildPayload( entries, elapsedMs ) {
-	const payload = { sf: {} };
+	const payload = { bf: {} };
 	for ( const [ key, value ] of entries ) {
 		if ( typeof value !== 'string' ) {
 			continue;
 		}
-		const m = /^sf\[([^\]]+)\](\[\])?$/.exec( key );
+		const m = /^bf\[([^\]]+)\](\[\])?$/.exec( key );
 		if ( m ) {
 			if ( m[ 2 ] ) {
-				payload.sf[ m[ 1 ] ] = ( payload.sf[ m[ 1 ] ] || [] ).concat(
+				payload.bf[ m[ 1 ] ] = ( payload.bf[ m[ 1 ] ] || [] ).concat(
 					value
 				);
 			} else {
-				payload.sf[ m[ 1 ] ] = value;
+				payload.bf[ m[ 1 ] ] = value;
 			}
-		} else if ( /^_sf_/.test( key ) ) {
+		} else if ( /^_bf_/.test( key ) ) {
 			payload[ key ] = value;
 		}
 	}
-	payload._sf_t = 'js.' + Math.max( 0, Math.round( elapsedMs ) );
+	payload._bf_t = 'js.' + Math.max( 0, Math.round( elapsedMs ) );
 	return payload;
 }
 

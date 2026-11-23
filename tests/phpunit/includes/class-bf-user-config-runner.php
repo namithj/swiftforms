@@ -1,4 +1,4 @@
-<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- Test helper: the class name SF_User_Config_Runner is fixed by the R00 plan; it reads stored state straight from the database on purpose.
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- Test helper: the class name BF_User_Config_Runner is fixed by the R00 plan; it reads stored state straight from the database on purpose.
 /**
  * Runs one user config through the scenario matrix and collects its snapshots.
  *
@@ -15,29 +15,29 @@
  * derived formIds, user IDs) are replaced by stable labels before anything is written to a snapshot; see
  * clean() and text().
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once __DIR__ . '/class-sf-test-redirect.php';
-require_once __DIR__ . '/class-sf-test-die.php';
+require_once __DIR__ . '/class-bf-test-redirect.php';
+require_once __DIR__ . '/class-bf-test-die.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Block_Walker;
-use SwiftForms\Entries_Repository;
-use SwiftForms\Form_Renderer;
-use SwiftForms\Form_State;
-use SwiftForms\Migrations;
-use SwiftForms\Nojs_Handler;
-use SwiftForms\Render_Token;
-use SwiftForms\Schema_Resolver;
-use SwiftForms\Settings;
-use SwiftForms\Source_Stack;
-use SwiftForms\Time_Trap;
+use BlockForms\Clock;
+use BlockForms\Block_Walker;
+use BlockForms\Entries_Repository;
+use BlockForms\Form_Renderer;
+use BlockForms\Form_State;
+use BlockForms\Migrations;
+use BlockForms\Nojs_Handler;
+use BlockForms\Render_Token;
+use BlockForms\Schema_Resolver;
+use BlockForms\Settings;
+use BlockForms\Source_Stack;
+use BlockForms\Time_Trap;
 
 /**
  * Scenario runner.
  */
-class SF_User_Config_Runner {
+class BF_User_Config_Runner {
 
 	/**
 	 * Scenarios in run order. S12 and S13 run in the browser (tests/e2e), not here.
@@ -58,7 +58,7 @@ class SF_User_Config_Runner {
 	 * The client address and user agent every request is made from.
 	 */
 	const CLIENT_IP         = '203.0.113.7';
-	const CLIENT_USER_AGENT = 'SwiftForms-Regression/1.0';
+	const CLIENT_USER_AGENT = 'BlockForms-Regression/1.0';
 
 	/**
 	 * Network sites of the "multisite" check whose tables and install marker (frozen version "1.0.0") the runner writes itself.
@@ -166,7 +166,7 @@ class SF_User_Config_Runner {
 	/**
 	 * Constructor.
 	 *
-	 * @param WP_UnitTestCase_Base $test The running test case (must offer sf_go_to() and sf_factory()).
+	 * @param WP_UnitTestCase_Base $test The running test case (must offer bf_go_to() and bf_factory()).
 	 */
 	public function __construct( $test ) {
 		$this->test = $test;
@@ -190,7 +190,7 @@ class SF_User_Config_Runner {
 				$this->failures[] = 'Variant name "' . $this->variant . '" must be lowercase letters, digits and dashes (it becomes part of a file name).';
 				continue;
 			}
-			SF_User_Config_Loader::apply( $config, $this->variant );
+			BF_User_Config_Loader::apply( $config, $this->variant );
 			$this->prepare();
 
 			foreach ( self::ORDER as $scenario ) {
@@ -224,7 +224,7 @@ class SF_User_Config_Runner {
 		}
 		$this->output( '_skipped.txt', $lines ? implode( "\n", $lines ) . "\n" : "(none)\n" );
 
-		SF_User_Config_Loader::reset();
+		BF_User_Config_Loader::reset();
 		wp_set_current_user( 0 );
 
 		return [
@@ -237,7 +237,7 @@ class SF_User_Config_Runner {
 	/**
 	 * Harness self-check: read the stored state back from the database.
 	 *
-	 * Dumps the site settings the config sets, every swiftforms_* option as the raw serialised bytes and every
+	 * Dumps the site settings the config sets, every blockforms_* option as the raw serialised bytes and every
 	 * post's content, so a change to what a config writes (or to how it is
 	 * written) is a diff. Post IDs are left out: they depend on the database.
 	 */
@@ -263,7 +263,7 @@ class SF_User_Config_Runner {
 		}
 
 		$text .= "\n== options ==\n";
-		$rows  = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE 'swiftforms\\_%' AND option_name <> 'swiftforms_source_edges' ORDER BY option_name", ARRAY_A );
+		$rows  = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE 'blockforms\\_%' AND option_name <> 'blockforms_source_edges' ORDER BY option_name", ARRAY_A );
 		foreach ( $rows as $row ) {
 			$text .= $row['option_name'] . ' = ' . $row['option_value'] . "\n";
 		}
@@ -272,15 +272,15 @@ class SF_User_Config_Runner {
 		}
 
 		$text .= "\n== posts ==\n";
-		foreach ( SF_User_Config_Loader::ids() as $key => $id ) {
+		foreach ( BF_User_Config_Loader::ids() as $key => $id ) {
 			$post  = $wpdb->get_row( $wpdb->prepare( "SELECT post_type, post_status, post_name, post_title, post_content FROM {$wpdb->posts} WHERE ID = %d", $id ), ARRAY_A );
 			$text .= '-- ' . $key . ' (' . $post['post_type'] . '/' . $post['post_status'] . ', slug ' . $post['post_name'] . ', title ' . $post['post_title'] . ")\n" . $post['post_content'] . "\n";
 		}
-		if ( ! SF_User_Config_Loader::ids() ) {
+		if ( ! BF_User_Config_Loader::ids() ) {
 			$text .= "(none)\n";
 		}
 		++$this->checks;
-		$this->output( 'apply.txt', SF_Normaliser::text( $text ) );
+		$this->output( 'apply.txt', BF_Normaliser::text( $text ) );
 	}
 
 	// ---------------------------------------------------------------------
@@ -297,16 +297,16 @@ class SF_User_Config_Runner {
 		$this->aliases      = [];
 		$this->entry_labels = [];
 		$this->user_labels  = [];
-		$post_keys          = array_flip( SF_User_Config_Loader::ids() );
+		$post_keys          = array_flip( BF_User_Config_Loader::ids() );
 
-		foreach ( SF_User_Config_Loader::ids() as $key => $id ) {
+		foreach ( BF_User_Config_Loader::ids() as $key => $id ) {
 			$this->aliases[ 'post:' . $id ] = 'post:' . $key;
 		}
-		foreach ( SF_User_Config_Loader::user_ids() as $key => $id ) {
+		foreach ( BF_User_Config_Loader::user_ids() as $key => $id ) {
 			$this->user_labels[ (int) $id ] = '{USER:' . $key . '}';
 		}
 
-		$table = SwiftForms\Database::table( 'forms' );
+		$table = BlockForms\Database::table( 'forms' );
 		$rows  = $wpdb->get_results( "SELECT form_id, stored_id, source, title, status, locations FROM {$table}", ARRAY_A );
 		foreach ( is_array( $rows ) ? $rows : [] as $row ) {
 			$locations = json_decode( (string) $row['locations'], true );
@@ -319,7 +319,7 @@ class SF_User_Config_Runner {
 				foreach ( $this->config['posts'] as $configured ) {
 					if ( 'wp_' . $tm[1] === ( $configured['post_type'] ?? '' ) && $tm[2] === ( $configured['slug'] ?? $configured['key'] ) ) {
 						$name          = (string) $configured['key'];
-						$template_post = (int) ( SF_User_Config_Loader::ids()[ $configured['key'] ] ?? 0 );
+						$template_post = (int) ( BF_User_Config_Loader::ids()[ $configured['key'] ] ?? 0 );
 					}
 				}
 			}
@@ -355,23 +355,23 @@ class SF_User_Config_Runner {
 		foreach ( $this->forms as $form ) {
 			if ( $form['form_id'] !== $form['stored_id'] ) {
 				$this->aliases[ $form['form_id'] ]                               = '{FORM:' . $form['key'] . '}';
-				$this->aliases[ 'sf-' . substr( $form['form_id'], 0, 8 ) . '-' ] = 'sf-{FORM:' . $form['key'] . '}-';
+				$this->aliases[ 'bf-' . substr( $form['form_id'], 0, 8 ) . '-' ] = 'bf-{FORM:' . $form['key'] . '}-';
 			}
 		}
 
 		$this->fixture_entry_ids = [];
-		foreach ( (array) ( $this->config['tables']['swiftforms_entries'] ?? [] ) as $entry ) {
+		foreach ( (array) ( $this->config['tables']['blockforms_entries'] ?? [] ) as $entry ) {
 			if ( isset( $entry['id'] ) ) {
 				$this->fixture_entry_ids[] = (int) $entry['id'];
 			}
 		}
 
 		$this->cursor      = [
-			'entries' => (int) $wpdb->get_var( 'SELECT MAX(id) FROM ' . SwiftForms\Database::table( 'entries' ) ),
-			'meta'    => (int) $wpdb->get_var( 'SELECT MAX(meta_id) FROM ' . SwiftForms\Database::table( 'entry_meta' ) ),
-			'log'     => (int) $wpdb->get_var( 'SELECT MAX(id) FROM ' . SwiftForms\Database::table( 'log' ) ),
+			'entries' => (int) $wpdb->get_var( 'SELECT MAX(id) FROM ' . BlockForms\Database::table( 'entries' ) ),
+			'meta'    => (int) $wpdb->get_var( 'SELECT MAX(meta_id) FROM ' . BlockForms\Database::table( 'entry_meta' ) ),
+			'log'     => (int) $wpdb->get_var( 'SELECT MAX(id) FROM ' . BlockForms\Database::table( 'log' ) ),
 		];
-		$this->mail_cursor = count( SF_User_Config_Loader::mails() );
+		$this->mail_cursor = count( BF_User_Config_Loader::mails() );
 
 		$_SERVER['REMOTE_ADDR']     = self::CLIENT_IP;
 		$_SERVER['HTTP_USER_AGENT'] = self::CLIENT_USER_AGENT;
@@ -385,7 +385,7 @@ class SF_User_Config_Runner {
 		Form_Renderer::reset();
 		Form_State::reset();
 		Source_Stack::reset();
-		Clock::freeze( SF_User_Config_Loader::FROZEN_TIME );
+		Clock::freeze( BF_User_Config_Loader::FROZEN_TIME );
 		wp_set_current_user( 0 );
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$_POST                     = [];
@@ -400,9 +400,9 @@ class SF_User_Config_Runner {
 	private function reset_limits( $include_mail = false ) {
 		global $wpdb;
 
-		$prefixes = [ 'swiftforms_c_', 'swiftforms_f_', 'swiftforms_d_' ];
+		$prefixes = [ 'blockforms_c_', 'blockforms_f_', 'blockforms_d_' ];
 		if ( $include_mail ) {
-			$prefixes = array_merge( $prefixes, [ 'swiftforms_mla_', 'swiftforms_mld_', 'swiftforms_mlh_' ] );
+			$prefixes = array_merge( $prefixes, [ 'blockforms_mla_', 'blockforms_mld_', 'blockforms_mlh_' ] );
 		}
 		foreach ( $prefixes as $prefix ) {
 			$names = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s", $wpdb->esc_like( '_transient_' . $prefix ) . '%' ) );
@@ -418,8 +418,8 @@ class SF_User_Config_Runner {
 	 * @return int
 	 */
 	private function admin_id() {
-		$users = SF_User_Config_Loader::user_ids();
-		return isset( $users['admin'] ) ? (int) $users['admin'] : (int) $this->test->sf_factory()->user->create( [ 'role' => 'administrator' ] );
+		$users = BF_User_Config_Loader::user_ids();
+		return isset( $users['admin'] ) ? (int) $users['admin'] : (int) $this->test->bf_factory()->user->create( [ 'role' => 'administrator' ] );
 	}
 
 	/**
@@ -482,15 +482,15 @@ class SF_User_Config_Runner {
 	 * @return string
 	 */
 	private function text( $text ) {
-		$text = SF_Normaliser::scrub( (string) $text, $this->aliases );
+		$text = BF_Normaliser::scrub( (string) $text, $this->aliases );
 		$text = preg_replace_callback(
-			'/swiftforms-entry-(\d+)/',
+			'/blockforms-entry-(\d+)/',
 			function ( $m ) {
-				return 'swiftforms-entry-' . $this->entry_label( $m[1] );
+				return 'blockforms-entry-' . $this->entry_label( $m[1] );
 			},
 			$text
 		);
-		return SF_Normaliser::tokens( $text );
+		return BF_Normaliser::tokens( $text );
 	}
 
 	/**
@@ -524,11 +524,11 @@ class SF_User_Config_Runner {
 			return $value;
 		}
 		if ( is_string( $value ) ) {
-			if ( '_sf_v' === $key && SWIFTFORMS_VERSION === $value ) {
+			if ( '_bf_v' === $key && BLOCKFORMS_VERSION === $value ) {
 				return '{VERSION}';
 			}
-			// Markup SwiftForms renders (a confirmation) goes through the HTML normaliser, which absorbs core-version noise.
-			return $this->text( 'html' === $key ? SF_Normaliser::html( $value ) : $value );
+			// Markup BlockForms renders (a confirmation) goes through the HTML normaliser, which absorbs core-version noise.
+			return $this->text( 'html' === $key ? BF_Normaliser::html( $value ) : $value );
 		}
 		return $value;
 	}
@@ -540,7 +540,7 @@ class SF_User_Config_Runner {
 	 * @return string
 	 */
 	private function json( $value ) {
-		return SF_Normaliser::json( $this->clean( $value ) );
+		return BF_Normaliser::json( $this->clean( $value ) );
 	}
 
 	/**
@@ -572,13 +572,13 @@ class SF_User_Config_Runner {
 			return [];
 		}
 		$controls = [
-			'_sf_form'   => $form['form_id'],
-			'_sf_source' => $form['source'],
-			'_sf_token'  => Render_Token::issue( $form['form_id'], $form['source'], $schema->hash ),
-			'_sf_hp'     => '',
-			'_sf_t'      => 'js.10000',
-			'_sf_v'      => SWIFTFORMS_VERSION,
-			'_sf_i'      => '1',
+			'_bf_form'   => $form['form_id'],
+			'_bf_source' => $form['source'],
+			'_bf_token'  => Render_Token::issue( $form['form_id'], $form['source'], $schema->hash ),
+			'_bf_hp'     => '',
+			'_bf_t'      => 'js.10000',
+			'_bf_v'      => BLOCKFORMS_VERSION,
+			'_bf_i'      => '1',
 		];
 		foreach ( $over as $name => $value ) {
 			if ( null === $value ) {
@@ -624,14 +624,14 @@ class SF_User_Config_Runner {
 	 * POST a submission to the public route.
 	 *
 	 * @param array<string, mixed> $form     Form.
-	 * @param array<string, mixed> $sf       Field values.
+	 * @param array<string, mixed> $bf       Field values.
 	 * @param array<string, mixed> $controls Control overrides.
 	 * @param int                  $user_id  User ID (0 for a guest).
 	 * @return array{status:int, data:mixed, headers:array<string, string>}
 	 */
-	private function submit( array $form, array $sf, array $controls = [], $user_id = 0 ) {
+	private function submit( array $form, array $bf, array $controls = [], $user_id = 0 ) {
 		$this->reset_limits( false );
-		return $this->rest( 'POST', '/swiftforms/v1/submit', array_merge( $this->controls( $form, $controls ), [ 'sf' => $sf ] ), $user_id );
+		return $this->rest( 'POST', '/blockforms/v1/submit', array_merge( $this->controls( $form, $controls ), [ 'bf' => $bf ] ), $user_id );
 	}
 
 	/**
@@ -662,7 +662,7 @@ class SF_User_Config_Runner {
 
 		$text = '';
 
-		$entries_table = SwiftForms\Database::table( 'entries' );
+		$entries_table = BlockForms\Database::table( 'entries' );
 		$entries       = $wpdb->get_results( $wpdb->prepare( "SELECT id, form_id, schema_hash, source, status, starred, user_id, HEX(ip) AS ip, user_agent, created_gmt, updated_gmt FROM {$entries_table} WHERE id > %d ORDER BY id", $this->cursor['entries'] ), ARRAY_A );
 		foreach ( is_array( $entries ) ? $entries : [] as $entry ) {
 			$this->cursor['entries'] = max( $this->cursor['entries'], (int) $entry['id'] );
@@ -670,7 +670,7 @@ class SF_User_Config_Runner {
 			$entry['ip'] = '' === $entry['ip'] ? null : $entry['ip'];
 			$text       .= "entry:\n" . $this->json( $entry );
 
-			$values = $wpdb->get_results( $wpdb->prepare( 'SELECT entry_id, field, idx, value FROM ' . SwiftForms\Database::table( 'entry_values' ) . ' WHERE entry_id = %d ORDER BY field, idx', (int) $entry['id'] ), ARRAY_A );
+			$values = $wpdb->get_results( $wpdb->prepare( 'SELECT entry_id, field, idx, value FROM ' . BlockForms\Database::table( 'entry_values' ) . ' WHERE entry_id = %d ORDER BY field, idx', (int) $entry['id'] ), ARRAY_A );
 			foreach ( is_array( $values ) ? $values : [] as $value ) {
 				$this->assert_row_shape( 'entry_values', $value );
 				$text .= '  value ' . $value['field'] . '[' . $value['idx'] . '] = ' . $this->text( wp_json_encode( $value['value'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) ) . "\n";
@@ -680,7 +680,7 @@ class SF_User_Config_Runner {
 			}
 		}
 
-		$meta = $wpdb->get_results( $wpdb->prepare( 'SELECT meta_id, entry_id, meta_key, meta_value, user_id, created_gmt FROM ' . SwiftForms\Database::table( 'entry_meta' ) . ' WHERE meta_id > %d ORDER BY meta_id', $this->cursor['meta'] ), ARRAY_A );
+		$meta = $wpdb->get_results( $wpdb->prepare( 'SELECT meta_id, entry_id, meta_key, meta_value, user_id, created_gmt FROM ' . BlockForms\Database::table( 'entry_meta' ) . ' WHERE meta_id > %d ORDER BY meta_id', $this->cursor['meta'] ), ARRAY_A );
 		foreach ( is_array( $meta ) ? $meta : [] as $row ) {
 			$this->cursor['meta'] = max( $this->cursor['meta'], (int) $row['meta_id'] );
 			$this->assert_row_shape( 'entry_meta', $row );
@@ -688,14 +688,14 @@ class SF_User_Config_Runner {
 			$text .= "meta:\n" . $this->json( $row );
 		}
 
-		$logs = $wpdb->get_results( $wpdb->prepare( 'SELECT id, type, ref, level, message, context FROM ' . SwiftForms\Database::table( 'log' ) . ' WHERE id > %d ORDER BY id', $this->cursor['log'] ), ARRAY_A );
+		$logs = $wpdb->get_results( $wpdb->prepare( 'SELECT id, type, ref, level, message, context FROM ' . BlockForms\Database::table( 'log' ) . ' WHERE id > %d ORDER BY id', $this->cursor['log'] ), ARRAY_A );
 		foreach ( is_array( $logs ) ? $logs : [] as $row ) {
 			$this->cursor['log'] = max( $this->cursor['log'], (int) $row['id'] );
 			$context             = json_decode( (string) $row['context'], true );
 			$text               .= 'log ' . $row['type'] . '/' . $row['level'] . ' ' . $this->text( $row['ref'] ) . ': ' . $this->text( $row['message'] ) . ' ' . $this->text( wp_json_encode( $this->clean( null === $context ? $row['context'] : $context ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) ) . "\n";
 		}
 
-		$mails = SF_User_Config_Loader::mails();
+		$mails = BF_User_Config_Loader::mails();
 		$total = count( $mails );
 		for ( $i = $this->mail_cursor; $i < $total; $i++ ) {
 			$text .= $this->format_mail( $mails[ $i ], $i - $this->mail_cursor + 1 );
@@ -735,7 +735,7 @@ class SF_User_Config_Runner {
 				$lines[] = 'header: ' . $header[0] . ': ' . $header[1];
 			}
 			$lines[] = '-- body --';
-			$lines[] = false !== stripos( (string) $mail['content_type'], 'html' ) ? SF_Normaliser::html( $mail['body'] ) : $mail['body'];
+			$lines[] = false !== stripos( (string) $mail['content_type'], 'html' ) ? BF_Normaliser::html( $mail['body'] ) : $mail['body'];
 			$lines[] = '-- alt body --';
 			$lines[] = '' === $mail['alt_body'] ? '(none)' : $mail['alt_body'];
 		} else {
@@ -749,9 +749,9 @@ class SF_User_Config_Runner {
 			$lines[] = 'attachments: ' . ( $mail['attachments'] ? implode( ', ', (array) $mail['attachments'] ) : '(none)' );
 			$body    = (string) ( $mail['message'] ?? '' );
 			$lines[] = '-- body --';
-			$lines[] = false !== stripos( implode( "\n", $headers ), 'text/html' ) ? SF_Normaliser::html( $body ) : $body;
+			$lines[] = false !== stripos( implode( "\n", $headers ), 'text/html' ) ? BF_Normaliser::html( $body ) : $body;
 		}
-		return $this->text( SF_Normaliser::text( implode( "\n", $lines ) ) ) . "\n";
+		return $this->text( BF_Normaliser::text( implode( "\n", $lines ) ) ) . "\n";
 	}
 
 	/**
@@ -840,12 +840,12 @@ class SF_User_Config_Runner {
 	private function reference_row( $table ) {
 		global $wpdb;
 
-		$rows = $this->config['tables'][ 'swiftforms_' . $table ] ?? [];
+		$rows = $this->config['tables'][ 'blockforms_' . $table ] ?? [];
 		if ( ! $rows ) {
 			return null;
 		}
 		$first = $rows[0];
-		$full  = SwiftForms\Database::table( $table );
+		$full  = BlockForms\Database::table( $table );
 		if ( 'entries' === $table ) {
 			$row = $wpdb->get_row( $wpdb->prepare( "SELECT id, form_id, schema_hash, source, status, starred, user_id, HEX(ip) AS ip, user_agent, created_gmt, updated_gmt FROM {$full} WHERE id = %d", (int) $first['id'] ), ARRAY_A );
 			if ( is_array( $row ) ) {
@@ -877,7 +877,7 @@ class SF_User_Config_Runner {
 		if ( 1 === preg_match( '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/D', $value ) ) {
 			return 'datetime';
 		}
-		if ( SwiftForms\Uuid::is_valid( $value ) ) {
+		if ( BlockForms\Uuid::is_valid( $value ) ) {
 			return 'uuid';
 		}
 		if ( 1 === preg_match( '/^[0-9a-f]{64}$/D', $value ) ) {
@@ -907,8 +907,8 @@ class SF_User_Config_Runner {
 	 *
 	 * A location is a page or post (the_content), a synced pattern (a core/block reference), a template part or a
 	 * template of the active theme (rendered the way the theme renders it), or a widget area. For each one the
-	 * snapshot holds the normalised HTML, the SwiftForms assets the page enqueues and the client state the view
-	 * module reads. A location without a form must enqueue no SwiftForms asset. Every token and signed render
+	 * snapshot holds the normalised HTML, the BlockForms assets the page enqueues and the client state the view
+	 * module reads. A location without a form must enqueue no BlockForms asset. Every token and signed render
 	 * time in the HTML is verified before the normaliser replaces it.
 	 */
 	private function scenario_s1() {
@@ -920,7 +920,7 @@ class SF_User_Config_Runner {
 		] as $who => $user_id ) {
 			wp_set_current_user( $user_id );
 			$text = '';
-			foreach ( SF_User_Config_Loader::ids() as $key => $id ) {
+			foreach ( BF_User_Config_Loader::ids() as $key => $id ) {
 				$location = $this->render_location( (int) $id );
 				if ( null === $location ) {
 					continue;
@@ -931,7 +931,7 @@ class SF_User_Config_Runner {
 				} else {
 					$this->assert_no_assets( $key, $who, $location['assets'] );
 				}
-				$text .= '== ' . $key . ' (' . get_post_type( $id ) . ") ==\n" . $this->text( SF_Normaliser::html( $location['html'] ) ) . "\n"
+				$text .= '== ' . $key . ' (' . get_post_type( $id ) . ") ==\n" . $this->text( BF_Normaliser::html( $location['html'] ) ) . "\n"
 					. '-- assets: ' . ( $location['assets'] ? implode( ', ', $location['assets'] ) : '(none)' ) . "\n"
 					. ( '' !== $location['data'] ? '-- client state --' . "\n" . $this->text( $location['data'] ) . "\n" : '' ) . "\n";
 			}
@@ -946,7 +946,7 @@ class SF_User_Config_Runner {
 				} else {
 					$this->assert_no_assets( $label, $who, $location['assets'] );
 				}
-				$text .= '== ' . $label . " (rendered: {$spec['type']}) ==\n" . $this->text( SF_Normaliser::html( $location['html'] ) ) . "\n"
+				$text .= '== ' . $label . " (rendered: {$spec['type']}) ==\n" . $this->text( BF_Normaliser::html( $location['html'] ) ) . "\n"
 					. '-- assets: ' . ( $location['assets'] ? implode( ', ', $location['assets'] ) : '(none)' ) . "\n"
 					. ( '' !== $location['data'] ? '-- client state --' . "\n" . $this->text( $location['data'] ) . "\n" : '' ) . "\n";
 			}
@@ -992,7 +992,7 @@ class SF_User_Config_Runner {
 		if ( '' !== $nojs_key ) {
 			$url = add_query_arg( Nojs_Handler::RESULT_PARAM, $nojs_key, $url );
 		}
-		$this->test->sf_go_to( $url );
+		$this->test->bf_go_to( $url );
 		if ( '' !== $nojs_key ) {
 			Nojs_Handler::maybe_handle();
 		}
@@ -1039,7 +1039,7 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * What a render left behind: the HTML, whether it holds a form, the SwiftForms assets the page enqueues and the client state.
+	 * What a render left behind: the HTML, whether it holds a form, the BlockForms assets the page enqueues and the client state.
 	 *
 	 * @param string $html Rendered HTML.
 	 * @return array{html:string, has_form:bool, assets:string[], data:string}
@@ -1049,36 +1049,36 @@ class SF_User_Config_Runner {
 
 		$assets = [];
 		foreach ( wp_styles()->queue as $handle ) {
-			if ( 0 === stripos( $handle, 'swiftforms' ) ) {
+			if ( 0 === stripos( $handle, 'blockforms' ) ) {
 				$assets[] = 'style ' . $handle;
 			}
 		}
 		foreach ( wp_scripts()->queue as $handle ) {
-			if ( 0 === stripos( $handle, 'swiftforms' ) ) {
+			if ( 0 === stripos( $handle, 'blockforms' ) ) {
 				$assets[] = 'script ' . $handle;
 			}
 		}
 		ob_start();
 		wp_script_modules()->print_enqueued_script_modules();
 		$modules = ob_get_clean();
-		if ( preg_match_all( '/id=["\']([^"\']*swiftforms[^"\']*)-js-module["\']/i', (string) $modules, $found ) ) {
+		if ( preg_match_all( '/id=["\']([^"\']*blockforms[^"\']*)-js-module["\']/i', (string) $modules, $found ) ) {
 			foreach ( $found[1] as $id ) {
 				$assets[] = 'module ' . $id;
 			}
 		}
 
 		// A site that turned the plugin's styles off (general.load_styles false): the style stays in the queue, but must not be printed.
-		if ( false === Settings::get_value( 'general.load_styles' ) && in_array( 'style swiftforms-form', $assets, true ) ) {
+		if ( false === Settings::get_value( 'general.load_styles' ) && in_array( 'style blockforms-form', $assets, true ) ) {
 			ob_start();
 			wp_print_styles();
 			$printed = (string) ob_get_clean();
-			$this->expect( false === strpos( $printed, 'swiftforms-form-css' ), 'S1: general.load_styles is false but the SwiftForms stylesheet is printed.' );
-			$assets[] = 'style printed: ' . ( false === strpos( $printed, 'swiftforms-form-css' ) ? 'no (load_styles is off)' : 'YES' );
+			$this->expect( false === strpos( $printed, 'blockforms-form-css' ), 'S1: general.load_styles is false but the BlockForms stylesheet is printed.' );
+			$assets[] = 'style printed: ' . ( false === strpos( $printed, 'blockforms-form-css' ) ? 'no (load_styles is off)' : 'YES' );
 		}
 
 		return [
 			'html'     => $html,
-			'has_form' => false !== strpos( $html, 'name="_sf_form"' ),
+			'has_form' => false !== strpos( $html, 'name="_bf_form"' ),
 			'assets'   => $assets,
 			'data'     => $this->interactivity_data(),
 		];
@@ -1098,7 +1098,7 @@ class SF_User_Config_Runner {
 		if ( '' === $type ) {
 			return 0;
 		}
-		foreach ( SF_User_Config_Loader::ids() as $key => $id ) {
+		foreach ( BF_User_Config_Loader::ids() as $key => $id ) {
 			if ( $type === get_post_type( $id ) ) {
 				return (int) $id;
 			}
@@ -1128,7 +1128,7 @@ class SF_User_Config_Runner {
 		if ( '' !== $nojs_key ) {
 			$home = add_query_arg( Nojs_Handler::RESULT_PARAM, $nojs_key, $home );
 		}
-		$this->test->sf_go_to( $home );
+		$this->test->bf_go_to( $home );
 		if ( '' !== $nojs_key ) {
 			Nojs_Handler::maybe_handle();
 		}
@@ -1142,7 +1142,7 @@ class SF_User_Config_Runner {
 				}
 				$context = $this->template_context( (string) $template->slug );
 				if ( $context > 0 ) {
-					$this->test->sf_go_to( get_permalink( $context ) );
+					$this->test->bf_go_to( get_permalink( $context ) );
 					if ( have_posts() ) {
 						the_post();
 					}
@@ -1171,7 +1171,7 @@ class SF_User_Config_Runner {
 
 			case 'blog_index':
 				// The loop of the fixture theme's index.php, on the main query of the posts page.
-				$this->test->sf_go_to( home_url( '/' ) );
+				$this->test->bf_go_to( home_url( '/' ) );
 				ob_start();
 				while ( have_posts() ) {
 					the_post();
@@ -1194,7 +1194,7 @@ class SF_User_Config_Runner {
 	 */
 	private function reset_interactivity() {
 		// Core 6.8 keeps the "enqueued" flag on the registered module; later cores keep a queue, handled below.
-		wp_dequeue_script_module( SwiftForms\Assets::VIEW_MODULE );
+		wp_dequeue_script_module( BlockForms\Assets::VIEW_MODULE );
 		$objects = [ wp_script_modules() ];
 		if ( function_exists( 'wp_interactivity' ) ) {
 			$objects[] = wp_interactivity();
@@ -1219,7 +1219,7 @@ class SF_User_Config_Runner {
 	 */
 	private function interactivity_data() {
 		$data = apply_filters( 'script_module_data_@wordpress/interactivity', [] ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, WordPress.NamingConventions.ValidHookName.UseUnderscores -- Core hook.
-		return is_array( $data ) && $data ? trim( SF_Normaliser::json( $data ) ) : '';
+		return is_array( $data ) && $data ? trim( BF_Normaliser::json( $data ) ) : '';
 	}
 
 	/**
@@ -1234,10 +1234,10 @@ class SF_User_Config_Runner {
 			preg_match_all( '/<input type="hidden" name="' . preg_quote( $name, '/' ) . '" value="([^"]*)"/', $html, $m );
 			return $m[1];
 		};
-		$forms   = $pick( '_sf_form' );
-		$sources = $pick( '_sf_source' );
-		$tokens  = $pick( '_sf_token' );
-		$times   = $pick( '_sf_t' );
+		$forms   = $pick( '_bf_form' );
+		$sources = $pick( '_bf_source' );
+		$tokens  = $pick( '_bf_token' );
+		$times   = $pick( '_bf_t' );
 
 		$this->expect( count( $forms ) === count( $sources ) && count( $forms ) === count( $tokens ) && count( $forms ) === count( $times ), 'S1 (' . $who . '): ' . $key . ' has forms with missing hidden controls.' );
 		foreach ( $forms as $i => $form_id ) {
@@ -1266,7 +1266,7 @@ class SF_User_Config_Runner {
 		if ( ! function_exists( 'wp_apply_anchor_support' ) ) {
 			return; // Core before the release that prints the anchor of a dynamic block; the normaliser removes it from the HTML.
 		}
-		if ( preg_match_all( '/<!-- wp:swiftforms\/form \{[^}]*"anchor":"([^"]+)"/', $content, $m ) ) {
+		if ( preg_match_all( '/<!-- wp:blockforms\/form \{[^}]*"anchor":"([^"]+)"/', $content, $m ) ) {
 			foreach ( $m[1] as $anchor ) {
 				$this->expect( false !== strpos( $html, ' id="' . $anchor . '"' ), 'S1 (' . $who . '): the anchor "' . $anchor . '" of a form in ' . $key . ' is not printed as an id.' );
 			}
@@ -1274,7 +1274,7 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * Fail when a SwiftForms script, style or script module is enqueued where there is no form (a site with a form in an active widget area is the exception).
+	 * Fail when a BlockForms script, style or script module is enqueued where there is no form (a site with a form in an active widget area is the exception).
 	 *
 	 * @param string   $key    Location.
 	 * @param string   $who    guest or admin.
@@ -1284,11 +1284,11 @@ class SF_User_Config_Runner {
 		// A page of a site with a form in an active widget area shows that form (the theme prints the sidebar on every page), so it needs the assets.
 		foreach ( $this->forms as $form ) {
 			if ( 0 === strpos( $form['source'], 'widget:' ) && 'live' === $form['status'] ) {
-				$this->expect( (bool) $assets, 'S1 (' . $who . '): location "' . $key . '" shows an active widget form but enqueues no SwiftForms assets.' );
+				$this->expect( (bool) $assets, 'S1 (' . $who . '): location "' . $key . '" shows an active widget form but enqueues no BlockForms assets.' );
 				return;
 			}
 		}
-		$this->expect( ! $assets, 'S1 (' . $who . '): post "' . $key . '" has no SwiftForms form but enqueues SwiftForms assets: ' . implode( ', ', $assets ) );
+		$this->expect( ! $assets, 'S1 (' . $who . '): post "' . $key . '" has no BlockForms form but enqueues BlockForms assets: ' . implode( ', ', $assets ) );
 	}
 
 	/**
@@ -1306,9 +1306,9 @@ class SF_User_Config_Runner {
 
 		foreach ( $forms as $form ) {
 			foreach ( $this->payload_names( $form, 'valid' ) as $name ) {
-				$sf       = SF_VALUES( $name );
-				$request  = $this->controls( $form ) + [ 'sf' => $sf ];
-				$response = $this->submit( $form, $sf );
+				$bf       = BF_VALUES( $name );
+				$request  = $this->controls( $form ) + [ 'bf' => $bf ];
+				$response = $this->submit( $form, $bf );
 				$delta    = $this->delta();
 
 				$this->expect( 200 === $response['status'] && 'success' === ( $response['data']['status'] ?? '' ), 'S2: ' . $form['key'] . ' / ' . $name . ' was not accepted (' . $response['status'] . ').' );
@@ -1321,7 +1321,7 @@ class SF_User_Config_Runner {
 			$form = $forms[0];
 			$name = $this->payload_names( $form, 'valid' )[0] ?? '';
 			if ( '' !== $name ) {
-				$response = $this->submit( $form, SF_VALUES( $name ), [], $admin );
+				$response = $this->submit( $form, BF_VALUES( $name ), [], $admin );
 				$delta    = $this->delta();
 				$stored   = false !== strpos( $delta, 'entry:' );
 				$this->expect( 200 === $response['status'], 'S2: ' . $form['key'] . ' / ' . $name . ' was not accepted as an administrator.' );
@@ -1346,16 +1346,16 @@ class SF_User_Config_Runner {
 			if ( null === $schema || ! $valid ) {
 				continue;
 			}
-			$base = SF_VALUES( $valid[0] );
+			$base = BF_VALUES( $valid[0] );
 
 			$text = '';
 			foreach ( $schema->fields as $field ) {
 				if ( empty( $field['required'] ) || 'hidden' === $field['type'] ) {
 					continue;
 				}
-				$sf = $base;
-				unset( $sf[ $field['name'] ] );
-				$response = $this->submit( $form, $sf );
+				$bf = $base;
+				unset( $bf[ $field['name'] ] );
+				$response = $this->submit( $form, $bf );
 				$delta    = $this->delta();
 				$this->expect( 422 === $response['status'] && isset( $response['data']['errors'] ) && isset( ( (array) $response['data']['errors'] )[ $field['name'] ] ), 'S3: ' . $form['key'] . ' accepts a submission without the required field ' . $field['name'] . ' (' . $response['status'] . ').' );
 				$this->expect( false === strpos( $delta, 'entry:' ) && false === strpos( $delta, '-- mail' ), 'S3: ' . $form['key'] . ' stored or mailed a submission without ' . $field['name'] . '.' );
@@ -1363,7 +1363,7 @@ class SF_User_Config_Runner {
 			}
 
 			foreach ( $this->payload_names( $form, 'invalid' ) as $name ) {
-				$response = $this->submit( $form, SF_VALUES( $name ) );
+				$response = $this->submit( $form, BF_VALUES( $name ) );
 				$delta    = $this->delta();
 				$this->expect( 422 === $response['status'], 'S3: ' . $form['key'] . ' / ' . $name . ' should be invalid (' . $response['status'] . ').' );
 				$this->expect( false === strpos( $delta, 'entry:' ) && false === strpos( $delta, '-- mail' ), 'S3: ' . $form['key'] . ' / ' . $name . ' stored or mailed an invalid submission.' );
@@ -1402,12 +1402,12 @@ class SF_User_Config_Runner {
 				$out .= $this->block( 'S4 ' . $form['key'], "(no page or stored template shows this form, so there is nothing to post to)\n" );
 				continue;
 			}
-			$cases = [ 'valid' => [ SF_VALUES( $valid[0] ), 0 ] ];
+			$cases = [ 'valid' => [ BF_VALUES( $valid[0] ), 0 ] ];
 			$bad   = $this->payload_names( $form, 'invalid' );
 			if ( $bad ) {
-				$cases['invalid'] = [ SF_VALUES( $bad[0] ), 0 ];
+				$cases['invalid'] = [ BF_VALUES( $bad[0] ), 0 ];
 			}
-			$cases['expired token'] = [ SF_VALUES( $valid[0] ), 200 * HOUR_IN_SECONDS ];
+			$cases['expired token'] = [ BF_VALUES( $valid[0] ), 200 * HOUR_IN_SECONDS ];
 
 			$text = '';
 			foreach ( $cases as $label => $case ) {
@@ -1425,7 +1425,7 @@ class SF_User_Config_Runner {
 					$location                  = null !== $widget_area ? $this->render_extra( $widget_area, $key ) : $this->render_location( $form['render_id'], $key );
 					$this->expect( null !== $location, 'S4: the page of ' . $form['key'] . ' could not be rendered.' );
 					if ( null !== $location ) {
-						$text .= 'result page (' . ( Nojs_Handler::$uncacheable ? 'uncacheable' : 'CACHEABLE' ) . ', headers: ' . implode( ' | ', Nojs_Handler::$headers ) . "):\n" . $this->text( SF_Normaliser::html( $location['html'] ) ) . "\n";
+						$text .= 'result page (' . ( Nojs_Handler::$uncacheable ? 'uncacheable' : 'CACHEABLE' ) . ', headers: ' . implode( ' | ', Nojs_Handler::$headers ) . "):\n" . $this->text( BF_Normaliser::html( $location['html'] ) ) . "\n";
 					}
 					$this->expect( false === get_transient( Nojs_Handler::TRANSIENT_PREFIX . $key ), 'S4: the result key of ' . $form['key'] . ' / ' . $label . ' survived its single read.' );
 				}
@@ -1442,15 +1442,15 @@ class SF_User_Config_Runner {
 	 * Post a form to its page without JavaScript.
 	 *
 	 * @param array<string, mixed> $form        Form.
-	 * @param array<string, mixed> $sf          Field values.
+	 * @param array<string, mixed> $bf          Field values.
 	 * @param int                  $token_age   Seconds before now the render token was issued (0 for a fresh one).
-	 * @return SF_Test_Redirect|SF_Test_Die The exit the handler took.
+	 * @return BF_Test_Redirect|BF_Test_Die The exit the handler took.
 	 */
-	private function post_without_js( array $form, array $sf, $token_age ) {
-		$now = SF_User_Config_Loader::FROZEN_TIME;
+	private function post_without_js( array $form, array $bf, $token_age ) {
+		$now = BF_User_Config_Loader::FROZEN_TIME;
 
 		Clock::freeze( $now - $token_age );
-		$token = $this->controls( $form )['_sf_token'];
+		$token = $this->controls( $form )['_bf_token'];
 		Clock::freeze( $now - 10 );
 		$signed = Time_Trap::issue( $form['form_id'], $form['source'] );
 		Clock::freeze( $now );
@@ -1458,33 +1458,33 @@ class SF_User_Config_Runner {
 		$controls = $this->controls(
 			$form,
 			[
-				'_sf_token' => $token,
-				'_sf_t'     => $signed,
+				'_bf_token' => $token,
+				'_bf_t'     => $signed,
 			]
 		);
 		// A form in a template is posted to the home page, which is a page view like any other for the handler.
 		$permalink = $form['page_id'] > 0 ? get_permalink( $form['page_id'] ) : home_url( '/' );
-		$this->test->sf_go_to( $permalink );
+		$this->test->bf_go_to( $permalink );
 		$path                      = (string) wp_parse_url( $permalink, PHP_URL_PATH );
 		$path                      = '' === $path ? '/' : $path;
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_SERVER['REQUEST_URI']    = $path;
-		$_POST                     = wp_slash( array_merge( $controls, [ 'sf' => $sf ] ) );
+		$_POST                     = wp_slash( array_merge( $controls, [ 'bf' => $bf ] ) );
 
 		$exit = null;
 		try {
 			Form_Renderer::reset();
 			Nojs_Handler::maybe_handle();
-		} catch ( SF_Test_Redirect $e ) {
+		} catch ( BF_Test_Redirect $e ) {
 			$exit = $e;
-		} catch ( SF_Test_Die $e ) {
+		} catch ( BF_Test_Die $e ) {
 			$exit = $e;
 		}
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$_POST                     = [];
 		if ( null === $exit ) {
 			$this->failures[] = 'S4: the no-JS handler neither redirected nor stopped for ' . $form['key'] . '.';
-			$exit             = new SF_Test_Die( 'no exit' );
+			$exit             = new BF_Test_Die( 'no exit' );
 		}
 		return $exit;
 	}
@@ -1492,24 +1492,24 @@ class SF_User_Config_Runner {
 	/**
 	 * An exit of the no-JS handler as text.
 	 *
-	 * @param SF_Test_Redirect|SF_Test_Die $exit Exit.
+	 * @param BF_Test_Redirect|BF_Test_Die $exit Exit.
 	 * @return string
 	 */
 	private function describe_exit( $exit ) {
-		if ( $exit instanceof SF_Test_Redirect ) {
+		if ( $exit instanceof BF_Test_Redirect ) {
 			return 'redirect ' . $exit->status . ' Location: ' . $this->text( $exit->location ) . "\n";
 		}
 		return 'die ' . $exit->status . ': ' . $this->text( $exit->getMessage() ) . "\n";
 	}
 
 	/**
-	 * The sf_result key of a redirect, or an empty string.
+	 * The bf_result key of a redirect, or an empty string.
 	 *
-	 * @param SF_Test_Redirect|SF_Test_Die $exit Exit.
+	 * @param BF_Test_Redirect|BF_Test_Die $exit Exit.
 	 * @return string
 	 */
 	private function result_key( $exit ) {
-		if ( ! $exit instanceof SF_Test_Redirect ) {
+		if ( ! $exit instanceof BF_Test_Redirect ) {
 			return '';
 		}
 		parse_str( (string) wp_parse_url( $exit->location, PHP_URL_QUERY ), $query );
@@ -1524,18 +1524,18 @@ class SF_User_Config_Runner {
 	private $exit_filters = [];
 
 	/**
-	 * Make wp_redirect() throw SF_Test_Redirect and wp_die() throw SF_Test_Die until release_exits().
+	 * Make wp_redirect() throw BF_Test_Redirect and wp_die() throw BF_Test_Die until release_exits().
 	 */
 	private function capture_exits() {
 		$redirect = static function ( $location, $status ) {
-			$e           = new SF_Test_Redirect( 'redirect' );
+			$e           = new BF_Test_Redirect( 'redirect' );
 			$e->location = $location;
 			$e->status   = $status;
 			throw $e;
 		};
 		$die      = static function () {
 			return static function ( $message, $title, $args ) {
-				$e         = new SF_Test_Die( is_string( $message ) ? $message : 'die' );
+				$e         = new BF_Test_Die( is_string( $message ) ? $message : 'die' );
 				$e->status = isset( $args['response'] ) ? (int) $args['response'] : 500;
 				throw $e;
 			};
@@ -1581,31 +1581,31 @@ class SF_User_Config_Runner {
 			$this->output( 'S5.txt', "(the first live form has no valid payload)\n" );
 			return;
 		}
-		$sf  = SF_VALUES( $names[0] );
+		$bf  = BF_VALUES( $names[0] );
 		$out = '';
 
 		// The reference: a clean submission of the same values.
-		$control = $this->submit( $form, $sf );
+		$control = $this->submit( $form, $bf );
 		$out    .= $this->block( 'S5 control: a clean submission of the same values', $this->describe( $control ) . "left behind:\n" . $this->delta() );
 
 		$cases = [
-			'honeypot filled'          => [ [ '_sf_hp' => 'http://spam.example/' ], $sf ],
-			'too fast (js.500)'        => [ [ '_sf_t' => 'js.500' ], $sf ],
-			'forged token'             => [ [ '_sf_token' => 'v1.' . base_convert( (string) intdiv( SF_User_Config_Loader::FROZEN_TIME, HOUR_IN_SECONDS ), 10, 36 ) . '.' . str_repeat( '0', 32 ) ], $sf ],
-			'no token'                 => [ [ '_sf_token' => null ], $sf ],
-			'no browser-measured time' => [ [ '_sf_t' => null ], $sf ],
+			'honeypot filled'          => [ [ '_bf_hp' => 'http://spam.example/' ], $bf ],
+			'too fast (js.500)'        => [ [ '_bf_t' => 'js.500' ], $bf ],
+			'forged token'             => [ [ '_bf_token' => 'v1.' . base_convert( (string) intdiv( BF_User_Config_Loader::FROZEN_TIME, HOUR_IN_SECONDS ), 10, 36 ) . '.' . str_repeat( '0', 32 ) ], $bf ],
+			'no token'                 => [ [ '_bf_token' => null ], $bf ],
+			'no browser-measured time' => [ [ '_bf_t' => null ], $bf ],
 		];
 		if ( true === Settings::get_value( 'spam.js_token' ) ) {
-			$cases['signed time over REST (no js token)'] = [ [ '_sf_t' => Time_Trap::issue( $form['form_id'], $form['source'] ) ], $sf ];
+			$cases['signed time over REST (no js token)'] = [ [ '_bf_t' => Time_Trap::issue( $form['form_id'], $form['source'] ) ], $bf ];
 		}
 		// A site that changed the minimum time (default 3 seconds) is tested at its own limit: one second under it is spam, one second over it is a clean submission.
 		$min_seconds = (int) Settings::get_value( 'spam.min_seconds', 3 );
 		if ( 3 !== $min_seconds && $min_seconds > 1 ) {
-			$cases[ 'too fast for this site (js.' . ( $min_seconds * 1000 - 1000 ) . ', min_seconds ' . $min_seconds . ')' ] = [ [ '_sf_t' => 'js.' . ( $min_seconds * 1000 - 1000 ) ], $sf ];
+			$cases[ 'too fast for this site (js.' . ( $min_seconds * 1000 - 1000 ) . ', min_seconds ' . $min_seconds . ')' ] = [ [ '_bf_t' => 'js.' . ( $min_seconds * 1000 - 1000 ) ], $bf ];
 		}
 		$words = array_values( array_filter( array_map( 'trim', preg_split( '/[\r\n,]+/', (string) Settings::get_value( 'spam.blocked_words', '' ) ) ) ) );
 		foreach ( $this->payload_names( $form, 'spam' ) as $name ) {
-			$cases[ 'blocked word: ' . $name ] = [ [], SF_VALUES( $name ) ];
+			$cases[ 'blocked word: ' . $name ] = [ [], BF_VALUES( $name ) ];
 		}
 		if ( $words && ! $this->payload_names( $form, 'spam' ) ) {
 			$this->failures[] = 'S5: the config blocks words (' . implode( ', ', $words ) . ') but lists no submissions.spam payload for ' . $form['key'] . '.';
@@ -1615,7 +1615,7 @@ class SF_User_Config_Runner {
 			$response = $this->submit( $form, $case[1], $case[0] );
 			$delta    = $this->delta();
 			// A case with the control's own values must be answered byte for byte like the control; a case with other values (a blocked word) only has to be a success of the same kind.
-			$same_values = $case[1] === $sf;
+			$same_values = $case[1] === $bf;
 			$identical   = $response['status'] === $control['status'] && ( $same_values ? $response['data'] === $control['data'] : ( $response['data']['status'] ?? '' ) === ( $control['data']['status'] ?? '' ) && ( $response['data']['confirmation']['type'] ?? '' ) === ( $control['data']['confirmation']['type'] ?? '' ) );
 			$this->expect( $identical, 'S5: the spam case "' . $label . '" is not answered like a clean submission.' );
 			$this->expect( false === strpos( $delta, '-- mail' ), 'S5: the spam case "' . $label . '" sent mail.' );
@@ -1625,7 +1625,7 @@ class SF_User_Config_Runner {
 
 		// One second over the site's own minimum is a clean submission: stored as new, mail sent.
 		if ( 3 !== $min_seconds && $min_seconds > 1 ) {
-			$response = $this->submit( $form, $sf, [ '_sf_t' => 'js.' . ( $min_seconds * 1000 + 1000 ) ] );
+			$response = $this->submit( $form, $bf, [ '_bf_t' => 'js.' . ( $min_seconds * 1000 + 1000 ) ] );
 			$delta    = $this->delta();
 			$this->expect( 200 === $response['status'] && false !== strpos( $delta, '"status": "new"' ) && false !== strpos( $delta, '-- mail' ), 'S5: a submission one second over min_seconds (' . $min_seconds . ') was not handled as a clean one.' );
 			$out .= $this->block( 'S5 ' . $form['key'] . ' / slow enough for this site (js.' . ( $min_seconds * 1000 + 1000 ) . ', min_seconds ' . $min_seconds . ')', $this->describe( $response ) . "left behind:\n" . $delta );
@@ -1633,10 +1633,10 @@ class SF_User_Config_Runner {
 
 		// A site that turned the JS token off (spam.js_token false) accepts a headless REST client that sends the signed render time: a clean submission.
 		if ( false === Settings::get_value( 'spam.js_token' ) ) {
-			Clock::freeze( SF_User_Config_Loader::FROZEN_TIME - 10 );
+			Clock::freeze( BF_User_Config_Loader::FROZEN_TIME - 10 );
 			$signed = Time_Trap::issue( $form['form_id'], $form['source'] );
-			Clock::freeze( SF_User_Config_Loader::FROZEN_TIME );
-			$response = $this->submit( $form, $sf, [ '_sf_t' => $signed ] );
+			Clock::freeze( BF_User_Config_Loader::FROZEN_TIME );
+			$response = $this->submit( $form, $bf, [ '_bf_t' => $signed ] );
 			$delta    = $this->delta();
 			$this->expect( 200 === $response['status'] && false !== strpos( $delta, '"status": "new"' ), 'S5: with spam.js_token off, a REST client with the signed time was not handled as a clean submission.' );
 			$out .= $this->block( 'S5 ' . $form['key'] . ' / headless REST client with the signed time (js_token off)', $this->describe( $response ) . "left behind:\n" . $delta );
@@ -1649,9 +1649,9 @@ class SF_User_Config_Runner {
 			$this->reset_limits( false );
 			$statuses = [];
 			for ( $i = 1; $i <= $limit + 1; $i++ ) {
-				$this->delete_counters( [ 'swiftforms_c_', 'swiftforms_d_' ] );
-				$request    = $this->controls( $form, [ '_sf_hp' => 'probe' ] ) + [ 'sf' => array_merge( $sf, [ 'message' => 'Rate limit probe ' . $i ] ) ];
-				$response   = $this->rest( 'POST', '/swiftforms/v1/submit', $request );
+				$this->delete_counters( [ 'blockforms_c_', 'blockforms_d_' ] );
+				$request    = $this->controls( $form, [ '_bf_hp' => 'probe' ] ) + [ 'bf' => array_merge( $bf, [ 'message' => 'Rate limit probe ' . $i ] ) ];
+				$response   = $this->rest( 'POST', '/blockforms/v1/submit', $request );
 				$statuses[] = $response['status'];
 				$last       = $response;
 			}
@@ -1667,7 +1667,7 @@ class SF_User_Config_Runner {
 		$this->reset_limits( false );
 		$statuses = [];
 		for ( $i = 1; $i <= 61; $i++ ) {
-			$response   = $this->rest( 'POST', '/swiftforms/v1/submit', [ '_sf_form' => wp_generate_uuid4() ] );
+			$response   = $this->rest( 'POST', '/blockforms/v1/submit', [ '_bf_form' => wp_generate_uuid4() ] );
 			$statuses[] = $response['status'];
 			$last       = $response;
 		}
@@ -1694,11 +1694,11 @@ class SF_User_Config_Runner {
 			$request  = $this->controls(
 				$form,
 				[
-					'_sf_form'   => $pair[0],
-					'_sf_source' => $pair[1],
+					'_bf_form'   => $pair[0],
+					'_bf_source' => $pair[1],
 				]
-			) + [ 'sf' => $sf ];
-			$response = $this->rest( 'POST', '/swiftforms/v1/submit', $request );
+			) + [ 'bf' => $bf ];
+			$response = $this->rest( 'POST', '/blockforms/v1/submit', $request );
 			$this->expect( 403 === $response['status'] && 'closed' === ( $response['data']['status'] ?? '' ), 'S5: "' . $label . '" is not answered closed (' . $response['status'] . ').' );
 			$text .= '-- ' . $label . " --\n" . $this->describe( $response );
 		}
@@ -1734,16 +1734,16 @@ class SF_User_Config_Runner {
 		$admin = $this->admin_id();
 		$out   = '';
 
-		$list = $this->rest( 'GET', '/swiftforms/v1/entries', [], $admin );
+		$list = $this->rest( 'GET', '/blockforms/v1/entries', [], $admin );
 		$out .= $this->block( 'S6 GET /entries (default: new and read, newest first)', $this->describe_list( $list ) );
 
-		$forms = $this->rest( 'GET', '/swiftforms/v1/forms', [], $admin );
+		$forms = $this->rest( 'GET', '/blockforms/v1/forms', [], $admin );
 		$out  .= $this->block( 'S6 GET /forms', $this->describe( $forms ) );
 
 		foreach ( $this->forms as $form ) {
 			$response = $this->rest(
 				'GET',
-				'/swiftforms/v1/entries',
+				'/blockforms/v1/entries',
 				[
 					'form'   => $form['form_id'],
 					'status' => 'new',
@@ -1753,7 +1753,7 @@ class SF_User_Config_Runner {
 			$out     .= $this->block( 'S6 GET /entries?form=' . $form['key'] . '&status=new', $this->describe_list( $response ) );
 		}
 		foreach ( [ 'new', 'read', 'spam', 'trash' ] as $status ) {
-			$response = $this->rest( 'GET', '/swiftforms/v1/entries', [ 'status' => $status ], $admin );
+			$response = $this->rest( 'GET', '/blockforms/v1/entries', [ 'status' => $status ], $admin );
 			$out     .= $this->block( 'S6 GET /entries?status=' . $status, $this->describe_list( $response ) );
 		}
 
@@ -1768,7 +1768,7 @@ class SF_User_Config_Runner {
 			$out .= $this->block( 'S6 single entry', "(the list is empty, so there is no entry to read or change)\n" );
 		} else {
 			$label = $this->entry_label( $first );
-			$one   = $this->rest( 'GET', '/swiftforms/v1/entries/' . $first, [], $admin );
+			$one   = $this->rest( 'GET', '/blockforms/v1/entries/' . $first, [], $admin );
 			$out  .= $this->block( 'S6 GET /entries/' . $label, $this->describe( $one ) );
 			$steps = [
 				'status read'   => [ 'status' => 'read' ],
@@ -1779,21 +1779,21 @@ class SF_User_Config_Runner {
 				'starred false' => [ 'starred' => false ],
 			];
 			foreach ( $steps as $step => $body ) {
-				$response = $this->rest( 'PATCH', '/swiftforms/v1/entries/' . $first, $body, $admin );
+				$response = $this->rest( 'PATCH', '/blockforms/v1/entries/' . $first, $body, $admin );
 				// The first answer is shown whole; the rest only for what changes.
 				$shown = 'status read' === $step ? $this->describe( $response ) : 'status: ' . $response['status'] . ', entry status: ' . ( $response['data']['status'] ?? '?' ) . ', starred: ' . wp_json_encode( $response['data']['starred'] ?? null ) . "\n";
 				$out  .= $this->block( 'S6 PATCH /entries/' . $label . ' ' . wp_json_encode( $body ), $shown );
 			}
-			$response = $this->rest( 'PATCH', '/swiftforms/v1/entries/' . $first, [], $admin );
+			$response = $this->rest( 'PATCH', '/blockforms/v1/entries/' . $first, [], $admin );
 			$out     .= $this->block( 'S6 PATCH /entries/' . $label . ' with nothing to change', $this->describe( $response ) );
-			$response = $this->rest( 'GET', '/swiftforms/v1/entries/999999999', [], $admin );
+			$response = $this->rest( 'GET', '/blockforms/v1/entries/999999999', [], $admin );
 			$out     .= $this->block( 'S6 GET /entries/999999999 (no such entry)', $this->describe( $response ) );
 		}
 
-		$guest = $this->rest( 'GET', '/swiftforms/v1/entries' );
+		$guest = $this->rest( 'GET', '/blockforms/v1/entries' );
 		$this->expect( in_array( $guest['status'], [ 401, 403 ], true ), 'S6: a guest can list entries (' . $guest['status'] . ').' );
 		$out  .= $this->block( 'S6 GET /entries as a guest', $this->describe( $guest ) );
-		$guest = $this->rest( 'PATCH', '/swiftforms/v1/entries/' . ( $first ?? 1 ), [ 'status' => 'trash' ] );
+		$guest = $this->rest( 'PATCH', '/blockforms/v1/entries/' . ( $first ?? 1 ), [ 'status' => 'trash' ] );
 		$this->expect( in_array( $guest['status'], [ 401, 403 ], true ), 'S6: a guest can change an entry (' . $guest['status'] . ').' );
 		$out .= $this->block( 'S6 PATCH /entries/{id} as a guest', $this->describe( $guest ) );
 
@@ -1822,17 +1822,17 @@ class SF_User_Config_Runner {
 	private function scenario_s7() {
 		$found = [];
 		foreach ( array_keys( rest_get_server()->get_routes() ) as $route ) {
-			if ( 0 === strpos( $route, '/swiftforms' ) && false !== stripos( $route, 'export' ) ) {
+			if ( 0 === strpos( $route, '/blockforms' ) && false !== stripos( $route, 'export' ) ) {
 				$found[] = $route;
 			}
 		}
-		$response = $this->rest( 'GET', '/swiftforms/v1/entries/export', [], $this->admin_id() );
-		$this->expect( ! $found, 'S7: a SwiftForms route with "export" in its name exists: ' . implode( ', ', $found ) );
-		$this->expect( 404 === $response['status'], 'S7: /swiftforms/v1/entries/export answers ' . $response['status'] . ', not 404.' );
+		$response = $this->rest( 'GET', '/blockforms/v1/entries/export', [], $this->admin_id() );
+		$this->expect( ! $found, 'S7: a BlockForms route with "export" in its name exists: ' . implode( ', ', $found ) );
+		$this->expect( 404 === $response['status'], 'S7: /blockforms/v1/entries/export answers ' . $response['status'] . ', not 404.' );
 		$this->output(
 			'S7.txt',
 			"Export does not exist in 1.0.0: no REST route with \"export\" in its name is registered.\n"
-			. "GET /swiftforms/v1/entries/export as an administrator:\n" . $this->describe( $response )
+			. "GET /blockforms/v1/entries/export as an administrator:\n" . $this->describe( $response )
 			. "From R02 this file holds the CSV and JSON bytes of an export.\n"
 		);
 	}
@@ -1862,8 +1862,8 @@ class SF_User_Config_Runner {
 			return $nodes;
 		};
 
-		$handler = SwiftForms\Vendor\PedalCMS\CassetteCMF\Core\Manager::init()->get_new_settings_handler();
-		foreach ( $handler->get_fields( SwiftForms\Settings_Page::PAGE_ID ) as $field ) {
+		$handler = BlockForms\Vendor\PedalCMS\CassetteCMF\Core\Manager::init()->get_new_settings_handler();
+		foreach ( $handler->get_fields( BlockForms\Settings_Page::PAGE_ID ) as $field ) {
 			if ( 'metabox' === $field->get_type() ) {
 				$field->set_config( 'fields', $walk( (array) $field->get_config( 'fields', [] ) ) );
 			}
@@ -1874,12 +1874,12 @@ class SF_User_Config_Runner {
 	 * S8: the settings route (cassette-cmf's). GET, then POST the same payload: no write at all.
 	 *
 	 * An absent option stays absent and a present one keeps its exact bytes; no add_option, update_option or
-	 * delete_option for any swiftforms_{section}_* option may run, and cassette-cmf writes no option of its own.
+	 * delete_option for any blockforms_{section}_* option may run, and cassette-cmf writes no option of its own.
 	 */
 	private function scenario_s8() {
 		global $wpdb;
 
-		$route = '/swiftforms-cmf/v1/settings/swiftforms';
+		$route = '/blockforms-cmf/v1/settings/blockforms';
 		$this->refresh_settings_page_defaults();
 		$admin      = $this->admin_id();
 		$before     = Settings::stored_options();
@@ -1939,7 +1939,7 @@ class SF_User_Config_Runner {
 		$this->expect( $cmf_before === $cmf_rows(), 'S8: cassette-cmf wrote an option of its own.' );
 		$out .= $this->block(
 			'S8 writes',
-			'writes to swiftforms_{section}_* options: ' . count( $writes ) . "\nsettings options before: " . count( $before ) . ', after: ' . count( $after ) . "\nstored options unchanged (names and values): " . ( $unchanged ? 'yes' : 'NO' ) . "\ncassette-cmf options written: " . count( array_diff( $cmf_rows(), $cmf_before ) ) . "\n"
+			'writes to blockforms_{section}_* options: ' . count( $writes ) . "\nsettings options before: " . count( $before ) . ', after: ' . count( $after ) . "\nstored options unchanged (names and values): " . ( $unchanged ? 'yes' : 'NO' ) . "\ncassette-cmf options written: " . count( array_diff( $cmf_rows(), $cmf_before ) ) . "\n"
 		);
 		$this->output( 'S8.txt', $out );
 	}
@@ -1947,7 +1947,7 @@ class SF_User_Config_Runner {
 	/**
 	 * S9: the privacy exporter and eraser, for the email the config names.
 	 *
-	 * Runs the callbacks WordPress would run (the registered personal-data exporter and eraser of SwiftForms)
+	 * Runs the callbacks WordPress would run (the registered personal-data exporter and eraser of BlockForms)
 	 * page by page, for the known email and for an unknown one, and lists what is left behind.
 	 */
 	private function scenario_s9() {
@@ -1962,15 +1962,15 @@ class SF_User_Config_Runner {
 
 		$exporters = apply_filters( 'wp_privacy_personal_data_exporters', [] ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core hook.
 		$erasers   = apply_filters( 'wp_privacy_personal_data_erasers', [] ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core hook.
-		$this->expect( isset( $exporters['swiftforms-entries'], $erasers['swiftforms-entries'] ), 'S9: the SwiftForms exporter or eraser is not registered.' );
-		if ( ! isset( $exporters['swiftforms-entries'], $erasers['swiftforms-entries'] ) ) {
+		$this->expect( isset( $exporters['blockforms-entries'], $erasers['blockforms-entries'] ), 'S9: the BlockForms exporter or eraser is not registered.' );
+		if ( ! isset( $exporters['blockforms-entries'], $erasers['blockforms-entries'] ) ) {
 			$this->output( 'S9.txt', "(not registered)\n" );
 			return;
 		}
 
 		$out = $this->block(
 			'S9 registered',
-			'exporter: ' . $exporters['swiftforms-entries']['exporter_friendly_name'] . "\neraser: " . $erasers['swiftforms-entries']['eraser_friendly_name'] . "\n"
+			'exporter: ' . $exporters['blockforms-entries']['exporter_friendly_name'] . "\neraser: " . $erasers['blockforms-entries']['eraser_friendly_name'] . "\n"
 		);
 
 		$run = static function ( $callback, $address ) {
@@ -1984,43 +1984,43 @@ class SF_User_Config_Runner {
 			return $pages;
 		};
 
-		$exported = $run( $exporters['swiftforms-entries']['callback'], $email );
+		$exported = $run( $exporters['blockforms-entries']['callback'], $email );
 		$out     .= $this->block( 'S9 export for ' . $email, $this->json( $exported ) );
 		$this->expect( ! empty( $exported[0]['data'] ), 'S9: the exporter found nothing for ' . $email . '.' );
 
-		$unknown = $run( $exporters['swiftforms-entries']['callback'], 'nobody@example.com' );
+		$unknown = $run( $exporters['blockforms-entries']['callback'], 'nobody@example.com' );
 		$out    .= $this->block( 'S9 export for an address with no entries', $this->json( $unknown ) );
 
 		$count     = static function ( $address ) use ( $wpdb ) {
-			return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(DISTINCT entry_id) FROM ' . SwiftForms\Database::table( 'entry_values' ) . ' WHERE value = %s', $address ) );
+			return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(DISTINCT entry_id) FROM ' . BlockForms\Database::table( 'entry_values' ) . ' WHERE value = %s', $address ) );
 		};
 		$mail_rows = static function ( $address ) use ( $wpdb ) {
-			return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'log' ) . " WHERE type = 'mail' AND (context LIKE %s OR message LIKE %s)", '%' . $wpdb->esc_like( $address ) . '%', '%' . $wpdb->esc_like( $address ) . '%' ) );
+			return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'log' ) . " WHERE type = 'mail' AND (context LIKE %s OR message LIKE %s)", '%' . $wpdb->esc_like( $address ) . '%', '%' . $wpdb->esc_like( $address ) . '%' ) );
 		};
 		$before    = [
 			'entries with the address' => $count( $email ),
-			'entries'                  => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'entries' ) ),
-			'value rows'               => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'entry_values' ) ),
+			'entries'                  => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'entries' ) ),
+			'value rows'               => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'entry_values' ) ),
 			'mail log rows naming it'  => $mail_rows( $email ),
 		];
 
-		$erased = $run( $erasers['swiftforms-entries']['callback'], $email );
+		$erased = $run( $erasers['blockforms-entries']['callback'], $email );
 		$out   .= $this->block( 'S9 erase ' . $email, $this->json( $erased ) );
 
 		$after = [
 			'entries with the address' => $count( $email ),
-			'entries'                  => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'entries' ) ),
-			'value rows'               => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'entry_values' ) ),
-			'orphan value rows'        => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'entry_values' ) . ' v LEFT JOIN ' . SwiftForms\Database::table( 'entries' ) . ' e ON e.id = v.entry_id WHERE e.id IS NULL' ),
-			'orphan meta rows'         => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'entry_meta' ) . ' m LEFT JOIN ' . SwiftForms\Database::table( 'entries' ) . ' e ON e.id = m.entry_id WHERE e.id IS NULL' ),
+			'entries'                  => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'entries' ) ),
+			'value rows'               => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'entry_values' ) ),
+			'orphan value rows'        => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'entry_values' ) . ' v LEFT JOIN ' . BlockForms\Database::table( 'entries' ) . ' e ON e.id = v.entry_id WHERE e.id IS NULL' ),
+			'orphan meta rows'         => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'entry_meta' ) . ' m LEFT JOIN ' . BlockForms\Database::table( 'entries' ) . ' e ON e.id = m.entry_id WHERE e.id IS NULL' ),
 			'mail log rows naming it'  => $mail_rows( $email ),
 		];
 		$this->expect( 0 === $after['entries with the address'] && 0 === $after['orphan value rows'] && 0 === $after['orphan meta rows'] && 0 === $after['mail log rows naming it'], 'S9: erasing ' . $email . ' left rows behind: ' . wp_json_encode( $after ) );
 		$out .= $this->block( 'S9 rows before and after the erasure', "before:\n" . $this->json( $before ) . "after:\n" . $this->json( $after ) );
 
-		$again = $run( $exporters['swiftforms-entries']['callback'], $email );
+		$again = $run( $exporters['blockforms-entries']['callback'], $email );
 		$out  .= $this->block( 'S9 export again after the erasure', $this->json( $again ) );
-		$none  = $run( $erasers['swiftforms-entries']['callback'], 'nobody@example.com' );
+		$none  = $run( $erasers['blockforms-entries']['callback'], 'nobody@example.com' );
 		$out  .= $this->block( 'S9 erase an address with no entries', $this->json( $none ) );
 
 		$this->output( 'S9.txt', $out );
@@ -2039,18 +2039,18 @@ class SF_User_Config_Runner {
 		global $wpdb;
 
 		$state   = function () use ( $wpdb ) {
-			$ring = SwiftForms\Backups::all();
+			$ring = BlockForms\Backups::all();
 			$last = $ring ? end( $ring ) : null;
-			if ( is_array( $last ) && SWIFTFORMS_VERSION === $last['version'] ) {
+			if ( is_array( $last ) && BLOCKFORMS_VERSION === $last['version'] ) {
 				$last['version'] = '{VERSION}'; // The backup records the plugin version that made it; that changes every release.
 			}
 			return [
 				'db_version row'       => $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", Migrations::OPTION_DB_VERSION ) ),
-				'install marker (raw)' => $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", SwiftForms\Install_Marker::OPTION ) ),
-				'settings row present' => Settings::has_stored(), // Any swiftforms_{section}_* option row.
+				'install marker (raw)' => $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", BlockForms\Install_Marker::OPTION ) ),
+				'settings row present' => Settings::has_stored(), // Any blockforms_{section}_* option row.
 				'backups in the ring'  => count( $ring ),
 				'newest backup'        => $last,
-				'migration log rows'   => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'log' ) . " WHERE type = 'migration'" ),
+				'migration log rows'   => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'log' ) . " WHERE type = 'migration'" ),
 				'migration lock row'   => null !== $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", Migrations::OPTION_LOCK ) ),
 			];
 		};
@@ -2058,7 +2058,7 @@ class SF_User_Config_Runner {
 		$count   = static function () use ( &$changed ) {
 			++$changed;
 		};
-		add_action( 'swiftforms_db_version_changed', $count );
+		add_action( 'blockforms_db_version_changed', $count );
 
 		$out    = '';
 		$marker = $state()['install marker (raw)'];
@@ -2088,10 +2088,10 @@ class SF_User_Config_Runner {
 		$this->expect( wp_json_encode( $end ) === wp_json_encode( $mid ), 'S11: the second run changed the stored state.' ); // JSON, not ===: a backup of a corrupt option may hold an object.
 		$this->expect( $marker === $end['install marker (raw)'], 'S11: a migration changed the install marker.' );
 		$this->expect( $start['backups in the ring'] + ( $has_data ? 1 : 0 ) === $mid['backups in the ring'], 'S11: the backup ring should have gained ' . ( $has_data ? 'one entry' : 'no entry' ) . ' (' . $start['backups in the ring'] . ' to ' . $mid['backups in the ring'] . ').' );
-		$this->expect( 1 === $mid_changed, 'S11: swiftforms_db_version_changed should fire once (' . $mid_changed . ').' );
-		$out .= $this->block( 'S11 site as before an update (version row removed)', "before:\n" . $this->json( $start ) . 'first run returned ' . wp_json_encode( $first ) . ' (swiftforms_db_version_changed fired ' . $mid_changed . " time(s))\nafter the first run:\n" . $this->json( $mid ) . 'second run returned ' . wp_json_encode( $next ) . "\nafter the second run:\n" . $this->json( $end ) );
+		$this->expect( 1 === $mid_changed, 'S11: blockforms_db_version_changed should fire once (' . $mid_changed . ').' );
+		$out .= $this->block( 'S11 site as before an update (version row removed)', "before:\n" . $this->json( $start ) . 'first run returned ' . wp_json_encode( $first ) . ' (blockforms_db_version_changed fired ' . $mid_changed . " time(s))\nafter the first run:\n" . $this->json( $mid ) . 'second run returned ' . wp_json_encode( $next ) . "\nafter the second run:\n" . $this->json( $end ) );
 
-		remove_action( 'swiftforms_db_version_changed', $count );
+		remove_action( 'blockforms_db_version_changed', $count );
 		$this->output( 'S11.txt', $out );
 	}
 
@@ -2104,12 +2104,12 @@ class SF_User_Config_Runner {
 		global $wpdb;
 
 		$days  = (int) Settings::get_value( 'general.retention_days', 0 );
-		$table = SwiftForms\Database::table( 'entries' );
+		$table = BlockForms\Database::table( 'entries' );
 		$ids   = static function () use ( $wpdb, $table ) {
 			return $wpdb->get_results( "SELECT id, created_gmt FROM {$table} ORDER BY created_gmt, id", ARRAY_A );
 		};
 
-		$cutoff = gmdate( 'Y-m-d H:i:s', SF_User_Config_Loader::FROZEN_TIME - $days * DAY_IN_SECONDS );
+		$cutoff = gmdate( 'Y-m-d H:i:s', BF_User_Config_Loader::FROZEN_TIME - $days * DAY_IN_SECONDS );
 		$before = $ids();
 		$expect = [];
 		foreach ( $before as $row ) {
@@ -2118,8 +2118,8 @@ class SF_User_Config_Runner {
 			}
 		}
 
-		$scheduled = wp_next_scheduled( SwiftForms\Cron::DAILY );
-		do_action( SwiftForms\Cron::DAILY );
+		$scheduled = wp_next_scheduled( BlockForms\Cron::DAILY );
+		do_action( BlockForms\Cron::DAILY );
 		$after = $ids();
 
 		$kept    = array_map( 'intval', wp_list_pluck( $after, 'id' ) );
@@ -2127,7 +2127,7 @@ class SF_User_Config_Runner {
 		sort( $expect );
 		sort( $deleted );
 		$this->expect( $expect === $deleted, 'Retention: the daily job deleted ' . wp_json_encode( $deleted ) . ' but only ' . wp_json_encode( $expect ) . ' are older than ' . $days . ' days.' );
-		$this->expect( false !== $scheduled, 'Retention: the daily job (swiftforms_daily) is not scheduled.' );
+		$this->expect( false !== $scheduled, 'Retention: the daily job (blockforms_daily) is not scheduled.' );
 
 		$describe    = function ( array $rows ) {
 			return $rows ? $rows[0]['created_gmt'] . ' to ' . $rows[ count( $rows ) - 1 ]['created_gmt'] : '(none)';
@@ -2139,7 +2139,7 @@ class SF_User_Config_Runner {
 		}
 		$this->output(
 			'check-retention.txt',
-			'retention_days: ' . $days . "\nfrozen now: " . gmdate( 'Y-m-d H:i:s', SF_User_Config_Loader::FROZEN_TIME ) . "\ncutoff (entries strictly older are deleted): " . $cutoff
+			'retention_days: ' . $days . "\nfrozen now: " . gmdate( 'Y-m-d H:i:s', BF_User_Config_Loader::FROZEN_TIME ) . "\ncutoff (entries strictly older are deleted): " . $cutoff
 			. "\ndaily job scheduled: " . ( false !== $scheduled ? 'yes' : 'NO' )
 			. "\nentries before: " . count( $before ) . ' (' . $describe( $before ) . ')'
 			. "\nentries after: " . count( $after ) . ' (' . $describe( $after ) . ')'
@@ -2172,10 +2172,10 @@ class SF_User_Config_Runner {
 				continue;
 			}
 			$valid = $this->payload_names( $form, 'valid' );
-			$sf    = SF_VALUES( $valid[0] );
+			$bf    = BF_VALUES( $valid[0] );
 			$text  = '';
 
-			$response = $this->submit( $form, $sf );
+			$response = $this->submit( $form, $bf );
 			$delta    = $this->delta();
 			$accepted = 200 === $response['status'];
 			$closed   = 403 === $response['status'] && 'closed' === ( $response['data']['status'] ?? '' );
@@ -2190,7 +2190,7 @@ class SF_User_Config_Runner {
 				require_once ABSPATH . WPINC . '/class-phpass.php';
 				$hasher             = new PasswordHash( 8, true );
 				$_COOKIE[ $cookie ] = $hasher->HashPassword( $post->post_password );
-				$response           = $this->submit( $form, $sf );
+				$response           = $this->submit( $form, $bf );
 				$delta              = $this->delta();
 				unset( $_COOKIE[ $cookie ] );
 				$this->expect( 200 === $response['status'] && false !== strpos( $delta, 'entry:' ), 'Source states: ' . $form['key'] . ' did not accept a visitor who entered the password (' . $response['status'] . ').' );
@@ -2202,9 +2202,9 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * Check "roles": what each user of the config can do through the REST routes and Access::can(), and that SwiftForms wrote no role.
+	 * Check "roles": what each user of the config can do through the REST routes and Access::can(), and that BlockForms wrote no role.
 	 *
-	 * For every user: the six SwiftForms capabilities, the entries routes (list, read, change, delete), the forms list, the settings
+	 * For every user: the six BlockForms capabilities, the entries routes (list, read, change, delete), the forms list, the settings
 	 * routes (GET and a no-op POST), and whether a submission they make gets an entryId (only a user who can view entries does).
 	 * A guest is refused everywhere. The wp_user_roles option, and the capabilities stored in every user's meta,
 	 * must be the same bytes after the whole run as before it: roles and capabilities are never modified in the database (C-8.4).
@@ -2216,50 +2216,50 @@ class SF_User_Config_Runner {
 		$caps_before  = $wpdb->get_results( "SELECT user_id, meta_value FROM {$wpdb->usermeta} WHERE meta_key = '{$wpdb->prefix}capabilities' ORDER BY user_id", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Fixed name.
 		$this->delta();
 
-		$out  = $this->block( 'Capability map (after the swiftforms_capability_map filter)', $this->json( SwiftForms\Access::map() ) );
+		$out  = $this->block( 'Capability map (after the blockforms_capability_map filter)', $this->json( BlockForms\Access::map() ) );
 		$out .= $this->block( 'Roles in the database before the check', $this->text( implode( ', ', array_keys( (array) maybe_unserialize( $roles_before ) ) ) ) . "\n" );
 
 		$form           = $this->live_forms()[0];
 		$valid          = $this->payload_names( $form, 'valid' );
-		$sf             = SF_VALUES( $valid[0] );
-		$users          = SF_User_Config_Loader::user_ids();
+		$bf             = BF_VALUES( $valid[0] );
+		$users          = BF_User_Config_Loader::user_ids();
 		$users['guest'] = 0;
 		$matrix         = '';
 		foreach ( $users as $key => $user_id ) {
 			$text = '';
-			foreach ( SwiftForms\Access::CAPS as $cap ) {
+			foreach ( BlockForms\Access::CAPS as $cap ) {
 				$can   = $user_id > 0 && user_can( $user_id, $cap );
 				$text .= str_pad( $cap, 34 ) . ( $can ? 'yes' : 'no' ) . "\n";
-				$this->expect( $can === ( $user_id > 0 && SwiftForms\Access::can( $cap, $user_id ) ), 'Roles: Access::can() and user_can() disagree for ' . $key . ' / ' . $cap . '.' );
+				$this->expect( $can === ( $user_id > 0 && BlockForms\Access::can( $cap, $user_id ) ), 'Roles: Access::can() and user_can() disagree for ' . $key . ' / ' . $cap . '.' );
 			}
 			$responses                                  = [
-				'GET /entries'             => $this->rest( 'GET', '/swiftforms/v1/entries', [], $user_id ),
-				'GET /forms'               => $this->rest( 'GET', '/swiftforms/v1/forms', [], $user_id ),
-				'GET /entries/3'           => $this->rest( 'GET', '/swiftforms/v1/entries/3', [], $user_id ),
-				'PATCH /entries/3 starred' => $this->rest( 'PATCH', '/swiftforms/v1/entries/3', [ 'starred' => true ], $user_id ),
-				'PATCH /entries/3 unstar'  => $this->rest( 'PATCH', '/swiftforms/v1/entries/3', [ 'starred' => false ], $user_id ),
-				'DELETE /entries/999999'   => $this->rest( 'DELETE', '/swiftforms/v1/entries/999999', [], $user_id ),
-				'GET /settings'            => $this->rest( 'GET', '/swiftforms-cmf/v1/settings/swiftforms', [], $user_id ), // The route is cassette-cmf's.
+				'GET /entries'             => $this->rest( 'GET', '/blockforms/v1/entries', [], $user_id ),
+				'GET /forms'               => $this->rest( 'GET', '/blockforms/v1/forms', [], $user_id ),
+				'GET /entries/3'           => $this->rest( 'GET', '/blockforms/v1/entries/3', [], $user_id ),
+				'PATCH /entries/3 starred' => $this->rest( 'PATCH', '/blockforms/v1/entries/3', [ 'starred' => true ], $user_id ),
+				'PATCH /entries/3 unstar'  => $this->rest( 'PATCH', '/blockforms/v1/entries/3', [ 'starred' => false ], $user_id ),
+				'DELETE /entries/999999'   => $this->rest( 'DELETE', '/blockforms/v1/entries/999999', [], $user_id ),
+				'GET /settings'            => $this->rest( 'GET', '/blockforms-cmf/v1/settings/blockforms', [], $user_id ), // The route is cassette-cmf's.
 			];
-			$responses['POST /settings (same payload)'] = $this->rest( 'POST', '/swiftforms-cmf/v1/settings/swiftforms', [ 'values' => (array) ( $responses['GET /settings']['data']['values'] ?? [] ) ], $user_id );
+			$responses['POST /settings (same payload)'] = $this->rest( 'POST', '/blockforms-cmf/v1/settings/blockforms', [ 'values' => (array) ( $responses['GET /settings']['data']['values'] ?? [] ) ], $user_id );
 			$text                                      .= "\n";
 			foreach ( $responses as $label => $response ) {
 				$text .= str_pad( $label, 34 ) . $response['status'] . ( isset( $response['data']['code'] ) ? ' ' . $response['data']['code'] : '' ) . "\n";
 			}
 
 			// The routes must agree with the capabilities.
-			$view = $user_id > 0 && SwiftForms\Access::can( 'swiftforms_view_entries', $user_id );
-			$this->expect( $view === ( 200 === $responses['GET /entries']['status'] ) && $view === ( 200 === $responses['GET /forms']['status'] ), 'Roles: the entries routes do not follow swiftforms_view_entries for ' . $key . '.' );
-			$this->expect( ( $user_id > 0 && SwiftForms\Access::can( 'swiftforms_edit_entries', $user_id ) ) === ( 200 === $responses['PATCH /entries/3 starred']['status'] ), 'Roles: PATCH /entries does not follow swiftforms_edit_entries for ' . $key . '.' );
-			$this->expect( ( $user_id > 0 && SwiftForms\Access::can( 'swiftforms_delete_entries', $user_id ) ) === ( 404 === $responses['DELETE /entries/999999']['status'] ), 'Roles: DELETE /entries does not follow swiftforms_delete_entries for ' . $key . '.' );
-			$this->expect( ( $user_id > 0 && SwiftForms\Access::can( 'swiftforms_manage_settings', $user_id ) ) === ( 200 === $responses['GET /settings']['status'] ), 'Roles: GET /settings does not follow swiftforms_manage_settings for ' . $key . '.' );
+			$view = $user_id > 0 && BlockForms\Access::can( 'blockforms_view_entries', $user_id );
+			$this->expect( $view === ( 200 === $responses['GET /entries']['status'] ) && $view === ( 200 === $responses['GET /forms']['status'] ), 'Roles: the entries routes do not follow blockforms_view_entries for ' . $key . '.' );
+			$this->expect( ( $user_id > 0 && BlockForms\Access::can( 'blockforms_edit_entries', $user_id ) ) === ( 200 === $responses['PATCH /entries/3 starred']['status'] ), 'Roles: PATCH /entries does not follow blockforms_edit_entries for ' . $key . '.' );
+			$this->expect( ( $user_id > 0 && BlockForms\Access::can( 'blockforms_delete_entries', $user_id ) ) === ( 404 === $responses['DELETE /entries/999999']['status'] ), 'Roles: DELETE /entries does not follow blockforms_delete_entries for ' . $key . '.' );
+			$this->expect( ( $user_id > 0 && BlockForms\Access::can( 'blockforms_manage_settings', $user_id ) ) === ( 200 === $responses['GET /settings']['status'] ), 'Roles: GET /settings does not follow blockforms_manage_settings for ' . $key . '.' );
 			if ( 0 === $user_id ) {
 				foreach ( $responses as $label => $response ) {
 					$this->expect( 401 === $response['status'], 'Roles: a guest got ' . $response['status'] . ' for ' . $label . '.' );
 				}
 			}
 
-			$response = $this->submit( $form, $sf, [], $user_id );
+			$response = $this->submit( $form, $bf, [], $user_id );
 			$delta    = $this->delta();
 			$this->expect( 200 === $response['status'] && $view === isset( $response['data']['entryId'] ), 'Roles: ' . $key . ' ' . ( $view ? 'should' : 'must not' ) . ' get an entryId from a submission.' );
 			$text   .= "\nsubmission: " . $response['status'] . ', entryId ' . ( isset( $response['data']['entryId'] ) ? 'returned' : 'not returned' ) . ', entry stored by user ' . $this->text( 1 === preg_match( '/"user_id": ("[^"]*"|\d+)/', $delta, $m ) ? $m[1] : '?' ) . "\n";
@@ -2271,10 +2271,10 @@ class SF_User_Config_Runner {
 		$caps_after  = $wpdb->get_results( "SELECT user_id, meta_value FROM {$wpdb->usermeta} WHERE meta_key = '{$wpdb->prefix}capabilities' ORDER BY user_id", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Fixed name.
 		$this->expect( $roles_before === $roles_after, 'Roles: the wp_user_roles option changed during the run.' );
 		$this->expect( $caps_before === $caps_after, 'Roles: a user\'s stored capabilities changed during the run.' );
-		$this->expect( false === strpos( $roles_after, 'swiftforms_' ), 'Roles: a SwiftForms capability was written to wp_user_roles.' );
+		$this->expect( false === strpos( $roles_after, 'blockforms_' ), 'Roles: a BlockForms capability was written to wp_user_roles.' );
 		$out .= $this->block(
 			'Stored roles and capabilities',
-			'wp_user_roles unchanged: ' . ( $roles_before === $roles_after ? 'yes' : 'NO' ) . "\nuser capabilities unchanged: " . ( $caps_before === $caps_after ? 'yes' : 'NO' ) . "\nwp_user_roles mentions swiftforms_: " . ( false === strpos( $roles_after, 'swiftforms_' ) ? 'no' : 'YES' ) . "\n"
+			'wp_user_roles unchanged: ' . ( $roles_before === $roles_after ? 'yes' : 'NO' ) . "\nuser capabilities unchanged: " . ( $caps_before === $caps_after ? 'yes' : 'NO' ) . "\nwp_user_roles mentions blockforms_: " . ( false === strpos( $roles_after, 'blockforms_' ) ? 'no' : 'YES' ) . "\n"
 		);
 		$this->output( 'check-roles.txt', $out );
 	}
@@ -2296,7 +2296,7 @@ class SF_User_Config_Runner {
 			return;
 		}
 		$data    = (array) $this->config['subsites'];
-		$factory = $this->test->sf_factory();
+		$factory = $this->test->bf_factory();
 		$active  = get_site_option( 'active_sitewide_plugins' );
 		$ids     = [];
 		$names   = [];
@@ -2305,9 +2305,9 @@ class SF_User_Config_Runner {
 
 		$main_state = function () use ( $wpdb ) {
 			return [
-				'entries'  => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . SwiftForms\Database::table( 'entries' ) ),
+				'entries'  => (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . BlockForms\Database::table( 'entries' ) ),
 				'settings' => serialize( Settings::stored_options() ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize -- Byte comparison of stored values, never stored.
-				'tables'   => count( SwiftForms\Database::missing() ),
+				'tables'   => count( BlockForms\Database::missing() ),
 			];
 		};
 		$label_of   = function ( $text ) use ( &$ids ) {
@@ -2319,20 +2319,20 @@ class SF_User_Config_Runner {
 		$describe   = function ( $label ) use ( &$ids, $wpdb, $label_of ) {
 			switch_to_blog( $ids[ $label ] );
 			Settings::flush_cache();
-			$missing = SwiftForms\Database::missing();
+			$missing = BlockForms\Database::missing();
 			$raw     = static function ( $name ) use ( $wpdb ) {
 				return $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", $name ) );
 			};
-			$text    = 'tables: ' . ( $missing ? count( $missing ) . ' of ' . count( SwiftForms\Database::TABLES ) . ' missing' : 'all ' . count( SwiftForms\Database::TABLES ) . ' present' ) . "\n";
+			$text    = 'tables: ' . ( $missing ? count( $missing ) . ' of ' . count( BlockForms\Database::TABLES ) . ' missing' : 'all ' . count( BlockForms\Database::TABLES ) . ' present' ) . "\n";
 			$text   .= 'table prefix: ' . $label_of( $wpdb->prefix ) . "\n";
-			$text   .= 'swiftforms_db_version: ' . ( null === $raw( 'swiftforms_db_version' ) ? '(absent)' : $raw( 'swiftforms_db_version' ) ) . "\n";
-			$marker  = $raw( 'swiftforms_installed' );
+			$text   .= 'blockforms_db_version: ' . ( null === $raw( 'blockforms_db_version' ) ? '(absent)' : $raw( 'blockforms_db_version' ) ) . "\n";
+			$marker  = $raw( 'blockforms_installed' );
 			// Only a marker the plugin wrote carries the running version; the seeded sites keep their frozen "1.0.0" as stored, so the
-			// snapshot does not change when SWIFTFORMS_VERSION happens to be 1.0.0.
+			// snapshot does not change when BLOCKFORMS_VERSION happens to be 1.0.0.
 			if ( null !== $marker && ! in_array( $label, self::MULTISITE_SEEDED_SITES, true ) ) {
-				$marker = str_replace( SWIFTFORMS_VERSION, '{VERSION}', (string) $marker );
+				$marker = str_replace( BLOCKFORMS_VERSION, '{VERSION}', (string) $marker );
 			}
-			$text  .= 'swiftforms_installed: ' . ( null === $marker ? '(absent)' : $marker ) . "\n";
+			$text  .= 'blockforms_installed: ' . ( null === $marker ? '(absent)' : $marker ) . "\n";
 			$stored = Settings::stored_options();
 			$text  .= 'settings options: ' . ( $stored ? count( $stored ) : '(none)' ) . "\n";
 			foreach ( $stored as $name => $value ) {
@@ -2340,7 +2340,7 @@ class SF_User_Config_Runner {
 			}
 			$text .= 'effective notification_to: ' . wp_json_encode( Settings::get_value( 'email.notification_to' ) ) . ', retention_days: ' . wp_json_encode( Settings::get_value( 'general.retention_days' ) ) . ', store_ip: ' . wp_json_encode( Settings::get_value( 'general.store_ip' ) ) . "\n";
 			if ( ! $missing ) {
-				$counts = $wpdb->get_results( 'SELECT status, COUNT(*) AS total FROM ' . SwiftForms\Database::table( 'entries' ) . ' GROUP BY status ORDER BY status', ARRAY_A );
+				$counts = $wpdb->get_results( 'SELECT status, COUNT(*) AS total FROM ' . BlockForms\Database::table( 'entries' ) . ' GROUP BY status ORDER BY status', ARRAY_A );
 				$text  .= 'entries: ' . ( $counts ? implode(
 					', ',
 					array_map(
@@ -2350,7 +2350,7 @@ class SF_User_Config_Runner {
 						$counts
 					)
 				) : '(none)' ) . "\n";
-				$forms  = $wpdb->get_results( 'SELECT title, status FROM ' . SwiftForms\Database::table( 'forms' ) . ' ORDER BY title', ARRAY_A );
+				$forms  = $wpdb->get_results( 'SELECT title, status FROM ' . BlockForms\Database::table( 'forms' ) . ' ORDER BY title', ARRAY_A );
 				$text  .= 'forms in the index: ' . ( $forms ? implode(
 					', ',
 					array_map(
@@ -2382,7 +2382,7 @@ class SF_User_Config_Runner {
 		$out .= $this->block( 'Before network activation: legacy (never had the plugin)', $describe( 'legacy' ) );
 
 		// 2. Network activation changes no site; a site created afterwards is installed on wp_initialize_site.
-		update_site_option( 'active_sitewide_plugins', $active ? $active : [ plugin_basename( SWIFTFORMS_FILE ) => SF_User_Config_Loader::FROZEN_TIME ] );
+		update_site_option( 'active_sitewide_plugins', $active ? $active : [ plugin_basename( BLOCKFORMS_FILE ) => BF_User_Config_Loader::FROZEN_TIME ] );
 		$out         .= $this->block( 'After network activation: legacy is still untouched', $describe( 'legacy' ) );
 		$ids['fresh'] = $factory->blog->create( [ 'path' => '/fresh/' ] );
 		$out         .= $this->block( 'Created after activation: fresh (installed by wp_initialize_site)', $describe( 'fresh' ) );
@@ -2391,15 +2391,15 @@ class SF_User_Config_Runner {
 
 		// 3. The first request on legacy installs it, and writes no settings option.
 		switch_to_blog( $ids['legacy'] );
-		SwiftForms\Activator::maybe_install();
+		BlockForms\Activator::maybe_install();
 		restore_current_blog();
 		$out .= $this->block( 'legacy after its first request (lazy install)', $describe( 'legacy' ) );
 
 		// 4. A submission to alpha lands in alpha's tables only.
 		switch_to_blog( $ids['alpha'] );
 		wp_cache_flush();
-		SwiftForms\Form_Index::flush_cache();
-		$row = $wpdb->get_row( 'SELECT form_id, source FROM ' . SwiftForms\Database::table( 'forms' ) . ' LIMIT 1', ARRAY_A );
+		BlockForms\Form_Index::flush_cache();
+		$row = $wpdb->get_row( 'SELECT form_id, source FROM ' . BlockForms\Database::table( 'forms' ) . ' LIMIT 1', ARRAY_A );
 		$this->expect( is_array( $row ), 'Multisite: alpha has no form in its index.' );
 		$text = '';
 		if ( is_array( $row ) ) {
@@ -2408,9 +2408,9 @@ class SF_User_Config_Runner {
 				'form_id' => $row['form_id'],
 				'source'  => $row['source'],
 			];
-			$sf   = $data['alpha']['submission'];
+			$bf   = $data['alpha']['submission'];
 			$this->reset_limits( false );
-			$response = $this->rest( 'POST', '/swiftforms/v1/submit', array_merge( $this->controls( $form ), [ 'sf' => $sf ] ) );
+			$response = $this->rest( 'POST', '/blockforms/v1/submit', array_merge( $this->controls( $form ), [ 'bf' => $bf ] ) );
 			$this->expect( 200 === $response['status'] && 'success' === ( $response['data']['status'] ?? '' ), 'Multisite: the submission to alpha was not accepted (' . $response['status'] . ').' );
 			$text .= $this->describe( $response );
 		}
@@ -2427,8 +2427,8 @@ class SF_User_Config_Runner {
 			// DESCRIBE (not SHOW TABLES) because the test suite's tables are TEMPORARY, which MySQL 8 does not list (same as Database::missing()).
 			$count    = 0;
 			$suppress = $wpdb->suppress_errors();
-			foreach ( \SwiftForms\Database::TABLES as $name ) {
-				if ( $wpdb->get_results( 'DESCRIBE `' . esc_sql( $prefix . \SwiftForms\Database::PREFIX . $name ) . '`' ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Table name built from a prefix and a fixed list.
+			foreach ( \BlockForms\Database::TABLES as $name ) {
+				if ( $wpdb->get_results( 'DESCRIBE `' . esc_sql( $prefix . \BlockForms\Database::PREFIX . $name ) . '`' ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Table name built from a prefix and a fixed list.
 					++$count;
 				}
 			}
@@ -2441,7 +2441,7 @@ class SF_User_Config_Runner {
 		$this->expect( 6 === $had && 0 === $now, 'Multisite: deleting fresh should drop its 6 tables (had ' . $had . ', now ' . $now . ').' );
 		$legacy_prefix = $wpdb->get_blog_prefix( $ids['legacy'] );
 		wp_delete_site( $ids['legacy'] );
-		$out .= $this->block( 'Deleting sites', 'fresh: ' . $had . ' SwiftForms tables before, ' . $now . ' after' . "\nlegacy (installed lazily): " . $tables_of( $legacy_prefix ) . " tables after\nalpha: " . $tables_of( $wpdb->get_blog_prefix( $ids['alpha'] ) ) . ' tables, beta: ' . $tables_of( $wpdb->get_blog_prefix( $ids['beta'] ) ) . " tables (untouched)\n" );
+		$out .= $this->block( 'Deleting sites', 'fresh: ' . $had . ' BlockForms tables before, ' . $now . ' after' . "\nlegacy (installed lazily): " . $tables_of( $legacy_prefix ) . " tables after\nalpha: " . $tables_of( $wpdb->get_blog_prefix( $ids['alpha'] ) ) . ' tables, beta: ' . $tables_of( $wpdb->get_blog_prefix( $ids['beta'] ) ) . " tables (untouched)\n" );
 		$out .= $this->block( 'Main site at the very end', 'entries: ' . $main_state()['entries'] . ', tables missing: ' . $main_state()['tables'] . ', settings options unchanged: ' . ( $before['settings'] === $main_state()['settings'] ? 'yes' : 'NO' ) . "\n" );
 
 		update_site_option( 'active_sitewide_plugins', $active );
@@ -2449,7 +2449,7 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * Write a subsite the way a site that already runs SwiftForms looks: tables, options, a page with a form, entries.
+	 * Write a subsite the way a site that already runs BlockForms looks: tables, options, a page with a form, entries.
 	 *
 	 * The tables are created with Database::install() (as the harness does for the main site); everything else is a raw row.
 	 *
@@ -2462,13 +2462,13 @@ class SF_User_Config_Runner {
 
 		switch_to_blog( $blog_id );
 		if ( in_array( $label, self::MULTISITE_SEEDED_SITES, true ) ) {
-			SwiftForms\Database::install();
-			update_option( 'swiftforms_db_version', 1 );
+			BlockForms\Database::install();
+			update_option( 'blockforms_db_version', 1 );
 			update_option(
-				'swiftforms_installed',
+				'blockforms_installed',
 				[
 					'version' => '1.0.0',
-					'time'    => SF_User_Config_Loader::FROZEN_TIME,
+					'time'    => BF_User_Config_Loader::FROZEN_TIME,
 				]
 			);
 		}
@@ -2495,12 +2495,12 @@ class SF_User_Config_Runner {
 		);
 		$post_id = (int) $wpdb->insert_id;
 		clean_post_cache( $post_id );
-		SwiftForms\Form_Index::rebuild();
-		$form_id = (string) $wpdb->get_var( 'SELECT form_id FROM ' . SwiftForms\Database::table( 'forms' ) . ' LIMIT 1' );
-		$hash    = (string) $wpdb->get_var( 'SELECT schema_hash FROM ' . SwiftForms\Database::table( 'schemas' ) . ' LIMIT 1' );
+		BlockForms\Form_Index::rebuild();
+		$form_id = (string) $wpdb->get_var( 'SELECT form_id FROM ' . BlockForms\Database::table( 'forms' ) . ' LIMIT 1' );
+		$hash    = (string) $wpdb->get_var( 'SELECT schema_hash FROM ' . BlockForms\Database::table( 'schemas' ) . ' LIMIT 1' );
 		foreach ( (array) ( $data['entries'] ?? [] ) as $n => $entry ) {
 			$wpdb->insert(
-				SwiftForms\Database::table( 'entries' ),
+				BlockForms\Database::table( 'entries' ),
 				[
 					'form_id'     => $form_id,
 					'schema_hash' => $hash,
@@ -2515,7 +2515,7 @@ class SF_User_Config_Runner {
 			$entry_id = (int) $wpdb->insert_id;
 			foreach ( $entry['values'] as $field => $value ) {
 				$wpdb->insert(
-					SwiftForms\Database::table( 'entry_values' ),
+					BlockForms\Database::table( 'entry_values' ),
 					[
 						'entry_id' => $entry_id,
 						'field'    => $field,
@@ -2529,9 +2529,9 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * Check "global_styles": the site owner's styles for SwiftForms blocks (the user layer of theme.json) reach the merged global styles.
+	 * Check "global_styles": the site owner's styles for BlockForms blocks (the user layer of theme.json) reach the merged global styles.
 	 *
-	 * The raw merged data for the swiftforms/* blocks is the snapshot (the same on every WordPress version). The generated stylesheet is not
+	 * The raw merged data for the blockforms/* blocks is the snapshot (the same on every WordPress version). The generated stylesheet is not
 	 * compared: its text differs between WordPress versions, and the throwaway core does not print block styles from a wp_global_styles post for any block.
 	 */
 	private function check_global_styles() {
@@ -2540,46 +2540,46 @@ class SF_User_Config_Runner {
 		$raw    = WP_Theme_JSON_Resolver::get_merged_data()->get_raw_data();
 		$blocks = [];
 		foreach ( (array) ( $raw['styles']['blocks'] ?? [] ) as $name => $styles ) {
-			if ( 0 === strpos( (string) $name, 'swiftforms/' ) ) {
+			if ( 0 === strpos( (string) $name, 'blockforms/' ) ) {
 				$blocks[ $name ] = $styles;
 			}
 		}
 		ksort( $blocks );
-		$this->expect( isset( $blocks['swiftforms/form']['color']['background'] ) && isset( $blocks['swiftforms/submit']['color']['background'] ), 'Global styles: the owner\'s styles for the SwiftForms blocks are not in the merged global styles.' );
-		$this->output( 'check-global-styles.txt', $this->block( 'Styles for swiftforms/* blocks in the merged global styles (raw)', '' === wp_json_encode( $blocks ) || ! $blocks ? "(none)\n" : $this->json( $blocks ) ) );
+		$this->expect( isset( $blocks['blockforms/form']['color']['background'] ) && isset( $blocks['blockforms/submit']['color']['background'] ), 'Global styles: the owner\'s styles for the BlockForms blocks are not in the merged global styles.' );
+		$this->output( 'check-global-styles.txt', $this->block( 'Styles for blockforms/* blocks in the merged global styles (raw)', '' === wp_json_encode( $blocks ) || ! $blocks ? "(none)\n" : $this->json( $blocks ) ) );
 	}
 
 	/**
 	 * Check "hooks": the mu-plugin of the config uses every documented v1 hook (C-8.3), and the hooks that change behaviour do.
 	 *
 	 * The snippet records each call (hook => calls, argument types). Written to the snapshot: whether each hook ran, the argument types, and
-	 * for the three actions the number of calls. Then two effects that need a request of their own: swiftforms_client_ip (the stored address is the
-	 * one the hook returns) and swiftforms_throttle_limit (the coarse limiter lets exactly the hook's number of requests through).
+	 * for the three actions the number of calls. Then two effects that need a request of their own: blockforms_client_ip (the stored address is the
+	 * one the hook returns) and blockforms_throttle_limit (the coarse limiter lets exactly the hook's number of requests through).
 	 */
 	private function check_hooks() {
 		global $wpdb;
 
 		$documented = [
-			'swiftforms_entry_saved',
-			'swiftforms_mail_sent',
-			'swiftforms_submission_complete',
-			'swiftforms_validate_field',
-			'swiftforms_spam_check',
-			'swiftforms_before_send_mail',
-			'swiftforms_merge_tags',
-			'swiftforms_render_form',
-			'swiftforms_capability_map',
-			'swiftforms_client_ip',
-			'swiftforms_throttle_limit',
+			'blockforms_entry_saved',
+			'blockforms_mail_sent',
+			'blockforms_submission_complete',
+			'blockforms_validate_field',
+			'blockforms_spam_check',
+			'blockforms_before_send_mail',
+			'blockforms_merge_tags',
+			'blockforms_render_form',
+			'blockforms_capability_map',
+			'blockforms_client_ip',
+			'blockforms_throttle_limit',
 		];
-		$log        = isset( $GLOBALS['sf_user_config_hook_log'] ) ? (array) $GLOBALS['sf_user_config_hook_log'] : [];
+		$log        = isset( $GLOBALS['bf_user_config_hook_log'] ) ? (array) $GLOBALS['bf_user_config_hook_log'] : [];
 		$text       = '';
 		foreach ( $documented as $hook ) {
 			$ran = ! empty( $log[ $hook ]['calls'] );
 			$this->expect( $ran, 'Hooks: ' . $hook . ' never ran during the scenarios.' );
 			$types = $ran ? array_keys( $log[ $hook ]['types'] ) : [];
 			sort( $types );
-			$counted = in_array( $hook, [ 'swiftforms_entry_saved', 'swiftforms_mail_sent', 'swiftforms_submission_complete' ], true );
+			$counted = in_array( $hook, [ 'blockforms_entry_saved', 'blockforms_mail_sent', 'blockforms_submission_complete' ], true );
 			$text   .= str_pad( $hook, 34 ) . ( $ran ? 'ran' : 'DID NOT RUN' ) . ( $ran && $counted ? ', ' . $log[ $hook ]['calls'] . ' calls' : '' ) . "\n";
 			foreach ( $types as $signature ) {
 				$text .= '    arguments: ' . $signature . "\n";
@@ -2587,31 +2587,31 @@ class SF_User_Config_Runner {
 		}
 		$out = $this->block( 'Documented v1 hooks used by the config\'s mu-plugin', $text );
 
-		// swiftforms_client_ip: the address the hook returns is the one that is stored.
+		// blockforms_client_ip: the address the hook returns is the one that is stored.
 		$forms = $this->live_forms();
 		$form  = $forms[0];
-		$sf    = SF_VALUES( $this->payload_names( $form, 'valid' )[0] );
+		$bf    = BF_VALUES( $this->payload_names( $form, 'valid' )[0] );
 		$this->delta();
-		$_SERVER['HTTP_X_SF_CLIENT'] = '198.51.100.9';
-		$response                    = $this->submit( $form, $sf );
-		unset( $_SERVER['HTTP_X_SF_CLIENT'] );
-		$ip = $wpdb->get_var( 'SELECT HEX(ip) FROM ' . SwiftForms\Database::table( 'entries' ) . ' ORDER BY id DESC LIMIT 1' );
-		$this->expect( 200 === $response['status'] && 'C6336409' === $ip, 'Hooks: swiftforms_client_ip did not decide the stored address (' . wp_json_encode( $ip ) . ').' );
-		$out .= $this->block( 'swiftforms_client_ip returns 198.51.100.9', 'status: ' . $response['status'] . "\nstored address (hex): " . $ip . "\n" );
+		$_SERVER['HTTP_X_BF_CLIENT'] = '198.51.100.9';
+		$response                    = $this->submit( $form, $bf );
+		unset( $_SERVER['HTTP_X_BF_CLIENT'] );
+		$ip = $wpdb->get_var( 'SELECT HEX(ip) FROM ' . BlockForms\Database::table( 'entries' ) . ' ORDER BY id DESC LIMIT 1' );
+		$this->expect( 200 === $response['status'] && 'C6336409' === $ip, 'Hooks: blockforms_client_ip did not decide the stored address (' . wp_json_encode( $ip ) . ').' );
+		$out .= $this->block( 'blockforms_client_ip returns 198.51.100.9', 'status: ' . $response['status'] . "\nstored address (hex): " . $ip . "\n" );
 		$this->delta();
 
-		// swiftforms_throttle_limit: the hook says 3 requests a minute.
-		$GLOBALS['sf_user_config_throttle'] = 3; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Read by the config's mu-plugin snippet.
+		// blockforms_throttle_limit: the hook says 3 requests a minute.
+		$GLOBALS['bf_user_config_throttle'] = 3; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Read by the config's mu-plugin snippet.
 		$this->reset_limits( false );
 		$statuses = [];
 		for ( $i = 1; $i <= 5; $i++ ) {
-			$response   = $this->rest( 'POST', '/swiftforms/v1/submit', [ '_sf_form' => wp_generate_uuid4() ] );
+			$response   = $this->rest( 'POST', '/blockforms/v1/submit', [ '_bf_form' => wp_generate_uuid4() ] );
 			$statuses[] = $response['status'];
 		}
-		unset( $GLOBALS['sf_user_config_throttle'] );
+		unset( $GLOBALS['bf_user_config_throttle'] );
 		$this->reset_limits( false );
-		$this->expect( [ 403, 403, 403, 429, 429 ] === $statuses, 'Hooks: swiftforms_throttle_limit (3) did not limit the coarse limiter as expected (' . implode( ',', $statuses ) . ').' );
-		$out .= $this->block( 'swiftforms_throttle_limit returns 3', 'statuses of 5 requests: ' . implode( ', ', $statuses ) . "\n" );
+		$this->expect( [ 403, 403, 403, 429, 429 ] === $statuses, 'Hooks: blockforms_throttle_limit (3) did not limit the coarse limiter as expected (' . implode( ',', $statuses ) . ').' );
+		$out .= $this->block( 'blockforms_throttle_limit returns 3', 'statuses of 5 requests: ' . implode( ', ', $statuses ) . "\n" );
 
 		$this->output( 'check-hooks.txt', $out );
 	}
@@ -2619,7 +2619,7 @@ class SF_User_Config_Runner {
 	/**
 	 * Check "heavy_history": the entries list of a big site.
 	 *
-	 * For every form, with the status filter on, the middle and the last page: the SwiftForms queries the request runs are
+	 * For every form, with the status filter on, the middle and the last page: the BlockForms queries the request runs are
 	 * counted (at most four) and the count and page queries are EXPLAINed (no ANALYZE TABLE) to see that MySQL picks
 	 * the form_status_date index. Entries that point at older schema snapshots are read one by one: each is shown with the labels
 	 * of the snapshot it was stored under, even for fields the current form no longer has. Timings are not asserted.
@@ -2628,7 +2628,7 @@ class SF_User_Config_Runner {
 		global $wpdb;
 
 		$admin  = $this->admin_id();
-		$table  = SwiftForms\Database::table( 'entries' );
+		$table  = BlockForms\Database::table( 'entries' );
 		$out    = '';
 		$counts = $wpdb->get_results( "SELECT form_id, status, COUNT(*) AS total, SUM(starred) AS starred FROM {$table} GROUP BY form_id, status ORDER BY form_id, status", ARRAY_A );
 		$text   = '';
@@ -2642,7 +2642,7 @@ class SF_User_Config_Runner {
 			$queries[] = $sql;
 			return $sql;
 		};
-		$prefix  = $wpdb->prefix . 'swiftforms_';
+		$prefix  = $wpdb->prefix . 'blockforms_';
 
 		foreach ( $this->forms as $form ) {
 			foreach ( [ 'new', 'read', 'spam', 'trash' ] as $status ) {
@@ -2654,7 +2654,7 @@ class SF_User_Config_Runner {
 					add_filter( 'query', $capture );
 					$response = $this->rest(
 						'GET',
-						'/swiftforms/v1/entries',
+						'/blockforms/v1/entries',
 						[
 							'form'   => $form['form_id'],
 							'status' => $status,
@@ -2673,7 +2673,7 @@ class SF_User_Config_Runner {
 						)
 					);
 					$this->expect( 200 === $response['status'], 'Heavy history: the list of ' . $form['key'] . ' ' . $status . ' page ' . $page . ' answered ' . $response['status'] . '.' );
-					$this->expect( count( $own ) <= 4, 'Heavy history: the list of ' . $form['key'] . ' ' . $status . ' page ' . $page . ' ran ' . count( $own ) . ' SwiftForms queries (at most 4).' );
+					$this->expect( count( $own ) <= 4, 'Heavy history: the list of ' . $form['key'] . ' ' . $status . ' page ' . $page . ' ran ' . count( $own ) . ' BlockForms queries (at most 4).' );
 
 					$keys = [];
 					foreach ( $own as $sql ) {
@@ -2685,7 +2685,7 @@ class SF_User_Config_Runner {
 						}
 					}
 					$ids   = wp_list_pluck( (array) $response['data'], 'id' );
-					$text .= $form['key'] . ' / ' . $status . ' / page ' . $page . ' of ' . $last . ': x-wp-total ' . ( $response['headers']['X-WP-Total'] ?? '?' ) . ', ' . count( $ids ) . ' items, ' . count( $own ) . ' SwiftForms queries; ' . implode( '; ', $keys ) . "\n";
+					$text .= $form['key'] . ' / ' . $status . ' / page ' . $page . ' of ' . $last . ': x-wp-total ' . ( $response['headers']['X-WP-Total'] ?? '?' ) . ', ' . count( $ids ) . ' items, ' . count( $own ) . ' BlockForms queries; ' . implode( '; ', $keys ) . "\n";
 				}
 				$out .= $this->block( 'List queries: ' . $form['key'] . ' / ' . $status, $text );
 			}
@@ -2703,7 +2703,7 @@ class SF_User_Config_Runner {
 		}
 		ksort( $samples );
 		foreach ( $samples as $id => $hash ) {
-			$one   = $this->rest( 'GET', '/swiftforms/v1/entries/' . $id, [], $admin );
+			$one   = $this->rest( 'GET', '/blockforms/v1/entries/' . $id, [], $admin );
 			$text .= '-- entry ' . $id . " --\n" . $this->describe( $one );
 		}
 		$out .= $this->block( 'One entry per schema snapshot of the first form', $text );
@@ -2712,7 +2712,7 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * Check "patterns": the patterns SwiftForms registers (swiftforms/*) are in the inserter, but a pattern that is registered and placed nowhere is not a
+	 * Check "patterns": the patterns BlockForms registers (blockforms/*) are in the inserter, but a pattern that is registered and placed nowhere is not a
 	 * live location (C-3.11): a submission to one is answered "closed" and stores nothing.
 	 *
 	 * The form blocks of the patterns have no formId, so their effective IDs are the ones the contract derives for a missing ID.
@@ -2722,12 +2722,12 @@ class SF_User_Config_Runner {
 		$out      = '';
 		$names    = [];
 		foreach ( $registry->get_all_registered() as $pattern ) {
-			if ( 0 === strpos( (string) $pattern['name'], 'swiftforms/' ) ) {
+			if ( 0 === strpos( (string) $pattern['name'], 'blockforms/' ) ) {
 				$names[] = (string) $pattern['name'];
 			}
 		}
 		sort( $names );
-		$this->expect( (bool) $names, 'Patterns: SwiftForms registers no pattern.' );
+		$this->expect( (bool) $names, 'Patterns: BlockForms registers no pattern.' );
 		$this->delta();
 
 		foreach ( $names as $name ) {
@@ -2735,21 +2735,21 @@ class SF_User_Config_Runner {
 			$forms = Block_Walker::forms( parse_blocks( (string) $registry->get_registered( $name )['content'] ) );
 			$text  = '';
 			foreach ( $forms as $form ) {
-				$form_id = SwiftForms\Uuid::v5( 'missing|' . $ref . '|' . $form['ordinal'] );
-				$live    = SwiftForms\Form_Index::is_live( $form_id, $ref );
+				$form_id = BlockForms\Uuid::v5( 'missing|' . $ref . '|' . $form['ordinal'] );
+				$live    = BlockForms\Form_Index::is_live( $form_id, $ref );
 				$this->reset_limits( false );
 				$response = $this->rest(
 					'POST',
-					'/swiftforms/v1/submit',
+					'/blockforms/v1/submit',
 					[
-						'_sf_form'   => $form_id,
-						'_sf_source' => $ref,
-						'_sf_token'  => 'v1.' . base_convert( (string) intdiv( SF_User_Config_Loader::FROZEN_TIME, HOUR_IN_SECONDS ), 10, 36 ) . '.' . str_repeat( '0', 32 ),
-						'_sf_hp'     => '',
-						'_sf_t'      => 'js.10000',
-						'_sf_v'      => SWIFTFORMS_VERSION,
-						'_sf_i'      => '1',
-						'sf'         => [ 'name' => 'Probe' ],
+						'_bf_form'   => $form_id,
+						'_bf_source' => $ref,
+						'_bf_token'  => 'v1.' . base_convert( (string) intdiv( BF_User_Config_Loader::FROZEN_TIME, HOUR_IN_SECONDS ), 10, 36 ) . '.' . str_repeat( '0', 32 ),
+						'_bf_hp'     => '',
+						'_bf_t'      => 'js.10000',
+						'_bf_v'      => BLOCKFORMS_VERSION,
+						'_bf_i'      => '1',
+						'bf'         => [ 'name' => 'Probe' ],
 					]
 				);
 				$delta    = $this->delta();
@@ -2772,9 +2772,9 @@ class SF_User_Config_Runner {
 		$may_write = ! empty( $this->config['resave_writes'] );
 		$out       = '';
 		wp_set_current_user( $this->admin_id() );
-		foreach ( SF_User_Config_Loader::ids() as $key => $id ) {
+		foreach ( BF_User_Config_Loader::ids() as $key => $id ) {
 			$post = get_post( $id );
-			if ( ! $post instanceof WP_Post || false === strpos( $post->post_content, '<!-- wp:swiftforms/form' ) ) {
+			if ( ! $post instanceof WP_Post || false === strpos( $post->post_content, '<!-- wp:blockforms/form' ) ) {
 				continue;
 			}
 			$before = $post->post_content;
@@ -2817,7 +2817,7 @@ class SF_User_Config_Runner {
 		$admin = $this->admin_id();
 		$out   = '';
 		foreach ( array_slice( $this->fixture_entry_ids, 0, 20 ) as $id ) {
-			$response = $this->rest( 'GET', '/swiftforms/v1/entries/' . $id, [], $admin );
+			$response = $this->rest( 'GET', '/blockforms/v1/entries/' . $id, [], $admin );
 			$this->expect( in_array( $response['status'], [ 200, 404 ], true ), 'Entry details: entry ' . $id . ' answered ' . $response['status'] . '.' );
 			$out .= $this->block( 'GET /entries/' . $id, $this->describe( $response ) );
 		}
@@ -2836,15 +2836,15 @@ class SF_User_Config_Runner {
 				continue;
 			}
 			$valid = $this->payload_names( $form, 'valid' );
-			$sf    = SF_VALUES( $valid[0] );
+			$bf    = BF_VALUES( $valid[0] );
 			$cases = [
-				'honeypot filled'       => [ [ '_sf_hp' => 'http://spam.example/' ], $sf, 'new' ],
-				'too fast (js.100)'     => [ [ '_sf_t' => 'js.100' ], $sf, 'new' ],
-				'no JS token over REST' => [ [ '_sf_t' => Time_Trap::issue( $form['form_id'], $form['source'] ) ], $sf, 'new' ],
-				'forged token'          => [ [ '_sf_token' => 'v1.' . base_convert( (string) intdiv( SF_User_Config_Loader::FROZEN_TIME, HOUR_IN_SECONDS ), 10, 36 ) . '.' . str_repeat( '0', 32 ) ], $sf, 'spam' ],
+				'honeypot filled'       => [ [ '_bf_hp' => 'http://spam.example/' ], $bf, 'new' ],
+				'too fast (js.100)'     => [ [ '_bf_t' => 'js.100' ], $bf, 'new' ],
+				'no JS token over REST' => [ [ '_bf_t' => Time_Trap::issue( $form['form_id'], $form['source'] ) ], $bf, 'new' ],
+				'forged token'          => [ [ '_bf_token' => 'v1.' . base_convert( (string) intdiv( BF_User_Config_Loader::FROZEN_TIME, HOUR_IN_SECONDS ), 10, 36 ) . '.' . str_repeat( '0', 32 ) ], $bf, 'spam' ],
 			];
 			foreach ( $this->payload_names( $form, 'spam' ) as $name ) {
-				$cases[ 'payload with a blocked word: ' . $name ] = [ [], SF_VALUES( $name ), 'new' ];
+				$cases[ 'payload with a blocked word: ' . $name ] = [ [], BF_VALUES( $name ), 'new' ];
 			}
 			$text = '';
 			foreach ( $cases as $label => $case ) {
@@ -2866,7 +2866,7 @@ class SF_User_Config_Runner {
 		global $wpdb;
 
 		$text   = "== tables ==\n";
-		$tables = $wpdb->get_col( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->prefix . 'swiftforms_' ) . '%' ) );
+		$tables = $wpdb->get_col( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->prefix . 'blockforms_' ) . '%' ) );
 		sort( $tables );
 		foreach ( $tables as $table ) {
 			$text .= '{prefix}' . substr( $table, strlen( $wpdb->prefix ) ) . "\n";
@@ -2879,22 +2879,22 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * The swiftforms/* blocks SwiftForms hands to the builder: name, attribute schema and the relations
+	 * The blockforms/* blocks BlockForms hands to the builder: name, attribute schema and the relations
 	 * and supports that are part of the contract (ancestor, parent, context, supports).
 	 *
-	 * Read from SwiftForms' own block configs, compiled by the builder's Block_Definition without
+	 * Read from BlockForms' own block configs, compiled by the builder's Block_Definition without
 	 * registering anything, so a snapshot does not depend on the builder having started. Whether the
 	 * blocks are registered is asserted separately. One line per block: the name, a space, compact JSON.
 	 *
 	 * @return string
 	 */
 	public static function blocks_text() {
-		$configs    = SwiftForms\Plugin::instance()->block_configs();
+		$configs    = BlockForms\Plugin::instance()->block_configs();
 		$blocks     = isset( $configs['blocks'] ) && is_array( $configs['blocks'] ) ? $configs['blocks'] : [];
-		$definition = '\\SwiftForms\\Vendor\\PedalCMS\\CassetteCMFBlocks\\Core\\Block_Definition';
+		$definition = '\\BlockForms\\Vendor\\PedalCMS\\CassetteCMFBlocks\\Core\\Block_Definition';
 		$lines      = [];
 		foreach ( $blocks as $block ) {
-			if ( ! is_array( $block ) || ! isset( $block['id'] ) || 0 !== strpos( (string) $block['id'], 'swiftforms/' ) ) {
+			if ( ! is_array( $block ) || ! isset( $block['id'] ) || 0 !== strpos( (string) $block['id'], 'blockforms/' ) ) {
 				continue;
 			}
 			$compiled = new $definition( $block );
@@ -2912,8 +2912,8 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * Hooks text for the _global snapshot: every swiftforms_* hook with callbacks
-	 * and every SwiftForms\ callback on any hook, as "hook priority callback".
+	 * Hooks text for the _global snapshot: every blockforms_* hook with callbacks
+	 * and every BlockForms\ callback on any hook, as "hook priority callback".
 	 *
 	 * @return string
 	 */
@@ -2923,9 +2923,9 @@ class SF_User_Config_Runner {
 		foreach ( $wp_filter as $hook => $filter ) {
 			foreach ( $filter->callbacks as $priority => $callbacks ) {
 				foreach ( $callbacks as $entry ) {
-					if ( 0 === strpos( $hook, 'swiftforms_' ) || SF_User_Config_Loader::is_swiftforms_callback( $entry['function'] ) ) {
+					if ( 0 === strpos( $hook, 'blockforms_' ) || BF_User_Config_Loader::is_blockforms_callback( $entry['function'] ) ) {
 						// The activation hooks are named after the plugin file's path, which differs per machine.
-						$name    = preg_replace( '/^(activate|deactivate)_.+swiftforms\.php$/', '$1_{plugin}', $hook );
+						$name    = preg_replace( '/^(activate|deactivate)_.+blockforms\.php$/', '$1_{plugin}', $hook );
 						$lines[] = $name . ' ' . ( PHP_INT_MAX === $priority ? 'PHP_INT_MAX' : $priority ) . ' ' . self::describe_callback( $entry['function'] );
 					}
 				}
@@ -2936,14 +2936,14 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * REST routes in the swiftforms/v1 namespace, with methods and whether a logged-out caller passes.
+	 * REST routes in the blockforms/v1 namespace, with methods and whether a logged-out caller passes.
 	 *
 	 * @return string
 	 */
 	public static function rest_routes_text() {
 		wp_set_current_user( 0 );
 		$lines = [];
-		foreach ( rest_get_server()->get_routes( 'swiftforms/v1' ) as $route => $handlers ) {
+		foreach ( rest_get_server()->get_routes( 'blockforms/v1' ) as $route => $handlers ) {
 			foreach ( $handlers as $handler ) {
 				$methods = array_keys( array_filter( (array) $handler['methods'] ) );
 				sort( $methods );
@@ -2972,13 +2972,13 @@ class SF_User_Config_Runner {
 	}
 
 	/**
-	 * CREATE TABLE statements of every swiftforms_* table, with prefix, AUTO_INCREMENT, integer widths and numeric default quoting normalised.
+	 * CREATE TABLE statements of every blockforms_* table, with prefix, AUTO_INCREMENT, integer widths and numeric default quoting normalised.
 	 *
 	 * @return string
 	 */
 	public static function db_schema_text() {
 		global $wpdb;
-		$tables = $wpdb->get_col( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->prefix . 'swiftforms_' ) . '%' ) );
+		$tables = $wpdb->get_col( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->prefix . 'blockforms_' ) . '%' ) );
 		sort( $tables );
 		$text = '';
 		foreach ( $tables as $table ) {
@@ -2997,7 +2997,7 @@ class SF_User_Config_Runner {
 			}
 			$text .= $sql . ";\n\n";
 		}
-		return SF_Normaliser::text( '' === $text ? "(none)\n" : $text );
+		return BF_Normaliser::text( '' === $text ? "(none)\n" : $text );
 	}
 
 	/**
@@ -3032,6 +3032,6 @@ class SF_User_Config_Runner {
 		if ( '' !== $this->variant && '_skipped.txt' !== $name ) {
 			$name = preg_replace( '/\.txt$/D', '.' . $this->variant . '.txt', $name );
 		}
-		$this->outputs[ $this->slug . '/' . $name ] = SF_Normaliser::text( $text );
+		$this->outputs[ $this->slug . '/' . $name ] = BF_Normaliser::text( $text );
 	}
 }

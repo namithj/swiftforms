@@ -2,10 +2,10 @@
 /**
  * Diagnostics log.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Log
  *
- * Rows in {prefix}swiftforms_log: mail, webhook, error and migration events,
+ * Rows in {prefix}blockforms_log: mail, webhook, error and migration events,
  * pruned after 30 days. It is for diagnostics. It never holds anything a
  * user created (entry values, notes, payment records, C-4.5), so callers pass
  * identifiers and counts in the message and context, never field values.

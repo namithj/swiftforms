@@ -54,13 +54,13 @@ jobs:
                     ref: `refs/pull/${issue_number}/head`,
                     refType: 'refname',
                   },
-                  options: { activate: true, targetFolderName: 'swiftforms' },
+                  options: { activate: true, targetFolderName: 'blockforms' },
                 },
               ],
             };
             const url = `https://playground.wordpress.net/#${Buffer.from(JSON.stringify(blueprint)).toString('base64')}`;
 
-            const marker = '<!-- swiftforms-playground-preview -->';
+            const marker = '<!-- blockforms-playground-preview -->';
             const body = [
               marker,
               '### Live preview',

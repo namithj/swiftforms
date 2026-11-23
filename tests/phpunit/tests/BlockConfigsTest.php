@@ -1,13 +1,13 @@
 <?php
 /**
- * Tests for the block registration (SwiftForms\Block_Configs through the block builder).
+ * Tests for the block registration (BlockForms\Block_Configs through the block builder).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Block_Configs;
-use SwiftForms\Field_Types;
-use SwiftForms\Plugin;
+use BlockForms\Block_Configs;
+use BlockForms\Field_Types;
+use BlockForms\Plugin;
 
 /**
  * Class BlockConfigsTest
@@ -22,9 +22,9 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	 * @return string[]
 	 */
 	private function block_names() {
-		$names = [ 'swiftforms/form', 'swiftforms/submit', 'swiftforms/confirmation' ];
+		$names = [ 'blockforms/form', 'blockforms/submit', 'blockforms/confirmation' ];
 		foreach ( Field_Types::types() as $type ) {
-			$names[] = 'swiftforms/field-' . $type;
+			$names[] = 'blockforms/field-' . $type;
 		}
 		return $names;
 	}
@@ -48,7 +48,7 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	 * @return object
 	 */
 	private function definition( $name ) {
-		$class = '\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Definition';
+		$class = '\BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Definition';
 		foreach ( Block_Configs::all()['blocks'] as $block ) {
 			if ( $block['id'] === $name ) {
 				return new $class( $block );
@@ -81,9 +81,9 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	 */
 	public function test_attributes_equal_field_types() {
 		$expected = [
-			'swiftforms/form'         => Field_Types::form_attributes(),
-			'swiftforms/submit'       => Field_Types::submit_attributes(),
-			'swiftforms/confirmation' => Field_Types::confirmation_attributes(),
+			'blockforms/form'         => Field_Types::form_attributes(),
+			'blockforms/submit'       => Field_Types::submit_attributes(),
+			'blockforms/confirmation' => Field_Types::confirmation_attributes(),
 		];
 		foreach ( Field_Types::types() as $type ) {
 			$expected[ Field_Types::block_name( $type ) ] = Field_Types::attributes( $type );
@@ -115,11 +115,11 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	 */
 	public function test_ancestors_and_parents() {
 		foreach ( Field_Types::types() as $type ) {
-			$this->assertSame( [ 'swiftforms/form' ], $this->type( 'swiftforms/field-' . $type )->ancestor, $type );
+			$this->assertSame( [ 'blockforms/form' ], $this->type( 'blockforms/field-' . $type )->ancestor, $type );
 		}
-		$this->assertSame( [ 'swiftforms/form' ], $this->type( 'swiftforms/submit' )->ancestor );
-		$this->assertSame( [ 'swiftforms/form' ], $this->type( 'swiftforms/confirmation' )->parent );
-		$this->assertNull( $this->type( 'swiftforms/form' )->ancestor );
+		$this->assertSame( [ 'blockforms/form' ], $this->type( 'blockforms/submit' )->ancestor );
+		$this->assertSame( [ 'blockforms/form' ], $this->type( 'blockforms/confirmation' )->parent );
+		$this->assertNull( $this->type( 'blockforms/form' )->ancestor );
 	}
 
 	/**
@@ -130,17 +130,17 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	public function test_context() {
 		$this->assertSame(
 			[
-				'swiftforms/formId'            => 'formId',
-				'swiftforms/labelPosition'     => 'labelPosition',
-				'swiftforms/requiredIndicator' => 'requiredIndicator',
+				'blockforms/formId'            => 'formId',
+				'blockforms/labelPosition'     => 'labelPosition',
+				'blockforms/requiredIndicator' => 'requiredIndicator',
 			],
-			$this->type( 'swiftforms/form' )->provides_context
+			$this->type( 'blockforms/form' )->provides_context
 		);
 		foreach ( Field_Types::types() as $type ) {
-			$uses = $this->type( 'swiftforms/field-' . $type )->uses_context;
+			$uses = $this->type( 'blockforms/field-' . $type )->uses_context;
 			sort( $uses );
-			$this->assertSame( [ 'swiftforms/formId', 'swiftforms/labelPosition', 'swiftforms/requiredIndicator' ], $uses, $type );
-			$this->assertArrayNotHasKey( 'formId', $this->type( 'swiftforms/field-' . $type )->attributes, 'A context value is not stored as an attribute.' );
+			$this->assertSame( [ 'blockforms/formId', 'blockforms/labelPosition', 'blockforms/requiredIndicator' ], $uses, $type );
+			$this->assertArrayNotHasKey( 'formId', $this->type( 'blockforms/field-' . $type )->attributes, 'A context value is not stored as an attribute.' );
 		}
 	}
 
@@ -150,13 +150,13 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_form_supports() {
-		$supports = $this->type( 'swiftforms/form' )->supports;
+		$supports = $this->type( 'blockforms/form' )->supports;
 		foreach ( Field_Types::form_supports() as $support ) {
 			$this->assertArrayHasKey( $support, $supports, $support );
 			$this->assertNotEmpty( $supports[ $support ], $support );
 		}
 		$this->assertTrue( $supports['interactivity'] );
-		$this->assertNotEmpty( $this->type( 'swiftforms/field-text' )->supports['color'] );
+		$this->assertNotEmpty( $this->type( 'blockforms/field-text' )->supports['color'] );
 	}
 
 	/**
@@ -171,11 +171,11 @@ class BlockConfigsTest extends WP_UnitTestCase {
 			$this->assertSame( [], $this->type( $name )->view_script_handles, $name . ' has no view script.' );
 		}
 
-		$form = $this->type( 'swiftforms/form' );
-		$this->assertSame( [ 'swiftforms-form' ], $form->view_style_handles );
-		$this->assertSame( [ 'swiftforms-form', 'swiftforms-editor' ], $form->editor_style_handles );
-		$this->assertSame( [ 'swiftforms-editor' ], $form->editor_script_handles );
-		$this->assertSame( [ '@swiftforms/view' ], $form->view_script_module_ids );
+		$form = $this->type( 'blockforms/form' );
+		$this->assertSame( [ 'blockforms-form' ], $form->view_style_handles );
+		$this->assertSame( [ 'blockforms-form', 'blockforms-editor' ], $form->editor_style_handles );
+		$this->assertSame( [ 'blockforms-editor' ], $form->editor_script_handles );
+		$this->assertSame( [ '@blockforms/view' ], $form->view_script_module_ids );
 	}
 
 	/**
@@ -186,7 +186,7 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	public function test_form_template_and_children() {
 		$template = Block_Configs::form_template();
 		$this->assertSame(
-			[ 'swiftforms/field-text', 'swiftforms/field-email', 'swiftforms/field-textarea', 'swiftforms/submit', 'swiftforms/confirmation' ],
+			[ 'blockforms/field-text', 'blockforms/field-email', 'blockforms/field-textarea', 'blockforms/submit', 'blockforms/confirmation' ],
 			array_column( $template, 0 )
 		);
 		$this->assertSame(
@@ -219,18 +219,18 @@ class BlockConfigsTest extends WP_UnitTestCase {
 
 		$allowed = Block_Configs::form_children();
 		foreach ( Field_Types::types() as $type ) {
-			$this->assertContains( 'swiftforms/field-' . $type, $allowed );
+			$this->assertContains( 'blockforms/field-' . $type, $allowed );
 		}
-		foreach ( [ 'swiftforms/submit', 'swiftforms/confirmation', 'core/columns', 'core/column', 'core/group', 'core/paragraph', 'core/heading', 'core/separator', 'core/spacer', 'core/image', 'core/list' ] as $block ) {
+		foreach ( [ 'blockforms/submit', 'blockforms/confirmation', 'core/columns', 'core/column', 'core/group', 'core/paragraph', 'core/heading', 'core/separator', 'core/spacer', 'core/image', 'core/list' ] as $block ) {
 			$this->assertContains( $block, $allowed );
 		}
 		$this->assertCount( 23, $allowed );
 
 		$config = Block_Configs::all();
-		$this->assertSame( 'swiftforms', $config['block_categories'][0]['slug'] );
-		$this->assertSame( 'swiftforms', $config['pattern_categories'][0]['slug'] );
+		$this->assertSame( 'blockforms', $config['block_categories'][0]['slug'] );
+		$this->assertSame( 'blockforms', $config['pattern_categories'][0]['slug'] );
 		foreach ( $config['blocks'] as $block ) {
-			$this->assertSame( 'swiftforms', $block['args']['category'], $block['id'] );
+			$this->assertSame( 'blockforms', $block['args']['category'], $block['id'] );
 			$this->assertSame( 'dynamic', $block['render']['mode'] );
 			$this->assertTrue( is_callable( $block['render']['callback'] ), $block['id'] );
 		}
@@ -243,7 +243,7 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	 */
 	public function test_internal_filter_is_the_outermost_wrapper() {
 		add_filter(
-			'swiftforms_block_configs',
+			'blockforms_block_configs',
 			static function ( $config ) {
 				$config['marker'] = count( $config['blocks'] );
 				return $config;
@@ -317,8 +317,8 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	 */
 	public function test_prepare_attributes_keeps_every_attribute() {
 		$expected = [
-			'swiftforms/form'   => Field_Types::form_attributes(),
-			'swiftforms/submit' => Field_Types::submit_attributes(),
+			'blockforms/form'   => Field_Types::form_attributes(),
+			'blockforms/submit' => Field_Types::submit_attributes(),
 		];
 		foreach ( Field_Types::types() as $type ) {
 			$expected[ Field_Types::block_name( $type ) ] = Field_Types::attributes( $type );
@@ -334,18 +334,18 @@ class BlockConfigsTest extends WP_UnitTestCase {
 		}
 
 		// A stored form with a formId and nothing else keeps it and gets every default.
-		$prepared = $this->type( 'swiftforms/form' )->prepare_attributes_for_render( [ 'formId' => '11111111-1111-4111-8111-111111111111' ] );
+		$prepared = $this->type( 'blockforms/form' )->prepare_attributes_for_render( [ 'formId' => '11111111-1111-4111-8111-111111111111' ] );
 		$this->assertEquals( array_merge( Field_Types::form_defaults(), [ 'formId' => '11111111-1111-4111-8111-111111111111' ] ), array_intersect_key( $prepared, Field_Types::form_defaults() ) );
 	}
 
 	/**
 	 * The builder's own sanitising pass (Block_Definition::sanitize_attributes) keeps the stored values that matter
-	 * and is lossy for others. SwiftForms does not use it: the resolver and the renderers read the stored attributes.
+	 * and is lossy for others. BlockForms does not use it: the resolver and the renderers read the stored attributes.
 	 *
 	 * @return void
 	 */
 	public function test_builder_sanitiser_is_not_used_for_values_that_matter() {
-		$kept = $this->definition( 'swiftforms/field-text' )->sanitize_attributes(
+		$kept = $this->definition( 'blockforms/field-text' )->sanitize_attributes(
 			[
 				'pattern'        => '^\\d{3}\\\\w+$',
 				'patternMessage' => 'Use 3 digits, then letters | digits',
@@ -358,7 +358,7 @@ class BlockConfigsTest extends WP_UnitTestCase {
 		$this->assertSame( '{field:x} ü 日本語', $kept['placeholder'] );
 		$this->assertSame( 'Naïve, café | bar', $kept['label'] );
 
-		$options = $this->definition( 'swiftforms/field-select' )->sanitize_attributes(
+		$options = $this->definition( 'blockforms/field-select' )->sanitize_attributes(
 			[
 				'options' => [
 					[
@@ -379,8 +379,8 @@ class BlockConfigsTest extends WP_UnitTestCase {
 			'Commas and pipes in option values survive.'
 		);
 
-		// What the builder's pass does change, which is why nothing of SwiftForms reads it.
-		$lossy = $this->definition( 'swiftforms/field-text' )->sanitize_attributes(
+		// What the builder's pass does change, which is why nothing of BlockForms reads it.
+		$lossy = $this->definition( 'blockforms/field-text' )->sanitize_attributes(
 			[
 				'pattern' => '%41',
 				'label'   => "two  spaces\nand <b>tags</b>",
@@ -389,7 +389,7 @@ class BlockConfigsTest extends WP_UnitTestCase {
 		$this->assertSame( '', $lossy['pattern'], 'A %41 octet is stripped by sanitize_text_field.' );
 		$this->assertSame( 'two spaces and tags', $lossy['label'] );
 
-		$form = $this->definition( 'swiftforms/form' )->sanitize_attributes(
+		$form = $this->definition( 'blockforms/form' )->sanitize_attributes(
 			[
 				'notifications' => [
 					[
@@ -410,9 +410,9 @@ class BlockConfigsTest extends WP_UnitTestCase {
 	 */
 	public function test_renderers_read_stored_attributes() {
 		$html = do_blocks(
-			'<!-- wp:swiftforms/form {"formId":"11111111-1111-4111-8111-111111111111"} -->'
-			. '<!-- wp:swiftforms/field-text {"name":"x","pattern":"%41\\\\d","placeholder":"two  spaces"} /-->'
-			. '<!-- /wp:swiftforms/form -->'
+			'<!-- wp:blockforms/form {"formId":"11111111-1111-4111-8111-111111111111"} -->'
+			. '<!-- wp:blockforms/field-text {"name":"x","pattern":"%41\\\\d","placeholder":"two  spaces"} /-->'
+			. '<!-- /wp:blockforms/form -->'
 		);
 		$this->assertStringContainsString( 'pattern="%41\\d"', $html );
 		$this->assertStringContainsString( 'placeholder="two  spaces"', $html );

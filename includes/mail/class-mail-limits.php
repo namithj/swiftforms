@@ -2,10 +2,10 @@
 /**
  * Limits for visitor-addressed mail.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Counters are transients (they expire by themselves and are not autoloaded). Days and hours are fixed
  * UTC windows. A counter update is not atomic, so two simultaneous submissions can overshoot a cap by a
  * few mails; the limits stop floods, they are not a billing meter. A cap that is hit (the daily or the
- * hourly one) records a banner state in the option `swiftforms_mail_cap_notice` (Mail_Notice). The
+ * hourly one) records a banner state in the option `blockforms_mail_cap_notice` (Mail_Notice). The
  * per-address pause is a dedupe, not a cap: it is logged but does not raise the banner.
  */
 class Mail_Limits {
@@ -38,7 +38,7 @@ class Mail_Limits {
 	/**
 	 * Option with the last cap hit.
 	 */
-	const NOTICE_OPTION = 'swiftforms_mail_cap_notice';
+	const NOTICE_OPTION = 'blockforms_mail_cap_notice';
 
 	/**
 	 * Check the limits for one visitor-supplied address and, when it passes, count it.
@@ -137,7 +137,7 @@ class Mail_Limits {
 	 * @return string
 	 */
 	private static function address_key( $address, $form_id ) {
-		return 'swiftforms_mla_' . hash_hmac( 'sha256', strtolower( (string) $address ), wp_salt( 'nonce' ) ) . '_' . substr( md5( (string) $form_id ), 0, 12 );
+		return 'blockforms_mla_' . hash_hmac( 'sha256', strtolower( (string) $address ), wp_salt( 'nonce' ) ) . '_' . substr( md5( (string) $form_id ), 0, 12 );
 	}
 
 	/**
@@ -147,7 +147,7 @@ class Mail_Limits {
 	 * @return string
 	 */
 	private static function day_key( $form_id ) {
-		return 'swiftforms_mld_' . substr( md5( (string) $form_id ), 0, 16 ) . '_' . gmdate( 'Ymd', Clock::now() );
+		return 'blockforms_mld_' . substr( md5( (string) $form_id ), 0, 16 ) . '_' . gmdate( 'Ymd', Clock::now() );
 	}
 
 	/**
@@ -156,6 +156,6 @@ class Mail_Limits {
 	 * @return string
 	 */
 	private static function hour_key() {
-		return 'swiftforms_mlh_' . gmdate( 'YmdH', Clock::now() );
+		return 'blockforms_mlh_' . gmdate( 'YmdH', Clock::now() );
 	}
 }

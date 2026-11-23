@@ -2,10 +2,10 @@
 /**
  * Render token.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,12 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Render_Token
  *
- * The signed token a rendered form carries (`_sf_token`, C-3.7):
+ * The signed token a rendered form carries (`_bf_token`, C-3.7):
  *
  *   v1.{issued}.{mac}
  *
  * - issued: the issue time in whole hours since the Unix epoch, base 36.
- * - mac:    the first 32 hex characters of HMAC-SHA256( wp_salt( 'auth' ) . 'swiftforms',
+ * - mac:    the first 32 hex characters of HMAC-SHA256( wp_salt( 'auth' ) . 'blockforms',
  *           "v1|{formId}|{source}|{schema_hash}|{issued}" ).
  *
  * It is an integrity token, not an anti-replay control and not proof of a human: it says "this
@@ -147,6 +147,6 @@ class Render_Token {
 	 * @return string
 	 */
 	public static function key() {
-		return wp_salt( 'auth' ) . 'swiftforms';
+		return wp_salt( 'auth' ) . 'blockforms';
 	}
 }

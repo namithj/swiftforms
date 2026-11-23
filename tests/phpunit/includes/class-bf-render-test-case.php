@@ -1,22 +1,22 @@
-<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Test helper: the class name follows SF_Resolver_Test_Case, and tests apply core's the_content filter.
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Test helper: the class name follows BF_Resolver_Test_Case, and tests apply core's the_content filter.
 /**
  * Base class for the block render tests.
  *
  * Renders form markup the way a visitor's page does: a published page, a front-end
  * request for it, the_content. Resets the per-request state of the renderers.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once __DIR__ . '/class-sf-resolver-test-case.php';
+require_once __DIR__ . '/class-bf-resolver-test-case.php';
 
-use SwiftForms\Form_Renderer;
-use SwiftForms\Form_State;
+use BlockForms\Form_Renderer;
+use BlockForms\Form_State;
 
 /**
- * Class SF_Render_Test_Case
+ * Class BF_Render_Test_Case
  */
-abstract class SF_Render_Test_Case extends SF_Resolver_Test_Case {
+abstract class BF_Render_Test_Case extends BF_Resolver_Test_Case {
 
 	/**
 	 * Start from an empty renderer state.
@@ -94,7 +94,7 @@ abstract class SF_Render_Test_Case extends SF_Resolver_Test_Case {
 	protected function render_field( $type, array $attrs = [], array $form = [] ) {
 		$html  = $this->render_form( $this->field_markup( $type, $attrs ), $form );
 		$start = strpos( $html, 'hidden></div>' );
-		$end   = strpos( $html, '<input type="hidden" name="_sf_form"' );
+		$end   = strpos( $html, '<input type="hidden" name="_bf_form"' );
 		$this->assertNotFalse( $start );
 		$this->assertNotFalse( $end );
 		return substr( $html, $start + strlen( 'hidden></div>' ), $end - $start - strlen( 'hidden></div>' ) );

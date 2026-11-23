@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="SwiftForms WordPress Coding Standards">
+<ruleset name="BlockForms WordPress Coding Standards">
 	<description>Apply WordPress Coding Standards to first-party plugin PHP.</description>
 	<arg name="extensions" value="php"/>
 	<arg name="cache" value=".cache/phpcs.cache"/>
@@ -29,24 +29,24 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="swiftforms"/>
+				<element value="blockforms"/>
 			</property>
 		</properties>
 	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="swiftforms"/>
-				<element value="SwiftForms"/>
-				<element value="sf_test"/>
+				<element value="blockforms"/>
+				<element value="BlockForms"/>
+				<element value="bf_test"/>
 			</property>
 			<!-- Test cases that extend our shared base class count as test classes (no prefix needed). -->
 			<property name="custom_test_classes" type="array">
-				<element value="SF_Storage_Test_Case"/>
-				<element value="SF_Resolver_Test_Case"/>
-				<element value="SF_Render_Test_Case"/>
-				<element value="SF_Submission_Test_Case"/>
-				<element value="SF_Admin_Test_Case"/>
+				<element value="BF_Storage_Test_Case"/>
+				<element value="BF_Resolver_Test_Case"/>
+				<element value="BF_Render_Test_Case"/>
+				<element value="BF_Submission_Test_Case"/>
+				<element value="BF_Admin_Test_Case"/>
 			</property>
 		</properties>
 	</rule>
@@ -66,16 +66,16 @@
 	<rule ref="WordPress.WP.EnqueuedResources">
 		<exclude-pattern>/tests/*</exclude-pattern>
 	</rule>
-	<!-- SwiftForms capabilities are meta capabilities mapped by Access (C-8.4); no role holds them. -->
+	<!-- BlockForms capabilities are meta capabilities mapped by Access (C-8.4); no role holds them. -->
 	<rule ref="WordPress.WP.Capabilities">
 		<properties>
 			<property name="custom_capabilities" type="array">
-				<element value="swiftforms_manage_settings"/>
-				<element value="swiftforms_view_entries"/>
-				<element value="swiftforms_edit_entries"/>
-				<element value="swiftforms_delete_entries"/>
-				<element value="swiftforms_export_entries"/>
-				<element value="swiftforms_manage_integrations"/>
+				<element value="blockforms_manage_settings"/>
+				<element value="blockforms_view_entries"/>
+				<element value="blockforms_edit_entries"/>
+				<element value="blockforms_delete_entries"/>
+				<element value="blockforms_export_entries"/>
+				<element value="blockforms_manage_integrations"/>
 			</property>
 		</properties>
 	</rule>

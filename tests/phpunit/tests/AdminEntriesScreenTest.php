@@ -2,15 +2,15 @@
 /**
  * Tests for the Entries screen: the list table, the single-entry screen and the actions.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-admin-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-admin-test-case.php';
 
-use SwiftForms\Database;
-use SwiftForms\Entries_Repository;
-use SwiftForms\Entries_Screen;
-use SwiftForms\Entry_Presenter;
+use BlockForms\Database;
+use BlockForms\Entries_Repository;
+use BlockForms\Entries_Screen;
+use BlockForms\Entry_Presenter;
 
 /**
  * Class AdminEntriesScreenTest
@@ -18,7 +18,7 @@ use SwiftForms\Entry_Presenter;
  * @group admin
  * @group security
  */
-class AdminEntriesScreenTest extends SF_Admin_Test_Case {
+class AdminEntriesScreenTest extends BF_Admin_Test_Case {
 
 	/**
 	 * The nasty corpus of config 05.
@@ -57,12 +57,12 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 	 * @return string The page.
 	 */
 	private function screen( array $get = [] ) {
-		$get      = array_merge( [ 'page' => 'swiftforms' ], $get );
+		$get      = array_merge( [ 'page' => 'blockforms' ], $get );
 		$_GET     = $get;
 		$_REQUEST = $get;
 		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- The hook suffix of the screen being shown.
-		$GLOBALS['hook_suffix'] = 'toplevel_page_swiftforms';
-		set_current_screen( 'toplevel_page_swiftforms' );
+		$GLOBALS['hook_suffix'] = 'toplevel_page_blockforms';
+		set_current_screen( 'toplevel_page_blockforms' );
 		Entries_Screen::load();
 		ob_start();
 		Entries_Screen::render();
@@ -76,7 +76,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 	 * @param int             $id     Entry ID.
 	 * @param array           $extra  More query arguments.
 	 * @param string|bool|int $nonce  true: a good nonce; a string: that value; false: none.
-	 * @return SF_Test_Redirect|SF_Test_Die
+	 * @return BF_Test_Redirect|BF_Test_Die
 	 */
 	private function act( $action, $id, array $extra = [], $nonce = true ) {
 		$get = array_merge(
@@ -87,15 +87,15 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 			$extra
 		);
 		if ( true === $nonce ) {
-			$get['_wpnonce'] = wp_create_nonce( 'swiftforms-' . $action . '-entry_' . $id );
+			$get['_wpnonce'] = wp_create_nonce( 'blockforms-' . $action . '-entry_' . $id );
 		} elseif ( false !== $nonce ) {
 			$get['_wpnonce'] = $nonce;
 		}
 		try {
 			$this->screen( $get );
-		} catch ( SF_Test_Redirect $exit ) {
+		} catch ( BF_Test_Redirect $exit ) {
 			return $exit;
-		} catch ( SF_Test_Die $exit ) {
+		} catch ( BF_Test_Die $exit ) {
 			return $exit;
 		}
 		$this->fail( 'The action neither redirected nor died.' );
@@ -104,10 +104,10 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 	/**
 	 * The query arguments of a redirect.
 	 *
-	 * @param SF_Test_Redirect $exit Redirect.
+	 * @param BF_Test_Redirect $exit Redirect.
 	 * @return array<string, string>
 	 */
-	private function query_of( SF_Test_Redirect $exit ) {
+	private function query_of( BF_Test_Redirect $exit ) {
 		parse_str( (string) wp_parse_url( $exit->location, PHP_URL_QUERY ), $query );
 		return $query;
 	}
@@ -290,7 +290,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		$row = $this->row_html( $html, $starred );
 		$this->assertStringContainsString( 'dashicons-star-filled', $row );
 		$this->assertStringContainsString( '<span class="screen-reader-text">Starred</span>', $row );
-		$this->assertStringNotContainsString( 'swiftforms-star', $this->row_html( $html, $read ) );
+		$this->assertStringNotContainsString( 'blockforms-star', $this->row_html( $html, $read ) );
 		$this->assertStringContainsString( '<a class="row-title" href="' . esc_url( Entries_Screen::view_url( $unread ) ) . '">Una Unread · ada@example.com</a>', $this->row_html( $html, $unread ) );
 	}
 
@@ -333,7 +333,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		$this->assertSame( [ 'view', 'untrash', 'delete' ], $actions( $this->screen( [ 'status' => 'trash' ] ), $trash ) );
 
 		// View only: no action link carries a nonce.
-		$this->map_caps( [ 'swiftforms_view_entries' => 'edit_posts' ] );
+		$this->map_caps( [ 'blockforms_view_entries' => 'edit_posts' ] );
 		$this->be_role( 'contributor' );
 		$view_only = $this->screen();
 		$this->assertSame( [ 'view' ], $actions( $view_only, $new ) );
@@ -342,9 +342,9 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		// Edit but not delete: the Trash view offers Restore only.
 		$this->map_caps(
 			[
-				'swiftforms_view_entries'   => 'edit_posts',
-				'swiftforms_edit_entries'   => 'edit_posts',
-				'swiftforms_delete_entries' => 'do_not_allow',
+				'blockforms_view_entries'   => 'edit_posts',
+				'blockforms_edit_entries'   => 'edit_posts',
+				'blockforms_delete_entries' => 'do_not_allow',
 			]
 		);
 		$this->assertSame( [ 'view', 'untrash' ], $actions( $this->screen( [ 'status' => 'trash' ] ), $trash ) );
@@ -374,12 +374,12 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 			Entries_Repository::update( $id, [ 'starred' => $star_before ] );
 			$this->be_admin();
 
-			$_SERVER['HTTP_REFERER'] = admin_url( 'admin.php?page=swiftforms&status=read&paged=2&junk=1' );
+			$_SERVER['HTTP_REFERER'] = admin_url( 'admin.php?page=blockforms&status=read&paged=2&junk=1' );
 			$exit                    = $this->act( $action, $id );
-			$this->assertInstanceOf( SF_Test_Redirect::class, $exit, $action );
+			$this->assertInstanceOf( BF_Test_Redirect::class, $exit, $action );
 			$this->assertSame( 302, $exit->status );
 			$query = $this->query_of( $exit );
-			$this->assertSame( 'swiftforms', $query['page'], $action );
+			$this->assertSame( 'blockforms', $query['page'], $action );
 			$this->assertSame( $action, $query['message'], $action );
 			$this->assertSame( 'read', $query['status'], 'The view the user came from is kept: ' . $action );
 			$this->assertSame( '2', $query['paged'] );
@@ -427,9 +427,9 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		$other = $this->add_entry();
 		$this->be_admin();
 
-		foreach ( [ false, 'badbadbad1', wp_create_nonce( 'swiftforms-trash-entry_' . $other ), wp_create_nonce( 'swiftforms-star-entry_' . $id ) ] as $nonce ) {
+		foreach ( [ false, 'badbadbad1', wp_create_nonce( 'blockforms-trash-entry_' . $other ), wp_create_nonce( 'blockforms-star-entry_' . $id ) ] as $nonce ) {
 			$exit = $this->act( 'trash', $id, [], $nonce );
-			$this->assertInstanceOf( SF_Test_Die::class, $exit );
+			$this->assertInstanceOf( BF_Test_Die::class, $exit );
 			$this->assertSame( 403, $exit->status );
 			$this->assertSame( 'new', $this->status( $id ) );
 		}
@@ -447,17 +447,17 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		$this->be_role( 'subscriber' );
 		foreach ( [ 'read', 'star', 'trash', 'untrash', 'delete' ] as $action ) {
 			$exit = $this->act( $action, $id );
-			$this->assertInstanceOf( SF_Test_Die::class, $exit, $action );
+			$this->assertInstanceOf( BF_Test_Die::class, $exit, $action );
 			$this->assertSame( 403, $exit->status, $action );
 		}
 		$this->assertSame( 'trash', $this->status( $id ) );
 
 		// A role that may edit but not delete.
-		$this->map_caps( [ 'swiftforms_delete_entries' => 'do_not_allow' ] );
+		$this->map_caps( [ 'blockforms_delete_entries' => 'do_not_allow' ] );
 		$this->be_admin();
-		$this->assertInstanceOf( SF_Test_Die::class, $this->act( 'delete', $id ) );
+		$this->assertInstanceOf( BF_Test_Die::class, $this->act( 'delete', $id ) );
 		$this->assertNotNull( Entries_Repository::get( $id ) );
-		$this->assertInstanceOf( SF_Test_Redirect::class, $this->act( 'untrash', $id ) );
+		$this->assertInstanceOf( BF_Test_Redirect::class, $this->act( 'untrash', $id ) );
 	}
 
 	/**
@@ -468,7 +468,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 	public function test_action_on_a_missing_entry() {
 		$this->be_admin();
 		$exit = $this->act( 'trash', 987654 );
-		$this->assertInstanceOf( SF_Test_Die::class, $exit );
+		$this->assertInstanceOf( BF_Test_Die::class, $exit );
 		$this->assertSame( 404, $exit->status );
 	}
 
@@ -484,22 +484,22 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		$exit  = $this->act( 'trash', $id );
 		$query = $this->query_of( $exit );
 		$this->assertSame( 'trash', $query['message'] );
-		$this->assertSame( (string) $id, $query['sf_undo'] );
-		$this->assertSame( 'read', $query['sf_to'] );
+		$this->assertSame( (string) $id, $query['bf_undo'] );
+		$this->assertSame( 'read', $query['bf_to'] );
 
 		$html = $this->screen(
 			[
 				'message' => 'trash',
-				'sf_undo' => $id,
-				'sf_to'   => 'read',
+				'bf_undo' => $id,
+				'bf_to'   => 'read',
 			]
 		);
 		$this->assertStringContainsString( 'class="notice notice-success is-dismissible"', $html );
 		$this->assertStringContainsString( 'Entry moved to the Trash.', $html );
-		$this->assertMatchesRegularExpression( '/<a href="[^"]*action=untrash[^"]*sf_to=read[^"]*_wpnonce=[0-9a-f]{10}[^"]*">Undo<\/a>/', $html );
+		$this->assertMatchesRegularExpression( '/<a href="[^"]*action=untrash[^"]*bf_to=read[^"]*_wpnonce=[0-9a-f]{10}[^"]*">Undo<\/a>/', $html );
 
-		$exit = $this->act( 'untrash', $id, [ 'sf_to' => 'read' ] );
-		$this->assertInstanceOf( SF_Test_Redirect::class, $exit );
+		$exit = $this->act( 'untrash', $id, [ 'bf_to' => 'read' ] );
+		$this->assertInstanceOf( BF_Test_Redirect::class, $exit );
 		$this->assertSame( 'read', $this->status( $id ) );
 
 		$this->assertStringNotContainsString( 'notice-success', $this->screen( [ 'message' => 'nonsense' ] ) );
@@ -507,14 +507,14 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		$this->assertStringNotContainsString( 'Undo', $this->screen( [ 'message' => 'read' ] ) );
 
 		// No Undo for a user who may not edit.
-		$this->map_caps( [ 'swiftforms_view_entries' => 'edit_posts' ] );
+		$this->map_caps( [ 'blockforms_view_entries' => 'edit_posts' ] );
 		$this->be_role( 'contributor' );
 		$this->assertStringNotContainsString(
 			'Undo',
 			$this->screen(
 				[
 					'message' => 'trash',
-					'sf_undo' => $id,
+					'bf_undo' => $id,
 				]
 			)
 		);
@@ -536,14 +536,14 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 				'label' => 'Full name',
 			]
 		)
-			. '<!-- wp:swiftforms/submit /-->';
+			. '<!-- wp:blockforms/submit /-->';
 		wp_update_post(
 			[
 				'ID'           => (int) substr( $this->source, 5 ),
 				'post_content' => $this->form_markup( $this->form_id, $inner ),
 			]
 		);
-		\SwiftForms\Form_Index::flush_cache();
+		\BlockForms\Form_Index::flush_cache();
 
 		$html = $this->screen(
 			[
@@ -560,8 +560,8 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		$this->assertStringContainsString( '<a href="mailto:ada@example.com">ada@example.com</a>', $html );
 		$this->assertStringContainsString( 'Back to Entries', $html );
 		$this->assertStringContainsString( 'id="poststuff"', $html );
-		$this->assertStringContainsString( 'class="widefat striped swiftforms-entry-fields"', $html );
-		$this->assertStringContainsString( 'swiftforms-print', $html );
+		$this->assertStringContainsString( 'class="widefat striped blockforms-entry-fields"', $html );
+		$this->assertStringContainsString( 'blockforms-print', $html );
 	}
 
 	/**
@@ -583,7 +583,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		);
 		$this->assertSame( 'new', $this->status( $id ) );
 
-		$this->map_caps( [ 'swiftforms_view_entries' => 'edit_posts' ] );
+		$this->map_caps( [ 'blockforms_view_entries' => 'edit_posts' ] );
 		$this->be_role( 'contributor' );
 		$this->screen(
 			[
@@ -601,7 +601,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 			]
 		);
 		$this->assertSame( 'read', $this->status( $id ) );
-		$this->assertStringContainsString( '<strong class="swiftforms-entry-status">Read</strong>', $html );
+		$this->assertStringContainsString( '<strong class="blockforms-entry-status">Read</strong>', $html );
 
 		// Spam and trash keep their status.
 		$spam = $this->add_entry( [], [ 'status' => 'spam' ] );
@@ -630,7 +630,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 					]
 				);
 				$this->fail( 'Expected a die.' );
-			} catch ( SF_Test_Die $die ) {
+			} catch ( BF_Test_Die $die ) {
 				$this->assertSame( 404, $die->status );
 			}
 		}
@@ -675,7 +675,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 				'post_status' => 'private',
 			]
 		);
-		$this->map_caps( [ 'swiftforms_view_entries' => 'edit_posts' ] );
+		$this->map_caps( [ 'blockforms_view_entries' => 'edit_posts' ] );
 		$this->be_role( 'contributor' );
 		$html = $view( $plain );
 		$this->assertStringNotContainsString( 'Sent from:', $html, 'No title or link for a post the user cannot read.' );
@@ -694,7 +694,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 		foreach ( [ '#adminmenumain', '#wpadminbar', '#wpfooter', '#postbox-container-1', '.notice' ] as $hidden ) {
 			$this->assertStringContainsString( $hidden, $print );
 		}
-		$this->assertStringNotContainsString( 'swiftforms-entry-fields', substr( $print, 0, (int) strpos( $print, '{' ) ), 'The fields table is not in the hidden list.' );
+		$this->assertStringNotContainsString( 'blockforms-entry-fields', substr( $print, 0, (int) strpos( $print, '{' ) ), 'The fields table is not in the hidden list.' );
 	}
 
 	/**
@@ -792,7 +792,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 			return Entries_Screen::values_html( [ 'values' => $items ] );
 		};
 
-		$this->assertSame( '<ul class="swiftforms-values"><li>Red</li><li>Blue &amp; green</li></ul>', $text( [ 'Red', 'Blue & green' ] ) );
+		$this->assertSame( '<ul class="blockforms-values"><li>Red</li><li>Blue &amp; green</li></ul>', $text( [ 'Red', 'Blue & green' ] ) );
 		$this->assertSame( "Line one<br />\nLine two", $text( [ "Line one\nLine two" ] ) );
 		$this->assertStringContainsString( 'No answer', $text( [] ) );
 		$this->assertStringContainsString( 'No answer', $text( [ '' ] ) );
@@ -832,7 +832,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 
 		$queries = [];
 		$spy     = static function ( $query ) use ( &$queries ) {
-			if ( false !== strpos( $query, 'swiftforms_' ) ) {
+			if ( false !== strpos( $query, 'blockforms_' ) ) {
 				$queries[] = $query;
 			}
 			return $query;
@@ -884,7 +884,7 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 	public function test_form_titles_for_a_deleted_form() {
 		$this->add_entry();
 		wp_delete_post( (int) substr( $this->source, 5 ), true );
-		\SwiftForms\Form_Index::flush_cache();
+		\BlockForms\Form_Index::flush_cache();
 		Entry_Presenter::flush();
 
 		$titles = Entry_Presenter::form_titles( [ $this->form_id, 'not-a-uuid' ] );
@@ -905,9 +905,9 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 			'email' => 'email',
 			'name'  => 'text',
 		] as $name => $type ) {
-			$fields[] = array_merge( [ 'type' => $type ], \SwiftForms\Field_Types::defaults( $type ), [ 'name' => $name ] );
+			$fields[] = array_merge( [ 'type' => $type ], \BlockForms\Field_Types::defaults( $type ), [ 'name' => $name ] );
 		}
-		$schema = new \SwiftForms\Form_Schema(
+		$schema = new \BlockForms\Form_Schema(
 			[
 				'form_id' => '5f990000-0000-4000-8000-000000000001',
 				'source'  => 'post:1',
@@ -920,6 +920,6 @@ class AdminEntriesScreenTest extends SF_Admin_Test_Case {
 			'email' => [ 'jonas@example.com' ],
 			'name'  => [ 'Jonas' ],
 		];
-		$this->assertSame( 'jonas@example.com · Jonas', \SwiftForms\Entry_Presenter::summary( $schema, $values ) );
+		$this->assertSame( 'jonas@example.com · Jonas', \BlockForms\Entry_Presenter::summary( $schema, $values ) );
 	}
 }

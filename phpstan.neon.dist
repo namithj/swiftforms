@@ -4,7 +4,7 @@ parameters:
     level: 6
     treatPhpDocTypesAsCertain: false
     paths:
-        - swiftforms.php
+        - blockforms.php
         - includes
     scanDirectories:
         - vendor-prefixed

@@ -32,7 +32,7 @@ before:
     "migration log rows": 0,
     "migration lock row": false
 }
-first run returned true (swiftforms_db_version_changed fired 1 time(s))
+first run returned true (blockforms_db_version_changed fired 1 time(s))
 after the first run:
 {
     "db_version row": "1",

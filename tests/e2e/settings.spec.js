@@ -1,15 +1,15 @@
 /**
  * Settings e2e (P10): Forms → Settings is a cassette-cmf settings page (React renderer, REST route
- * swiftforms-cmf/v1/settings/swiftforms, one option per key).
+ * blockforms-cmf/v1/settings/blockforms, one option per key).
  *
- * Runs against a WordPress with the plugin active. Set SF_WP_PATH to the WordPress folder to let the spec read
+ * Runs against a WordPress with the plugin active. Set BF_WP_PATH to the WordPress folder to let the spec read
  * and reset the options with WP-CLI (the "writes nothing" checks need it); without it those checks are skipped.
  */
 const { execSync } = require( 'child_process' );
 const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 
-const ROUTE = '/swiftforms-cmf/v1/settings/swiftforms';
-const WP_PATH = process.env.SF_WP_PATH || '';
+const ROUTE = '/blockforms-cmf/v1/settings/blockforms';
+const WP_PATH = process.env.BF_WP_PATH || '';
 
 /**
  * Run WP-CLI against the site under test.
@@ -32,12 +32,12 @@ function wp( args ) {
 function storedOptions() {
 	const rows = JSON.parse(
 		wp(
-			`option list --search="swiftforms_*_*" --fields=option_name,option_value --format=json`
+			`option list --search="blockforms_*_*" --fields=option_name,option_value --format=json`
 		) || '[]'
 	);
 	const found = {};
 	rows.filter( ( row ) =>
-		/^swiftforms_(general|email|spam|privacy|advanced)_/.test(
+		/^blockforms_(general|email|spam|privacy|advanced)_/.test(
 			row.option_name
 		)
 	).forEach( ( row ) => {
@@ -56,10 +56,10 @@ test.describe( 'Forms → Settings', () => {
 	} );
 
 	async function openSettings( admin, page ) {
-		await admin.visitAdminPage( 'admin.php', 'page=swiftforms-settings' );
+		await admin.visitAdminPage( 'admin.php', 'page=blockforms-settings' );
 		await expect(
 			page.getByRole( 'heading', {
-				name: 'SwiftForms settings',
+				name: 'BlockForms settings',
 				level: 1,
 			} )
 		).toBeVisible();
@@ -78,11 +78,11 @@ test.describe( 'Forms → Settings', () => {
 			.first()
 			.click();
 		const link = page.locator(
-			'#adminmenu .wp-submenu a[href="admin.php?page=swiftforms-settings"]'
+			'#adminmenu .wp-submenu a[href="admin.php?page=blockforms-settings"]'
 		);
 		await expect( link ).toHaveCount( 1 );
 		await link.click();
-		await expect( page ).toHaveURL( /page=swiftforms-settings/ );
+		await expect( page ).toHaveURL( /page=blockforms-settings/ );
 		for ( const name of [
 			'General',
 			'Email',
@@ -150,12 +150,12 @@ test.describe( 'Forms → Settings', () => {
 
 		if ( WP_PATH ) {
 			expect( storedOptions() ).toEqual( {
-				swiftforms_advanced_debug_log: '1',
-				swiftforms_email_from_name: 'Acme Support',
-				swiftforms_general_default_success_message:
+				blockforms_advanced_debug_log: '1',
+				blockforms_email_from_name: 'Acme Support',
+				blockforms_general_default_success_message:
 					'Thanks, <b>we</b> will reply.',
-				swiftforms_general_retention_days: '45',
-				swiftforms_spam_rate_limit_per_minute: '9',
+				blockforms_general_retention_days: '45',
+				blockforms_spam_rate_limit_per_minute: '9',
 			} );
 		}
 	} );

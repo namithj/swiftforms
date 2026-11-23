@@ -1,17 +1,17 @@
 <?php
 /**
- * Tests for SwiftForms\Validator.
+ * Tests for BlockForms\Validator.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Database;
-use SwiftForms\Field_Types;
-use SwiftForms\Form_Schema;
-use SwiftForms\Submission_Context;
-use SwiftForms\Validator;
+use BlockForms\Database;
+use BlockForms\Field_Types;
+use BlockForms\Form_Schema;
+use BlockForms\Submission_Context;
+use BlockForms\Validator;
 
 /**
  * Class ValidatorTest
@@ -19,7 +19,7 @@ use SwiftForms\Validator;
  * @group submission
  * @group security
  */
-class ValidatorTest extends SF_Storage_Test_Case {
+class ValidatorTest extends BF_Storage_Test_Case {
 
 	const FORM = '11111111-1111-4111-8111-111111111111';
 
@@ -799,7 +799,7 @@ class ValidatorTest extends SF_Storage_Test_Case {
 	}
 
 	/**
-	 * The swiftforms_validate_field filter can add, keep and ignore.
+	 * The blockforms_validate_field filter can add, keep and ignore.
 	 *
 	 * @return void
 	 */
@@ -813,7 +813,7 @@ class ValidatorTest extends SF_Storage_Test_Case {
 		);
 		$calls  = [];
 		add_filter(
-			'swiftforms_validate_field',
+			'blockforms_validate_field',
 			static function ( $error, $value, $field ) use ( &$calls ) {
 				$calls[] = $field['name'];
 				if ( 'code' === $field['name'] && 'bad' === $value ) {
@@ -840,9 +840,9 @@ class ValidatorTest extends SF_Storage_Test_Case {
 		$this->assertSame( [ 'code' => 'Code rejected.' ], $errors, 'A non-string result is ignored, so the invalid email would have failed only through the built-in rule... which the filter replaced.' );
 		$this->assertSame( [ 'code', 'email' ], $calls, 'Hidden fields are skipped.' );
 
-		remove_all_filters( 'swiftforms_validate_field' );
+		remove_all_filters( 'blockforms_validate_field' );
 		add_filter(
-			'swiftforms_validate_field',
+			'blockforms_validate_field',
 			static function ( $error ) {
 				return $error;
 			}

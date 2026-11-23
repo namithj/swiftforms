@@ -7,8 +7,8 @@
  * and its confirmation.
  *
  * Needs a WordPress with the plugin active, admin/password, and WP_BASE_URL. The two token tests move the
- * plugin's clock (the mu-plugin tests/e2e/mu/sf-test-clock.php freezes it to a constant); they run when
- * SF_E2E_NOW_FILE names a file the site reads as SWIFTFORMS_TEST_NOW (the scratch site does) and skip
+ * plugin's clock (the mu-plugin tests/e2e/mu/bf-test-clock.php freezes it to a constant); they run when
+ * BF_E2E_NOW_FILE names a file the site reads as BLOCKFORMS_TEST_NOW (the scratch site does) and skip
  * otherwise.
  */
 const fs = require( 'fs' );
@@ -16,14 +16,14 @@ const crypto = require( 'crypto' );
 const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 const { default: AxeBuilder } = require( '@axe-core/playwright' );
 
-const NOW_FILE = process.env.SF_E2E_NOW_FILE || '';
+const NOW_FILE = process.env.BF_E2E_NOW_FILE || '';
 const setClock = ( seconds ) =>
 	fs.writeFileSync( NOW_FILE, String( Math.floor( seconds ) ) );
 const realNow = () => Date.now() / 1000;
 
 const uuid = () => crypto.randomUUID();
 const block = ( name, attrs = {} ) =>
-	`<!-- wp:swiftforms/${ name } ${ JSON.stringify( attrs ) } /-->`;
+	`<!-- wp:blockforms/${ name } ${ JSON.stringify( attrs ) } /-->`;
 const OPTIONS = [
 	{ label: 'Sales', value: 'sales' },
 	{ label: 'Support', value: 'support' },
@@ -37,7 +37,7 @@ const OPTIONS = [
  */
 function formMarkup( message ) {
 	return (
-		`<!-- wp:swiftforms/form ${ JSON.stringify( { formId: uuid() } ) } -->` +
+		`<!-- wp:blockforms/form ${ JSON.stringify( { formId: uuid() } ) } -->` +
 		block( 'field-text', {
 			label: 'Your name',
 			name: 'name',
@@ -75,8 +75,8 @@ function formMarkup( message ) {
 			text: 'I agree to be contacted',
 		} ) +
 		block( 'submit' ) +
-		`<!-- wp:swiftforms/confirmation --><!-- wp:paragraph --><p>${ message }</p><!-- /wp:paragraph --><!-- /wp:swiftforms/confirmation -->` +
-		'<!-- /wp:swiftforms/form -->'
+		`<!-- wp:blockforms/confirmation --><!-- wp:paragraph --><p>${ message }</p><!-- /wp:paragraph --><!-- /wp:blockforms/confirmation -->` +
+		'<!-- /wp:blockforms/form -->'
 	);
 }
 
@@ -98,13 +98,13 @@ test.describe( 'Front end', () => {
 		await make(
 			requestUtils,
 			'one',
-			`SF front end ${ stamp }`,
+			`BF front end ${ stamp }`,
 			formMarkup( 'Thank you, we got it.' )
 		);
 		await make(
 			requestUtils,
 			'two',
-			`SF two forms ${ stamp }`,
+			`BF two forms ${ stamp }`,
 			formMarkup( 'First form done.' ) + formMarkup( 'Second form done.' )
 		);
 		if ( NOW_FILE ) {
@@ -144,17 +144,17 @@ test.describe( 'Front end', () => {
 				( r ) => r.method() === 'POST' && posts.push( r.url() )
 			);
 			await page.goto( urls.one );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await expect( form ).toHaveAttribute( 'novalidate', '' );
 
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 
-			const summary = form.locator( '.swiftforms-errors-summary' );
+			const summary = form.locator( '.blockforms-errors-summary' );
 			await expect( summary ).toBeVisible();
 			await expect( summary ).toBeFocused();
 			await expect( summary.locator( 'li a' ) ).toHaveCount( 4 );
 			await expect(
-				form.locator( '.swiftforms-error:not([hidden])' )
+				form.locator( '.blockforms-error:not([hidden])' )
 			).toHaveCount( 4 );
 			await expect( form.getByLabel( 'Your name' ) ).toHaveAttribute(
 				'aria-invalid',
@@ -164,7 +164,7 @@ test.describe( 'Front end', () => {
 				form.getByLabel( 'Your name' )
 			).toHaveAccessibleDescription( 'This field is required.' );
 			await expect(
-				form.locator( '.swiftforms-error:not([hidden])' ).first()
+				form.locator( '.blockforms-error:not([hidden])' ).first()
 			).toHaveText( 'This field is required.' );
 			expect( posts ).toEqual( [] );
 
@@ -185,12 +185,12 @@ test.describe( 'Front end', () => {
 			await form.getByLabel( 'Seats' ).fill( '99' );
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 			await expect(
-				form.locator( '.swiftforms-error:not([hidden])', {
+				form.locator( '.blockforms-error:not([hidden])', {
 					hasText: 'valid email',
 				} )
 			).toHaveText( 'Please enter a valid email address.' );
 			await expect(
-				form.locator( '.swiftforms-error:not([hidden])', {
+				form.locator( '.blockforms-error:not([hidden])', {
 					hasText: 'at most 10',
 				} )
 			).toHaveText( 'Please enter a number that is at most 10.' );
@@ -203,20 +203,20 @@ test.describe( 'Front end', () => {
 			page.on( 'request', ( r ) => {
 				if (
 					r.method() === 'POST' &&
-					r.url().includes( 'swiftforms/v1/submit' )
+					r.url().includes( 'blockforms/v1/submit' )
 				) {
 					body = r.postDataJSON();
 				}
 			} );
 			await page.goto( urls.one );
 			await page.evaluate( () => ( window.__noReload = true ) );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await fillValid( form );
 			await form.getByLabel( 'Sales' ).check();
 			await form.getByLabel( 'Support' ).check();
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 
-			const confirmation = page.locator( '.swiftforms-confirmation' );
+			const confirmation = page.locator( '.blockforms-confirmation' );
 			await expect( confirmation ).toHaveText( 'Thank you, we got it.' );
 			await expect( confirmation ).toHaveAttribute( 'role', 'status' );
 			await expect( confirmation ).toBeFocused();
@@ -227,7 +227,7 @@ test.describe( 'Front end', () => {
 				true
 			);
 
-			expect( body.sf ).toEqual( {
+			expect( body.bf ).toEqual( {
 				name: 'Ann Example',
 				email: 'ann@example.com',
 				seats: '',
@@ -235,9 +235,9 @@ test.describe( 'Front end', () => {
 				extras: [ 'sales', 'support' ],
 				agree: '1',
 			} );
-			expect( body._sf_t ).toMatch( /^js\.\d+$/ );
-			expect( body._sf_token ).toMatch( /^v1\./ );
-			expect( body._sf_hp ).toBe( '' );
+			expect( body._bf_t ).toMatch( /^js\.\d+$/ );
+			expect( body._bf_token ).toMatch( /^v1\./ );
+			expect( body._bf_hp ).toBe( '' );
 			expect( body ).not.toHaveProperty( '_wpnonce' );
 		} );
 
@@ -245,7 +245,7 @@ test.describe( 'Front end', () => {
 			page,
 		} ) => {
 			await page.goto( urls.one );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await fillValid( form );
 			// An option the form does not have: the client does not know the options.
 			await form.getByLabel( 'Topic' ).evaluate( ( select ) => {
@@ -258,7 +258,7 @@ test.describe( 'Front end', () => {
 			} );
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 
-			const summary = form.locator( '.swiftforms-errors-summary' );
+			const summary = form.locator( '.blockforms-errors-summary' );
 			await expect( summary ).toBeFocused();
 			await expect( summary ).toContainText(
 				'Please choose one of the available options.'
@@ -277,13 +277,13 @@ test.describe( 'Front end', () => {
 			page,
 		} ) => {
 			await page.goto( urls.one );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			const button = form.getByRole( 'button', { name: 'Submit' } );
-			const summary = form.locator( '.swiftforms-errors-summary' );
+			const summary = form.locator( '.blockforms-errors-summary' );
 			await fillValid( form );
 
 			const answer = ( status, json ) =>
-				page.route( '**/swiftforms/v1/submit*', ( route ) =>
+				page.route( '**/blockforms/v1/submit*', ( route ) =>
 					route.fulfill( { status, json } )
 				);
 
@@ -295,18 +295,18 @@ test.describe( 'Front end', () => {
 			await expect( summary ).toBeFocused();
 			await expect( button ).toBeEnabled();
 
-			await page.unroute( '**/swiftforms/v1/submit*' );
+			await page.unroute( '**/blockforms/v1/submit*' );
 			await answer( 429, { status: 'rate_limited' } );
 			await button.click();
 			await expect( summary ).toContainText( 'Too many attempts' );
 
-			await page.unroute( '**/swiftforms/v1/submit*' );
+			await page.unroute( '**/blockforms/v1/submit*' );
 			await answer( 200, { status: 'something-new' } );
 			await button.click();
 			await expect( summary ).toContainText( 'could not be accepted' );
 
-			await page.unroute( '**/swiftforms/v1/submit*' );
-			await page.route( '**/swiftforms/v1/submit*', ( route ) =>
+			await page.unroute( '**/blockforms/v1/submit*' );
+			await page.route( '**/blockforms/v1/submit*', ( route ) =>
 				route.abort()
 			);
 			await button.click();
@@ -318,12 +318,12 @@ test.describe( 'Front end', () => {
 		test( 'an expired token is refreshed once and the submission is retried', async ( {
 			page,
 		} ) => {
-			test.skip( ! NOW_FILE, 'SF_E2E_NOW_FILE is not set' );
+			test.skip( ! NOW_FILE, 'BF_E2E_NOW_FILE is not set' );
 			setClock( realNow() );
 			await page.goto( urls.one );
 			const log = [];
 			page.on( 'request', ( r ) => {
-				if ( r.url().includes( 'swiftforms/v1/' ) ) {
+				if ( r.url().includes( 'blockforms/v1/' ) ) {
 					log.push(
 						r.method() +
 							' ' +
@@ -331,7 +331,7 @@ test.describe( 'Front end', () => {
 					);
 				}
 			} );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await fillValid( form );
 
 			// The server's clock jumps past the token's life (168 hours); the page does not know.
@@ -339,7 +339,7 @@ test.describe( 'Front end', () => {
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 
 			await expect(
-				page.locator( '.swiftforms-confirmation' )
+				page.locator( '.blockforms-confirmation' )
 			).toHaveText( 'Thank you, we got it.' );
 			expect( log ).toEqual( [
 				'POST submit',
@@ -352,12 +352,12 @@ test.describe( 'Front end', () => {
 		test( 'a page older than 12 hours refreshes its token before the first submit', async ( {
 			page,
 		} ) => {
-			test.skip( ! NOW_FILE, 'SF_E2E_NOW_FILE is not set' );
+			test.skip( ! NOW_FILE, 'BF_E2E_NOW_FILE is not set' );
 			setClock( realNow() - 20 * 3600 );
 			await page.goto( urls.one );
 			const log = [];
 			page.on( 'request', ( r ) => {
-				if ( r.url().includes( 'swiftforms/v1/' ) ) {
+				if ( r.url().includes( 'blockforms/v1/' ) ) {
 					log.push(
 						r.method() +
 							' ' +
@@ -365,12 +365,12 @@ test.describe( 'Front end', () => {
 					);
 				}
 			} );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await fillValid( form );
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 
 			await expect(
-				page.locator( '.swiftforms-confirmation' )
+				page.locator( '.blockforms-confirmation' )
 			).toBeVisible();
 			expect( log ).toEqual( [ 'GET token', 'POST submit' ] );
 			setClock( realNow() );
@@ -384,26 +384,26 @@ test.describe( 'Front end', () => {
 				const html = ( await response.text() )
 					.replace( /,&quot;issued&quot;:\d+/, '' )
 					.replace(
-						/<div class="swiftforms-errors-summary"[^>]*><\/div>/,
+						/<div class="blockforms-errors-summary"[^>]*><\/div>/,
 						''
 					);
 				await route.fulfill( { response, body: html } );
 			} );
 			await page.goto( urls.one );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await expect(
-				form.locator( '.swiftforms-errors-summary' )
+				form.locator( '.blockforms-errors-summary' )
 			).toHaveCount( 0 );
 
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 			await expect(
-				form.locator( '.swiftforms-errors-summary' )
+				form.locator( '.blockforms-errors-summary' )
 			).toBeFocused();
 
 			// An unknown token age is refreshed before the first submit.
 			const log = [];
 			page.on( 'request', ( r ) => {
-				if ( r.url().includes( 'swiftforms/v1/' ) ) {
+				if ( r.url().includes( 'blockforms/v1/' ) ) {
 					log.push(
 						r.method() +
 							' ' +
@@ -414,7 +414,7 @@ test.describe( 'Front end', () => {
 			await fillValid( form );
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 			await expect(
-				page.locator( '.swiftforms-confirmation' )
+				page.locator( '.blockforms-confirmation' )
 			).toBeVisible();
 			expect( log ).toEqual( [ 'GET token', 'POST submit' ] );
 		} );
@@ -423,7 +423,7 @@ test.describe( 'Front end', () => {
 			page,
 		} ) => {
 			await page.goto( urls.two );
-			const forms = page.locator( 'form.swiftforms-form' );
+			const forms = page.locator( 'form.blockforms-form' );
 			await expect( forms ).toHaveCount( 2 );
 
 			const ids = await page
@@ -437,10 +437,10 @@ test.describe( 'Front end', () => {
 				.getByRole( 'button', { name: 'Submit' } )
 				.click();
 			await expect(
-				forms.nth( 1 ).locator( '.swiftforms-errors-summary' )
+				forms.nth( 1 ).locator( '.blockforms-errors-summary' )
 			).toBeFocused();
 			await expect(
-				forms.nth( 0 ).locator( '.swiftforms-errors-summary' )
+				forms.nth( 0 ).locator( '.blockforms-errors-summary' )
 			).toBeHidden();
 			await expect(
 				forms.nth( 0 ).locator( '[aria-invalid="true"]' )
@@ -453,7 +453,7 @@ test.describe( 'Front end', () => {
 				.getByRole( 'button', { name: 'Submit' } )
 				.click();
 			await expect(
-				page.locator( '.swiftforms-confirmation' )
+				page.locator( '.blockforms-confirmation' )
 			).toHaveText( 'First form done.' );
 			await expect(
 				forms.nth( 1 ).getByRole( 'button', { name: 'Submit' } )
@@ -465,7 +465,7 @@ test.describe( 'Front end', () => {
 				.getByRole( 'button', { name: 'Submit' } )
 				.click();
 			await expect(
-				page.locator( '.swiftforms-confirmation' ).nth( 1 )
+				page.locator( '.blockforms-confirmation' ).nth( 1 )
 			).toHaveText( 'Second form done.' );
 		} );
 
@@ -474,7 +474,7 @@ test.describe( 'Front end', () => {
 		} ) => {
 			const serious = async ( label ) => {
 				const results = await new AxeBuilder( { page } )
-					.include( 'form.swiftforms-form' )
+					.include( 'form.blockforms-form' )
 					.withTags( [
 						'wcag2a',
 						'wcag2aa',
@@ -495,12 +495,12 @@ test.describe( 'Front end', () => {
 			};
 
 			await page.goto( urls.one );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await serious( 'form' );
 
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 			await expect(
-				form.locator( '.swiftforms-errors-summary' )
+				form.locator( '.blockforms-errors-summary' )
 			).toBeFocused();
 			await serious( 'errors' );
 
@@ -509,7 +509,7 @@ test.describe( 'Front end', () => {
 			await form.getByLabel( 'Support' ).check();
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 			await expect(
-				page.locator( '.swiftforms-confirmation' )
+				page.locator( '.blockforms-confirmation' )
 			).toBeFocused();
 			await serious( 'confirmation' );
 		} );
@@ -520,7 +520,7 @@ test.describe( 'Front end', () => {
 			await page.goto( urls.one );
 			const small = await page
 				.locator(
-					'form.swiftforms-form :is(input:not([type="hidden"]):not([tabindex="-1"]), select, textarea, button)'
+					'form.blockforms-form :is(input:not([type="hidden"]):not([tabindex="-1"]), select, textarea, button)'
 				)
 				.evaluateAll( ( els ) =>
 					els
@@ -538,7 +538,7 @@ test.describe( 'Front end', () => {
 
 		test( 'a guest page carries no nonce', async ( { request } ) => {
 			const html = await ( await request.get( urls.one ) ).text();
-			expect( html ).toContain( 'swiftforms/v1/submit' );
+			expect( html ).toContain( 'blockforms/v1/submit' );
 			expect( html ).not.toContain( '"nonce"' );
 			expect( html ).not.toContain( '_wpnonce' );
 		} );
@@ -554,7 +554,7 @@ test.describe( 'Front end', () => {
 			page,
 		} ) => {
 			await page.goto( urls.one );
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await expect( form ).not.toHaveAttribute( 'novalidate', '' );
 			await form.getByLabel( 'Your name' ).fill( 'Ann Example' );
 			await form.getByLabel( 'Email' ).first().fill( 'ann@example.com' );
@@ -564,9 +564,9 @@ test.describe( 'Front end', () => {
 			await page.waitForTimeout( 3500 );
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 
-			await expect( page ).toHaveURL( /sf_result=/ );
+			await expect( page ).toHaveURL( /bf_result=/ );
 			await expect(
-				page.locator( '.swiftforms-confirmation' )
+				page.locator( '.blockforms-confirmation' )
 			).toContainText( 'Thank you, we got it.' );
 		} );
 	} );
@@ -581,7 +581,7 @@ test.describe( 'Front end', () => {
 
 			const nonces = [];
 			let ajaxNonceCalls = 0;
-			await page.route( '**/swiftforms/v1/submit*', ( route ) => {
+			await page.route( '**/blockforms/v1/submit*', ( route ) => {
 				const headers = route.request().headers();
 				nonces.push( headers[ 'x-wp-nonce' ] );
 				if ( nonces.length === 1 ) {
@@ -593,19 +593,19 @@ test.describe( 'Front end', () => {
 				}
 			} );
 			page.on( 'request', ( r ) => {
-				if ( r.url().includes( 'action=swiftforms_rest_nonce' ) ) {
+				if ( r.url().includes( 'action=blockforms_rest_nonce' ) ) {
 					ajaxNonceCalls++;
 				}
 			} );
 
-			const form = page.locator( 'form.swiftforms-form' );
+			const form = page.locator( 'form.blockforms-form' );
 			await fillValid( form );
 			await form.getByLabel( 'Sales' ).check();
 			await form.getByLabel( 'Support' ).check();
 			await form.getByRole( 'button', { name: 'Submit' } ).click();
 
 			await expect(
-				page.locator( '.swiftforms-confirmation' )
+				page.locator( '.blockforms-confirmation' )
 			).toHaveText( 'Thank you, we got it.' );
 			expect( ajaxNonceCalls ).toBe( 1 );
 			expect( nonces ).toHaveLength( 2 );

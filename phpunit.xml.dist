@@ -14,7 +14,7 @@
 	cacheResultFile=".cache/phpunit.result.cache"
 >
 	<testsuites>
-		<testsuite name="swiftforms">
+		<testsuite name="blockforms">
 			<directory suffix="Test.php">tests/phpunit/tests</directory>
 		</testsuite>
 	</testsuites>

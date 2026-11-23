@@ -2,10 +2,10 @@
 /**
  * Time trap.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Time_Trap
  *
- * The `_sf_t` control: how long the visitor took. A bot posts instantly.
+ * The `_bf_t` control: how long the visitor took. A bot posts instantly.
  *
  * Two formats:
  * - Signed render time, `{unix}.{mac}`: written into the HTML on the server. mac = the first 16 hex
@@ -48,7 +48,7 @@ class Time_Trap {
 	}
 
 	/**
-	 * Parse a posted `_sf_t`.
+	 * Parse a posted `_bf_t`.
 	 *
 	 * @param mixed  $value   Posted value.
 	 * @param string $form_id Effective formId.

@@ -19,7 +19,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -38,7 +38,7 @@ header: X-Power-User: 1
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
 -- mail 2 (wp_mail arguments) --
 to: dev@power-site.example
 subject: [power] Hello from the hook: Ada Lovelace
@@ -49,7 +49,7 @@ header: X-Power-User: 1
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
 
 == S5 contact#1 / honeypot filled ==
 answered exactly like the clean submission
@@ -73,7 +73,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -105,7 +105,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -137,7 +137,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -169,7 +169,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -201,7 +201,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -233,7 +233,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -265,7 +265,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -295,7 +295,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -314,7 +314,7 @@ header: X-Power-User: 1
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
 -- mail 2 (wp_mail arguments) --
 to: dev@power-site.example
 subject: [power] Hello from the hook: Ada Lovelace
@@ -325,7 +325,7 @@ header: X-Power-User: 1
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
 
 == S5 contact#1 / headless REST client with the signed time (js_token off) ==
 status: 200
@@ -348,7 +348,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -367,7 +367,7 @@ header: X-Power-User: 1
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
 -- mail 2 (wp_mail arguments) --
 to: dev@power-site.example
 subject: [power] Hello from the hook: Ada Lovelace
@@ -378,7 +378,7 @@ header: X-Power-User: 1
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #1d4ed8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#1d4ed8">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Promo code</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">WELCOME10</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">A promo code the hook accepts.</td></tr></table></td></tr><tr><td style="padding:16px 24px;border-top:1px solid #e2e4e7;font-size:13px;color:#646970"><p>Sent by the power site.</p></td></tr></table></td></tr></table></body></html>
 
 == S5 contact#1 / per-form rate limit ==
 limit 20 per minute; statuses of requests 1 to 21: 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 429
@@ -400,7 +400,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -418,7 +418,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -436,7 +436,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -454,7 +454,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -472,7 +472,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -490,7 +490,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -508,7 +508,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -526,7 +526,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -544,7 +544,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -562,7 +562,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -580,7 +580,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -598,7 +598,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -616,7 +616,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -634,7 +634,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -652,7 +652,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -670,7 +670,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -688,7 +688,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -706,7 +706,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -724,7 +724,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }
@@ -742,7 +742,7 @@ entry:
     "starred": "0",
     "user_id": 0,
     "ip": "CB007107",
-    "user_agent": "SwiftForms-Regression/1.0",
+    "user_agent": "BlockForms-Regression/1.0",
     "created_gmt": "2026-11-19 10:00:00",
     "updated_gmt": "2026-11-19 10:00:00"
 }

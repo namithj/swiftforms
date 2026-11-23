@@ -4,7 +4,7 @@
  *
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 return [
@@ -13,15 +13,15 @@ return [
 	'guards'        => [ 'C-3.3', 'C-5.2', 'C-6.1' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_email_notification_to' => 'owner@example.org',
-		'swiftforms_db_version'            => 1,
-		'swiftforms_installed'             => [
+		'blockforms_email_notification_to' => 'owner@example.org',
+		'blockforms_db_version'            => 1,
+		'blockforms_installed'             => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -33,11 +33,11 @@ return [
 			'status'    => 'publish',
 			'title'     => 'Contact',
 			'slug'      => 'contact',
-			'content'   => SF_FX( 'page-minimal-contact' ),
+			'content'   => BF_FX( 'page-minimal-contact' ),
 		],
 	],
 	'tables'        => [
-		'swiftforms_schemas'      => [
+		'blockforms_schemas'      => [
 			[
 				'schema_hash' => '2d82400fd7db8befa96f8a78e3bcc702e041a1f221299dc03fa7008310c37b1e',
 				'form_id'     => '5f020001-0000-4000-8000-000000000001',
@@ -45,7 +45,7 @@ return [
 				'created_gmt' => '2026-10-01 09:00:00',
 			],
 		],
-		'swiftforms_entries'      => [
+		'blockforms_entries'      => [
 			[
 				'id'          => 1,
 				'form_id'     => '5f020001-0000-4000-8000-000000000001',
@@ -102,7 +102,7 @@ return [
 				'updated_gmt' => '2026-11-01 16:20:00',
 			],
 		],
-		'swiftforms_entry_values' => [
+		'blockforms_entry_values' => [
 			[
 				'entry_id' => 1,
 				'field'    => 'name',

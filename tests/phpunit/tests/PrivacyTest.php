@@ -2,14 +2,14 @@
 /**
  * Tests for the privacy exporter, eraser and policy text.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-admin-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-admin-test-case.php';
 
-use SwiftForms\Entries_Repository;
-use SwiftForms\Log;
-use SwiftForms\Privacy;
+use BlockForms\Entries_Repository;
+use BlockForms\Log;
+use BlockForms\Privacy;
 
 /**
  * Class PrivacyTest
@@ -17,7 +17,7 @@ use SwiftForms\Privacy;
  * @group admin
  * @group privacy
  */
-class PrivacyTest extends SF_Admin_Test_Case {
+class PrivacyTest extends BF_Admin_Test_Case {
 
 	/**
 	 * The tools are registered while their settings are on.
@@ -80,14 +80,14 @@ class PrivacyTest extends SF_Admin_Test_Case {
 				'name'  => 'email',
 				'label' => 'Email',
 			]
-		) . '<!-- wp:swiftforms/submit /-->';
+		) . '<!-- wp:blockforms/submit /-->';
 		wp_update_post(
 			[
 				'ID'           => (int) substr( $this->source, 5 ),
 				'post_content' => $this->form_markup( $this->form_id, $inner ),
 			]
 		);
-		\SwiftForms\Form_Index::flush_cache();
+		\BlockForms\Form_Index::flush_cache();
 		$now_text = $this->add_entry( [ 'email' => 'ada@example.com' ] );
 
 		$this->assertSame( [ $id ], Privacy::entry_ids( 'ada@example.com' ), 'Only the entry whose snapshot says email.' );
@@ -102,7 +102,7 @@ class PrivacyTest extends SF_Admin_Test_Case {
 	public function test_entry_without_a_snapshot_is_still_found() {
 		global $wpdb;
 		$id = $this->add_entry( [ 'email' => 'margaret@example.org' ] );
-		$wpdb->update( \SwiftForms\Database::table( 'entries' ), [ 'schema_hash' => str_repeat( 'f', 64 ) ], [ 'id' => $id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Test fixture.
+		$wpdb->update( \BlockForms\Database::table( 'entries' ), [ 'schema_hash' => str_repeat( 'f', 64 ) ], [ 'id' => $id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Test fixture.
 
 		$this->assertSame( [ $id ], Privacy::entry_ids( 'margaret@example.org' ) );
 	}
@@ -125,9 +125,9 @@ class PrivacyTest extends SF_Admin_Test_Case {
 		$this->assertTrue( $result['done'] );
 		$this->assertCount( 1, $result['data'] );
 		$item = $result['data'][0];
-		$this->assertSame( 'swiftforms-entries', $item['group_id'] );
-		$this->assertSame( 'SwiftForms entries', $item['group_label'] );
-		$this->assertSame( 'swiftforms-entry-' . $id, $item['item_id'] );
+		$this->assertSame( 'blockforms-entries', $item['group_id'] );
+		$this->assertSame( 'BlockForms entries', $item['group_label'] );
+		$this->assertSame( 'blockforms-entry-' . $id, $item['item_id'] );
 		$pairs = wp_list_pluck( $item['data'], 'value', 'name' );
 		$this->assertSame( 'Ada', $pairs['Name'] );
 		$this->assertSame( 'ada@example.com', $pairs['Email'] );
@@ -176,7 +176,7 @@ class PrivacyTest extends SF_Admin_Test_Case {
 		$mine2 = $this->add_entry( [ 'email' => 'ada@example.com' ] );
 		$other = $this->add_entry( [ 'email' => 'bigada@example.com' ] );
 		$wpdb->insert(
-			\SwiftForms\Database::table( 'entry_meta' ),
+			\BlockForms\Database::table( 'entry_meta' ),
 			[
 				'entry_id'   => $mine,
 				'meta_key'   => 'k',
@@ -200,8 +200,8 @@ class PrivacyTest extends SF_Admin_Test_Case {
 		$this->assertNull( Entries_Repository::get( $mine2 ) );
 		$this->assertSame( [], Entries_Repository::values( $mine ) );
 		$this->assertNotNull( Entries_Repository::get( $other ), 'Another address stays.' );
-		$this->assertSame( '0', (string) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . \SwiftForms\Database::table( 'entry_meta' ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Test read.
-		$left = $wpdb->get_col( 'SELECT type FROM ' . \SwiftForms\Database::table( 'log' ) . " WHERE type IN ('mail', 'error') ORDER BY id" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Test read.
+		$this->assertSame( '0', (string) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . \BlockForms\Database::table( 'entry_meta' ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Test read.
+		$left = $wpdb->get_col( 'SELECT type FROM ' . \BlockForms\Database::table( 'log' ) . " WHERE type IN ('mail', 'error') ORDER BY id" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Test read.
 		$this->assertSame( [ 'mail', 'error' ], $left, 'Only the mail row of bigada@example.com and the error row remain.' );
 
 		$again = Privacy::erase( 'ada@example.com', 1 );

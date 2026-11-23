@@ -2,10 +2,10 @@
 /**
  * REST route: token.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Rest_Token
  *
- * GET swiftforms/v1/token?formId=&source= . A page cached for days refreshes its render token and its signed
+ * GET blockforms/v1/token?formId=&source= . A page cached for days refreshes its render token and its signed
  * render time from here (ADR-002). Public, throttled, behind the Gate: a pair that is not a live location
  * (or whose source is not open) answers 403 closed with no token and no schema hash. The answer is never
  * cached.

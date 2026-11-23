@@ -2,10 +2,10 @@
 /**
  * Admin banner for visitor-mail limits.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Mail_Notice
  *
- * Shown on SwiftForms screens (screen ID contains "swiftforms") for 24 hours after a visitor-mail cap was
+ * Shown on BlockForms screens (screen ID contains "blockforms") for 24 hours after a visitor-mail cap was
  * hit (Mail_Limits). Dismissible per user. Names the cap and links to Settings, Email.
  */
 class Mail_Notice {
@@ -22,12 +22,12 @@ class Mail_Notice {
 	/**
 	 * User meta key: when the user dismissed the banner (unix time).
 	 */
-	const META = 'swiftforms_mail_cap_dismissed';
+	const META = 'blockforms_mail_cap_dismissed';
 
 	/**
 	 * admin-post action and nonce action of the dismiss link.
 	 */
-	const ACTION = 'swiftforms_dismiss_mail_notice';
+	const ACTION = 'blockforms_dismiss_mail_notice';
 
 	/**
 	 * Hook the banner and the dismiss handler.
@@ -45,7 +45,7 @@ class Mail_Notice {
 	 * @return void
 	 */
 	public static function render() {
-		if ( ! self::on_swiftforms_screen() || ! Access::can( 'swiftforms_manage_settings' ) ) {
+		if ( ! self::on_blockforms_screen() || ! Access::can( 'blockforms_manage_settings' ) ) {
 			return;
 		}
 		$state = Mail_Limits::notice_state();
@@ -59,28 +59,28 @@ class Mail_Notice {
 		$cap = 'hourly' === $state['cap']
 			? sprintf(
 				/* translators: %d: mails per hour. */
-				_n( 'the limit of %d mail per hour for the whole site', 'the limit of %d mails per hour for the whole site', $state['limit'], 'swiftforms' ),
+				_n( 'the limit of %d mail per hour for the whole site', 'the limit of %d mails per hour for the whole site', $state['limit'], 'blockforms' ),
 				$state['limit']
 			)
 			: sprintf(
 				/* translators: %d: mails per day. */
-				_n( 'the limit of %d mail per day for one form', 'the limit of %d mails per day for one form', $state['limit'], 'swiftforms' ),
+				_n( 'the limit of %d mail per day for one form', 'the limit of %d mails per day for one form', $state['limit'], 'blockforms' ),
 				$state['limit']
 			);
 
 		$dismiss  = wp_nonce_url( admin_url( 'admin-post.php?action=' . self::ACTION ), self::ACTION );
-		$settings = admin_url( 'admin.php?page=swiftforms-settings' );
+		$settings = admin_url( 'admin.php?page=blockforms-settings' );
 
 		echo '<div class="notice notice-warning"><p>';
 		echo esc_html(
 			sprintf(
 				/* translators: %s: the limit, for example "the limit of 100 mails per day for one form". */
-				__( 'SwiftForms did not send some mail to addresses that visitors typed in, because it reached %s. The entries were saved.', 'swiftforms' ),
+				__( 'BlockForms did not send some mail to addresses that visitors typed in, because it reached %s. The entries were saved.', 'blockforms' ),
 				$cap
 			)
 		);
-		echo ' <a href="' . esc_url( $settings ) . '">' . esc_html__( 'Review the email settings', 'swiftforms' ) . '</a>';
-		echo ' | <a href="' . esc_url( $dismiss ) . '">' . esc_html__( 'Dismiss', 'swiftforms' ) . '</a>';
+		echo ' <a href="' . esc_url( $settings ) . '">' . esc_html__( 'Review the email settings', 'blockforms' ) . '</a>';
+		echo ' | <a href="' . esc_url( $dismiss ) . '">' . esc_html__( 'Dismiss', 'blockforms' ) . '</a>';
 		echo '</p></div>';
 	}
 
@@ -91,8 +91,8 @@ class Mail_Notice {
 	 */
 	public static function dismiss() {
 		check_admin_referer( self::ACTION );
-		if ( ! Access::can( 'swiftforms_manage_settings' ) ) {
-			wp_die( esc_html__( 'You are not allowed to do this.', 'swiftforms' ), '', [ 'response' => 403 ] );
+		if ( ! Access::can( 'blockforms_manage_settings' ) ) {
+			wp_die( esc_html__( 'You are not allowed to do this.', 'blockforms' ), '', [ 'response' => 403 ] );
 		}
 		update_user_meta( get_current_user_id(), self::META, Clock::now() );
 
@@ -102,15 +102,15 @@ class Mail_Notice {
 	}
 
 	/**
-	 * Whether the current admin screen is one of SwiftForms'.
+	 * Whether the current admin screen is one of BlockForms'.
 	 *
 	 * @return bool
 	 */
-	private static function on_swiftforms_screen() {
+	private static function on_blockforms_screen() {
 		if ( ! function_exists( 'get_current_screen' ) ) {
 			return false;
 		}
 		$screen = get_current_screen();
-		return $screen instanceof \WP_Screen && false !== strpos( (string) $screen->id, 'swiftforms' );
+		return $screen instanceof \WP_Screen && false !== strpos( (string) $screen->id, 'blockforms' );
 	}
 }

@@ -1,18 +1,18 @@
-<?php // phpcs:disable WordPress.WP.AlternativeFunctions, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper: plain file functions are the point; the class name SF_Snapshot_Store is fixed by the R00 plan.
+<?php // phpcs:disable WordPress.WP.AlternativeFunctions, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper: plain file functions are the point; the class name BF_Snapshot_Store is fixed by the R00 plan.
 /**
  * Golden-master snapshot files for the user-config regression suite.
  *
- * - A missing snapshot fails. SF_UPDATE_SNAPSHOTS=1 creates it.
+ * - A missing snapshot fails. BF_UPDATE_SNAPSHOTS=1 creates it.
  * - A mismatch fails with a unified diff.
- * - SF_UPDATE_SNAPSHOTS=1 is refused in CI.
+ * - BF_UPDATE_SNAPSHOTS=1 is refused in CI.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 /**
  * Reads, compares and (in update mode) writes snapshot files.
  */
-class SF_Snapshot_Store {
+class BF_Snapshot_Store {
 
 	/**
 	 * Root directory of the snapshots.
@@ -22,7 +22,7 @@ class SF_Snapshot_Store {
 	private $root;
 
 	/**
-	 * Whether SF_UPDATE_SNAPSHOTS=1 is in effect.
+	 * Whether BF_UPDATE_SNAPSHOTS=1 is in effect.
 	 *
 	 * @var bool
 	 */
@@ -49,9 +49,9 @@ class SF_Snapshot_Store {
 	 */
 	public function __construct( $root ) {
 		$this->root   = rtrim( $root, '/' );
-		$this->update = '1' === getenv( 'SF_UPDATE_SNAPSHOTS' );
+		$this->update = '1' === getenv( 'BF_UPDATE_SNAPSHOTS' );
 		if ( $this->update && ( getenv( 'CI' ) || getenv( 'GITHUB_ACTIONS' ) ) ) {
-			throw new RuntimeException( 'SF_UPDATE_SNAPSHOTS=1 is forbidden in CI. Regenerate snapshots locally and list the diff under "Intended snapshot changes" in the release plan.' ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Developer-facing message.
+			throw new RuntimeException( 'BF_UPDATE_SNAPSHOTS=1 is forbidden in CI. Regenerate snapshots locally and list the diff under "Intended snapshot changes" in the release plan.' ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Developer-facing message.
 		}
 	}
 
@@ -96,7 +96,7 @@ class SF_Snapshot_Store {
 		}
 
 		if ( ! is_file( $path ) ) {
-			return 'Missing snapshot ' . $relative . '. Run with SF_UPDATE_SNAPSHOTS=1 to create it.';
+			return 'Missing snapshot ' . $relative . '. Run with BF_UPDATE_SNAPSHOTS=1 to create it.';
 		}
 		$expected = file_get_contents( $path );
 		if ( $expected === $actual ) {

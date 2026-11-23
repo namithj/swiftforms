@@ -1,11 +1,11 @@
 <?php
 /**
- * Tests for SwiftForms\Uuid.
+ * Tests for BlockForms\Uuid.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Uuid;
+use BlockForms\Uuid;
 
 /**
  * Class UuidTest
@@ -29,7 +29,7 @@ class UuidTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The default namespace is the SwiftForms one (C-2.7).
+	 * The default namespace is the BlockForms one (C-2.7).
 	 *
 	 * @return void
 	 */

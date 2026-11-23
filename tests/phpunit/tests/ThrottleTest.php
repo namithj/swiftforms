@@ -1,14 +1,14 @@
 <?php
 /**
- * Tests for SwiftForms\Throttle.
+ * Tests for BlockForms\Throttle.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Throttle;
+use BlockForms\Clock;
+use BlockForms\Throttle;
 
 /**
  * Class ThrottleTest
@@ -16,7 +16,7 @@ use SwiftForms\Throttle;
  * @group submission
  * @group security
  */
-class ThrottleTest extends SF_Storage_Test_Case {
+class ThrottleTest extends BF_Storage_Test_Case {
 
 	/**
 	 * Freeze the clock at the start of a minute.
@@ -37,23 +37,23 @@ class ThrottleTest extends SF_Storage_Test_Case {
 		$this->assertSame( 60, Throttle::limit() );
 
 		add_filter(
-			'swiftforms_throttle_limit',
+			'blockforms_throttle_limit',
 			static function () {
 				return 5;
 			}
 		);
 		$this->assertSame( 5, Throttle::limit() );
-		remove_all_filters( 'swiftforms_throttle_limit' );
+		remove_all_filters( 'blockforms_throttle_limit' );
 
 		foreach ( [ 0, -3, 'abc', null, [] ] as $bad ) {
 			add_filter(
-				'swiftforms_throttle_limit',
+				'blockforms_throttle_limit',
 				static function () use ( $bad ) {
 					return $bad;
 				}
 			);
 			$this->assertSame( 60, Throttle::limit(), 'Ignored.' );
-			remove_all_filters( 'swiftforms_throttle_limit' );
+			remove_all_filters( 'blockforms_throttle_limit' );
 		}
 	}
 
@@ -84,7 +84,7 @@ class ThrottleTest extends SF_Storage_Test_Case {
 	 */
 	public function test_filtered_limit_applies() {
 		add_filter(
-			'swiftforms_throttle_limit',
+			'blockforms_throttle_limit',
 			static function () {
 				return 2;
 			}
@@ -162,7 +162,7 @@ class ThrottleTest extends SF_Storage_Test_Case {
 		Throttle::allow_form( '11111111-1111-4111-8111-111111111111', 'client-z', 5 );
 		Throttle::claim( '11111111-1111-4111-8111-111111111111', 'client-z', 'p' );
 
-		$rows = $wpdb->get_results( "SELECT option_name, autoload FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_swiftforms\\_%' OR option_name LIKE '\\_transient\\_timeout\\_swiftforms\\_%'", ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$rows = $wpdb->get_results( "SELECT option_name, autoload FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_blockforms\\_%' OR option_name LIKE '\\_transient\\_timeout\\_blockforms\\_%'", ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$this->assertNotEmpty( $rows );
 		foreach ( $rows as $row ) {
 			$this->assertContains( $row['autoload'], [ 'no', 'off' ], $row['option_name'] );

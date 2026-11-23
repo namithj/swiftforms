@@ -1,8 +1,8 @@
 /**
- * SwiftForms front-end view module.
+ * BlockForms front-end view module.
  *
  * Progressive enhancement of the server-rendered form (Interactivity API, no jQuery): client validation
- * that mirrors the server, an AJAX submit to swiftforms/v1/submit, and the token and nonce refresh paths
+ * that mirrors the server, an AJAX submit to blockforms/v1/submit, and the token and nonce refresh paths
  * for pages that sit in a cache for days (ADR-002, C-3.7, C-7.4). Every context key is optional.
  *
  * The only HTML this module inserts is `confirmation.html` from the server. Everything else is
@@ -23,7 +23,7 @@ const hydrated = new WeakMap();
 const sending = new WeakSet();
 const refreshing = new WeakMap();
 
-const { state } = store( 'swiftforms', {
+const { state } = store( 'blockforms', {
 	actions: {
 		/**
 		 * Submit handler: validate, then POST JSON. Without ajax the browser posts natively.
@@ -57,7 +57,7 @@ const { state } = store( 'swiftforms', {
 		},
 	},
 	callbacks: {
-		/** Mark the form as managed by this module and start the clock for `_sf_t`. */
+		/** Mark the form as managed by this module and start the clock for `_bf_t`. */
 		init() {
 			const { ref } = getElement();
 			const ctx = getContext();
@@ -107,12 +107,12 @@ function refreshToken( form, ctx ) {
 		return refreshing.get( form );
 	}
 	const base =
-		state.tokenUrl || ( state.restUrl || '' ) + 'swiftforms/v1/token';
+		state.tokenUrl || ( state.restUrl || '' ) + 'blockforms/v1/token';
 	const query =
 		'formId=' +
-		encodeURIComponent( ctx.formId || value( form, '_sf_form' ) ) +
+		encodeURIComponent( ctx.formId || value( form, '_bf_form' ) ) +
 		'&source=' +
-		encodeURIComponent( ctx.source || value( form, '_sf_source' ) );
+		encodeURIComponent( ctx.source || value( form, '_bf_source' ) );
 	const promise = fetch( urlWith( base, query ), {
 		cache: 'no-store',
 		credentials: 'same-origin',
@@ -123,8 +123,8 @@ function refreshToken( form, ctx ) {
 			if ( ! body || body.status !== 'success' || ! body.token ) {
 				return false;
 			}
-			const token = field( form, '_sf_token' );
-			const time = field( form, '_sf_t' );
+			const token = field( form, '_bf_token' );
+			const time = field( form, '_bf_t' );
 			if ( token ) {
 				token.value = body.token;
 			}
@@ -152,7 +152,7 @@ function refreshToken( form, ctx ) {
  */
 function refreshNonce( form ) {
 	return fetch(
-		urlWith( state.ajaxUrl || '', 'action=swiftforms_rest_nonce' ),
+		urlWith( state.ajaxUrl || '', 'action=blockforms_rest_nonce' ),
 		{
 			cache: 'no-store',
 			credentials: 'same-origin',
@@ -178,7 +178,7 @@ function refreshNonce( form ) {
 // ---------------------------------------------------------------------
 
 const wrappers = ( form ) =>
-	Array.from( form.querySelectorAll( '.swiftforms-field' ) );
+	Array.from( form.querySelectorAll( '.blockforms-field' ) );
 
 const controlsOf = ( wrapper ) =>
 	Array.from( wrapper.querySelectorAll( 'input, select, textarea' ) );
@@ -189,7 +189,7 @@ const invalidWrapper = ( wrapper ) =>
 	);
 
 function setFieldError( wrapper, message, control ) {
-	const target = wrapper.querySelector( '.swiftforms-error' );
+	const target = wrapper.querySelector( '.blockforms-error' );
 	controlsOf( wrapper ).forEach( ( c ) => {
 		if ( message ) {
 			c.setAttribute( 'aria-invalid', 'true' );
@@ -207,10 +207,10 @@ function setFieldError( wrapper, message, control ) {
 }
 
 function summaryOf( form ) {
-	let summary = form.querySelector( '.swiftforms-errors-summary' );
+	let summary = form.querySelector( '.blockforms-errors-summary' );
 	if ( ! summary ) {
 		summary = document.createElement( 'div' );
-		summary.className = 'swiftforms-errors-summary';
+		summary.className = 'blockforms-errors-summary';
 		summary.hidden = true;
 		form.insertBefore( summary, form.firstChild );
 	}
@@ -270,13 +270,13 @@ function showSummary( form, items, focus ) {
  * @return {string} Label text.
  */
 function labelOf( wrapper ) {
-	const source = wrapper.querySelector( '.swiftforms-label' );
-	if ( ! source || source.classList.contains( 'swiftforms-consent' ) ) {
+	const source = wrapper.querySelector( '.blockforms-label' );
+	if ( ! source || source.classList.contains( 'blockforms-consent' ) ) {
 		return '';
 	}
 	const clone = source.cloneNode( true );
 	clone
-		.querySelectorAll( '.swiftforms-required, .swiftforms-sr-only, input' )
+		.querySelectorAll( '.blockforms-required, .blockforms-sr-only, input' )
 		.forEach( ( node ) => node.remove() );
 	return clone.textContent.trim();
 }
@@ -291,7 +291,7 @@ function currentItems( form ) {
 	return wrappers( form )
 		.filter( invalidWrapper )
 		.map( ( wrapper ) => {
-			const error = wrapper.querySelector( '.swiftforms-error' );
+			const error = wrapper.querySelector( '.blockforms-error' );
 			const first = controlsOf( wrapper )[ 0 ];
 			const label = labelOf( wrapper );
 			const message = error ? error.textContent : '';
@@ -326,7 +326,7 @@ function validateAll( form ) {
 
 function recheck( target ) {
 	const wrapper =
-		target && target.closest && target.closest( '.swiftforms-field' );
+		target && target.closest && target.closest( '.blockforms-field' );
 	const form = wrapper && wrapper.closest( 'form' );
 	if ( ! wrapper || ! form || ! invalidWrapper( wrapper ) ) {
 		return;
@@ -350,9 +350,9 @@ function showServerErrors( form, errors ) {
 		const control =
 			message &&
 			form.querySelector(
-				'[name="sf[' + name + ']"], [name="sf[' + name + '][]"]'
+				'[name="bf[' + name + ']"], [name="bf[' + name + '][]"]'
 			);
-		const wrapper = control && control.closest( '.swiftforms-field' );
+		const wrapper = control && control.closest( '.blockforms-field' );
 		if ( wrapper ) {
 			setFieldError( wrapper, message, null );
 		} else if ( message ) {
@@ -384,12 +384,12 @@ function showConfirmation( form, confirmation ) {
 		return false;
 	}
 	const box = document.createElement( 'div' );
-	box.className = 'swiftforms-confirmation';
+	box.className = 'blockforms-confirmation';
 	box.setAttribute( 'role', 'status' );
 	box.setAttribute( 'tabindex', '-1' );
 	box.innerHTML = confirmation.html; // The one piece of HTML we insert: the server's confirmation.
 	form.replaceChildren( box );
-	form.classList.add( 'swiftforms-form--submitted' );
+	form.classList.add( 'blockforms-form--submitted' );
 	form.removeAttribute( 'aria-busy' );
 	box.focus();
 	return true;
@@ -421,7 +421,7 @@ async function send( form, ctx ) {
 
 		const started0 = hydrated.has( form ) ? hydrated.get( form ) : started;
 		const url =
-			state.submitUrl || ( state.restUrl || '' ) + 'swiftforms/v1/submit';
+			state.submitUrl || ( state.restUrl || '' ) + 'blockforms/v1/submit';
 		const result = await submitWithRetry( {
 			send: async () => {
 				const headers = {

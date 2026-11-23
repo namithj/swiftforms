@@ -10,14 +10,14 @@
  * entries point at four schema snapshots (the current one and three older ones, with a field added, removed and
  * renamed over time); the survey stores a multi-value checkbox field (one value row per tick).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-$sf_c11_now  = 1795082400;
-$sf_c11_step = 6307;
+$bf_c11_now  = 1795082400;
+$bf_c11_step = 6307;
 
 // The schema snapshot the plugin stores for each current form (hash and JSON as the plugin wrote them).
-$sf_c11_current = [
+$bf_c11_current = [
 	'contact'    => [
 		'hash'   => '71f98317627b3e2ca8b4eecf11d0b3e253ecb4cbf3a3f7dcb936dfd9bf003c9a',
 		'schema' => <<<'JSON'
@@ -41,7 +41,7 @@ JSON
 	],
 ];
 
-return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
+return ( static function () use ( $bf_c11_now, $bf_c11_step, $bf_c11_current ) {
 	$form_ids = [
 		'contact'    => '5f110001-0000-4000-8000-000000000001',
 		'newsletter' => '5f110002-0000-4000-8000-000000000002',
@@ -49,7 +49,7 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 	];
 
 	// Older snapshots of the contact form: v1 (name, email, message), v2 (+ phone), v3 (- phone, + topic); the current one renamed message to details.
-	$contact_fields = json_decode( $sf_c11_current['contact']['schema'], true )['fields'];
+	$contact_fields = json_decode( $bf_c11_current['contact']['schema'], true )['fields'];
 	$by_name        = [];
 	foreach ( $contact_fields as $field ) {
 		$by_name[ $field['name'] ] = $field;
@@ -69,10 +69,10 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 	];
 	$schemas           = [];
 	$hashes            = [
-		'v1'      => hash( 'sha256', 'sf-config-11-contact-v1' ),
-		'v2'      => hash( 'sha256', 'sf-config-11-contact-v2' ),
-		'v3'      => hash( 'sha256', 'sf-config-11-contact-v3' ),
-		'current' => $sf_c11_current['contact']['hash'],
+		'v1'      => hash( 'sha256', 'bf-config-11-contact-v1' ),
+		'v2'      => hash( 'sha256', 'bf-config-11-contact-v2' ),
+		'v3'      => hash( 'sha256', 'bf-config-11-contact-v3' ),
+		'current' => $bf_c11_current['contact']['hash'],
 	];
 	$created           = [
 		'v1' => '2025-10-01 09:00:00',
@@ -80,7 +80,7 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 		'v3' => '2026-05-20 09:00:00',
 	];
 	foreach ( $versions as $version => $fields ) {
-		$snapshot           = json_decode( $sf_c11_current['contact']['schema'], true );
+		$snapshot           = json_decode( $bf_c11_current['contact']['schema'], true );
 		$snapshot['hash']   = $hashes[ $version ];
 		$snapshot['fields'] = $fields;
 		$schemas[]          = [
@@ -90,7 +90,7 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 			'created_gmt' => $created[ $version ],
 		];
 	}
-	foreach ( $sf_c11_current as $name => $current ) {
+	foreach ( $bf_c11_current as $name => $current ) {
 		$schemas[] = [
 			'schema_hash' => $current['hash'],
 			'form_id'     => $form_ids[ $name ],
@@ -112,13 +112,13 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 		} elseif ( $n <= 4200 ) {
 			$form = 'newsletter';
 			$step = $n - 3000;
-			$hash = $sf_c11_current['newsletter']['hash'];
+			$hash = $bf_c11_current['newsletter']['hash'];
 		} else {
 			$form = 'survey';
 			$step = $n - 4200;
-			$hash = $sf_c11_current['survey']['hash'];
+			$hash = $bf_c11_current['survey']['hash'];
 		}
-		$when      = gmdate( 'Y-m-d H:i:s', $sf_c11_now - ( 5000 - $n ) * $sf_c11_step );
+		$when      = gmdate( 'Y-m-d H:i:s', $bf_c11_now - ( 5000 - $n ) * $bf_c11_step );
 		$label     = sprintf( '%04d', $n );
 		$entries[] = [
 			'id'          => $n,
@@ -207,15 +207,15 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 		'guards'        => [ 'C-4.1', 'C-4.2', 'C-4.3', 'C-4.4' ],
 		'site'          => [
 			'locale'     => 'en_US',
-			'theme'      => 'sf-test-block',
+			'theme'      => 'bf-test-block',
 			'multisite'  => false,
 			'timezone'   => 'Europe/London',
 			'permalinks' => '/%postname%/',
 		],
 		'options'       => [
-			'swiftforms_email_notification_to' => 'ops@busy-site.example',
-			'swiftforms_db_version'            => 1,
-			'swiftforms_installed'             => [
+			'blockforms_email_notification_to' => 'ops@busy-site.example',
+			'blockforms_db_version'            => 1,
+			'blockforms_installed'             => [
 				'version' => '1.0.0',
 				'time'    => 1795082400,
 			],
@@ -228,13 +228,13 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 				'title'     => 'Contact',
 				'slug'      => 'contact',
 				'date'      => '2025-09-30 09:00:00',
-				'content'   => SF_FORM(
+				'content'   => BF_FORM(
 					[
 						'formId' => $form_ids['contact'],
 						'title'  => 'Contact',
 					],
 					[
-						SF_FIELD(
+						BF_FIELD(
 							'text',
 							[
 								'label'        => 'Name',
@@ -243,7 +243,7 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 								'autocomplete' => 'name',
 							]
 						),
-						SF_FIELD(
+						BF_FIELD(
 							'email',
 							[
 								'label'        => 'Email',
@@ -252,7 +252,7 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 								'autocomplete' => 'email',
 							]
 						),
-						SF_FIELD(
+						BF_FIELD(
 							'select',
 							[
 								'label'             => 'Topic',
@@ -274,7 +274,7 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 								],
 							]
 						),
-						SF_FIELD(
+						BF_FIELD(
 							'textarea',
 							[
 								'label'    => 'Details',
@@ -294,13 +294,13 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 				'title'     => 'Newsletter',
 				'slug'      => 'newsletter',
 				'date'      => '2025-09-30 10:00:00',
-				'content'   => SF_FORM(
+				'content'   => BF_FORM(
 					[
 						'formId' => $form_ids['newsletter'],
 						'title'  => 'Newsletter',
 					],
 					[
-						SF_FIELD(
+						BF_FIELD(
 							'email',
 							[
 								'label'        => 'Email',
@@ -321,13 +321,13 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 				'title'     => 'Survey',
 				'slug'      => 'survey',
 				'date'      => '2025-09-30 11:00:00',
-				'content'   => SF_FORM(
+				'content'   => BF_FORM(
 					[
 						'formId' => $form_ids['survey'],
 						'title'  => 'Reader survey',
 					],
 					[
-						SF_FIELD(
+						BF_FIELD(
 							'text',
 							[
 								'label'    => 'Name',
@@ -335,7 +335,7 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 								'required' => true,
 							]
 						),
-						SF_FIELD(
+						BF_FIELD(
 							'checkboxes',
 							[
 								'label'      => 'What would you like to hear about?',
@@ -367,7 +367,7 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 								],
 							]
 						),
-						SF_FIELD(
+						BF_FIELD(
 							'textarea',
 							[
 								'label' => 'Comment',
@@ -381,9 +381,9 @@ return ( static function () use ( $sf_c11_now, $sf_c11_step, $sf_c11_current ) {
 			],
 		],
 		'tables'        => [
-			'swiftforms_schemas'      => $schemas,
-			'swiftforms_entries'      => $entries,
-			'swiftforms_entry_values' => $values,
+			'blockforms_schemas'      => $schemas,
+			'blockforms_entries'      => $entries,
+			'blockforms_entry_values' => $values,
 		],
 		'users'         => [ 'admin' ],
 		'submissions'   => [

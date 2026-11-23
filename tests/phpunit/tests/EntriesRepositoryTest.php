@@ -1,24 +1,24 @@
 <?php
 /**
- * Tests for SwiftForms\Entries_Repository.
+ * Tests for BlockForms\Entries_Repository.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Entries_Repository;
-use SwiftForms\Field_Types;
-use SwiftForms\Form_Schema;
-use SwiftForms\Submission_Context;
+use BlockForms\Clock;
+use BlockForms\Entries_Repository;
+use BlockForms\Field_Types;
+use BlockForms\Form_Schema;
+use BlockForms\Submission_Context;
 
 /**
  * Class EntriesRepositoryTest
  *
  * @group submission
  */
-class EntriesRepositoryTest extends SF_Storage_Test_Case {
+class EntriesRepositoryTest extends BF_Storage_Test_Case {
 
 	const FORM = '11111111-1111-4111-8111-111111111111';
 
@@ -165,7 +165,7 @@ class EntriesRepositoryTest extends SF_Storage_Test_Case {
 		$this->assertStringStartsWith( 'Mozilla/5.0 (Test) xxx', $on['user_agent'] );
 
 		global $wpdb;
-		$raw = $wpdb->get_var( $wpdb->prepare( 'SELECT HEX(ip) FROM `' . SwiftForms\Database::table( 'entries' ) . '` WHERE id = %d', $on['id'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
+		$raw = $wpdb->get_var( $wpdb->prepare( 'SELECT HEX(ip) FROM `' . BlockForms\Database::table( 'entries' ) . '` WHERE id = %d', $on['id'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
 		$this->assertSame( 'CB007107', $raw, 'Four bytes: inet_pton() of the IPv4 address.' );
 
 		$_SERVER['REMOTE_ADDR'] = '2001:db8::7';

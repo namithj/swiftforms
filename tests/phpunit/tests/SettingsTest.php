@@ -1,22 +1,22 @@
 <?php
 /**
- * Tests for SwiftForms\Settings (C-5).
+ * Tests for BlockForms\Settings (C-5).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
-require_once dirname( __DIR__ ) . '/includes/class-sf-test-future-settings.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-test-future-settings.php';
 
-use SwiftForms\Install_Marker;
-use SwiftForms\Settings;
+use BlockForms\Install_Marker;
+use BlockForms\Settings;
 
 /**
  * Class SettingsTest
  *
  * @group settings
  */
-class SettingsTest extends SF_Storage_Test_Case {
+class SettingsTest extends BF_Storage_Test_Case {
 
 	/**
 	 * The exact C-5 defaults.
@@ -75,7 +75,7 @@ class SettingsTest extends SF_Storage_Test_Case {
 	 */
 	public function test_success_message_is_translated() {
 		add_filter(
-			'gettext_swiftforms',
+			'gettext_blockforms',
 			static function ( $translation, $text ) {
 				return 'Thank you. Your message has been sent.' === $text ? 'Danke.' : $translation;
 			},
@@ -86,51 +86,51 @@ class SettingsTest extends SF_Storage_Test_Case {
 	}
 
 	/**
-	 * Every key is one option, swiftforms_{section}_{key}, and none collides with another SwiftForms option.
+	 * Every key is one option, blockforms_{section}_{key}, and none collides with another BlockForms option.
 	 *
 	 * @return void
 	 */
 	public function test_option_names() {
 		$expected = [
-			'swiftforms_general_store_entries',
-			'swiftforms_general_store_ip',
-			'swiftforms_general_store_user_agent',
-			'swiftforms_general_retention_days',
-			'swiftforms_general_load_styles',
-			'swiftforms_general_default_success_message',
-			'swiftforms_email_from_name',
-			'swiftforms_email_from_email',
-			'swiftforms_email_notification_to',
-			'swiftforms_email_html_template',
-			'swiftforms_email_logo_id',
-			'swiftforms_email_accent_color',
-			'swiftforms_email_footer_text',
-			'swiftforms_email_visitor_mail_daily_cap',
-			'swiftforms_email_visitor_mail_hourly_cap',
-			'swiftforms_spam_honeypot',
-			'swiftforms_spam_min_seconds',
-			'swiftforms_spam_js_token',
-			'swiftforms_spam_rate_limit_per_minute',
-			'swiftforms_spam_blocked_words',
-			'swiftforms_spam_spam_action',
-			'swiftforms_privacy_exporter',
-			'swiftforms_privacy_eraser',
-			'swiftforms_advanced_delete_on_uninstall',
-			'swiftforms_advanced_debug_log',
+			'blockforms_general_store_entries',
+			'blockforms_general_store_ip',
+			'blockforms_general_store_user_agent',
+			'blockforms_general_retention_days',
+			'blockforms_general_load_styles',
+			'blockforms_general_default_success_message',
+			'blockforms_email_from_name',
+			'blockforms_email_from_email',
+			'blockforms_email_notification_to',
+			'blockforms_email_html_template',
+			'blockforms_email_logo_id',
+			'blockforms_email_accent_color',
+			'blockforms_email_footer_text',
+			'blockforms_email_visitor_mail_daily_cap',
+			'blockforms_email_visitor_mail_hourly_cap',
+			'blockforms_spam_honeypot',
+			'blockforms_spam_min_seconds',
+			'blockforms_spam_js_token',
+			'blockforms_spam_rate_limit_per_minute',
+			'blockforms_spam_blocked_words',
+			'blockforms_spam_spam_action',
+			'blockforms_privacy_exporter',
+			'blockforms_privacy_eraser',
+			'blockforms_advanced_delete_on_uninstall',
+			'blockforms_advanced_debug_log',
 		];
 		$names    = array_map( [ Settings::class, 'option_name' ], Settings::paths() );
 		$this->assertSame( $expected, $names );
 
-		$others = [ 'swiftforms_installed', 'swiftforms_db_version', 'swiftforms_backups', 'swiftforms_migration_lock', 'swiftforms_source_edges', 'swiftforms_recent_clients', 'swiftforms_mail_cap_notice', 'swiftforms_secrets', 'swiftforms_settings' ];
-		$this->assertSame( [], array_intersect( $names, $others ), 'No settings option is another SwiftForms option.' );
+		$others = [ 'blockforms_installed', 'blockforms_db_version', 'blockforms_backups', 'blockforms_migration_lock', 'blockforms_source_edges', 'blockforms_recent_clients', 'blockforms_mail_cap_notice', 'blockforms_secrets', 'blockforms_settings' ];
+		$this->assertSame( [], array_intersect( $names, $others ), 'No settings option is another BlockForms option.' );
 		foreach ( $others as $name ) {
 			$this->assertNull( Settings::path_of( $name ), $name . ' is not a settings option.' );
 		}
 		foreach ( Settings::paths() as $path ) {
 			$this->assertSame( $path, Settings::path_of( Settings::option_name( $path ) ) );
 		}
-		$this->assertNull( Settings::path_of( 'swiftforms_general_unknown' ) );
-		$this->assertNull( Settings::path_of( 'swiftforms_general' ) );
+		$this->assertNull( Settings::path_of( 'blockforms_general_unknown' ) );
+		$this->assertNull( Settings::path_of( 'blockforms_general' ) );
 	}
 
 	/**
@@ -169,15 +169,15 @@ class SettingsTest extends SF_Storage_Test_Case {
 	 */
 	public function test_present_options_are_typed() {
 		$this->clear_options();
-		update_option( 'swiftforms_general_store_entries', '0' );
-		update_option( 'swiftforms_general_store_ip', '1' );
-		update_option( 'swiftforms_general_retention_days', 30 );
-		update_option( 'swiftforms_spam_min_seconds', '0' );
-		update_option( 'swiftforms_email_notification_to', 'a@example.org, b@example.org' );
-		update_option( 'swiftforms_email_logo_id', 12 );
-		update_option( 'swiftforms_email_accent_color', '#12F' );
-		update_option( 'swiftforms_spam_spam_action', 'discard' );
-		update_option( 'swiftforms_spam_blocked_words', " foo\nbar " );
+		update_option( 'blockforms_general_store_entries', '0' );
+		update_option( 'blockforms_general_store_ip', '1' );
+		update_option( 'blockforms_general_retention_days', 30 );
+		update_option( 'blockforms_spam_min_seconds', '0' );
+		update_option( 'blockforms_email_notification_to', 'a@example.org, b@example.org' );
+		update_option( 'blockforms_email_logo_id', 12 );
+		update_option( 'blockforms_email_accent_color', '#12F' );
+		update_option( 'blockforms_spam_spam_action', 'discard' );
+		update_option( 'blockforms_spam_blocked_words', " foo\nbar " );
 
 		$this->assertFalse( Settings::get_value( 'general.store_entries' ) );
 		$this->assertTrue( Settings::get_value( 'general.store_ip' ) );
@@ -223,8 +223,8 @@ class SettingsTest extends SF_Storage_Test_Case {
 		}
 
 		// One corrupt neighbour does not spoil a valid one.
-		update_option( 'swiftforms_spam_honeypot', 'banana' );
-		update_option( 'swiftforms_spam_js_token', '0' );
+		update_option( 'blockforms_spam_honeypot', 'banana' );
+		update_option( 'blockforms_spam_js_token', '0' );
 		Settings::flush_cache();
 		$this->assertTrue( Settings::get_value( 'spam.honeypot' ) );
 		$this->assertFalse( Settings::get_value( 'spam.js_token' ) );
@@ -237,10 +237,10 @@ class SettingsTest extends SF_Storage_Test_Case {
 	 */
 	public function test_corrupt_bytes_stay_in_the_table() {
 		$this->clear_options();
-		update_option( 'swiftforms_spam_spam_action', 'delete' );
-		$this->assertSame( 'store', get_option( 'swiftforms_spam_spam_action' ) );
-		$this->assertSame( 'delete', $this->raw_option( 'swiftforms_spam_spam_action' ) );
-		$this->assertSame( [ 'swiftforms_spam_spam_action' => 'delete' ], Settings::stored_options() );
+		update_option( 'blockforms_spam_spam_action', 'delete' );
+		$this->assertSame( 'store', get_option( 'blockforms_spam_spam_action' ) );
+		$this->assertSame( 'delete', $this->raw_option( 'blockforms_spam_spam_action' ) );
+		$this->assertSame( [ 'blockforms_spam_spam_action' => 'delete' ], Settings::stored_options() );
 		$this->assertTrue( Settings::has_stored() );
 	}
 
@@ -251,14 +251,14 @@ class SettingsTest extends SF_Storage_Test_Case {
 	 */
 	public function test_unknown_options_are_ignored() {
 		$this->clear_options();
-		add_option( 'swiftforms_general_future_key', 'x' );
-		add_option( 'swiftforms_future_section_key', 'y' );
-		add_option( 'swiftforms_settings', [ 'spam' => [ 'honeypot' => false ] ] );
+		add_option( 'blockforms_general_future_key', 'x' );
+		add_option( 'blockforms_future_section_key', 'y' );
+		add_option( 'blockforms_settings', [ 'spam' => [ 'honeypot' => false ] ] );
 
 		$this->assertSame( Settings::defaults( Install_Marker::installed_version() ), Settings::get(), 'The old array option is not read any more.' );
-		$this->assertSame( 'x', get_option( 'swiftforms_general_future_key' ) );
-		$this->assertSame( 'y', get_option( 'swiftforms_future_section_key' ) );
-		$this->assertSame( [ 'swiftforms_general_future_key' => 'x' ], Settings::stored_options(), 'A key of a known section is part of the backup, a foreign section is not.' );
+		$this->assertSame( 'x', get_option( 'blockforms_general_future_key' ) );
+		$this->assertSame( 'y', get_option( 'blockforms_future_section_key' ) );
+		$this->assertSame( [ 'blockforms_general_future_key' => 'x' ], Settings::stored_options(), 'A key of a known section is part of the backup, a foreign section is not.' );
 	}
 
 	/**
@@ -270,16 +270,16 @@ class SettingsTest extends SF_Storage_Test_Case {
 		$this->clear_options();
 		$this->assertTrue( Settings::get_value( 'spam.honeypot' ) );
 
-		add_option( 'swiftforms_spam_honeypot', '0' );
+		add_option( 'blockforms_spam_honeypot', '0' );
 		$this->assertFalse( Settings::get_value( 'spam.honeypot' ) );
 
-		update_option( 'swiftforms_spam_honeypot', '1' );
+		update_option( 'blockforms_spam_honeypot', '1' );
 		$this->assertTrue( Settings::get_value( 'spam.honeypot' ) );
 
-		update_option( 'swiftforms_spam_honeypot', '0' );
+		update_option( 'blockforms_spam_honeypot', '0' );
 		$this->assertFalse( Settings::get_value( 'spam.honeypot' ) );
 
-		delete_option( 'swiftforms_spam_honeypot' );
+		delete_option( 'blockforms_spam_honeypot' );
 		$this->assertTrue( Settings::get_value( 'spam.honeypot' ) );
 	}
 
@@ -307,16 +307,16 @@ class SettingsTest extends SF_Storage_Test_Case {
 	 * @return void
 	 */
 	public function test_new_install_default_mechanism() {
-		$this->assertFalse( Sf_Test_Future_Settings::defaults()['general']['future_flag'], 'No version known: the old default.' );
-		$this->assertFalse( Sf_Test_Future_Settings::defaults( '1.0.0' )['general']['future_flag'] );
-		$this->assertFalse( Sf_Test_Future_Settings::defaults( '1.1.9' )['general']['future_flag'] );
-		$this->assertTrue( Sf_Test_Future_Settings::defaults( '1.2.0' )['general']['future_flag'] );
-		$this->assertTrue( Sf_Test_Future_Settings::defaults( '2.0.0' )['general']['future_flag'] );
+		$this->assertFalse( Bf_Test_Future_Settings::defaults()['general']['future_flag'], 'No version known: the old default.' );
+		$this->assertFalse( Bf_Test_Future_Settings::defaults( '1.0.0' )['general']['future_flag'] );
+		$this->assertFalse( Bf_Test_Future_Settings::defaults( '1.1.9' )['general']['future_flag'] );
+		$this->assertTrue( Bf_Test_Future_Settings::defaults( '1.2.0' )['general']['future_flag'] );
+		$this->assertTrue( Bf_Test_Future_Settings::defaults( '2.0.0' )['general']['future_flag'] );
 
 		// A stored value is valid whatever the install age, so it is never replaced.
-		$this->assertFalse( Sf_Test_Future_Settings::coerce( 'general.future_flag', '0', Sf_Test_Future_Settings::defaults( '1.3.0' )['general']['future_flag'] ) );
-		$this->assertTrue( Sf_Test_Future_Settings::defaults( '1.3.0' )['general']['future_flag'], 'An absent option takes the new-install default.' );
-		$this->assertFalse( Sf_Test_Future_Settings::defaults( '1.0.0' )['general']['future_flag'], 'An absent option on an old install keeps the old behaviour.' );
+		$this->assertFalse( Bf_Test_Future_Settings::coerce( 'general.future_flag', '0', Bf_Test_Future_Settings::defaults( '1.3.0' )['general']['future_flag'] ) );
+		$this->assertTrue( Bf_Test_Future_Settings::defaults( '1.3.0' )['general']['future_flag'], 'An absent option takes the new-install default.' );
+		$this->assertFalse( Bf_Test_Future_Settings::defaults( '1.0.0' )['general']['future_flag'], 'An absent option on an old install keeps the old behaviour.' );
 	}
 
 	/**
@@ -337,7 +337,7 @@ class SettingsTest extends SF_Storage_Test_Case {
 			false
 		);
 		Settings::flush_cache();
-		$this->assertTrue( Sf_Test_Future_Settings::get()['general']['future_flag'] );
+		$this->assertTrue( Bf_Test_Future_Settings::get()['general']['future_flag'] );
 
 		update_option(
 			Install_Marker::OPTION,
@@ -347,6 +347,6 @@ class SettingsTest extends SF_Storage_Test_Case {
 			]
 		);
 		Settings::flush_cache();
-		$this->assertFalse( Sf_Test_Future_Settings::get()['general']['future_flag'] );
+		$this->assertFalse( Bf_Test_Future_Settings::get()['general']['future_flag'] );
 	}
 }

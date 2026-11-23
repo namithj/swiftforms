@@ -2,10 +2,10 @@
 /**
  * UUID helpers.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Uuid {
 
 	/**
-	 * Namespace UUID for every SwiftForms name-based ID (C-2.7).
+	 * Namespace UUID for every BlockForms name-based ID (C-2.7).
 	 */
 	const NAMESPACE = '6f3c2a3e-5d1b-4c1e-9b8a-53776966746f';
 
@@ -29,7 +29,7 @@ class Uuid {
 	 * Version 5 UUID of a name in a namespace.
 	 *
 	 * @param string $name      Any string (bytes are hashed as they are).
-	 * @param string $namespace A canonical UUID. Defaults to the SwiftForms namespace.
+	 * @param string $namespace A canonical UUID. Defaults to the BlockForms namespace.
 	 * @return string Lowercase canonical UUID.
 	 */
 	public static function v5( $name, $namespace = self::NAMESPACE ) {

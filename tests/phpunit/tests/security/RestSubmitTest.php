@@ -2,19 +2,19 @@
 /**
  * Tests for the submit route and the pipeline behind it.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__, 2 ) . '/includes/class-sf-submission-test-case.php';
+require_once dirname( __DIR__, 2 ) . '/includes/class-bf-submission-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Field_Types;
-use SwiftForms\Form_Index;
-use SwiftForms\Render_Token;
-use SwiftForms\Schema_Store;
-use SwiftForms\Submission;
-use SwiftForms\Submission_Context;
-use SwiftForms\Time_Trap;
+use BlockForms\Clock;
+use BlockForms\Field_Types;
+use BlockForms\Form_Index;
+use BlockForms\Render_Token;
+use BlockForms\Schema_Store;
+use BlockForms\Submission;
+use BlockForms\Submission_Context;
+use BlockForms\Time_Trap;
 
 /**
  * Class RestSubmitTest
@@ -22,7 +22,7 @@ use SwiftForms\Time_Trap;
  * @group submission
  * @group security
  */
-class RestSubmitTest extends SF_Submission_Test_Case {
+class RestSubmitTest extends BF_Submission_Test_Case {
 
 	/**
 	 * Contexts seen by the hooks.
@@ -39,7 +39,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 	private $notified = [];
 
 	/**
-	 * Contexts seen by swiftforms_submission_complete.
+	 * Contexts seen by blockforms_submission_complete.
 	 *
 	 * @var Submission_Context[]
 	 */
@@ -58,7 +58,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		$this->notified  = [];
 		$this->completed = [];
 		add_action(
-			'swiftforms_entry_saved',
+			'blockforms_entry_saved',
 			function ( $entry_id, $ctx ) {
 				$this->saved[] = [ $entry_id, $ctx ];
 			},
@@ -66,7 +66,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 			2
 		);
 		add_action(
-			'swiftforms_submission_complete',
+			'blockforms_submission_complete',
 			function ( $ctx, $result ) {
 				$this->completed[] = [ $ctx, $result ];
 			},
@@ -124,7 +124,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 				'message' => [ 'Hello there' ],
 				'name'    => [ 'Ada Lovelace' ],
 			],
-			SwiftForms\Entries_Repository::get( (int) $entries[0]['id'] )['values']
+			BlockForms\Entries_Repository::get( (int) $entries[0]['id'] )['values']
 		);
 
 		$this->assertCount( 1, $this->saved );
@@ -199,11 +199,11 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 
 		$this->set_settings( [ 'spam' => [ 'blocked_words' => 'casino' ] ] );
 		$spam_cases = [
-			'honeypot'  => [ $this->good( [ 'name' => 'A' ] ), [ '_sf_hp' => 'http://spam.example' ] ],
-			'too fast'  => [ $this->good( [ 'name' => 'B' ] ), [ '_sf_t' => 'js.100' ] ],
-			'no js'     => [ $this->good( [ 'name' => 'C' ] ), [ '_sf_t' => Time_Trap::issue( $this->form_id, $this->source ) ] ],
-			'bad token' => [ $this->good( [ 'name' => 'D' ] ), [ '_sf_token' => 'v1.abc.' . str_repeat( 'a', 32 ) ] ],
-			'no token'  => [ $this->good( [ 'name' => 'E' ] ), [ '_sf_token' => null ] ],
+			'honeypot'  => [ $this->good( [ 'name' => 'A' ] ), [ '_bf_hp' => 'http://spam.example' ] ],
+			'too fast'  => [ $this->good( [ 'name' => 'B' ] ), [ '_bf_t' => 'js.100' ] ],
+			'no js'     => [ $this->good( [ 'name' => 'C' ] ), [ '_bf_t' => Time_Trap::issue( $this->form_id, $this->source ) ] ],
+			'bad token' => [ $this->good( [ 'name' => 'D' ] ), [ '_bf_token' => 'v1.abc.' . str_repeat( 'a', 32 ) ] ],
+			'no token'  => [ $this->good( [ 'name' => 'E' ] ), [ '_bf_token' => null ] ],
 			'word'      => [ $this->good( [ 'name' => 'Casino royale' ] ), [] ],
 		];
 		foreach ( $spam_cases as $label => $case ) {
@@ -253,7 +253,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		$this->make_form();
 		$clean = $this->submit( $this->good() );
 		$this->set_settings( [ 'spam' => [ 'spam_action' => 'discard' ] ] );
-		$spam = $this->submit( $this->good( [ 'name' => 'Spammer' ] ), [ '_sf_hp' => 'x' ] );
+		$spam = $this->submit( $this->good( [ 'name' => 'Spammer' ] ), [ '_bf_hp' => 'x' ] );
 
 		$this->assertSame( wp_json_encode( $clean->get_data() ), wp_json_encode( $spam->get_data() ) );
 		$this->assertSame( $clean->get_status(), $spam->get_status() );
@@ -267,7 +267,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 	 */
 	public function test_spam_with_invalid_values_still_looks_like_success() {
 		$this->make_form();
-		$res = $this->submit( [ 'email' => 'not-an-email' ], [ '_sf_hp' => 'x' ] );
+		$res = $this->submit( [ 'email' => 'not-an-email' ], [ '_bf_hp' => 'x' ] );
 		$this->assertSame( 200, $res->get_status() );
 		$this->assertSame( 'success', $res->get_data()['status'] );
 	}
@@ -280,7 +280,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 	public function test_entry_number_never_in_the_confirmation() {
 		$this->make_form( $this->default_inner( '<!-- wp:paragraph --><p>Ref [{entry:id}] for {field:name}</p><!-- /wp:paragraph -->' ) );
 		$clean = $this->submit( $this->good() );
-		$spam  = $this->submit( $this->good(), [ '_sf_hp' => 'x' ] );
+		$spam  = $this->submit( $this->good(), [ '_bf_hp' => 'x' ] );
 		$this->assertSame( $clean->get_data(), $spam->get_data() );
 		$this->assertStringContainsString( 'Ref [] for Ada Lovelace', $clean->get_data()['confirmation']['html'] );
 	}
@@ -353,7 +353,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 					'value' => 'spring',
 				]
 			)
-			. '<!-- wp:swiftforms/submit /-->';
+			. '<!-- wp:blockforms/submit /-->';
 		$this->make_form( $inner );
 
 		$bad = $this->submit(
@@ -371,11 +371,11 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 				'plan'     => 'a,b|c',
 				'campaign' => 'HACKED',
 				'is_admin' => '1',
-				'sf'       => [ 'nested' ],
+				'bf'       => [ 'nested' ],
 			]
 		);
 		$this->assertSame( 200, $good->get_status() );
-		$entry = SwiftForms\Entries_Repository::get( (int) $this->entries()[0]['id'] );
+		$entry = BlockForms\Entries_Repository::get( (int) $this->entries()[0]['id'] );
 		$this->assertSame(
 			[
 				'campaign' => [ 'spring' ],
@@ -394,9 +394,9 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 	 */
 	public function test_form_encoded() {
 		$this->make_form();
-		$request = new WP_REST_Request( 'POST', '/swiftforms/v1/submit' );
+		$request = new WP_REST_Request( 'POST', '/blockforms/v1/submit' );
 		$request->set_header( 'content-type', 'application/x-www-form-urlencoded' );
-		$request->set_body_params( array_merge( $this->controls(), [ 'sf' => $this->good() ] ) );
+		$request->set_body_params( array_merge( $this->controls(), [ 'bf' => $this->good() ] ) );
 		$res = rest_do_request( $request );
 		$this->assertSame( 200, $res->get_status() );
 		$this->assertCount( 1, $this->entries() );
@@ -411,18 +411,18 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		$this->make_form();
 		foreach ( [
 			[],
-			[ 'sf' => 'string' ],
+			[ 'bf' => 'string' ],
 			[
-				'_sf_form'   => [ 'a' ],
-				'_sf_source' => 5,
+				'_bf_form'   => [ 'a' ],
+				'_bf_source' => 5,
 			],
 			[
-				'_sf_form'   => $this->form_id,
-				'_sf_source' => $this->source,
-				'sf'         => [ 'name' => [ [ [ 'deep' ] ] ] ],
+				'_bf_form'   => $this->form_id,
+				'_bf_source' => $this->source,
+				'bf'         => [ 'name' => [ [ [ 'deep' ] ] ] ],
 			],
 		] as $body ) {
-			$request = new WP_REST_Request( 'POST', '/swiftforms/v1/submit' );
+			$request = new WP_REST_Request( 'POST', '/blockforms/v1/submit' );
 			$request->set_header( 'content-type', 'application/json' );
 			$request->set_body( wp_json_encode( $body ) );
 			$res = rest_do_request( $request );
@@ -441,13 +441,13 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		$token = Render_Token::issue( $this->form_id, $this->source, $this->schema()->hash );
 		Clock::freeze( time() + 8 * DAY_IN_SECONDS );
 
-		$res = $this->submit( $this->good(), [ '_sf_token' => $token ] );
+		$res = $this->submit( $this->good(), [ '_bf_token' => $token ] );
 		$this->assertSame( 403, $res->get_status() );
 		$this->assertSame( [ 'status' => 'expired' ], $res->get_data() );
 		$this->assertCount( 0, $this->entries() );
 
 		// A forged token that LOOKS expired is spam, not "expired".
-		$forged = $this->submit( $this->good(), [ '_sf_token' => 'v1.1.' . str_repeat( 'a', 32 ) ] );
+		$forged = $this->submit( $this->good(), [ '_bf_token' => 'v1.1.' . str_repeat( 'a', 32 ) ] );
 		$this->assertSame( 200, $forged->get_status() );
 	}
 
@@ -518,7 +518,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 				'name'  => 'Ada',
 				'email' => 'ada@example.com',
 			],
-			[ '_sf_token' => $token ]
+			[ '_bf_token' => $token ]
 		);
 		$this->assertSame( 200, $res->get_status(), wp_json_encode( $res->get_data() ) );
 
@@ -530,7 +530,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 				'email' => [ 'ada@example.com' ],
 				'name'  => [ 'Ada' ],
 			],
-			SwiftForms\Entries_Repository::get( (int) $entries[0]['id'] )['values']
+			BlockForms\Entries_Repository::get( (int) $entries[0]['id'] )['values']
 		);
 
 		// The context carries both: validation against the snapshot, recipients and routing from the current form.
@@ -548,7 +548,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 				'name'  => 'Ada',
 				'email' => 'ada@example.com',
 			],
-			[ '_sf_token' => $token_new ]
+			[ '_bf_token' => $token_new ]
 		);
 		$this->assertSame( 422, $res->get_status(), 'email is a number field now and "extra" is required.' );
 		$this->assertSame( [ 'email', 'extra' ], array_keys( (array) $res->get_data()['errors'] ) );
@@ -604,7 +604,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		$this->assertNotSame( $old->hash, $new->hash );
 		$this->assertSame( [ $new->hash, $old->hash ], Form_Index::hash_history( $this->form_id ) );
 
-		$res = $this->submit( $this->good(), [ '_sf_token' => $token ] );
+		$res = $this->submit( $this->good(), [ '_bf_token' => $token ] );
 		$this->assertSame( 200, $res->get_status() );
 		$entries = $this->entries();
 		$this->assertCount( 1, $entries );
@@ -688,7 +688,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		$this->assertSame( 200, $res->get_status(), 'A mail failure is not the visitor\'s problem.' );
 		$this->assertSame( 'success', $res->get_data()['status'] );
 		$this->assertSame( 1, $seen['entries_at_notify'], 'The entry was already in the database.' );
-		$this->assertSame( 1, $seen['saved_at_notify'], 'swiftforms_entry_saved fired first.' );
+		$this->assertSame( 1, $seen['saved_at_notify'], 'blockforms_entry_saved fired first.' );
 		$this->assertCount( 1, $this->entries() );
 		$this->assertCount( 1, $this->completed, 'The submission still completes.' );
 
@@ -737,11 +737,11 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 	 */
 	public function test_spam_storage() {
 		$this->make_form();
-		$this->submit( $this->good(), [ '_sf_hp' => 'x' ] );
+		$this->submit( $this->good(), [ '_bf_hp' => 'x' ] );
 		$this->assertSame( [ 'spam' ], array_column( $this->entries(), 'status' ) );
 
 		$this->set_settings( [ 'general' => [ 'store_entries' => false ] ] );
-		$this->submit( $this->good( [ 'name' => 'Other' ] ), [ '_sf_hp' => 'x' ] );
+		$this->submit( $this->good( [ 'name' => 'Other' ] ), [ '_bf_hp' => 'x' ] );
 		$this->assertCount( 1, $this->entries() );
 		$this->assertCount( 0, $this->notified );
 	}
@@ -829,7 +829,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		$this->set_settings( [ 'spam' => [ 'rate_limit_per_minute' => 2 ] ] );
 
 		for ( $i = 0; $i < 10; $i++ ) {
-			$res = $this->submit( $this->good(), [ '_sf_form' => wp_generate_uuid4() ] );
+			$res = $this->submit( $this->good(), [ '_bf_form' => wp_generate_uuid4() ] );
 			$this->assertSame( 403, $res->get_status() );
 		}
 		$this->assertSame( 200, $this->submit( $this->good( [ 'name' => 'One' ] ) )->get_status() );
@@ -865,7 +865,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 
 		list( $ctx2, $result ) = $this->completed[0];
 		$this->assertSame( $ctx, $ctx2 );
-		$this->assertInstanceOf( SwiftForms\Submission_Result::class, $result );
+		$this->assertInstanceOf( BlockForms\Submission_Result::class, $result );
 		$this->assertSame( 'success', $result->status );
 	}
 
@@ -921,27 +921,27 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		// Database template and part of the active theme.
 		$cases['template']      = function () use ( $form ) {
 			$id = wp_generate_uuid4();
-			$this->make_theme( 'sf-p4a' );
-			$this->make_template_post( 'wp_template', 'sf-p4a', 'single', $form( $id ) );
+			$this->make_theme( 'bf-p4a' );
+			$this->make_template_post( 'wp_template', 'bf-p4a', 'single', $form( $id ) );
 			wp_set_current_user( 0 );
-			$this->source  = 'template:sf-p4a//single';
+			$this->source  = 'template:bf-p4a//single';
 			$this->form_id = $id;
 		};
 		$cases['template part'] = function () use ( $form ) {
 			$id = wp_generate_uuid4();
-			$this->make_theme( 'sf-p4b' );
-			$this->make_template_post( 'wp_template_part', 'sf-p4b', 'footer', $form( $id ) );
+			$this->make_theme( 'bf-p4b' );
+			$this->make_template_post( 'wp_template_part', 'bf-p4b', 'footer', $form( $id ) );
 			wp_set_current_user( 0 );
-			$this->source  = 'template_part:sf-p4b//footer';
+			$this->source  = 'template_part:bf-p4b//footer';
 			$this->form_id = $id;
 		};
 
 		// A template file of the theme.
 		$cases['file template'] = function () use ( $form ) {
 			$id = wp_generate_uuid4();
-			$this->make_theme( 'sf-p4c', [ 'templates/single.html' => $form( $id ) ] );
+			$this->make_theme( 'bf-p4c', [ 'templates/single.html' => $form( $id ) ] );
 			Form_Index::rebuild();
-			$this->source  = 'template:sf-p4c//single';
+			$this->source  = 'template:bf-p4c//single';
 			$this->form_id = $id;
 		};
 
@@ -949,7 +949,7 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		$cases['widget'] = function () use ( $form ) {
 			$id                              = wp_generate_uuid4();
 			$GLOBALS['_wp_sidebars_widgets'] = null; // The REST server of set_up() cached the default sidebars.
-			$this->place_widget( 7, $form( $id ), 'sf-sidebar' );
+			$this->place_widget( 7, $form( $id ), 'bf-sidebar' );
 			$GLOBALS['_wp_sidebars_widgets'] = null;
 			Form_Index::reindex_widgets();
 			$this->source  = 'widget:block-7';
@@ -959,10 +959,10 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 		// A file pattern referenced by core/pattern from an active template.
 		$cases['core/pattern in a template'] = function () use ( $form ) {
 			$id = wp_generate_uuid4();
-			$this->register_pattern( 'sf/p4-contact', $form( $id ) );
-			$this->make_theme( 'sf-p4d', [ 'templates/single.html' => '<!-- wp:pattern {"slug":"sf/p4-contact"} /-->' ] );
+			$this->register_pattern( 'bf/p4-contact', $form( $id ) );
+			$this->make_theme( 'bf-p4d', [ 'templates/single.html' => '<!-- wp:pattern {"slug":"bf/p4-contact"} /-->' ] );
 			Form_Index::rebuild();
-			$this->source  = 'pattern:sf/p4-contact';
+			$this->source  = 'pattern:bf/p4-contact';
 			$this->form_id = $id;
 		};
 
@@ -989,14 +989,14 @@ class RestSubmitTest extends SF_Submission_Test_Case {
 	 */
 	public function test_client_schema_is_ignored() {
 		$this->make_form();
-		$request = new WP_REST_Request( 'POST', '/swiftforms/v1/submit' );
+		$request = new WP_REST_Request( 'POST', '/blockforms/v1/submit' );
 		$request->set_header( 'content-type', 'application/json' );
 		$request->set_body(
 			wp_json_encode(
 				array_merge(
 					$this->controls(),
 					[
-						'sf'      => [
+						'bf'      => [
 							'name'  => 'A',
 							'email' => 'nope',
 						],

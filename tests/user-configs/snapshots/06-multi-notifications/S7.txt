@@ -1,5 +1,5 @@
 Export does not exist in 1.0.0: no REST route with "export" in its name is registered.
-GET /swiftforms/v1/entries/export as an administrator:
+GET /blockforms/v1/entries/export as an administrator:
 status: 404
 {
     "code": "rest_no_route",

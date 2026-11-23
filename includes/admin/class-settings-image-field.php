@@ -2,12 +2,12 @@
 /**
  * Image settings field.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
-use SwiftForms\Vendor\PedalCMS\CassetteCMF\Field\Fields\Upload_Field;
+use BlockForms\Vendor\PedalCMS\CassetteCMF\Field\Fields\Upload_Field;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -24,7 +24,7 @@ class Settings_Image_Field extends Upload_Field {
 	/**
 	 * Field type the page registers this class under.
 	 */
-	const TYPE = 'swiftforms_image';
+	const TYPE = 'blockforms_image';
 
 	/**
 	 * The type the settings app sees.
@@ -64,7 +64,7 @@ class Settings_Image_Field extends Upload_Field {
 		];
 		if ( '' !== $input && ( ! is_int( $input ) || ! wp_attachment_is_image( $input ) ) ) {
 			$result['valid']    = false;
-			$result['errors'][] = __( 'Choose an image from the media library.', 'swiftforms' );
+			$result['errors'][] = __( 'Choose an image from the media library.', 'blockforms' );
 		}
 		return $result;
 	}

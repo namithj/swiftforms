@@ -8,7 +8,7 @@ name: Sync Version From Tag
 # and fast-forwards the default branch when the tag was cut from its tip.
 #
 # The commit is what makes the sync permanent: the tag then points at a tree
-# whose plugin header, SWIFTFORMS_VERSION constant and readme Stable tag all
+# whose plugin header, BLOCKFORMS_VERSION constant and readme Stable tag all
 # read the tagged version, so the release zip, the Playground bundle and the
 # WordPress.org deploy are all built from correct files.
 #

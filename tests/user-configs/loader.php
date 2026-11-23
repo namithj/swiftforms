@@ -1,14 +1,14 @@
-<?php // phpcs:disable WordPress.Files.FileName.InvalidClassFileName, Universal.Files.SeparateFunctionsFromOO.Mixed, WordPress.Security.EscapeOutput.ExceptionNotEscaped, WordPress.WP.GlobalVariablesOverride.Prohibited, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Fixture loader: the class name SF_User_Config_Loader is fixed by the R00 plan; exceptions are developer-facing.
+<?php // phpcs:disable WordPress.Files.FileName.InvalidClassFileName, Universal.Files.SeparateFunctionsFromOO.Mixed, WordPress.Security.EscapeOutput.ExceptionNotEscaped, WordPress.WP.GlobalVariablesOverride.Prohibited, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Fixture loader: the class name BF_User_Config_Loader is fixed by the R00 plan; exceptions are developer-facing.
 /**
  * User-config loader for the regression safety net (R00).
  *
  * Lists the numbered configuration files, validates and loads them, and applies
  * one to the (throwaway) database as raw stored data, the way a real existing
- * site would have it. It never writes through SwiftForms code.
+ * site would have it. It never writes through BlockForms code.
  *
  * It has no PHPUnit dependency, so bin/ scripts and apply-cli.php (WP-CLI) use it too.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 require_once __DIR__ . '/fixtures/builder.php';
@@ -18,7 +18,7 @@ require_once __DIR__ . '/fixtures/values.php';
 /**
  * Loads and applies user configurations.
  */
-class SF_User_Config_Loader {
+class BF_User_Config_Loader {
 
 	/**
 	 * The UTC moment every config is "now": 2026-11-19T10:00:00Z, the v1.0.0 date.
@@ -26,7 +26,7 @@ class SF_User_Config_Loader {
 	const FROZEN_TIME = 1795082400;
 
 	/**
-	 * Seed for mt_rand() and SwiftForms\Random.
+	 * Seed for mt_rand() and BlockForms\Random.
 	 */
 	const SEED = 20261119;
 
@@ -199,10 +199,10 @@ class SF_User_Config_Loader {
 	 * Write a config to the database as raw stored data.
 	 *
 	 * Order: site settings, users, posts, options, tables, mu-plugin snippets,
-	 * then the "swiftforms_user_config_applied" action. Placeholders
+	 * then the "blockforms_user_config_applied" action. Placeholders
 	 * "{{post:key}}" and "{{user:key}}" in post content and in option values
 	 * become the IDs created earlier in the same call (they use double braces
-	 * so they never collide with SwiftForms' own "{post:id}" merge tags).
+	 * so they never collide with BlockForms' own "{post:id}" merge tags).
 	 *
 	 * @param array  $config      Loaded config.
 	 * @param string $variant     Variant name, or an empty string for the base.
@@ -247,15 +247,15 @@ class SF_User_Config_Loader {
 		/**
 		 * Fires after a user config has been written, before the form index is rebuilt.
 		 *
-		 * Test-only. The rebuild that follows is SwiftForms' own code, run exactly as on a
-		 * real site after an update (swiftforms_db_version_changed).
+		 * Test-only. The rebuild that follows is BlockForms' own code, run exactly as on a
+		 * real site after an update (blockforms_db_version_changed).
 		 *
 		 * @param array $config The loaded config.
 		 */
-		do_action( 'swiftforms_user_config_applied', $config ); // phpcs:ignore WordPress.NamingConventions.ValidHookName -- Test-only hook, documented above.
+		do_action( 'blockforms_user_config_applied', $config ); // phpcs:ignore WordPress.NamingConventions.ValidHookName -- Test-only hook, documented above.
 
-		if ( class_exists( 'SwiftForms\\Form_Index' ) ) {
-			SwiftForms\Form_Index::rebuild();
+		if ( class_exists( 'BlockForms\\Form_Index' ) ) {
+			BlockForms\Form_Index::rebuild();
 		}
 	}
 
@@ -279,27 +279,27 @@ class SF_User_Config_Loader {
 	 * Start from the stored state of a site that has the six tables and nothing else.
 	 *
 	 * The plugin installs itself on init, so a test database (or wp-env) already holds
-	 * swiftforms_db_version, the install marker and a migration log row. A config
-	 * describes the whole stored state, so every swiftforms_* option is removed and
-	 * every SwiftForms table is emptied (created first when it is missing) before the
+	 * blockforms_db_version, the install marker and a migration log row. A config
+	 * describes the whole stored state, so every blockforms_* option is removed and
+	 * every BlockForms table is emptied (created first when it is missing) before the
 	 * config is written. Rows are deleted, not truncated: TRUNCATE commits, and the
 	 * PHPUnit run relies on its transaction to leave the database as it found it.
 	 */
 	private static function reset_stored_state() {
 		global $wpdb;
 
-		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'swiftforms\\_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'blockforms\\_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		wp_cache_flush();
 
-		if ( class_exists( 'SwiftForms\\Settings' ) ) {
-			SwiftForms\Settings::flush_cache();
+		if ( class_exists( 'BlockForms\\Settings' ) ) {
+			BlockForms\Settings::flush_cache();
 		}
-		if ( class_exists( 'SwiftForms\\Form_Index' ) ) {
-			SwiftForms\Form_Index::flush_cache();
+		if ( class_exists( 'BlockForms\\Form_Index' ) ) {
+			BlockForms\Form_Index::flush_cache();
 		}
-		if ( class_exists( 'SwiftForms\\Database' ) ) {
-			SwiftForms\Database::install();
-			foreach ( SwiftForms\Database::tables() as $table ) {
+		if ( class_exists( 'BlockForms\\Database' ) ) {
+			BlockForms\Database::install();
+			foreach ( BlockForms\Database::tables() as $table ) {
 				$wpdb->query( 'DELETE FROM `' . $table . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Own table; name built from $wpdb->prefix and a fixed list.
 			}
 		}
@@ -380,7 +380,7 @@ class SF_User_Config_Loader {
 	/**
 	 * Write an option exactly as given.
 	 *
-	 * A swiftforms_* option must have no sanitize_option_<name> filter: if one is
+	 * A blockforms_* option must have no sanitize_option_<name> filter: if one is
 	 * attached, update_option() would silently rewrite the fixture, so the write
 	 * is refused and the filter is named.
 	 *
@@ -388,7 +388,7 @@ class SF_User_Config_Loader {
 	 * @param mixed  $value Option value.
 	 */
 	public static function write_option( $name, $value ) {
-		if ( 0 === strpos( $name, 'swiftforms_' ) && has_filter( 'sanitize_option_' . $name ) ) {
+		if ( 0 === strpos( $name, 'blockforms_' ) && has_filter( 'sanitize_option_' . $name ) ) {
 			throw new RuntimeException(
 				'Refusing to write ' . $name . ': a sanitize_option_' . $name . ' filter is attached (' . self::describe_filter( 'sanitize_option_' . $name ) . '), so the stored bytes would not be the fixture. A user config is stored data, not a settings save.'
 			);
@@ -414,7 +414,7 @@ class SF_User_Config_Loader {
 		self::$env_installed     = true;
 		self::$mails             = [];
 		self::$http_fixtures     = (array) $config['http_fixtures'];
-		self::$uploads_dir       = sys_get_temp_dir() . '/sf-uploads-' . $config['slug'] . '-' . getmypid();
+		self::$uploads_dir       = sys_get_temp_dir() . '/bf-uploads-' . $config['slug'] . '-' . getmypid();
 		self::$env_filters       = [];
 		self::$theme_dirs_before = null;
 
@@ -460,7 +460,7 @@ class SF_User_Config_Loader {
 				if ( isset( self::$http_fixtures[ $url ] ) ) {
 					return self::$http_fixtures[ $url ];
 				}
-				return new WP_Error( 'sf_blocked_http', 'External HTTP is blocked in the user-config suite: ' . $url );
+				return new WP_Error( 'bf_blocked_http', 'External HTTP is blocked in the user-config suite: ' . $url );
 			},
 			10,
 			3
@@ -469,16 +469,16 @@ class SF_User_Config_Loader {
 			'upload_dir',
 			static function ( $dirs ) {
 				$dirs['basedir'] = self::$uploads_dir;
-				$dirs['baseurl'] = 'http://example.org/sf-uploads';
+				$dirs['baseurl'] = 'http://example.org/bf-uploads';
 				$dirs['path']    = self::$uploads_dir . $dirs['subdir'];
-				$dirs['url']     = 'http://example.org/sf-uploads' . $dirs['subdir'];
+				$dirs['url']     = 'http://example.org/bf-uploads' . $dirs['subdir'];
 				return $dirs;
 			}
 		);
 
-		if ( class_exists( 'SwiftForms\Clock' ) && ( ( defined( 'SWIFTFORMS_TESTS' ) && SWIFTFORMS_TESTS ) || defined( 'SWIFTFORMS_TEST_NOW' ) ) ) {
-			SwiftForms\Clock::freeze( self::FROZEN_TIME );
-			SwiftForms\Random::seed( self::SEED );
+		if ( class_exists( 'BlockForms\Clock' ) && ( ( defined( 'BLOCKFORMS_TESTS' ) && BLOCKFORMS_TESTS ) || defined( 'BLOCKFORMS_TEST_NOW' ) ) ) {
+			BlockForms\Clock::freeze( self::FROZEN_TIME );
+			BlockForms\Random::seed( self::SEED );
 		}
 		mt_srand( self::SEED ); // phpcs:ignore WordPress.WP.AlternativeFunctions.rand_seeding_mt_srand -- Deterministic fixtures.
 
@@ -495,9 +495,9 @@ class SF_User_Config_Loader {
 		}
 		self::$env_filters = [];
 
-		if ( class_exists( 'SwiftForms\Clock' ) ) {
-			SwiftForms\Clock::unfreeze();
-			SwiftForms\Random::unseed();
+		if ( class_exists( 'BlockForms\Clock' ) ) {
+			BlockForms\Clock::unfreeze();
+			BlockForms\Random::unseed();
 		}
 		if ( '' !== self::$uploads_dir && is_dir( self::$uploads_dir ) ) {
 			self::remove_dir( self::$uploads_dir );
@@ -535,9 +535,9 @@ class SF_User_Config_Loader {
 		if ( ! empty( $site['multisite'] ) && ! is_multisite() ) {
 			throw new RuntimeException( 'This config is a network install: run it with WP_TESTS_MULTISITE=1 (bin/test-user-configs.sh does for config 19).' );
 		}
-		if ( ! empty( $site['network_active'] ) && defined( 'SWIFTFORMS_FILE' ) ) {
+		if ( ! empty( $site['network_active'] ) && defined( 'BLOCKFORMS_FILE' ) ) {
 			// Network-activated: the plugin is in the network's list of active plugins, the way a network admin leaves it.
-			update_site_option( 'active_sitewide_plugins', [ plugin_basename( SWIFTFORMS_FILE ) => self::FROZEN_TIME ] );
+			update_site_option( 'active_sitewide_plugins', [ plugin_basename( BLOCKFORMS_FILE ) => self::FROZEN_TIME ] );
 		}
 		if ( isset( $site['locale'] ) && 'en_US' !== $site['locale'] ) {
 			// WordPress clears WPLANG when the language pack is not installed; a fixture site has the option stored and the locale in force.
@@ -603,9 +603,9 @@ class SF_User_Config_Loader {
 			$role = 'admin' === $role ? 'administrator' : $role;
 			$id   = wp_insert_user(
 				[
-					'user_login' => 'sf-' . $key,
-					'user_pass'  => 'sf-test-password',
-					'user_email' => 'sf-' . $key . '@example.org',
+					'user_login' => 'bf-' . $key,
+					'user_pass'  => 'bf-test-password',
+					'user_email' => 'bf-' . $key . '@example.org',
 					'role'       => $role,
 				]
 			);
@@ -626,7 +626,7 @@ class SF_User_Config_Loader {
 	/**
 	 * Insert the posts as stored data.
 	 *
-	 * Fixture content is stored data, not a save: kses filters and SwiftForms'
+	 * Fixture content is stored data, not a save: kses filters and BlockForms'
 	 * save callbacks (wp_insert_post_data, and the form-index hooks on
 	 * wp_after_insert_post and transition_post_status) are detached for the insert, and the stored
 	 * post_content is read back from the database and compared byte for byte.
@@ -638,9 +638,9 @@ class SF_User_Config_Loader {
 
 		kses_remove_filters();
 		$detached = array_merge(
-			self::detach_swiftforms_callbacks( 'wp_insert_post_data' ),
-			self::detach_swiftforms_callbacks( 'wp_after_insert_post' ),
-			self::detach_swiftforms_callbacks( 'transition_post_status' )
+			self::detach_blockforms_callbacks( 'wp_insert_post_data' ),
+			self::detach_blockforms_callbacks( 'wp_after_insert_post' ),
+			self::detach_blockforms_callbacks( 'transition_post_status' )
 		);
 
 		try {
@@ -693,7 +693,7 @@ class SF_User_Config_Loader {
 	}
 
 	/**
-	 * Insert raw rows into SwiftForms tables ("{{post:key}}" in a string column becomes the post ID).
+	 * Insert raw rows into BlockForms tables ("{{post:key}}" in a string column becomes the post ID).
 	 *
 	 * @param array $tables Table name (without prefix) => list of rows.
 	 */
@@ -780,14 +780,14 @@ class SF_User_Config_Loader {
 	}
 
 	/**
-	 * Detach every callback on a hook that lives in the SwiftForms\ namespace.
+	 * Detach every callback on a hook that lives in the BlockForms\ namespace.
 	 *
-	 * The prefixed frameworks (SwiftForms\Vendor\) are left alone.
+	 * The prefixed frameworks (BlockForms\Vendor\) are left alone.
 	 *
 	 * @param string $hook Hook name.
 	 * @return array<int, array{0:string,1:mixed,2:int,3:int}> Hook, callback, priority, accepted args.
 	 */
-	private static function detach_swiftforms_callbacks( $hook ) {
+	private static function detach_blockforms_callbacks( $hook ) {
 		global $wp_filter;
 		$detached = [];
 		if ( ! isset( $wp_filter[ $hook ] ) ) {
@@ -795,7 +795,7 @@ class SF_User_Config_Loader {
 		}
 		foreach ( $wp_filter[ $hook ]->callbacks as $priority => $callbacks ) {
 			foreach ( $callbacks as $entry ) {
-				if ( self::is_swiftforms_callback( $entry['function'] ) ) {
+				if ( self::is_blockforms_callback( $entry['function'] ) ) {
 					$detached[] = [ $hook, $entry['function'], (int) $priority, (int) $entry['accepted_args'] ];
 				}
 			}
@@ -809,7 +809,7 @@ class SF_User_Config_Loader {
 	/**
 	 * Put detached callbacks back with their original priority and accepted args.
 	 *
-	 * @param array $detached Result of detach_swiftforms_callbacks().
+	 * @param array $detached Result of detach_blockforms_callbacks().
 	 */
 	private static function reattach_callbacks( array $detached ) {
 		foreach ( $detached as $item ) {
@@ -818,15 +818,15 @@ class SF_User_Config_Loader {
 	}
 
 	/**
-	 * Whether a callback is a function, method or closure in the SwiftForms\ namespace.
+	 * Whether a callback is a function, method or closure in the BlockForms\ namespace.
 	 *
-	 * The prefixed frameworks (SwiftForms\Vendor\) are not ours, and which of them
+	 * The prefixed frameworks (BlockForms\Vendor\) are not ours, and which of them
 	 * hook anything depends on the PHP version, so they never count.
 	 *
 	 * @param mixed $callback A WordPress callback.
 	 * @return bool
 	 */
-	public static function is_swiftforms_callback( $callback ) {
+	public static function is_blockforms_callback( $callback ) {
 		$name = '';
 		if ( $callback instanceof Closure ) {
 			$reflection = new ReflectionFunction( $callback );
@@ -840,7 +840,7 @@ class SF_User_Config_Loader {
 			$name = $callback;
 		}
 		$name = ltrim( $name, '\\' );
-		return 0 === strpos( $name, 'SwiftForms\\' ) && 0 !== strpos( $name, 'SwiftForms\\Vendor\\' );
+		return 0 === strpos( $name, 'BlockForms\\' ) && 0 !== strpos( $name, 'BlockForms\\Vendor\\' );
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /**
  * Captures the six wordpress.org screenshots (1280 wide) from a scratch WordPress that has the plugin active
  * and the demo content loaded: `wp eval-file` of assets/wporg-src/demo-setup.php with its first `require` line
- * removed, on a site titled "SwiftForms demo" with Twenty Twenty-Five, admin / password, and no personal data.
+ * removed, on a site titled "BlockForms demo" with Twenty Twenty-Five, admin / password, and no personal data.
  *
  *   WP_BASE_URL=http://localhost:8889 NODE_PATH=<plugin>/node_modules node assets/wporg-src/capture-screenshots.js <out-dir> [1,2,...]
  *
@@ -62,7 +62,7 @@ const H = 900;
 			const form = d
 				.select( 'core/block-editor' )
 				.getBlocks()
-				.find( ( b ) => b.name === 'swiftforms/form' );
+				.find( ( b ) => b.name === 'blockforms/form' );
 			d.dispatch( 'core/block-editor' ).selectBlock( form.clientId );
 			d.dispatch( 'core/edit-post' ).openGeneralSidebar(
 				'edit-post/block'
@@ -110,7 +110,7 @@ const H = 900;
 	}
 	if ( want( '4' ) || want( '5' ) ) {
 		// The list first (an unread starred row is visible); opening an entry marks it read.
-		await page.goto( base + '/wp-admin/admin.php?page=swiftforms' );
+		await page.goto( base + '/wp-admin/admin.php?page=blockforms' );
 		await page.waitForSelector( 'text=Aisha Rahman' );
 		await page.waitForTimeout( 800 );
 		if ( want( '4' ) ) {
@@ -120,14 +120,14 @@ const H = 900;
 			await page.click(
 				'#the-list a.row-title:has-text("Aisha Rahman")'
 			);
-			await page.waitForSelector( 'table.swiftforms-entry-fields' );
+			await page.waitForSelector( 'table.blockforms-entry-fields' );
 			await page.waitForTimeout( 800 );
 			await page.screenshot( { path: out + '/screenshot-5.png' } );
 		}
 	}
 	if ( want( '6' ) ) {
 		await page.goto(
-			base + '/wp-admin/admin.php?page=swiftforms-settings'
+			base + '/wp-admin/admin.php?page=blockforms-settings'
 		);
 		await page.getByRole( 'tab', { name: 'Email' } ).click();
 		await page.waitForTimeout( 1500 );

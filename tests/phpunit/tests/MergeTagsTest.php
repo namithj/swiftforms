@@ -1,17 +1,17 @@
 <?php
 /**
- * Tests for SwiftForms\Merge_Tags.
+ * Tests for BlockForms\Merge_Tags.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Field_Types;
-use SwiftForms\Form_Schema;
-use SwiftForms\Merge_Tags;
-use SwiftForms\Submission_Context;
+use BlockForms\Clock;
+use BlockForms\Field_Types;
+use BlockForms\Form_Schema;
+use BlockForms\Merge_Tags;
+use BlockForms\Submission_Context;
 
 /**
  * Class MergeTagsTest
@@ -19,7 +19,7 @@ use SwiftForms\Submission_Context;
  * @group submission
  * @group security
  */
-class MergeTagsTest extends SF_Storage_Test_Case {
+class MergeTagsTest extends BF_Storage_Test_Case {
 
 	const FORM = '11111111-1111-4111-8111-111111111111';
 
@@ -189,7 +189,7 @@ class MergeTagsTest extends SF_Storage_Test_Case {
 	 */
 	public function test_filter_values_are_not_rescanned() {
 		add_filter(
-			'swiftforms_merge_tags',
+			'blockforms_merge_tags',
 			static function ( $tags ) {
 				$tags['order:ref'] = '{field:email}';
 				return $tags;
@@ -345,7 +345,7 @@ class MergeTagsTest extends SF_Storage_Test_Case {
 
 		$in_doc = Merge_Tags::replace( '<h1>New</h1>{all_fields}<p>{all_fields}</p>', $ctx, 'html' );
 		$this->assertSame( 2, substr_count( $in_doc, '<table' ) );
-		$this->assertStringNotContainsString( 'sf-all-fields', $in_doc );
+		$this->assertStringNotContainsString( 'bf-all-fields', $in_doc );
 
 		$in_attr = Merge_Tags::replace(
 			'<a title="{all_fields}">x</a>',
@@ -402,7 +402,7 @@ class MergeTagsTest extends SF_Storage_Test_Case {
 	public function test_filter() {
 		$seen = [];
 		add_filter(
-			'swiftforms_merge_tags',
+			'blockforms_merge_tags',
 			static function ( $tags, $context, $mode ) use ( &$seen ) {
 				$seen[]            = $mode;
 				$tags['order:id']  = 'A<1>';
@@ -420,8 +420,8 @@ class MergeTagsTest extends SF_Storage_Test_Case {
 		$this->assertSame( 'A&lt;1&gt;', Merge_Tags::replace( '{order:id}', $ctx, 'html' ) );
 		$this->assertSame( [ 'plain', 'html' ], $seen );
 
-		remove_all_filters( 'swiftforms_merge_tags' );
-		add_filter( 'swiftforms_merge_tags', '__return_null' );
+		remove_all_filters( 'blockforms_merge_tags' );
+		add_filter( 'blockforms_merge_tags', '__return_null' );
 		$this->assertSame( 'Contact "us"', Merge_Tags::replace( '{form:title}', $ctx, 'plain' ), 'A non-array return is ignored.' );
 	}
 
@@ -580,7 +580,7 @@ class MergeTagsTest extends SF_Storage_Test_Case {
 
 		// The filter does not apply to recipients.
 		add_filter(
-			'swiftforms_merge_tags',
+			'blockforms_merge_tags',
 			static function ( $tags ) {
 				$tags['field:name'] = 'attacker@example.com';
 				return $tags;
@@ -635,11 +635,11 @@ class MergeTagsTest extends SF_Storage_Test_Case {
 				'post_type'    => 'page',
 				'post_status'  => 'publish',
 				'post_title'   => 'Contact',
-				'post_content' => '<!-- wp:swiftforms/form {"formId":"' . $form_id . '"} --><!-- wp:swiftforms/field-email {"label":"Email","name":"email"} /--><!-- /wp:swiftforms/form -->',
+				'post_content' => '<!-- wp:blockforms/form {"formId":"' . $form_id . '"} --><!-- wp:blockforms/field-email {"label":"Email","name":"email"} /--><!-- /wp:blockforms/form -->',
 			]
 		);
-		\SwiftForms\Form_Index::index_source( 'post:' . $post_id );
-		$schema = \SwiftForms\Schema_Resolver::resolve( $form_id, 'post:' . $post_id );
+		\BlockForms\Form_Index::index_source( 'post:' . $post_id );
+		$schema = \BlockForms\Schema_Resolver::resolve( $form_id, 'post:' . $post_id );
 		$this->assertNotNull( $schema );
 		$this->assertSame( '', $schema->title() );
 

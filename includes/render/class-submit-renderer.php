@@ -2,10 +2,10 @@
 /**
  * Submit block renderer.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Submit_Renderer {
 
 	/**
-	 * Render callback of swiftforms/submit.
+	 * Render callback of blockforms/submit.
 	 *
 	 * The default label is stored as the English word (the stored markup must not depend on the
 	 * locale), so that exact value is translated here; a label the author typed is printed as typed.
@@ -38,10 +38,10 @@ class Submit_Renderer {
 		$stored = isset( $block->parsed_block['attrs'] ) && is_array( $block->parsed_block['attrs'] ) ? $block->parsed_block['attrs'] : [];
 		$label  = Field_Types::resolve( Field_Types::submit_attributes(), $stored )['label'];
 		if ( 'Submit' === $label ) {
-			$label = __( 'Submit', 'swiftforms' );
+			$label = __( 'Submit', 'blockforms' );
 		}
 
-		return '<div ' . get_block_wrapper_attributes( [ 'class' => 'swiftforms-submit' ] ) . '>'
-			. '<button type="submit" class="swiftforms-submit__button wp-element-button">' . esc_html( $label ) . '</button></div>';
+		return '<div ' . get_block_wrapper_attributes( [ 'class' => 'blockforms-submit' ] ) . '>'
+			. '<button type="submit" class="blockforms-submit__button wp-element-button">' . esc_html( $label ) . '</button></div>';
 	}
 }

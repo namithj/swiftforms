@@ -4,23 +4,23 @@
  *
  * Skipped unless the suite runs as a network: composer test:multisite.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Activator;
-use SwiftForms\Database;
-use SwiftForms\Install_Marker;
-use SwiftForms\Migrations;
-use SwiftForms\Settings;
+use BlockForms\Activator;
+use BlockForms\Database;
+use BlockForms\Install_Marker;
+use BlockForms\Migrations;
+use BlockForms\Settings;
 
 /**
  * Class MultisiteTest
  *
  * @group multisite
  */
-class MultisiteTest extends SF_Storage_Test_Case {
+class MultisiteTest extends BF_Storage_Test_Case {
 
 	/**
 	 * Skip on a single-site run.
@@ -35,12 +35,12 @@ class MultisiteTest extends SF_Storage_Test_Case {
 	}
 
 	/**
-	 * Mark SwiftForms network-active, the way a network admin does.
+	 * Mark BlockForms network-active, the way a network admin does.
 	 *
 	 * @return void
 	 */
 	private function network_activate() {
-		update_site_option( 'active_sitewide_plugins', [ plugin_basename( SWIFTFORMS_FILE ) => time() ] );
+		update_site_option( 'active_sitewide_plugins', [ plugin_basename( BLOCKFORMS_FILE ) => time() ] );
 	}
 
 	/**
@@ -57,7 +57,7 @@ class MultisiteTest extends SF_Storage_Test_Case {
 	}
 
 	/**
-	 * Whether a site has any SwiftForms bookkeeping option.
+	 * Whether a site has any BlockForms bookkeeping option.
 	 *
 	 * @param int $blog_id Site ID.
 	 * @return bool
@@ -103,7 +103,7 @@ class MultisiteTest extends SF_Storage_Test_Case {
 		$this->assertTrue( $this->has_tables( $blog_id ) );
 		switch_to_blog( $blog_id );
 		$this->assertSame( 1, (int) get_option( Migrations::OPTION_DB_VERSION ) );
-		$this->assertSame( SWIFTFORMS_VERSION, Install_Marker::installed_version() );
+		$this->assertSame( BLOCKFORMS_VERSION, Install_Marker::installed_version() );
 		$this->assertSame( [], Settings::stored_options(), 'No settings option is written for a new site either.' );
 		restore_current_blog();
 	}
@@ -150,13 +150,13 @@ class MultisiteTest extends SF_Storage_Test_Case {
 
 		$expected = [];
 		foreach ( Database::TABLES as $name ) {
-			$expected[] = $wpdb->get_blog_prefix( $blog_id ) . 'swiftforms_' . $name;
+			$expected[] = $wpdb->get_blog_prefix( $blog_id ) . 'blockforms_' . $name;
 		}
 		$this->assertSame( $expected, $tables );
 	}
 
 	/**
-	 * Deleting a site drops its SwiftForms tables.
+	 * Deleting a site drops its BlockForms tables.
 	 *
 	 * @return void
 	 */

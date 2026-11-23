@@ -1,5 +1,5 @@
 /**
- * User-config e2e checks (S12, S13), run once per config by bin/run-e2e-configs.mjs with SF_CONFIG=<slug>.
+ * User-config e2e checks (S12, S13), run once per config by bin/run-e2e-configs.mjs with BF_CONFIG=<slug>.
  *
  * The runner has already reset the site, applied the config (tests/user-configs/apply-cli.php) and written what the
  * config stored (tests/e2e/dump-posts.php) to tests/e2e/.state/<slug>.json.
@@ -13,14 +13,14 @@
  *
  * S13 (front-end JavaScript). On every public page that shows a form, as a guest: the client validation messages and the focus on
  * the error summary, the AJAX submission and its confirmation (or the plain form post for a form without JavaScript, or the redirect),
- * two forms on one page, and axe (no serious or critical finding inside the SwiftForms markup) in the initial, error and confirmation states.
+ * two forms on one page, and axe (no serious or critical finding inside the BlockForms markup) in the initial, error and confirmation states.
  */
 const fs = require( 'fs' );
 const path = require( 'path' );
 const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 const { default: AxeBuilder } = require( '@axe-core/playwright' );
 
-const slug = process.env.SF_CONFIG;
+const slug = process.env.BF_CONFIG;
 const statePath = slug
 	? path.join( __dirname, '.state', `${ slug }.json` )
 	: '';
@@ -28,7 +28,7 @@ const records =
 	statePath && fs.existsSync( statePath )
 		? JSON.parse( fs.readFileSync( statePath, 'utf8' ) )
 		: [];
-const NOW_FILE = process.env.SF_E2E_NOW_FILE || '';
+const NOW_FILE = process.env.BF_E2E_NOW_FILE || '';
 const FROZEN_TIME = 1795082400;
 const BASE_URL = process.env.WP_BASE_URL || 'http://localhost:8889';
 
@@ -45,8 +45,8 @@ function withoutFormIds( content ) {
 	return content
 		.replace( /"formId":"[^"]*",?/g, '' )
 		.replace(
-			/<!-- wp:swiftforms\/form \{\} -->/g,
-			'<!-- wp:swiftforms/form -->'
+			/<!-- wp:blockforms\/form \{\} -->/g,
+			'<!-- wp:blockforms/form -->'
 		)
 		.replace( /,\}/g, '}' );
 }
@@ -140,11 +140,11 @@ async function countWarnings( page ) {
 	return total;
 }
 
-test.describe( `User config ${ slug || '(SF_CONFIG not set)' }`, () => {
+test.describe( `User config ${ slug || '(BF_CONFIG not set)' }`, () => {
 	test( 'has a state file written by the runner', () => {
 		expect(
 			slug,
-			'SF_CONFIG must be set (use npm run test:e2e:configs)'
+			'BF_CONFIG must be set (use npm run test:e2e:configs)'
 		).toBeTruthy();
 		expect( fs.existsSync( statePath ), `missing ${ statePath }` ).toBe(
 			true
@@ -174,7 +174,7 @@ test.describe( `User config ${ slug || '(SF_CONFIG not set)' }`, () => {
 			await openInEditor( { admin, editor, page }, record );
 
 			const problems = await blockProblems( page );
-			if ( process.env.SF_E2E_DEBUG ) {
+			if ( process.env.BF_E2E_DEBUG ) {
 				// eslint-disable-next-line no-console
 				console.log( JSON.stringify( problems ) );
 			}
@@ -193,8 +193,8 @@ test.describe( `User config ${ slug || '(SF_CONFIG not set)' }`, () => {
 				expect( problems.missing, 'unknown blocks' ).toEqual( [] );
 			} else if ( record.title === 'From the future' ) {
 				expect( problems.missing.sort() ).toEqual( [
-					'swiftforms/field-rating',
-					'swiftforms/step',
+					'blockforms/field-rating',
+					'blockforms/step',
 				] );
 			}
 
@@ -272,7 +272,7 @@ test.describe( `User config ${ slug || '(SF_CONFIG not set)' }`, () => {
 			await keepOffTheNetwork( page );
 
 			await page.goto( visit.link );
-			const forms = page.locator( 'form.swiftforms-form' );
+			const forms = page.locator( 'form.blockforms-form' );
 			const count = await forms.count();
 			expect( count, 'forms on the page' ).toBeGreaterThan( 0 );
 			await page.waitForTimeout( WAIT_MS );
@@ -321,14 +321,14 @@ async function keepOffTheNetwork( page ) {
 }
 
 /**
- * Fail on a serious or critical axe finding inside the SwiftForms markup.
+ * Fail on a serious or critical axe finding inside the BlockForms markup.
  *
  * @param {import('@playwright/test').Page} page  Page.
  * @param {string}                          state Where the page is, for the message.
  */
 async function expectNoBlockingAxe( page, state ) {
 	const result = await new AxeBuilder( { page } )
-		.include( '.swiftforms-form' )
+		.include( '.blockforms-form' )
 		.analyze();
 	const blocking = result.violations
 		.filter( ( v ) => [ 'serious', 'critical' ].includes( v.impact ) )
@@ -357,17 +357,17 @@ async function describeForm( form ) {
  * @param {import('@playwright/test').Locator} form A form.
  */
 async function fillRequired( form ) {
-	const fields = await form.locator( '.swiftforms-field' ).all();
+	const fields = await form.locator( '.blockforms-field' ).all();
 	for ( const field of fields ) {
 		const classes = ( await field.getAttribute( 'class' ) ) || '';
-		const type = ( /swiftforms-field--([a-z]+)/.exec( classes ) ||
+		const type = ( /blockforms-field--([a-z]+)/.exec( classes ) ||
 			[] )[ 1 ];
-		const required = classes.includes( 'swiftforms-field--required' );
+		const required = classes.includes( 'blockforms-field--required' );
 		const minChoices = parseInt(
 			( await field
-				.locator( '[data-sf-min-choices]' )
+				.locator( '[data-bf-min-choices]' )
 				.first()
-				.getAttribute( 'data-sf-min-choices' )
+				.getAttribute( 'data-bf-min-choices' )
 				.catch( () => null ) ) || '0',
 			10
 		);
@@ -446,20 +446,20 @@ async function fillRequired( form ) {
  * @param {Object}                          visit The state-file entry of the page.
  */
 async function checkForm( page, index, visit ) {
-	const form = page.locator( 'form.swiftforms-form' ).nth( index );
+	const form = page.locator( 'form.blockforms-form' ).nth( index );
 	const facts = await describeForm( form );
-	const confirmations = page.locator( '.swiftforms-confirmation' );
+	const confirmations = page.locator( '.blockforms-confirmation' );
 	const confirmationsBefore = await confirmations.count();
 	const submit = form.locator( 'button[type=submit]' );
 
 	if ( facts.ajax && facts.required ) {
 		// Client validation: the messages, the summary, and the focus on the summary.
 		await submit.click();
-		const summary = form.locator( '.swiftforms-errors-summary' );
+		const summary = form.locator( '.blockforms-errors-summary' );
 		await expect( summary, 'error summary' ).toBeVisible();
 		await expect( summary, 'focus on the error summary' ).toBeFocused();
 		expect(
-			await form.locator( '.swiftforms-error:not([hidden])' ).count(),
+			await form.locator( '.blockforms-error:not([hidden])' ).count(),
 			'visible field error messages'
 		).toBeGreaterThan( 0 );
 		expect( ( await summary.innerText() ).trim() ).not.toBe( '' );
@@ -508,7 +508,7 @@ async function checkForm( page, index, visit ) {
  * @param {Object}                          visit The state-file entry of the page.
  */
 async function checkTwoForms( page, visit ) {
-	const forms = page.locator( 'form.swiftforms-form' );
+	const forms = page.locator( 'form.blockforms-form' );
 	const total = await forms.count();
 	let first = -1;
 	let second = -1;
@@ -528,21 +528,21 @@ async function checkTwoForms( page, visit ) {
 
 	await forms.nth( first ).locator( 'button[type=submit]' ).click();
 	await expect(
-		forms.nth( first ).locator( '.swiftforms-errors-summary' )
+		forms.nth( first ).locator( '.blockforms-errors-summary' )
 	).toBeVisible();
 	await expect(
-		forms.nth( second ).locator( '.swiftforms-errors-summary' ),
+		forms.nth( second ).locator( '.blockforms-errors-summary' ),
 		`${ visit.title }: the other form shows no summary`
 	).toBeHidden();
 	expect(
 		await forms
 			.nth( second )
-			.locator( '.swiftforms-error:not([hidden])' )
+			.locator( '.blockforms-error:not([hidden])' )
 			.count(),
 		'the other form shows no field errors'
 	).toBe( 0 );
 
-	const confirmations = page.locator( '.swiftforms-confirmation' );
+	const confirmations = page.locator( '.blockforms-confirmation' );
 	const before = await confirmations.count();
 	await fillRequired( forms.nth( second ) );
 	const urlBefore = page.url();
@@ -561,8 +561,8 @@ async function checkTwoForms( page, visit ) {
 	// The first form still shows its own errors.
 	await expect(
 		page
-			.locator( 'form.swiftforms-form' )
+			.locator( 'form.blockforms-form' )
 			.nth( first )
-			.locator( '.swiftforms-errors-summary' )
+			.locator( '.blockforms-errors-summary' )
 	).toBeVisible();
 }

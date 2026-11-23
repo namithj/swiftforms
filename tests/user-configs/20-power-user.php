@@ -8,16 +8,16 @@
  * not use JavaScript (ajax false) so they are posted to the REST route by a headless client or as a plain form post, a redirect
  * confirmation, a form with spam protection off, and notifications with a merge tag a hook adds. The plugin's own styles are
  * off (load_styles false), the debug log is on, and an mu-plugin (mu/20-all-hooks.php) uses every documented v1 hook. The site
- * owner's global styles (the user layer of theme.json, a wp_global_styles post) restyle three SwiftForms blocks. The variant
+ * owner's global styles (the user layer of theme.json, a wp_global_styles post) restyle three BlockForms blocks. The variant
  * "headless-no-js-token" is the same site with spam.js_token off: a REST client that has no browser can post with the signed time of
  * the page instead of the JS time (C-3.1).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-$sf_c20_fields = static function ( array $extra = [], $message_required = false ) {
+$bf_c20_fields = static function ( array $extra = [], $message_required = false ) {
 	$fields = [
-		SF_FIELD(
+		BF_FIELD(
 			'text',
 			[
 				'label'        => 'Name',
@@ -26,7 +26,7 @@ $sf_c20_fields = static function ( array $extra = [], $message_required = false 
 				'autocomplete' => 'name',
 			]
 		),
-		SF_FIELD(
+		BF_FIELD(
 			'email',
 			[
 				'label'        => 'Email',
@@ -39,7 +39,7 @@ $sf_c20_fields = static function ( array $extra = [], $message_required = false 
 	foreach ( $extra as $field ) {
 		$fields[] = $field;
 	}
-	$fields[] = SF_FIELD(
+	$fields[] = BF_FIELD(
 		'textarea',
 		$message_required
 			? [
@@ -55,8 +55,8 @@ $sf_c20_fields = static function ( array $extra = [], $message_required = false 
 	return $fields;
 };
 
-$sf_c20_form = static function ( $n, array $attrs, array $fields, $thanks = 'Received.' ) {
-	return SF_FORM(
+$bf_c20_form = static function ( $n, array $attrs, array $fields, $thanks = 'Received.' ) {
+	return BF_FORM(
 		array_merge(
 			[ 'formId' => sprintf( '5f2000%02d-0000-4000-8000-0000000000%02d', $n, $n ) ],
 			$attrs
@@ -67,9 +67,9 @@ $sf_c20_form = static function ( $n, array $attrs, array $fields, $thanks = 'Rec
 	);
 };
 
-$sf_c20_pages = [
+$bf_c20_pages = [
 	'contact'  => [
-		$sf_c20_form(
+		$bf_c20_form(
 			1,
 			[
 				'title'         => 'Hero contact',
@@ -89,9 +89,9 @@ $sf_c20_pages = [
 				'anchor'        => 'contact-hero',
 				'className'     => 'power-form power-form--hero',
 			],
-			$sf_c20_fields(
+			$bf_c20_fields(
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label' => 'Promo code',
@@ -101,7 +101,7 @@ $sf_c20_pages = [
 				]
 			)
 		),
-		$sf_c20_form(
+		$bf_c20_form(
 			2,
 			[
 				'title'             => 'Newsletter (no JavaScript)',
@@ -109,11 +109,11 @@ $sf_c20_pages = [
 				'ajax'              => false,
 				'anchor'            => 'newsletter',
 			],
-			$sf_c20_fields()
+			$bf_c20_fields()
 		),
 	],
 	'faq'      => [
-		$sf_c20_form(
+		$bf_c20_form(
 			3,
 			[
 				'title'             => 'Quiet form',
@@ -121,39 +121,39 @@ $sf_c20_pages = [
 				'requiredIndicator' => 'none',
 				'className'         => 'power-form power-form--quiet',
 			],
-			$sf_c20_fields()
+			$bf_c20_fields()
 		),
-		$sf_c20_form(
+		$bf_c20_form(
 			4,
 			[
 				'title'        => 'Anonymous poll (no JavaScript)',
 				'storeEntries' => 'no',
 				'ajax'         => false,
 			],
-			$sf_c20_fields()
+			$bf_c20_fields()
 		),
 	],
 	'services' => [
-		$sf_c20_form(
+		$bf_c20_form(
 			5,
 			[
 				'title'            => 'Redirect form',
 				'confirmationType' => 'redirect',
 				'redirectPageId'   => 900007, // The thank-you page: the 7th post of this config, so ID 900007 (IDs are pinned).
 			],
-			$sf_c20_fields()
+			$bf_c20_fields()
 		),
-		$sf_c20_form(
+		$bf_c20_form(
 			6,
 			[
 				'title'          => 'Spam protection off',
 				'spamProtection' => 'off',
 			],
-			$sf_c20_fields()
+			$bf_c20_fields()
 		),
 	],
 	'pricing'  => [
-		$sf_c20_form(
+		$bf_c20_form(
 			7,
 			[
 				'title'                  => 'Two notifications',
@@ -181,9 +181,9 @@ $sf_c20_pages = [
 					],
 				],
 			],
-			$sf_c20_fields()
+			$bf_c20_fields()
 		),
-		$sf_c20_form(
+		$bf_c20_form(
 			8,
 			[
 				'title'        => 'Stored although the site does not store',
@@ -191,19 +191,19 @@ $sf_c20_pages = [
 				'ajax'         => false,
 				'anchor'       => 'always-stored',
 			],
-			$sf_c20_fields()
+			$bf_c20_fields()
 		),
 	],
 	'events'   => [
-		$sf_c20_form(
+		$bf_c20_form(
 			9,
 			[
 				'title'     => 'Visit booking',
 				'className' => 'power-form',
 			],
-			$sf_c20_fields(
+			$bf_c20_fields(
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'date',
 						[
 							'label' => 'Visit on',
@@ -214,14 +214,14 @@ $sf_c20_pages = [
 				]
 			)
 		),
-		$sf_c20_form(
+		$bf_c20_form(
 			10,
 			[
 				'title' => 'Plan chooser',
 			],
-			$sf_c20_fields(
+			$bf_c20_fields(
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'radio',
 						[
 							'label'   => 'Plan',
@@ -244,14 +244,14 @@ $sf_c20_pages = [
 		),
 	],
 	'updates'  => [
-		$sf_c20_form(
+		$bf_c20_form(
 			11,
 			[
 				'title' => 'Where did you read this?',
 			],
-			$sf_c20_fields(
+			$bf_c20_fields(
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'hidden',
 						[
 							'label' => 'Page',
@@ -262,16 +262,16 @@ $sf_c20_pages = [
 				]
 			)
 		),
-		$sf_c20_form(
+		$bf_c20_form(
 			12,
 			[
 				'title'     => 'Topics',
 				'anchor'    => 'topics',
 				'className' => 'power-form power-form--topics',
 			],
-			$sf_c20_fields(
+			$bf_c20_fields(
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'select',
 						[
 							'label'    => 'Topics',
@@ -299,71 +299,71 @@ $sf_c20_pages = [
 	],
 ];
 
-$sf_c20_posts = [];
-$sf_c20_day   = 0;
-foreach ( $sf_c20_pages as $sf_c20_slug => $sf_c20_forms ) {
-	++$sf_c20_day;
-	$sf_c20_posts[] = [
-		'key'       => $sf_c20_slug,
+$bf_c20_posts = [];
+$bf_c20_day   = 0;
+foreach ( $bf_c20_pages as $bf_c20_slug => $bf_c20_forms ) {
+	++$bf_c20_day;
+	$bf_c20_posts[] = [
+		'key'       => $bf_c20_slug,
 		'post_type' => 'page',
 		'status'    => 'publish',
-		'title'     => ucfirst( $sf_c20_slug ),
-		'slug'      => $sf_c20_slug,
-		'date'      => sprintf( '2026-10-%02d 09:00:00', $sf_c20_day ),
-		'content'   => SF_HEADING( ucfirst( $sf_c20_slug ) ) . "\n\n" . implode( "\n\n", $sf_c20_forms ),
+		'title'     => ucfirst( $bf_c20_slug ),
+		'slug'      => $bf_c20_slug,
+		'date'      => sprintf( '2026-10-%02d 09:00:00', $bf_c20_day ),
+		'content'   => BF_HEADING( ucfirst( $bf_c20_slug ) ) . "\n\n" . implode( "\n\n", $bf_c20_forms ),
 	];
 }
-$sf_c20_posts[] = [
+$bf_c20_posts[] = [
 	'key'       => 'thanks',
 	'post_type' => 'page',
 	'status'    => 'publish',
 	'title'     => 'Thanks',
 	'slug'      => 'thanks',
 	'date'      => '2026-10-10 09:00:00',
-	'content'   => SF_PARAGRAPH( 'Thank you, we have your message.' ),
+	'content'   => BF_PARAGRAPH( 'Thank you, we have your message.' ),
 ];
-$sf_c20_posts[] = [
+$bf_c20_posts[] = [
 	'key'       => 'global-styles',
 	'post_type' => 'wp_global_styles',
 	'status'    => 'publish',
 	'title'     => 'Custom Styles',
-	'slug'      => 'wp-global-styles-sf-test-block',
+	'slug'      => 'wp-global-styles-bf-test-block',
 	'date'      => '2026-10-11 09:00:00',
-	'terms'     => [ 'wp_theme' => [ 'sf-test-block' ] ],
-	'content'   => '{"version":3,"isGlobalStylesUserThemeJSON":true,"styles":{"blocks":{"swiftforms/form":{"color":{"background":"#f6f7f7"},"spacing":{"padding":{"top":"1rem","bottom":"1rem"}},"border":{"radius":"6px"}},"swiftforms/submit":{"color":{"background":"#1d4ed8","text":"#ffffff"}},"swiftforms/field-text":{"spacing":{"margin":{"bottom":"0.75rem"}}}}}}',
+	'terms'     => [ 'wp_theme' => [ 'bf-test-block' ] ],
+	'content'   => '{"version":3,"isGlobalStylesUserThemeJSON":true,"styles":{"blocks":{"blockforms/form":{"color":{"background":"#f6f7f7"},"spacing":{"padding":{"top":"1rem","bottom":"1rem"}},"border":{"radius":"6px"}},"blockforms/submit":{"color":{"background":"#1d4ed8","text":"#ffffff"}},"blockforms/field-text":{"spacing":{"margin":{"bottom":"0.75rem"}}}}}}',
 ];
 
-$sf_c20_submissions = [];
-foreach ( $sf_c20_pages as $sf_c20_slug => $sf_c20_forms ) {
-	foreach ( array_keys( $sf_c20_forms ) as $sf_c20_i ) {
-		$sf_c20_key                        = $sf_c20_slug . '#' . ( $sf_c20_i + 1 );
-		$sf_c20_submissions[ $sf_c20_key ] = [
+$bf_c20_submissions = [];
+foreach ( $bf_c20_pages as $bf_c20_slug => $bf_c20_forms ) {
+	foreach ( array_keys( $bf_c20_forms ) as $bf_c20_i ) {
+		$bf_c20_key                        = $bf_c20_slug . '#' . ( $bf_c20_i + 1 );
+		$bf_c20_submissions[ $bf_c20_key ] = [
 			'valid'   => [ 'c20-basic' ],
 			'invalid' => [ 'c20-basic-bad' ],
 		];
 	}
 }
-$sf_c20_submissions['contact#1']['valid']   = [ 'c20-code' ];
-$sf_c20_submissions['contact#1']['invalid'] = [ 'c20-basic-bad', 'c20-code-rejected' ];
-$sf_c20_submissions['contact#1']['spam']    = [ 'c20-hook-spam' ];
-$sf_c20_submissions['events#1']['valid']    = [ 'c20-visit' ];
-$sf_c20_submissions['events#2']['valid']    = [ 'c20-plan' ];
-$sf_c20_submissions['updates#2']['valid']   = [ 'c20-topics' ];
+$bf_c20_submissions['contact#1']['valid']   = [ 'c20-code' ];
+$bf_c20_submissions['contact#1']['invalid'] = [ 'c20-basic-bad', 'c20-code-rejected' ];
+$bf_c20_submissions['contact#1']['spam']    = [ 'c20-hook-spam' ];
+$bf_c20_submissions['events#1']['valid']    = [ 'c20-visit' ];
+$bf_c20_submissions['events#2']['valid']    = [ 'c20-plan' ];
+$bf_c20_submissions['updates#2']['valid']   = [ 'c20-topics' ];
 
 // The settings options as cassette-cmf stores them: one option per key, checkboxes "1"/"0", numbers as integers.
-$sf_c20_settings = [
-	'swiftforms_general_store_ip'                => '1',
-	'swiftforms_general_store_user_agent'        => '1',
-	'swiftforms_general_load_styles'             => '0',
-	'swiftforms_general_default_success_message' => 'Received.',
-	'swiftforms_email_from_name'                 => 'Power Site',
-	'swiftforms_email_from_email'                => 'forms@power-site.example',
-	'swiftforms_email_notification_to'           => 'dev@power-site.example, ops@power-site.example',
-	'swiftforms_email_accent_color'              => '#1d4ed8',
-	'swiftforms_email_footer_text'               => '<p>Sent by the power site.</p>',
-	'swiftforms_spam_min_seconds'                => 2,
-	'swiftforms_spam_rate_limit_per_minute'      => 20,
-	'swiftforms_advanced_debug_log'              => '1',
+$bf_c20_settings = [
+	'blockforms_general_store_ip'                => '1',
+	'blockforms_general_store_user_agent'        => '1',
+	'blockforms_general_load_styles'             => '0',
+	'blockforms_general_default_success_message' => 'Received.',
+	'blockforms_email_from_name'                 => 'Power Site',
+	'blockforms_email_from_email'                => 'forms@power-site.example',
+	'blockforms_email_notification_to'           => 'dev@power-site.example, ops@power-site.example',
+	'blockforms_email_accent_color'              => '#1d4ed8',
+	'blockforms_email_footer_text'               => '<p>Sent by the power site.</p>',
+	'blockforms_spam_min_seconds'                => 2,
+	'blockforms_spam_rate_limit_per_minute'      => 20,
+	'blockforms_advanced_debug_log'              => '1',
 ];
 
 return [
@@ -372,16 +372,16 @@ return [
 	'guards'        => [ 'C-3.1', 'C-7.1', 'C-8.1', 'C-8.3' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => array_merge(
-		$sf_c20_settings,
+		$bf_c20_settings,
 		[
-			'swiftforms_db_version' => 1,
-			'swiftforms_installed'  => [
+			'blockforms_db_version' => 1,
+			'blockforms_installed'  => [
 				'version' => '1.0.0',
 				'time'    => 1795082400,
 			],
@@ -389,13 +389,13 @@ return [
 	),
 	'variants'      => [
 		'headless-no-js-token' => [
-			'swiftforms_spam_js_token' => '0',
+			'blockforms_spam_js_token' => '0',
 		],
 	],
-	'posts'         => $sf_c20_posts,
+	'posts'         => $bf_c20_posts,
 	'users'         => [ 'admin' ],
 	'mu_plugins'    => [ '20-all-hooks.php' ],
-	'submissions'   => $sf_c20_submissions,
+	'submissions'   => $bf_c20_submissions,
 	'privacy_email' => 'ada@example.com',
 	'checks'        => [ 'global_styles', 'hooks', 'resave' ],
 	'skip'          => [

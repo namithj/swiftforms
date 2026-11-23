@@ -4,7 +4,7 @@
 
 Please report security problems privately. Do not open a public issue.
 
-- Use GitHub's private vulnerability reporting: <https://github.com/namithj/swiftforms/security/advisories/new>
+- Use GitHub's private vulnerability reporting: <https://github.com/namithj/blockforms/security/advisories/new>
 - security@smartlogix.co.in
 
 We acknowledge a report within 3 working days and keep you updated until it is fixed.
@@ -15,7 +15,7 @@ We follow a 90-day coordinated disclosure window. A fix is released and the advi
 
 ## Patchstack
 
-SwiftForms is enrolled in the Patchstack managed vulnerability disclosure program (mVDP): enrolment requested, maintainer to confirm.
+BlockForms is enrolled in the Patchstack managed vulnerability disclosure program (mVDP): enrolment requested, maintainer to confirm.
 
 ## Supported versions
 

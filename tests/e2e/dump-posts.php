@@ -9,14 +9,14 @@
  * "theme//slug" for a template), type, restBase, title, status, password (whether a password is set), link (the public address of
  * a page or post, empty otherwise), hasBlocks, hasForms, forms (number of form blocks).
  *
- * Run through: wp eval-file wp-content/plugins/swiftforms/tests/e2e/dump-posts.php
+ * Run through: wp eval-file wp-content/plugins/blockforms/tests/e2e/dump-posts.php
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-function swiftforms_e2e_dump_posts() {
+function blockforms_e2e_dump_posts() {
 	$count_forms = static function ( $content ) {
-		return substr_count( (string) $content, '<!-- wp:swiftforms/form ' ) + substr_count( (string) $content, '<!-- wp:swiftforms/form -->' );
+		return substr_count( (string) $content, '<!-- wp:blockforms/form ' ) + substr_count( (string) $content, '<!-- wp:blockforms/form -->' );
 	};
 
 	$posts = get_posts(
@@ -56,7 +56,7 @@ function swiftforms_e2e_dump_posts() {
 			'password'  => '' !== (string) $post->post_password,
 			'link'      => is_post_type_viewable( $post->post_type ) && ! $is_template ? (string) get_permalink( $post ) : '',
 			'hasBlocks' => has_blocks( $post ),
-			'hasForms'  => false !== strpos( $post->post_content, '<!-- wp:swiftforms/' ),
+			'hasForms'  => false !== strpos( $post->post_content, '<!-- wp:blockforms/' ),
 			'forms'     => $count_forms( $post->post_content ),
 		];
 	}
@@ -70,7 +70,7 @@ function swiftforms_e2e_dump_posts() {
 			if ( ! $template instanceof WP_Block_Template || 'theme' !== $template->source || isset( $seen[ $type . ':' . $template->id ] ) ) {
 				continue;
 			}
-			if ( false === strpos( (string) $template->content, '<!-- wp:swiftforms/' ) ) {
+			if ( false === strpos( (string) $template->content, '<!-- wp:blockforms/' ) ) {
 				continue;
 			}
 			$rows[] = [
@@ -93,4 +93,4 @@ function swiftforms_e2e_dump_posts() {
 	echo "\nSF_STATE_BEGIN\n" . wp_json_encode( $rows ) . "\nSF_STATE_END\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
-swiftforms_e2e_dump_posts();
+blockforms_e2e_dump_posts();

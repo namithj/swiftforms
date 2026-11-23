@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: SwiftForms – Contact Form Builder for the Block Editor
- * Plugin URI: https://github.com/namithj/swiftforms
- * Description: Build contact forms with blocks, right in the editor. Fast, accessible and free, with no upsells.
+ * Plugin Name: BlockForms by Smartlogix – Contact Form Builder for the Block Editor
+ * Plugin URI: https://github.com/namithj/blockforms
+ * Description: Build contact forms with blocks, right in the editor. Fast, accessible and free.
  * Author: namithjawahar
  * Author URI: https://smartlogix.co.in/
  * Version: 1.0.0
@@ -10,7 +10,7 @@
  * Requires PHP: 7.4
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: swiftforms
+ * Text Domain: blockforms
  * Domain Path: /languages
  */
 
@@ -24,23 +24,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Kept in step with the plugin header and the readme Stable tag by
  * bin/set-version.sh, which the release pipeline runs from the pushed tag.
  */
-define( 'SWIFTFORMS_VERSION', '1.0.0' );
+define( 'BLOCKFORMS_VERSION', '1.0.0' );
 
 /**
  * Main plugin file, for plugin_dir_path() / plugin_dir_url() and activation hooks.
  */
-define( 'SWIFTFORMS_FILE', __FILE__ );
+define( 'BLOCKFORMS_FILE', __FILE__ );
 
 /**
  * Floors checked by the bootstrap guard below.
  *
- * SWIFTFORMS_MIN_PHP is the floor of SwiftForms' own code and of the bundled
+ * BLOCKFORMS_MIN_PHP is the floor of BlockForms' own code and of the bundled
  * frameworks (phpcs testVersion 7.4-), and it matches the "Requires PHP" header.
  * WordPress enforces the header; this guard is the last line of defence when the
  * header was bypassed.
  */
-define( 'SWIFTFORMS_MIN_PHP', '7.4' );
-define( 'SWIFTFORMS_MIN_WP', '6.8' );
+define( 'BLOCKFORMS_MIN_PHP', '7.4' );
+define( 'BLOCKFORMS_MIN_WP', '6.8' );
 
 /**
  * Print an admin notice and leave the plugin switched off.
@@ -51,7 +51,7 @@ define( 'SWIFTFORMS_MIN_WP', '6.8' );
  * @param string $message Already-translated, plain-text message.
  * @return void
  */
-function swiftforms_bootstrap_notice( $message ) {
+function blockforms_bootstrap_notice( $message ) {
 	add_action(
 		'admin_notices',
 		function () use ( $message ) {
@@ -66,24 +66,24 @@ function swiftforms_bootstrap_notice( $message ) {
 	);
 }
 
-if ( version_compare( PHP_VERSION, SWIFTFORMS_MIN_PHP, '<' ) ) {
-	swiftforms_bootstrap_notice(
+if ( version_compare( PHP_VERSION, BLOCKFORMS_MIN_PHP, '<' ) ) {
+	blockforms_bootstrap_notice(
 		sprintf(
 			/* translators: 1: required PHP version, 2: current PHP version. */
-			__( 'SwiftForms needs PHP %1$s or newer. You are running PHP %2$s, so the plugin is switched off.', 'swiftforms' ),
-			SWIFTFORMS_MIN_PHP,
+			__( 'BlockForms needs PHP %1$s or newer. You are running PHP %2$s, so the plugin is switched off.', 'blockforms' ),
+			BLOCKFORMS_MIN_PHP,
 			PHP_VERSION
 		)
 	);
 	return;
 }
 
-if ( version_compare( get_bloginfo( 'version' ), SWIFTFORMS_MIN_WP, '<' ) ) {
-	swiftforms_bootstrap_notice(
+if ( version_compare( get_bloginfo( 'version' ), BLOCKFORMS_MIN_WP, '<' ) ) {
+	blockforms_bootstrap_notice(
 		sprintf(
 			/* translators: 1: required WordPress version, 2: current WordPress version. */
-			__( 'SwiftForms needs WordPress %1$s or newer. You are running WordPress %2$s, so the plugin is switched off.', 'swiftforms' ),
-			SWIFTFORMS_MIN_WP,
+			__( 'BlockForms needs WordPress %1$s or newer. You are running WordPress %2$s, so the plugin is switched off.', 'blockforms' ),
+			BLOCKFORMS_MIN_WP,
 			get_bloginfo( 'version' )
 		)
 	);
@@ -92,8 +92,8 @@ if ( version_compare( get_bloginfo( 'version' ), SWIFTFORMS_MIN_WP, '<' ) ) {
 
 // Strauss output (the namespaced frameworks) and Composer's own autoloader (our classes).
 if ( ! is_readable( __DIR__ . '/vendor-prefixed/autoload.php' ) || ! is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
-	swiftforms_bootstrap_notice(
-		__( 'SwiftForms is missing its dependencies. Install the plugin from a release ZIP, or run "composer install" in the plugin folder.', 'swiftforms' )
+	blockforms_bootstrap_notice(
+		__( 'BlockForms is missing its dependencies. Install the plugin from a release ZIP, or run "composer install" in the plugin folder.', 'blockforms' )
 	);
 	return;
 }
@@ -102,12 +102,12 @@ require_once __DIR__ . '/vendor-prefixed/autoload.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Registered here, not in Plugin::boot(): activation runs before plugins_loaded fires.
-register_activation_hook( SWIFTFORMS_FILE, [ \SwiftForms\Activator::class, 'activate' ] );
-register_deactivation_hook( SWIFTFORMS_FILE, [ \SwiftForms\Activator::class, 'deactivate' ] );
+register_activation_hook( BLOCKFORMS_FILE, [ \BlockForms\Activator::class, 'activate' ] );
+register_deactivation_hook( BLOCKFORMS_FILE, [ \BlockForms\Activator::class, 'deactivate' ] );
 
 add_action(
 	'plugins_loaded',
 	function () {
-		\SwiftForms\Plugin::instance()->boot();
+		\BlockForms\Plugin::instance()->boot();
 	}
 );

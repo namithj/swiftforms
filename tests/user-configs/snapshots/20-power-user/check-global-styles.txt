@@ -1,13 +1,13 @@
-== Styles for swiftforms/* blocks in the merged global styles (raw) ==
+== Styles for blockforms/* blocks in the merged global styles (raw) ==
 {
-    "swiftforms/field-text": {
+    "blockforms/field-text": {
         "spacing": {
             "margin": {
                 "bottom": "0.75rem"
             }
         }
     },
-    "swiftforms/form": {
+    "blockforms/form": {
         "color": {
             "background": "#f6f7f7"
         },
@@ -21,7 +21,7 @@
             "radius": "6px"
         }
     },
-    "swiftforms/submit": {
+    "blockforms/submit": {
         "color": {
             "background": "#1d4ed8",
             "text": "#ffffff"

@@ -1,11 +1,11 @@
 <?php
 /**
- * Tests for SwiftForms\Source_Ref.
+ * Tests for BlockForms\Source_Ref.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Source_Ref;
+use BlockForms\Source_Ref;
 
 /**
  * Class SourceRefTest

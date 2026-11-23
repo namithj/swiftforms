@@ -1,7 +1,7 @@
 {
-	"name": "swiftforms",
+	"name": "blockforms",
 	"private": true,
-	"description": "Build and test tooling for the SwiftForms WordPress plugin. Never published.",
+	"description": "Build and test tooling for the BlockForms WordPress plugin. Never published.",
 	"license": "GPL-2.0-or-later",
 	"scripts": {
 		"build": "wp-scripts build --experimental-modules",

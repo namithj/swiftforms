@@ -1,25 +1,25 @@
-<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper: the class name follows SF_Submission_Test_Case.
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper: the class name follows BF_Submission_Test_Case.
 /**
  * Base class for the submission pipeline tests (REST and no-JS).
  *
  * Creates a published page with a form, builds valid control fields the way the view module would
  * (a real render token and a browser-measured time) and posts to the REST route in-process.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once __DIR__ . '/class-sf-render-test-case.php';
-require_once __DIR__ . '/class-sf-test-redirect.php';
-require_once __DIR__ . '/class-sf-test-die.php';
+require_once __DIR__ . '/class-bf-render-test-case.php';
+require_once __DIR__ . '/class-bf-test-redirect.php';
+require_once __DIR__ . '/class-bf-test-die.php';
 
-use SwiftForms\Form_Index;
-use SwiftForms\Render_Token;
-use SwiftForms\Schema_Resolver;
+use BlockForms\Form_Index;
+use BlockForms\Render_Token;
+use BlockForms\Schema_Resolver;
 
 /**
- * Class SF_Submission_Test_Case
+ * Class BF_Submission_Test_Case
  */
-abstract class SF_Submission_Test_Case extends SF_Render_Test_Case {
+abstract class BF_Submission_Test_Case extends BF_Render_Test_Case {
 
 	/**
 	 * Source of the form made by make_form().
@@ -58,7 +58,7 @@ abstract class SF_Submission_Test_Case extends SF_Render_Test_Case {
 	public function tear_down() {
 		global $wp_rest_server;
 		$wp_rest_server = null; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- See set_up().
-		unset( $_POST, $_GET['sf_result'] );
+		unset( $_POST, $_GET['bf_result'] );
 		$_POST = [];
 		parent::tear_down();
 	}
@@ -93,8 +93,8 @@ abstract class SF_Submission_Test_Case extends SF_Render_Test_Case {
 					'label' => 'Message',
 				]
 			)
-			. '<!-- wp:swiftforms/submit /-->'
-			. '<!-- wp:swiftforms/confirmation -->' . $confirmation . '<!-- /wp:swiftforms/confirmation -->';
+			. '<!-- wp:blockforms/submit /-->'
+			. '<!-- wp:blockforms/confirmation -->' . $confirmation . '<!-- /wp:blockforms/confirmation -->';
 	}
 
 	/**
@@ -121,7 +121,7 @@ abstract class SF_Submission_Test_Case extends SF_Render_Test_Case {
 	/**
 	 * The current schema of the form.
 	 *
-	 * @return \SwiftForms\Form_Schema
+	 * @return \BlockForms\Form_Schema
 	 */
 	protected function schema() {
 		$schema = Schema_Resolver::resolve( $this->form_id, $this->source );
@@ -137,12 +137,12 @@ abstract class SF_Submission_Test_Case extends SF_Render_Test_Case {
 	 */
 	protected function controls( array $override = [] ) {
 		$controls = [
-			'_sf_form'   => $this->form_id,
-			'_sf_source' => $this->source,
-			'_sf_token'  => Render_Token::issue( $this->form_id, $this->source, $this->schema()->hash ),
-			'_sf_hp'     => '',
-			'_sf_t'      => 'js.5000',
-			'_sf_v'      => SWIFTFORMS_VERSION,
+			'_bf_form'   => $this->form_id,
+			'_bf_source' => $this->source,
+			'_bf_token'  => Render_Token::issue( $this->form_id, $this->source, $this->schema()->hash ),
+			'_bf_hp'     => '',
+			'_bf_t'      => 'js.5000',
+			'_bf_v'      => BLOCKFORMS_VERSION,
 		];
 		foreach ( $override as $key => $value ) {
 			if ( null === $value ) {
@@ -174,19 +174,19 @@ abstract class SF_Submission_Test_Case extends SF_Render_Test_Case {
 	/**
 	 * POST a JSON submission to the REST route.
 	 *
-	 * @param array $sf       Field values.
+	 * @param array $bf       Field values.
 	 * @param array $controls Control overrides (see controls()).
 	 * @return WP_REST_Response
 	 */
-	protected function submit( array $sf, array $controls = [] ) {
-		$request = new WP_REST_Request( 'POST', '/swiftforms/v1/submit' );
+	protected function submit( array $bf, array $controls = [] ) {
+		$request = new WP_REST_Request( 'POST', '/blockforms/v1/submit' );
 		$request->set_header( 'content-type', 'application/json' );
-		$request->set_body( wp_json_encode( array_merge( $this->controls( $controls ), [ 'sf' => $sf ] ) ) );
+		$request->set_body( wp_json_encode( array_merge( $this->controls( $controls ), [ 'bf' => $bf ] ) ) );
 		return rest_do_request( $request );
 	}
 
 	/**
-	 * Make wp_redirect() throw SF_Test_Redirect and wp_die() throw SF_Test_Die for the rest of the test.
+	 * Make wp_redirect() throw BF_Test_Redirect and wp_die() throw BF_Test_Die for the rest of the test.
 	 *
 	 * @return void
 	 */
@@ -194,7 +194,7 @@ abstract class SF_Submission_Test_Case extends SF_Render_Test_Case {
 		add_filter(
 			'wp_redirect',
 			static function ( $location, $status ) {
-				$e           = new SF_Test_Redirect( 'redirect' );
+				$e           = new BF_Test_Redirect( 'redirect' );
 				$e->location = $location;
 				$e->status   = $status;
 				throw $e;
@@ -206,7 +206,7 @@ abstract class SF_Submission_Test_Case extends SF_Render_Test_Case {
 			'wp_die_handler',
 			static function () {
 				return static function ( $message, $title, $args ) {
-					$e         = new SF_Test_Die( is_string( $message ) ? $message : 'die' );
+					$e         = new BF_Test_Die( is_string( $message ) ? $message : 'die' );
 					$e->status = isset( $args['response'] ) ? (int) $args['response'] : 500;
 					throw $e;
 				};

@@ -1,20 +1,20 @@
 <?php
 /**
- * Tests for SwiftForms\Source_Loader.
+ * Tests for BlockForms\Source_Loader.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-resolver-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-resolver-test-case.php';
 
-use SwiftForms\Source_Loader;
+use BlockForms\Source_Loader;
 
 /**
  * Class SourceLoaderTest
  *
  * @group resolver
  */
-class SourceLoaderTest extends SF_Resolver_Test_Case {
+class SourceLoaderTest extends BF_Resolver_Test_Case {
 
 	/**
 	 * Posts: blocks parsed, state describes status, viewability, password and date.
@@ -26,7 +26,7 @@ class SourceLoaderTest extends SF_Resolver_Test_Case {
 
 		$loaded = Source_Loader::load( 'post:' . $page );
 		$this->assertSame( 'post:' . $page, $loaded['ref'] );
-		$this->assertSame( 'swiftforms/form', $loaded['blocks'][0]['blockName'] );
+		$this->assertSame( 'blockforms/form', $loaded['blocks'][0]['blockName'] );
 		$state = $loaded['state'];
 		$this->assertSame( 'post', $state['kind'] );
 		$this->assertSame( 'page', $state['post_type'] );
@@ -74,27 +74,27 @@ class SourceLoaderTest extends SF_Resolver_Test_Case {
 	 */
 	public function test_file_templates_and_parts() {
 		$this->make_theme(
-			'sf-t1',
+			'bf-t1',
 			[
 				'templates/single.html' => '<!-- wp:group --><div class="wp-block-group"></div><!-- /wp:group -->' . $this->form_markup( self::ID_A ),
 				'parts/header.html'     => '<!-- wp:site-title /-->',
 			]
 		);
 
-		$template = Source_Loader::load( 'template:sf-t1//single' );
+		$template = Source_Loader::load( 'template:bf-t1//single' );
 		$this->assertSame( 'template', $template['state']['kind'] );
 		$this->assertSame( 'file', $template['state']['origin'] );
 		$this->assertTrue( $template['state']['active'] );
 		$names = wp_list_pluck( $template['blocks'], 'blockName' );
-		$this->assertContains( 'swiftforms/form', $names );
+		$this->assertContains( 'blockforms/form', $names );
 
-		$part = Source_Loader::load( 'template_part:sf-t1//header' );
+		$part = Source_Loader::load( 'template_part:bf-t1//header' );
 		$this->assertSame( 'template_part', $part['state']['kind'] );
 		$this->assertSame( 'core/site-title', $part['blocks'][0]['blockName'] );
 
-		$this->assertNull( Source_Loader::load( 'template:sf-t1//missing' ) );
+		$this->assertNull( Source_Loader::load( 'template:bf-t1//missing' ) );
 		$this->assertNull( Source_Loader::load( 'template:other-theme//single' ) );
-		$this->assertTrue( Source_Loader::is_active_theme_template( 'template:sf-t1//single' ) );
+		$this->assertTrue( Source_Loader::is_active_theme_template( 'template:bf-t1//single' ) );
 		$this->assertFalse( Source_Loader::is_active_theme_template( 'template:other-theme//single' ) );
 		$this->assertFalse( Source_Loader::is_active_theme_template( 'post:1' ) );
 	}
@@ -105,16 +105,16 @@ class SourceLoaderTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_database_templates() {
-		$this->make_theme( 'sf-t2', [ 'templates/single.html' => '<!-- wp:paragraph --><p>file</p><!-- /wp:paragraph -->' ] );
-		$this->make_template_post( 'wp_template', 'sf-t2', 'single', $this->form_markup( self::ID_A ) );
-		$this->make_template_post( 'wp_template_part', 'sf-t2', 'footer', $this->form_markup( self::ID_B ) );
-		$this->make_template_post( 'wp_template', 'sf-old', 'single', $this->form_markup( self::ID_C ) );
+		$this->make_theme( 'bf-t2', [ 'templates/single.html' => '<!-- wp:paragraph --><p>file</p><!-- /wp:paragraph -->' ] );
+		$this->make_template_post( 'wp_template', 'bf-t2', 'single', $this->form_markup( self::ID_A ) );
+		$this->make_template_post( 'wp_template_part', 'bf-t2', 'footer', $this->form_markup( self::ID_B ) );
+		$this->make_template_post( 'wp_template', 'bf-old', 'single', $this->form_markup( self::ID_C ) );
 
-		$template = Source_Loader::load( 'template:sf-t2//single' );
+		$template = Source_Loader::load( 'template:bf-t2//single' );
 		$this->assertSame( 'db', $template['state']['origin'] );
-		$this->assertSame( 'swiftforms/form', $template['blocks'][0]['blockName'] );
-		$this->assertSame( 'db', Source_Loader::load( 'template_part:sf-t2//footer' )['state']['origin'] );
-		$this->assertNull( Source_Loader::load( 'template:sf-old//single' ), 'A template of an inactive theme is not a source.' );
+		$this->assertSame( 'blockforms/form', $template['blocks'][0]['blockName'] );
+		$this->assertSame( 'db', Source_Loader::load( 'template_part:bf-t2//footer' )['state']['origin'] );
+		$this->assertNull( Source_Loader::load( 'template:bf-old//single' ), 'A template of an inactive theme is not a source.' );
 	}
 
 	/**
@@ -123,15 +123,15 @@ class SourceLoaderTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_patterns() {
-		$this->register_pattern( 'sf/hero', $this->form_markup( self::ID_A ) );
+		$this->register_pattern( 'bf/hero', $this->form_markup( self::ID_A ) );
 
-		$loaded = Source_Loader::load( 'pattern:sf/hero' );
+		$loaded = Source_Loader::load( 'pattern:bf/hero' );
 		$this->assertSame( 'pattern', $loaded['state']['kind'] );
 		$this->assertSame( 'registry', $loaded['state']['origin'] );
-		$this->assertSame( 'swiftforms/form', $loaded['blocks'][0]['blockName'] );
-		$this->assertNotNull( Source_Loader::state( 'pattern:sf/hero' ) );
-		$this->assertNull( Source_Loader::load( 'pattern:sf/none' ) );
-		$this->assertNull( Source_Loader::state( 'pattern:sf/none' ) );
+		$this->assertSame( 'blockforms/form', $loaded['blocks'][0]['blockName'] );
+		$this->assertNotNull( Source_Loader::state( 'pattern:bf/hero' ) );
+		$this->assertNull( Source_Loader::load( 'pattern:bf/none' ) );
+		$this->assertNull( Source_Loader::state( 'pattern:bf/none' ) );
 	}
 
 	/**
@@ -141,17 +141,17 @@ class SourceLoaderTest extends SF_Resolver_Test_Case {
 	 */
 	public function test_file_pattern() {
 		$this->make_theme(
-			'sf-t3',
+			'bf-t3',
 			[
-				'patterns/contact.php' => "<?php\n/**\n * Title: Contact\n * Slug: sf-t3/contact\n * Inserter: no\n */\n?>\n" . $this->form_markup( self::ID_A ),
+				'patterns/contact.php' => "<?php\n/**\n * Title: Contact\n * Slug: bf-t3/contact\n * Inserter: no\n */\n?>\n" . $this->form_markup( self::ID_A ),
 			]
 		);
 		_register_theme_block_patterns();
-		$this->register_pattern_cleanup( 'sf-t3/contact' );
+		$this->register_pattern_cleanup( 'bf-t3/contact' );
 
-		$loaded = Source_Loader::load( 'pattern:sf-t3/contact' );
+		$loaded = Source_Loader::load( 'pattern:bf-t3/contact' );
 		$this->assertNotNull( $loaded );
-		$this->assertSame( 'swiftforms/form', $loaded['blocks'][0]['blockName'] );
+		$this->assertSame( 'blockforms/form', $loaded['blocks'][0]['blockName'] );
 	}
 
 	/**
@@ -160,13 +160,13 @@ class SourceLoaderTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_widgets() {
-		$this->place_widget( 3, $this->form_markup( self::ID_A ), 'sf-sidebar' );
+		$this->place_widget( 3, $this->form_markup( self::ID_A ), 'bf-sidebar' );
 		$this->place_widget( 4, $this->form_markup( self::ID_B ), 'wp_inactive_widgets' );
 
 		$active = Source_Loader::load( 'widget:block-3' );
 		$this->assertSame( 'widget', $active['state']['kind'] );
 		$this->assertTrue( $active['state']['active'] );
-		$this->assertSame( 'swiftforms/form', $active['blocks'][0]['blockName'] );
+		$this->assertSame( 'blockforms/form', $active['blocks'][0]['blockName'] );
 
 		$this->assertFalse( Source_Loader::load( 'widget:block-4' )['state']['active'] );
 		$this->assertNull( Source_Loader::load( 'widget:block-99' ) );

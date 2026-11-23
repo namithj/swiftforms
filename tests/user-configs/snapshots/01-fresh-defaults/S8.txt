@@ -1,4 +1,4 @@
-== S8 GET /swiftforms-cmf/v1/settings/swiftforms (no settings option stored) ==
+== S8 GET /blockforms-cmf/v1/settings/blockforms (no settings option stored) ==
 status: 200
 {
     "values": {
@@ -92,7 +92,7 @@ status: 200
 }
 
 == S8 writes ==
-writes to swiftforms_{section}_* options: 0
+writes to blockforms_{section}_* options: 0
 settings options before: 0, after: 0
 stored options unchanged (names and values): yes
 cassette-cmf options written: 0

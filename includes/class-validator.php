@@ -2,10 +2,10 @@
 /**
  * Server-side validation.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * The server is the authority on what a submission may contain (C-3.2). Two steps:
  *
- * - collect():  turns the posted `sf` array into clean values for the fields of a schema and nothing
+ * - collect():  turns the posted `bf` array into clean values for the fields of a schema and nothing
  *               else. Unknown and extra fields are discarded, a hidden field's value is recomputed from
  *               its attribute and the source (a posted value is ignored, C-3.10), multi-value fields
  *               become lists, everything is cleaned to valid UTF-8 without control characters. Values are
@@ -71,24 +71,24 @@ class Validator {
 	 */
 	public static function messages() {
 		return [
-			'required'    => __( 'This field is required.', 'swiftforms' ),
-			'email'       => __( 'Please enter a valid email address.', 'swiftforms' ),
-			'url'         => __( 'Please enter a valid web address starting with http:// or https://.', 'swiftforms' ),
-			'number'      => __( 'Please enter a number.', 'swiftforms' ),
-			'number_min'  => __( 'Please enter a number that is at least {min}.', 'swiftforms' ),
-			'number_max'  => __( 'Please enter a number that is at most {max}.', 'swiftforms' ),
-			'number_step' => __( 'Please enter a multiple of {step}.', 'swiftforms' ),
-			'date'        => __( 'Please enter a valid date as YYYY-MM-DD.', 'swiftforms' ),
-			'date_min'    => __( 'Please enter a date on or after {min}.', 'swiftforms' ),
-			'date_max'    => __( 'Please enter a date on or before {max}.', 'swiftforms' ),
-			'max_length'  => __( 'Please use at most {max} characters.', 'swiftforms' ),
-			'min_length'  => __( 'Please use at least {min} characters.', 'swiftforms' ),
-			'pattern'     => __( 'Please match the requested format.', 'swiftforms' ),
-			'option'      => __( 'Please choose one of the available options.', 'swiftforms' ),
-			'min_choices' => __( 'Please choose at least {min}.', 'swiftforms' ),
-			'max_choices' => __( 'Please choose at most {max}.', 'swiftforms' ),
-			'consent'     => __( 'Please tick this box to continue.', 'swiftforms' ),
-			'invalid'     => __( 'Please check this field.', 'swiftforms' ),
+			'required'    => __( 'This field is required.', 'blockforms' ),
+			'email'       => __( 'Please enter a valid email address.', 'blockforms' ),
+			'url'         => __( 'Please enter a valid web address starting with http:// or https://.', 'blockforms' ),
+			'number'      => __( 'Please enter a number.', 'blockforms' ),
+			'number_min'  => __( 'Please enter a number that is at least {min}.', 'blockforms' ),
+			'number_max'  => __( 'Please enter a number that is at most {max}.', 'blockforms' ),
+			'number_step' => __( 'Please enter a multiple of {step}.', 'blockforms' ),
+			'date'        => __( 'Please enter a valid date as YYYY-MM-DD.', 'blockforms' ),
+			'date_min'    => __( 'Please enter a date on or after {min}.', 'blockforms' ),
+			'date_max'    => __( 'Please enter a date on or before {max}.', 'blockforms' ),
+			'max_length'  => __( 'Please use at most {max} characters.', 'blockforms' ),
+			'min_length'  => __( 'Please use at least {min} characters.', 'blockforms' ),
+			'pattern'     => __( 'Please match the requested format.', 'blockforms' ),
+			'option'      => __( 'Please choose one of the available options.', 'blockforms' ),
+			'min_choices' => __( 'Please choose at least {min}.', 'blockforms' ),
+			'max_choices' => __( 'Please choose at most {max}.', 'blockforms' ),
+			'consent'     => __( 'Please tick this box to continue.', 'blockforms' ),
+			'invalid'     => __( 'Please check this field.', 'blockforms' ),
 		];
 	}
 
@@ -117,7 +117,7 @@ class Validator {
 	 * Clean values for the fields of a schema.
 	 *
 	 * @param Form_Schema          $schema Schema whose fields are collected.
-	 * @param array<string, mixed> $posted The posted `sf` array (name => value).
+	 * @param array<string, mixed> $posted The posted `bf` array (name => value).
 	 * @param Submission_Context   $ctx    Context (source and user, for hidden fields).
 	 * @return array<string, string|string[]> One key per field of the schema.
 	 */
@@ -257,7 +257,7 @@ class Validator {
 	 *
 	 * @param Form_Schema                    $schema Schema the values were collected for.
 	 * @param array<string, string|string[]> $values Values from collect().
-	 * @param Submission_Context             $ctx    Context, passed to the swiftforms_validate_field filter.
+	 * @param Submission_Context             $ctx    Context, passed to the blockforms_validate_field filter.
 	 * @return array<string, string> Field name => message. Empty when everything is valid.
 	 */
 	public static function validate( Form_Schema $schema, array $values, Submission_Context $ctx ) {
@@ -277,7 +277,7 @@ class Validator {
 			/**
 			 * Filters the validation error of one field.
 			 *
-			 * Runs for every field except hidden ones, after SwiftForms' own rules. Return a message to
+			 * Runs for every field except hidden ones, after BlockForms' own rules. Return a message to
 			 * make the field invalid, or null (or an empty string) to leave the result as it is. Return
 			 * the received value unchanged to keep a built-in error. The message is shown to the visitor
 			 * as plain text, so do not put the submitted value in it. The values are plain text, not
@@ -290,7 +290,7 @@ class Validator {
 			 * @param array<string, mixed> $field The field as resolved from the stored form (type, name, label, options, ...).
 			 * @param Submission_Context $context The submission being validated. $context->values holds the values collected so far.
 			 */
-			$error = apply_filters( 'swiftforms_validate_field', $error, $value, $field, $ctx );
+			$error = apply_filters( 'blockforms_validate_field', $error, $value, $field, $ctx );
 
 			if ( is_string( $error ) && '' !== $error ) {
 				$errors[ $name ] = $error;

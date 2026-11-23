@@ -57,7 +57,7 @@ jobs:
     permissions:
       contents: write
     env:
-      SLUG: swiftforms
+      SLUG: blockforms
       TAG: ${{ inputs.tag || github.ref_name }}
       VERSION: ${{ needs.version.outputs.version }}
 
@@ -126,9 +126,9 @@ jobs:
         with:
           tag_name: ${{ inputs.tag || github.ref_name }}
           files: |
-            ${{ runner.temp }}/swiftforms.zip
-            ${{ runner.temp }}/swiftforms.zip.sha256
-            ${{ runner.temp }}/swiftforms-playground.zip
+            ${{ runner.temp }}/blockforms.zip
+            ${{ runner.temp }}/blockforms.zip.sha256
+            ${{ runner.temp }}/blockforms-playground.zip
           generate_release_notes: true
 
       # The demo installs the ZIP attached to this very release.
@@ -140,7 +140,7 @@ jobs:
             const [ repository, tag ] = process.argv.slice( 1 );
             for ( const step of blueprint.steps ) {
               if ( step.step === "installPlugin" ) {
-                step.pluginData = { resource: "url", url: "https://github.com/" + repository + "/releases/download/" + tag + "/swiftforms.zip" };
+                step.pluginData = { resource: "url", url: "https://github.com/" + repository + "/releases/download/" + tag + "/blockforms.zip" };
               }
             }
             process.stdout.write( "https://playground.wordpress.net/#" + Buffer.from( JSON.stringify( blueprint ) ).toString( "base64" ) );
@@ -152,8 +152,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const startMarker = '<!-- swiftforms-playground:start -->';
-            const endMarker = '<!-- swiftforms-playground:end -->';
+            const startMarker = '<!-- blockforms-playground:start -->';
+            const endMarker = '<!-- blockforms-playground:end -->';
             const section = [
               startMarker,
               '## Live demo',
@@ -192,7 +192,7 @@ jobs:
             echo
             echo "- Version: \`${VERSION}\`"
             echo "- Built from: \`${{ needs.version.outputs.sha }}\`"
-            echo "- SHA-256: \`$(cut -d' ' -f1 "${RUNNER_TEMP}/swiftforms.zip.sha256")\`"
+            echo "- SHA-256: \`$(cut -d' ' -f1 "${RUNNER_TEMP}/blockforms.zip.sha256")\`"
             echo "- [Try it in WordPress Playground](${PLAYGROUND_URL})"
             echo
             echo "WordPress.org is not published automatically. To ship this"

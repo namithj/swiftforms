@@ -1,20 +1,20 @@
 <?php
 /**
- * Tests for SwiftForms\Database.
+ * Tests for BlockForms\Database.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Database;
+use BlockForms\Database;
 
 /**
  * Class DatabaseTest
  *
  * @group database
  */
-class DatabaseTest extends SF_Storage_Test_Case {
+class DatabaseTest extends BF_Storage_Test_Case {
 
 	/**
 	 * Column => "type NULL|NOT NULL", per table: ADR-003.
@@ -123,7 +123,7 @@ class DatabaseTest extends SF_Storage_Test_Case {
 	public function test_table_names() {
 		global $wpdb;
 
-		$this->assertSame( $wpdb->prefix . 'swiftforms_entries', Database::table( 'entries' ) );
+		$this->assertSame( $wpdb->prefix . 'blockforms_entries', Database::table( 'entries' ) );
 		$this->assertSame(
 			[ 'forms', 'schemas', 'entries', 'entry_values', 'entry_meta', 'log' ],
 			Database::TABLES
@@ -132,9 +132,9 @@ class DatabaseTest extends SF_Storage_Test_Case {
 		$tables = Database::tables();
 		$this->assertCount( 6, $tables );
 		foreach ( $tables as $table ) {
-			$this->assertStringStartsWith( $wpdb->prefix . 'swiftforms_', $table );
+			$this->assertStringStartsWith( $wpdb->prefix . 'blockforms_', $table );
 		}
-		$this->assertSame( $wpdb->get_blog_prefix( 1 ) . 'swiftforms_log', Database::tables( 1 )[5] );
+		$this->assertSame( $wpdb->get_blog_prefix( 1 ) . 'blockforms_log', Database::tables( 1 )[5] );
 	}
 
 	/**

@@ -1,7 +1,7 @@
 == GET /entries/1 ==
 status: 404
 {
-    "code": "swiftforms_entry_not_found",
+    "code": "blockforms_entry_not_found",
     "message": "No such entry.",
     "data": {
         "status": 404

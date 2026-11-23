@@ -2,18 +2,18 @@
 /**
  * Tests for the form post without JavaScript (Post/Redirect/Get).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__, 2 ) . '/includes/class-sf-submission-test-case.php';
+require_once dirname( __DIR__, 2 ) . '/includes/class-bf-submission-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Form_Renderer;
-use SwiftForms\Form_State;
-use SwiftForms\Nojs_Handler;
-use SwiftForms\Render_Token;
-use SwiftForms\Submission;
-use SwiftForms\Time_Trap;
+use BlockForms\Clock;
+use BlockForms\Form_Renderer;
+use BlockForms\Form_State;
+use BlockForms\Nojs_Handler;
+use BlockForms\Render_Token;
+use BlockForms\Submission;
+use BlockForms\Time_Trap;
 
 /**
  * Class NojsHandlerTest
@@ -21,7 +21,7 @@ use SwiftForms\Time_Trap;
  * @group submission
  * @group security
  */
-class NojsHandlerTest extends SF_Submission_Test_Case {
+class NojsHandlerTest extends BF_Submission_Test_Case {
 
 	/**
 	 * Page ID of the form.
@@ -33,7 +33,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 	/**
 	 * Contexts handed to the notifier.
 	 *
-	 * @var \SwiftForms\Submission_Context[]
+	 * @var \BlockForms\Submission_Context[]
 	 */
 	private $notified = [];
 
@@ -83,20 +83,20 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 	/**
 	 * Post the form as a browser without JavaScript would, five seconds after the page was rendered.
 	 *
-	 * @param array $sf       Field values.
+	 * @param array $bf       Field values.
 	 * @param array $controls Control overrides.
 	 * @param string $uri      Request URI (default: the page's path).
-	 * @return SF_Test_Redirect|SF_Test_Die The exit the handler took.
+	 * @return BF_Test_Redirect|BF_Test_Die The exit the handler took.
 	 */
-	private function post( array $sf, array $controls = [], $uri = null ) {
+	private function post( array $bf, array $controls = [], $uri = null ) {
 		$issued = Time_Trap::issue( $this->form_id, $this->source );
 		Clock::freeze( Clock::now() + 5 );
 
 		$controls  = $this->controls(
 			array_merge(
 				[
-					'_sf_t'  => $issued,
-					'_sf_hp' => '',
+					'_bf_t'  => $issued,
+					'_bf_hp' => '',
 				],
 				$controls
 			)
@@ -105,15 +105,15 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->go_to( $permalink );
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_SERVER['REQUEST_URI']    = null === $uri ? (string) wp_parse_url( $permalink, PHP_URL_PATH ) . ( (string) wp_parse_url( $permalink, PHP_URL_QUERY ) !== '' ? '?' . wp_parse_url( $permalink, PHP_URL_QUERY ) : '' ) : $uri;
-		$_POST                     = wp_slash( array_merge( $controls, [ 'sf' => $sf ] ) );
+		$_POST                     = wp_slash( array_merge( $controls, [ 'bf' => $bf ] ) );
 
 		try {
 			Nojs_Handler::maybe_handle();
-		} catch ( SF_Test_Redirect $e ) {
+		} catch ( BF_Test_Redirect $e ) {
 			$_SERVER['REQUEST_METHOD'] = 'GET';
 			$_POST                     = [];
 			return $e;
-		} catch ( SF_Test_Die $e ) {
+		} catch ( BF_Test_Die $e ) {
 			$_SERVER['REQUEST_METHOD'] = 'GET';
 			$_POST                     = [];
 			return $e;
@@ -125,14 +125,14 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 	/**
 	 * The result key of a Post/Redirect/Get redirect.
 	 *
-	 * @param SF_Test_Redirect $redirect Redirect.
+	 * @param BF_Test_Redirect $redirect Redirect.
 	 * @return string
 	 */
-	private function key( SF_Test_Redirect $redirect ) {
+	private function key( BF_Test_Redirect $redirect ) {
 		parse_str( (string) wp_parse_url( $redirect->location, PHP_URL_QUERY ), $query );
-		$this->assertArrayHasKey( 'sf_result', $query );
-		$this->assertMatchesRegularExpression( '/^[0-9a-f]{32}$/', $query['sf_result'] );
-		return $query['sf_result'];
+		$this->assertArrayHasKey( 'bf_result', $query );
+		$this->assertMatchesRegularExpression( '/^[0-9a-f]{32}$/', $query['bf_result'] );
+		return $query['bf_result'];
 	}
 
 	/**
@@ -146,9 +146,9 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		Form_Renderer::reset();
 		Nojs_Handler::$uncacheable = false;
 		Nojs_Handler::$headers     = [];
-		$this->go_to( add_query_arg( 'sf_result', $key, get_permalink( $this->page ) ) );
+		$this->go_to( add_query_arg( 'bf_result', $key, get_permalink( $this->page ) ) );
 		$_SERVER['REQUEST_METHOD'] = 'GET';
-		$_GET['sf_result']         = $key;
+		$_GET['bf_result']         = $key;
 		Nojs_Handler::maybe_handle();
 		return $this->render_current();
 	}
@@ -172,9 +172,9 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->page();
 		$exit = $this->post( $this->good() );
 
-		$this->assertInstanceOf( SF_Test_Redirect::class, $exit );
+		$this->assertInstanceOf( BF_Test_Redirect::class, $exit );
 		$this->assertSame( 303, $exit->status );
-		$this->assertSame( get_permalink( $this->page ), remove_query_arg( 'sf_result', $exit->location ) );
+		$this->assertSame( get_permalink( $this->page ), remove_query_arg( 'bf_result', $exit->location ) );
 		$key = $this->key( $exit );
 		$this->assertCount( 1, $this->entries() );
 		$this->assertCount( 1, $this->notified );
@@ -195,14 +195,14 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 
 		// The result page shows the confirmation.
 		$html = $this->visit( $key );
-		$this->assertStringContainsString( '<div class="swiftforms-confirmation" role="status"><p>Thanks!</p></div>', $this->norm( $html ) );
+		$this->assertStringContainsString( '<div class="blockforms-confirmation" role="status"><p>Thanks!</p></div>', $this->norm( $html ) );
 		$this->assertStringNotContainsString( '<form', $html );
 
 		// Single read: the key is gone.
 		$this->assertFalse( $this->stored( $key ), 'Deleted on the first read (mutation 10).' );
 		$again = $this->visit( $key );
 		$this->assertStringContainsString( '<form', $again, 'A second visit shows the plain form.' );
-		$this->assertStringNotContainsString( 'swiftforms-confirmation', $again );
+		$this->assertStringNotContainsString( 'blockforms-confirmation', $again );
 	}
 
 	/**
@@ -227,7 +227,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 			$html = $this->visit( $bad );
 			$this->assertTrue( Nojs_Handler::$uncacheable, $bad );
 			$this->assertStringContainsString( '<form', $html, $bad );
-			$this->assertStringNotContainsString( 'swiftforms-confirmation', $html, $bad );
+			$this->assertStringNotContainsString( 'blockforms-confirmation', $html, $bad );
 		}
 	}
 
@@ -262,7 +262,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->assertCount( 0, $this->entries() );
 
 		$html = $this->visit( $this->key( $exit ) );
-		$this->assertStringContainsString( 'swiftforms-errors-summary', $html );
+		$this->assertStringContainsString( 'blockforms-errors-summary', $html );
 		$this->assertStringContainsString( 'This field is required.', $html );
 		$this->assertStringContainsString( 'Please enter a valid email address.', $html );
 		$this->assertStringContainsString( 'value="not-an-email"', $html );
@@ -283,8 +283,8 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$exit = $this->post(
 			$this->good( [ 'message' => 'Do not lose me' ] ),
 			[
-				'_sf_token' => $old,
-				'_sf_t'     => Time_Trap::issue( $this->form_id, $this->source ),
+				'_bf_token' => $old,
+				'_bf_t'     => Time_Trap::issue( $this->form_id, $this->source ),
 			]
 		);
 		$this->assertSame( 303, $exit->status );
@@ -294,9 +294,9 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->assertStringContainsString( 'Please submit again.', $html );
 		$this->assertStringContainsString( 'Do not lose me', $html );
 		$this->assertStringContainsString( 'value="ada@example.com"', $html );
-		$this->assertStringNotContainsString( 'swiftforms-errors-summary" tabindex="-1" role="alert"', $html );
+		$this->assertStringNotContainsString( 'blockforms-errors-summary" tabindex="-1" role="alert"', $html );
 
-		preg_match( '/name="_sf_token" value="([^"]+)"/', $html, $m );
+		preg_match( '/name="_bf_token" value="([^"]+)"/', $html, $m );
 		$this->assertNotSame( $old, $m[1] );
 		$this->assertSame( 'valid', Render_Token::verify( $m[1], $this->form_id, $this->source, [ $this->schema()->hash ] )['state'], 'The re-rendered form has a fresh, valid token.' );
 	}
@@ -336,8 +336,8 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 			]
 		);
 		$exit = $this->post( $this->good( [ 'name' => 'evil.com' ] ) );
-		$this->assertSame( get_permalink( $this->page ), remove_query_arg( 'sf_result', $exit->location ) );
-		$this->assertStringContainsString( 'swiftforms-confirmation', $this->visit( $this->key( $exit ) ) );
+		$this->assertSame( get_permalink( $this->page ), remove_query_arg( 'bf_result', $exit->location ) );
+		$this->assertStringContainsString( 'blockforms-confirmation', $this->visit( $this->key( $exit ) ) );
 	}
 
 	/**
@@ -348,13 +348,13 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 	public function test_spam_looks_like_success() {
 		$this->page();
 		$clean = $this->post( $this->good() );
-		$spam  = $this->post( $this->good( [ 'name' => 'Bot' ] ), [ '_sf_hp' => 'http://spam' ] );
+		$spam  = $this->post( $this->good( [ 'name' => 'Bot' ] ), [ '_bf_hp' => 'http://spam' ] );
 
 		$this->assertSame( $clean->status, $spam->status );
-		$this->assertSame( remove_query_arg( 'sf_result', $clean->location ), remove_query_arg( 'sf_result', $spam->location ) );
+		$this->assertSame( remove_query_arg( 'bf_result', $clean->location ), remove_query_arg( 'bf_result', $spam->location ) );
 		$clean_html = $this->visit( $this->key( $clean ) );
 		$spam_html  = $this->visit( $this->key( $spam ) );
-		$this->assertStringContainsString( 'swiftforms-confirmation', $spam_html );
+		$this->assertStringContainsString( 'blockforms-confirmation', $spam_html );
 		$this->assertSame( $this->confirmation_of( $clean_html ), $this->confirmation_of( $spam_html ) );
 		$this->assertSame( [ 'new', 'spam' ], array_column( $this->entries(), 'status' ) );
 		$this->assertCount( 1, $this->notified );
@@ -367,7 +367,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 	 * @return string
 	 */
 	private function confirmation_of( $html ) {
-		preg_match( '#<div class="swiftforms-confirmation".*?</div>#s', $html, $m );
+		preg_match( '#<div class="blockforms-confirmation".*?</div>#s', $html, $m );
 		return $m[0] ?? '';
 	}
 
@@ -385,11 +385,11 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->go_to( $permalink );
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_SERVER['REQUEST_URI']    = (string) wp_parse_url( $permalink, PHP_URL_PATH );
-		$_POST                     = wp_slash( array_merge( $this->controls( [ '_sf_t' => $issued ] ), [ 'sf' => $this->good() ] ) );
+		$_POST                     = wp_slash( array_merge( $this->controls( [ '_bf_t' => $issued ] ), [ 'bf' => $this->good() ] ) );
 		try {
 			Nojs_Handler::maybe_handle();
 			$this->fail( 'No redirect.' );
-		} catch ( SF_Test_Redirect $e ) {
+		} catch ( BF_Test_Redirect $e ) {
 			$this->assertSame( 303, $e->status );
 		}
 		$this->assertSame( [ 'spam' ], array_column( $this->entries(), 'status' ) );
@@ -402,7 +402,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 	 */
 	public function test_js_time_format_is_refused_without_js() {
 		$this->page();
-		$this->post( $this->good(), [ '_sf_t' => 'js.99999' ] );
+		$this->post( $this->good(), [ '_bf_t' => 'js.99999' ] );
 		$this->assertSame( [ 'spam' ], array_column( $this->entries(), 'status' ) );
 	}
 
@@ -445,22 +445,22 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		global $wpdb;
 		$this->page();
 
-		$exit = $this->post( $this->good(), [ '_sf_form' => wp_generate_uuid4() ] );
-		$this->assertInstanceOf( SF_Test_Die::class, $exit );
+		$exit = $this->post( $this->good(), [ '_bf_form' => wp_generate_uuid4() ] );
+		$this->assertInstanceOf( BF_Test_Die::class, $exit );
 		$this->assertSame( 403, $exit->status );
 		$this->assertSame( 'This form is not accepting submissions.', $exit->getMessage() );
 
-		$exit = $this->post( $this->good(), [ '_sf_source' => 'post:999999' ] );
+		$exit = $this->post( $this->good(), [ '_bf_source' => 'post:999999' ] );
 		$this->assertSame( 403, $exit->status );
 
 		add_filter(
-			'swiftforms_throttle_limit',
+			'blockforms_throttle_limit',
 			static function () {
 				return 1;
 			}
 		);
 		$exit = $this->post( $this->good() );
-		$this->assertInstanceOf( SF_Test_Die::class, $exit );
+		$this->assertInstanceOf( BF_Test_Die::class, $exit );
 		$this->assertSame( 429, $exit->status, 'Over the coarse throttle.' );
 
 		$stored = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_" . Nojs_Handler::TRANSIENT_PREFIX . "%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
@@ -478,7 +478,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->set_settings( [ 'spam' => [ 'rate_limit_per_minute' => 1 ] ] );
 		$this->post( $this->good( [ 'name' => 'One' ] ) );
 		$exit = $this->post( $this->good( [ 'name' => 'Two' ] ) );
-		$this->assertInstanceOf( SF_Test_Redirect::class, $exit );
+		$this->assertInstanceOf( BF_Test_Redirect::class, $exit );
 		$html = $this->visit( $this->key( $exit ) );
 		$this->assertStringContainsString( 'Too many submissions. Please wait a minute and try again.', $html );
 		$this->assertStringContainsString( 'value="Two"', $html );
@@ -493,20 +493,20 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->page();
 		$this->go_to( get_permalink( $this->page ) );
 
-		// No _sf_form: nothing.
+		// No _bf_form: nothing.
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_POST                     = [ 'comment' => 'hi' ];
 		Nojs_Handler::maybe_handle();
 
-		// A GET with _sf_form in the query is not a post.
+		// A GET with _bf_form in the query is not a post.
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$_POST                     = [];
-		$_GET['_sf_form']          = $this->form_id;
+		$_GET['_bf_form']          = $this->form_id;
 		Nojs_Handler::maybe_handle();
 
 		// Admin, AJAX.
 		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$_POST                     = [ '_sf_form' => $this->form_id ];
+		$_POST                     = [ '_bf_form' => $this->form_id ];
 		set_current_screen( 'dashboard' );
 		Nojs_Handler::maybe_handle();
 		set_current_screen( 'front' );
@@ -538,7 +538,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 	 */
 	public function test_instance() {
 		$this->page();
-		$exit = $this->post( $this->good(), [ '_sf_i' => '2' ] );
+		$exit = $this->post( $this->good(), [ '_bf_i' => '2' ] );
 		$key  = $this->key( $exit );
 		$data = get_transient( Nojs_Handler::TRANSIENT_PREFIX . $key );
 		$this->assertSame( 2, $data['instance'] );
@@ -548,7 +548,7 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 		$this->assertFalse( Form_State::get( $this->form_id, 1 )['success'] );
 
 		foreach ( [ '0', '-1', 'x', '1000', '1.5', [ '2' ] ] as $bad ) {
-			$exit = $this->post( $this->good( [ 'message' => 'm' . wp_json_encode( $bad ) ] ), [ '_sf_i' => $bad ] );
+			$exit = $this->post( $this->good( [ 'message' => 'm' . wp_json_encode( $bad ) ] ), [ '_bf_i' => $bad ] );
 			$data = get_transient( Nojs_Handler::TRANSIENT_PREFIX . $this->key( $exit ) );
 			$this->assertSame( 1, $data['instance'], wp_json_encode( $bad ) );
 		}
@@ -561,13 +561,13 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 	 */
 	public function test_redirect_url_is_this_site() {
 		$this->page();
-		$exit = $this->post( $this->good(), [], '/some/path/?utm=1&sf_result=old' );
+		$exit = $this->post( $this->good(), [], '/some/path/?utm=1&bf_result=old' );
 		$home = wp_parse_url( home_url() );
 		$loc  = wp_parse_url( $exit->location );
 		$this->assertSame( $home['host'], $loc['host'] );
 		parse_str( $loc['query'], $query );
 		$this->assertSame( '1', $query['utm'] );
-		$this->assertNotSame( 'old', $query['sf_result'] );
+		$this->assertNotSame( 'old', $query['bf_result'] );
 
 		// A hostile request URI cannot move the redirect off the site.
 		foreach ( [ '//evil.com/x', 'http://evil.com/', "/ok\r\nLocation: http://evil.com", '' ] as $uri ) {
@@ -650,8 +650,8 @@ class NojsHandlerTest extends SF_Submission_Test_Case {
 					],
 				]
 			)
-			. '<!-- wp:swiftforms/submit /-->'
-			. '<!-- wp:swiftforms/confirmation --><p>Thanks!</p><!-- /wp:swiftforms/confirmation -->';
+			. '<!-- wp:blockforms/submit /-->'
+			. '<!-- wp:blockforms/confirmation --><p>Thanks!</p><!-- /wp:blockforms/confirmation -->';
 		$this->page( [], $inner );
 
 		$exit = $this->post(

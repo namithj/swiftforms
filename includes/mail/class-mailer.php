@@ -2,10 +2,10 @@
 /**
  * Notification mail.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -76,7 +76,7 @@ class Mailer {
 				'to'      => $to,
 				'cc'      => '',
 				'bcc'     => '',
-				'subject' => __( 'New submission: {form:title}', 'swiftforms' ),
+				'subject' => __( 'New submission: {form:title}', 'blockforms' ),
 				'replyTo' => '',
 				'body'    => '{all_fields}',
 				'format'  => 'html',
@@ -175,7 +175,7 @@ class Mailer {
 		// Subject.
 		$subject = trim( (string) $n['subject'] );
 		if ( '' === $subject ) {
-			$subject = __( 'New submission: {form:title}', 'swiftforms' );
+			$subject = __( 'New submission: {form:title}', 'blockforms' );
 		}
 		$subject = Merge_Tags::replace( $subject, $ctx, 'header', $visitor_mail );
 		$subject = trim( (string) preg_replace( '/[\x00-\x1F\x7F]+/', ' ', $subject ) );
@@ -234,9 +234,9 @@ class Mailer {
 		 * @param Submission_Context   $context      The submission.
 		 * @param array<string, mixed> $notification The notification: enabled, to, cc, bcc, subject, replyTo, body, format (the templates as authored, before tags are replaced).
 		 */
-		$mail = apply_filters( 'swiftforms_before_send_mail', $mail, $ctx, $n );
+		$mail = apply_filters( 'blockforms_before_send_mail', $mail, $ctx, $n );
 		if ( ! is_array( $mail ) || ! isset( $mail['to'], $mail['subject'], $mail['message'] ) ) {
-			Log::add( 'mail', 'info', 'A notification was not sent: a swiftforms_before_send_mail filter stopped it.', $ref, $form_id );
+			Log::add( 'mail', 'info', 'A notification was not sent: a blockforms_before_send_mail filter stopped it.', $ref, $form_id );
 			return;
 		}
 		$mail = array_merge(
@@ -268,7 +268,7 @@ class Mailer {
 		 * @param array<string, mixed> $mail  The mail as it was passed to wp_mail(): to, subject, message, headers, attachments.
 		 * @param Submission_Context $context The submission.
 		 */
-		do_action( 'swiftforms_mail_sent', $sent, $mail, $ctx );
+		do_action( 'blockforms_mail_sent', $sent, $mail, $ctx );
 	}
 
 	/**

@@ -1,15 +1,15 @@
 == S9 registered ==
-exporter: SwiftForms entries
-eraser: SwiftForms entries
+exporter: BlockForms entries
+eraser: BlockForms entries
 
 == S9 export for camille@example.fr ==
 [
     {
         "data": [
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-1",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-1",
                 "data": [
                     {
                         "name": "Form",
@@ -46,9 +46,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E1}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E1}",
                 "data": [
                     {
                         "name": "Form",
@@ -65,9 +65,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E2}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E2}",
                 "data": [
                     {
                         "name": "Form",
@@ -104,9 +104,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E3}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E3}",
                 "data": [
                     {
                         "name": "Form",
@@ -123,9 +123,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E4}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E4}",
                 "data": [
                     {
                         "name": "Form",
@@ -142,9 +142,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E5}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E5}",
                 "data": [
                     {
                         "name": "Form",
@@ -181,9 +181,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E6}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E6}",
                 "data": [
                     {
                         "name": "Form",
@@ -200,9 +200,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E7}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E7}",
                 "data": [
                     {
                         "name": "Form",
@@ -219,9 +219,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E8}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E8}",
                 "data": [
                     {
                         "name": "Form",
@@ -238,9 +238,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E9}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E9}",
                 "data": [
                     {
                         "name": "Form",
@@ -257,9 +257,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E10}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E10}",
                 "data": [
                     {
                         "name": "Form",
@@ -276,9 +276,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E11}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E11}",
                 "data": [
                     {
                         "name": "Form",
@@ -295,9 +295,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E12}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E12}",
                 "data": [
                     {
                         "name": "Form",
@@ -314,9 +314,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E13}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E13}",
                 "data": [
                     {
                         "name": "Form",
@@ -333,9 +333,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E14}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E14}",
                 "data": [
                     {
                         "name": "Form",
@@ -352,9 +352,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E15}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E15}",
                 "data": [
                     {
                         "name": "Form",
@@ -371,9 +371,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E16}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E16}",
                 "data": [
                     {
                         "name": "Form",
@@ -390,9 +390,9 @@ eraser: SwiftForms entries
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E17}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E17}",
                 "data": [
                     {
                         "name": "Form",
@@ -427,7 +427,7 @@ eraser: SwiftForms entries
         "items_removed": true,
         "items_retained": false,
         "messages": [
-            "Removed 18 SwiftForms entries."
+            "Removed 18 BlockForms entries."
         ],
         "done": true
     }

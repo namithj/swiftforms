@@ -2,15 +2,15 @@
 /**
  * Tests for cache safety of the rendered form (control fields, nonce, user data).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__, 2 ) . '/includes/class-sf-submission-test-case.php';
+require_once dirname( __DIR__, 2 ) . '/includes/class-bf-submission-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Form_Renderer;
-use SwiftForms\Render_Token;
-use SwiftForms\Time_Trap;
+use BlockForms\Clock;
+use BlockForms\Form_Renderer;
+use BlockForms\Render_Token;
+use BlockForms\Time_Trap;
 
 /**
  * Class CacheSafetyTest
@@ -18,7 +18,7 @@ use SwiftForms\Time_Trap;
  * @group submission
  * @group security
  */
-class CacheSafetyTest extends SF_Submission_Test_Case {
+class CacheSafetyTest extends BF_Submission_Test_Case {
 
 	/**
 	 * Page ID.
@@ -73,14 +73,14 @@ class CacheSafetyTest extends SF_Submission_Test_Case {
 		$html     = $this->render();
 		$controls = $this->controls_of( $html );
 
-		$this->assertSame( [ '_sf_form', '_sf_source', '_sf_v', '_sf_token', '_sf_t', '_sf_i' ], array_keys( $controls ) );
-		$this->assertSame( $this->form_id, $controls['_sf_form'] );
-		$this->assertSame( $this->source, $controls['_sf_source'] );
-		$this->assertSame( '1', $controls['_sf_i'] );
-		$this->assertSame( 'valid', Render_Token::verify( $controls['_sf_token'], $this->form_id, $this->source, [ $this->schema()->hash ] )['state'] );
-		$this->assertSame( $controls['_sf_t'], Time_Trap::issue( $this->form_id, $this->source ) );
+		$this->assertSame( [ '_bf_form', '_bf_source', '_bf_v', '_bf_token', '_bf_t', '_bf_i' ], array_keys( $controls ) );
+		$this->assertSame( $this->form_id, $controls['_bf_form'] );
+		$this->assertSame( $this->source, $controls['_bf_source'] );
+		$this->assertSame( '1', $controls['_bf_i'] );
+		$this->assertSame( 'valid', Render_Token::verify( $controls['_bf_token'], $this->form_id, $this->source, [ $this->schema()->hash ] )['state'] );
+		$this->assertSame( $controls['_bf_t'], Time_Trap::issue( $this->form_id, $this->source ) );
 		$this->assertStringNotContainsString( '_wpnonce', $html );
-		$this->assertStringContainsString( 'name="_sf_hp"', $html );
+		$this->assertStringContainsString( 'name="_bf_hp"', $html );
 	}
 
 	/**
@@ -153,13 +153,13 @@ class CacheSafetyTest extends SF_Submission_Test_Case {
 
 		Clock::freeze( 1900000000 + 30 );
 		$later = $this->controls_of( $this->render() );
-		$this->assertSame( $before['_sf_token'], $later['_sf_token'], 'Same hour, same schema, same token.' );
-		$this->assertNotSame( $before['_sf_t'], $later['_sf_t'] );
+		$this->assertSame( $before['_bf_token'], $later['_bf_token'], 'Same hour, same schema, same token.' );
+		$this->assertNotSame( $before['_bf_t'], $later['_bf_t'] );
 
 		Clock::freeze( 1900000000 + 2 * HOUR_IN_SECONDS );
 		$hours = $this->controls_of( $this->render() );
-		$this->assertNotSame( $before['_sf_token'], $hours['_sf_token'] );
-		$this->assertSame( 'valid', Render_Token::verify( $hours['_sf_token'], $this->form_id, $this->source, [ $this->schema()->hash ] )['state'] );
+		$this->assertNotSame( $before['_bf_token'], $hours['_bf_token'] );
+		$this->assertSame( 'valid', Render_Token::verify( $hours['_bf_token'], $this->form_id, $this->source, [ $this->schema()->hash ] )['state'] );
 	}
 
 	/**
@@ -176,9 +176,9 @@ class CacheSafetyTest extends SF_Submission_Test_Case {
 		Form_Renderer::reset();
 		$this->go_to( get_permalink( $page ) );
 		$html = $this->render_current();
-		preg_match_all( '/name="_sf_i" value="(\d+)"/', $html, $m );
+		preg_match_all( '/name="_bf_i" value="(\d+)"/', $html, $m );
 		$this->assertSame( [ '1', '2' ], $m[1] );
-		preg_match_all( '/name="_sf_source" value="([^"]+)"/', $html, $s );
+		preg_match_all( '/name="_bf_source" value="([^"]+)"/', $html, $s );
 		$this->assertSame( [ 'post:' . $block, 'post:' . $block ], $s[1] );
 	}
 }

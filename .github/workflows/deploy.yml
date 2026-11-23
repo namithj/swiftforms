@@ -10,7 +10,7 @@ name: Deploy to WordPress.org
 # them.
 #
 # Being manual does not mean the version is guessed. release.yml has already
-# rewritten the version into the plugin header, the SWIFTFORMS_VERSION constant
+# rewritten the version into the plugin header, the BLOCKFORMS_VERSION constant
 # and readme.txt and moved the tag onto that commit, so checking out the tag
 # yields the synced tree. This workflow asserts that before touching SVN: if the
 # tag's files do not read the tag's version, it fails instead of publishing a
@@ -97,7 +97,7 @@ jobs:
         run: |
           bash bin/build-release.sh "${RUNNER_TEMP}/dist"
           mkdir -p "${RUNNER_TEMP}/deploy"
-          unzip -q "${RUNNER_TEMP}/dist/swiftforms.zip" -d "${RUNNER_TEMP}/deploy"
+          unzip -q "${RUNNER_TEMP}/dist/blockforms.zip" -d "${RUNNER_TEMP}/deploy"
 
       # The live preview on wordpress.org installs the plugin from the directory, so the SVN copy of the
       # blueprint (assets/blueprints/blueprint.json in SVN) swaps the GitHub ZIP for the directory slug.
@@ -112,7 +112,7 @@ jobs:
             let swapped = 0;
             for ( const step of blueprint.steps ) {
               if ( step.step === "installPlugin" ) {
-                step.pluginData = { resource: "wordpress.org/plugins", slug: "swiftforms" };
+                step.pluginData = { resource: "wordpress.org/plugins", slug: "blockforms" };
                 swapped++;
               }
             }
@@ -127,9 +127,9 @@ jobs:
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SLUG: swiftforms
+          SLUG: blockforms
           VERSION: ${{ env.DEPLOY_VERSION }}
-          BUILD_DIR: ${{ runner.temp }}/deploy/swiftforms
+          BUILD_DIR: ${{ runner.temp }}/deploy/blockforms
         with:
           dry-run: ${{ inputs.dry_run }}
 

@@ -8,7 +8,7 @@
  * (ID 1 is D-40 and ID 40 is D-1). With retention_days 30 the daily job deletes
  * exactly the entries created strictly before D-30 10:00 UTC: D-40 to D-31, which are IDs 1 to 10.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 return ( static function () {
@@ -62,18 +62,18 @@ return ( static function () {
 		'guards'        => [ 'C-4.5', 'C-9' ],
 		'site'          => [
 			'locale'     => 'en_US',
-			'theme'      => 'sf-test-block',
+			'theme'      => 'bf-test-block',
 			'multisite'  => false,
 			'timezone'   => 'Europe/London',
 			'permalinks' => '/%postname%/',
 		],
 		'options'       => [
-			'swiftforms_general_store_ip'         => '0',
-			'swiftforms_general_store_user_agent' => '0',
-			'swiftforms_general_retention_days'   => 30,
-			'swiftforms_email_notification_to'    => 'dpo@eu-example.org',
-			'swiftforms_db_version'               => 1,
-			'swiftforms_installed'                => [
+			'blockforms_general_store_ip'         => '0',
+			'blockforms_general_store_user_agent' => '0',
+			'blockforms_general_retention_days'   => 30,
+			'blockforms_email_notification_to'    => 'dpo@eu-example.org',
+			'blockforms_db_version'               => 1,
+			'blockforms_installed'                => [
 				'version' => '1.0.0',
 				'time'    => 1795082400,
 			],
@@ -85,11 +85,11 @@ return ( static function () {
 				'status'    => 'publish',
 				'title'     => 'Contact',
 				'slug'      => 'contact',
-				'content'   => SF_FX( 'page-eu-contact' ),
+				'content'   => BF_FX( 'page-eu-contact' ),
 			],
 		],
 		'tables'        => [
-			'swiftforms_schemas'      => [
+			'blockforms_schemas'      => [
 				[
 					'schema_hash' => 'abf0e848d04bb8ee73c519aaf36067014ef0a906a3b3f476a56b3d4e50ec4dc9',
 					'form_id'     => '5f090001-0000-4000-8000-000000000001',
@@ -97,8 +97,8 @@ return ( static function () {
 					'created_gmt' => '2026-09-10 10:00:00',
 				],
 			],
-			'swiftforms_entries'      => $entries,
-			'swiftforms_entry_values' => $values,
+			'blockforms_entries'      => $entries,
+			'blockforms_entry_values' => $values,
 		],
 		'users'         => [ 'admin' ],
 		'submissions'   => [

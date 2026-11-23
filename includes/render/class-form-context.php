@@ -2,10 +2,10 @@
 /**
  * The form being rendered.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -158,14 +158,14 @@ class Form_Context {
 	}
 
 	/**
-	 * Element ID (C-7.3): sf-{first 8 of the effective formId}-{name}-{instance}, plus an optional suffix.
+	 * Element ID (C-7.3): bf-{first 8 of the effective formId}-{name}-{instance}, plus an optional suffix.
 	 *
 	 * @param string $name   Field name.
 	 * @param string $suffix Optional suffix such as "help", "error" or an option number.
 	 * @return string
 	 */
 	public function element_id( $name, $suffix = '' ) {
-		$id = 'sf-' . substr( $this->form_id, 0, 8 ) . '-' . $name . '-' . $this->instance;
+		$id = 'bf-' . substr( $this->form_id, 0, 8 ) . '-' . $name . '-' . $this->instance;
 		return '' === $suffix ? $id : $id . '-' . $suffix;
 	}
 

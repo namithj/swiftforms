@@ -2,10 +2,10 @@
 /**
  * Client address and client key.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,13 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Who is asking. The address is REMOTE_ADDR and nothing else: a header such as X-Forwarded-For is
  * client-controlled and would let one visitor hide behind a thousand addresses, or lock another
- * out. A site behind a trusted proxy or CDN opts in through the swiftforms_client_ip filter.
+ * out. A site behind a trusted proxy or CDN opts in through the blockforms_client_ip filter.
  *
  * The limiters and the duplicate guard never see the address, only the client key: an HMAC of the
  * normalised address (C-9.1). IPv4-mapped IPv6 addresses count as the IPv4 address, and every IPv6
  * address counts as its /64 prefix (one subscriber is handed 2^64 addresses).
  *
- * The last 20 client keys of accepted submissions are kept in the option swiftforms_recent_clients
+ * The last 20 client keys of accepted submissions are kept in the option blockforms_recent_clients
  * (autoload no) for the system-status warning (R04): when they are all the same, the site is
  * probably behind a proxy nobody configured, and the limiters treat every visitor as one.
  */
@@ -31,7 +31,7 @@ class Client_Ip {
 	/**
 	 * Option holding the recent client keys.
 	 */
-	const RECENT_OPTION = 'swiftforms_recent_clients';
+	const RECENT_OPTION = 'blockforms_recent_clients';
 
 	/**
 	 * How many recent keys are kept.
@@ -58,7 +58,7 @@ class Client_Ip {
 		}
 
 		/**
-		 * Filters the address SwiftForms treats as the visitor's.
+		 * Filters the address BlockForms treats as the visitor's.
 		 *
 		 * By default this is REMOTE_ADDR, the only value a visitor cannot choose. If the site sits
 		 * behind a reverse proxy or CDN, REMOTE_ADDR is the proxy and every visitor looks the same,
@@ -74,7 +74,7 @@ class Client_Ip {
 		 *
 		 * @param string $ip The address from REMOTE_ADDR, or an empty string when it is missing or invalid.
 		 */
-		$filtered = apply_filters( 'swiftforms_client_ip', $remote );
+		$filtered = apply_filters( 'blockforms_client_ip', $remote );
 		if ( is_string( $filtered ) ) {
 			$filtered = trim( $filtered );
 			if ( false !== filter_var( $filtered, FILTER_VALIDATE_IP ) ) {

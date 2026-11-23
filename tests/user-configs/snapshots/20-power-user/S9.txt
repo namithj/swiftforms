@@ -1,15 +1,15 @@
 == S9 registered ==
-exporter: SwiftForms entries
-eraser: SwiftForms entries
+exporter: BlockForms entries
+eraser: BlockForms entries
 
 == S9 export for ada@example.com ==
 [
     {
         "data": [
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E1}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E1}",
                 "data": [
                     {
                         "name": "Form",
@@ -41,14 +41,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E2}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E2}",
                 "data": [
                     {
                         "name": "Form",
@@ -76,14 +76,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E3}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E3}",
                 "data": [
                     {
                         "name": "Form",
@@ -115,14 +115,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E4}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E4}",
                 "data": [
                     {
                         "name": "Form",
@@ -154,14 +154,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E5}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E5}",
                 "data": [
                     {
                         "name": "Form",
@@ -189,14 +189,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E6}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E6}",
                 "data": [
                     {
                         "name": "Form",
@@ -224,14 +224,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E7}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E7}",
                 "data": [
                     {
                         "name": "Form",
@@ -259,14 +259,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E8}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E8}",
                 "data": [
                     {
                         "name": "Form",
@@ -294,14 +294,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E9}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E9}",
                 "data": [
                     {
                         "name": "Form",
@@ -329,14 +329,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E10}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E10}",
                 "data": [
                     {
                         "name": "Form",
@@ -368,14 +368,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E11}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E11}",
                 "data": [
                     {
                         "name": "Form",
@@ -407,14 +407,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E12}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E12}",
                 "data": [
                     {
                         "name": "Form",
@@ -446,14 +446,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E13}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E13}",
                 "data": [
                     {
                         "name": "Form",
@@ -485,14 +485,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E14}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E14}",
                 "data": [
                     {
                         "name": "Form",
@@ -520,14 +520,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E15}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E15}",
                 "data": [
                     {
                         "name": "Form",
@@ -559,14 +559,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E16}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E16}",
                 "data": [
                     {
                         "name": "Form",
@@ -598,14 +598,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E17}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E17}",
                 "data": [
                     {
                         "name": "Form",
@@ -633,14 +633,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E18}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E18}",
                 "data": [
                     {
                         "name": "Form",
@@ -668,14 +668,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E19}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E19}",
                 "data": [
                     {
                         "name": "Form",
@@ -703,14 +703,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E20}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E20}",
                 "data": [
                     {
                         "name": "Form",
@@ -738,14 +738,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E21}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E21}",
                 "data": [
                     {
                         "name": "Form",
@@ -773,14 +773,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E22}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E22}",
                 "data": [
                     {
                         "name": "Form",
@@ -812,14 +812,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E23}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E23}",
                 "data": [
                     {
                         "name": "Form",
@@ -851,14 +851,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E24}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E24}",
                 "data": [
                     {
                         "name": "Form",
@@ -890,14 +890,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E25}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E25}",
                 "data": [
                     {
                         "name": "Form",
@@ -929,14 +929,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E26}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E26}",
                 "data": [
                     {
                         "name": "Form",
@@ -968,14 +968,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E27}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E27}",
                 "data": [
                     {
                         "name": "Form",
@@ -1007,14 +1007,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E28}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E28}",
                 "data": [
                     {
                         "name": "Form",
@@ -1046,14 +1046,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E29}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E29}",
                 "data": [
                     {
                         "name": "Form",
@@ -1085,14 +1085,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E30}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E30}",
                 "data": [
                     {
                         "name": "Form",
@@ -1124,14 +1124,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E31}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E31}",
                 "data": [
                     {
                         "name": "Form",
@@ -1163,14 +1163,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E33}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E33}",
                 "data": [
                     {
                         "name": "Form",
@@ -1202,14 +1202,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E34}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E34}",
                 "data": [
                     {
                         "name": "Form",
@@ -1241,14 +1241,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E35}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E35}",
                 "data": [
                     {
                         "name": "Form",
@@ -1280,14 +1280,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E36}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E36}",
                 "data": [
                     {
                         "name": "Form",
@@ -1319,14 +1319,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E37}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E37}",
                 "data": [
                     {
                         "name": "Form",
@@ -1358,14 +1358,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E38}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E38}",
                 "data": [
                     {
                         "name": "Form",
@@ -1397,14 +1397,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E39}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E39}",
                 "data": [
                     {
                         "name": "Form",
@@ -1436,14 +1436,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E40}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E40}",
                 "data": [
                     {
                         "name": "Form",
@@ -1475,14 +1475,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E41}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E41}",
                 "data": [
                     {
                         "name": "Form",
@@ -1514,14 +1514,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E42}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E42}",
                 "data": [
                     {
                         "name": "Form",
@@ -1553,14 +1553,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E43}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E43}",
                 "data": [
                     {
                         "name": "Form",
@@ -1592,14 +1592,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E44}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E44}",
                 "data": [
                     {
                         "name": "Form",
@@ -1631,14 +1631,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E45}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E45}",
                 "data": [
                     {
                         "name": "Form",
@@ -1670,14 +1670,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E46}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E46}",
                 "data": [
                     {
                         "name": "Form",
@@ -1709,14 +1709,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E47}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E47}",
                 "data": [
                     {
                         "name": "Form",
@@ -1748,14 +1748,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E48}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E48}",
                 "data": [
                     {
                         "name": "Form",
@@ -1787,14 +1787,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E49}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E49}",
                 "data": [
                     {
                         "name": "Form",
@@ -1826,14 +1826,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E50}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E50}",
                 "data": [
                     {
                         "name": "Form",
@@ -1865,14 +1865,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E51}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E51}",
                 "data": [
                     {
                         "name": "Form",
@@ -1904,7 +1904,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             }
@@ -1914,9 +1914,9 @@ eraser: SwiftForms entries
     {
         "data": [
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E52}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E52}",
                 "data": [
                     {
                         "name": "Form",
@@ -1948,14 +1948,14 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             },
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-{E53}",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-{E53}",
                 "data": [
                     {
                         "name": "Form",
@@ -1987,7 +1987,7 @@ eraser: SwiftForms entries
                     },
                     {
                         "name": "User agent",
-                        "value": "SwiftForms-Regression/1.0"
+                        "value": "BlockForms-Regression/1.0"
                     }
                 ]
             }
@@ -2010,7 +2010,7 @@ eraser: SwiftForms entries
         "items_removed": true,
         "items_retained": false,
         "messages": [
-            "Removed 50 SwiftForms entries."
+            "Removed 50 BlockForms entries."
         ],
         "done": false
     },
@@ -2018,7 +2018,7 @@ eraser: SwiftForms entries
         "items_removed": true,
         "items_retained": false,
         "messages": [
-            "Removed 2 SwiftForms entries."
+            "Removed 2 BlockForms entries."
         ],
         "done": true
     }

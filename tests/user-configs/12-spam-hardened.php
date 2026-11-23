@@ -8,10 +8,10 @@
  * per form, a blocked-word list. Two forms: the contact form follows the site, the quick form has the form
  * override "spamProtection: off". The variant "discard" keeps the same site but throws spam away instead of storing it.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-$sf_c12_hash = 'REPLACE_HASH';
+$bf_c12_hash = 'REPLACE_HASH';
 
 return [
 	'slug'          => '12-spam-hardened',
@@ -19,30 +19,30 @@ return [
 	'guards'        => [ 'C-3.5', 'C-9.1' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_general_store_ip'           => '1',
-		'swiftforms_general_store_user_agent'   => '1',
-		'swiftforms_email_notification_to'      => 'abuse-desk@example.org',
-		'swiftforms_spam_honeypot'              => '1',
-		'swiftforms_spam_min_seconds'           => 8,
-		'swiftforms_spam_js_token'              => '1',
-		'swiftforms_spam_rate_limit_per_minute' => 2,
-		'swiftforms_spam_blocked_words'         => "casino\nviagra\nfree money\nseo services",
-		'swiftforms_spam_spam_action'           => 'store',
-		'swiftforms_db_version'                 => 1,
-		'swiftforms_installed'                  => [
+		'blockforms_general_store_ip'           => '1',
+		'blockforms_general_store_user_agent'   => '1',
+		'blockforms_email_notification_to'      => 'abuse-desk@example.org',
+		'blockforms_spam_honeypot'              => '1',
+		'blockforms_spam_min_seconds'           => 8,
+		'blockforms_spam_js_token'              => '1',
+		'blockforms_spam_rate_limit_per_minute' => 2,
+		'blockforms_spam_blocked_words'         => "casino\nviagra\nfree money\nseo services",
+		'blockforms_spam_spam_action'           => 'store',
+		'blockforms_db_version'                 => 1,
+		'blockforms_installed'                  => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
 	],
 	'variants'      => [
 		'discard' => [
-			'swiftforms_spam_spam_action' => 'discard',
+			'blockforms_spam_spam_action' => 'discard',
 		],
 	],
 	'posts'         => [
@@ -53,13 +53,13 @@ return [
 			'title'     => 'Contact',
 			'slug'      => 'contact',
 			'date'      => '2026-10-01 09:00:00',
-			'content'   => SF_HEADING( 'Contact us' ) . "\n\n" . SF_FORM(
+			'content'   => BF_HEADING( 'Contact us' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f120001-0000-4000-8000-000000000001',
 					'title'  => 'Contact (protected)',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Name',
@@ -68,7 +68,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'        => 'Email',
@@ -77,7 +77,7 @@ return [
 							'autocomplete' => 'email',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'textarea',
 						[
 							'label'    => 'Message',
@@ -97,14 +97,14 @@ return [
 			'title'     => 'Quick question',
 			'slug'      => 'quick',
 			'date'      => '2026-10-02 09:00:00',
-			'content'   => SF_FORM(
+			'content'   => BF_FORM(
 				[
 					'formId'         => '5f120002-0000-4000-8000-000000000002',
 					'title'          => 'Quick question (protection off)',
 					'spamProtection' => 'off',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'    => 'Email',
@@ -112,7 +112,7 @@ return [
 							'required' => true,
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'    => 'Question',

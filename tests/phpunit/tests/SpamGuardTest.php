@@ -1,20 +1,20 @@
 <?php
 /**
- * Tests for SwiftForms\Spam_Guard.
+ * Tests for BlockForms\Spam_Guard.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Field_Types;
-use SwiftForms\Form_Schema;
-use SwiftForms\Render_Token;
-use SwiftForms\Settings;
-use SwiftForms\Spam_Guard;
-use SwiftForms\Submission_Context;
-use SwiftForms\Time_Trap;
+use BlockForms\Clock;
+use BlockForms\Field_Types;
+use BlockForms\Form_Schema;
+use BlockForms\Render_Token;
+use BlockForms\Settings;
+use BlockForms\Spam_Guard;
+use BlockForms\Submission_Context;
+use BlockForms\Time_Trap;
 
 /**
  * Class SpamGuardTest
@@ -22,7 +22,7 @@ use SwiftForms\Time_Trap;
  * @group submission
  * @group security
  */
-class SpamGuardTest extends SF_Storage_Test_Case {
+class SpamGuardTest extends BF_Storage_Test_Case {
 
 	const FORM   = '11111111-1111-4111-8111-111111111111';
 	const SOURCE = 'post:5';
@@ -269,14 +269,14 @@ class SpamGuardTest extends SF_Storage_Test_Case {
 	}
 
 	/**
-	 * The swiftforms_spam_check filter.
+	 * The blockforms_spam_check filter.
 	 *
 	 * @return void
 	 */
 	public function test_spam_check_filter() {
 		$seen = [];
 		add_filter(
-			'swiftforms_spam_check',
+			'blockforms_spam_check',
 			static function ( $verdict, $context ) use ( &$seen ) {
 				$seen[] = $context;
 				return isset( $context->values['flag'] ) ? $context->values['flag'] : $verdict;
@@ -296,9 +296,9 @@ class SpamGuardTest extends SF_Storage_Test_Case {
 		Spam_Guard::check( $this->ctx( [], 'off' ), $this->clean(), $this->token() );
 		$this->assertSame( [], $seen, 'Not asked when protection is off.' );
 
-		remove_all_filters( 'swiftforms_spam_check' );
+		remove_all_filters( 'blockforms_spam_check' );
 		add_filter(
-			'swiftforms_spam_check',
+			'blockforms_spam_check',
 			static function () {
 				return true;
 			}
@@ -313,7 +313,7 @@ class SpamGuardTest extends SF_Storage_Test_Case {
 	 */
 	public function test_protection_off() {
 		$this->set_settings( [ 'spam' => [ 'blocked_words' => 'casino' ] ] );
-		add_filter( 'swiftforms_spam_check', '__return_true' );
+		add_filter( 'blockforms_spam_check', '__return_true' );
 
 		$verdict = Spam_Guard::check(
 			$this->ctx( [ 'm' => 'casino' ], 'off' ),

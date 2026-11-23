@@ -31,13 +31,13 @@ const NASTY = {
  */
 async function newForm( requestUtils, title ) {
 	const formId = crypto.randomUUID();
-	const content = `<!-- wp:swiftforms/form {"formId":"${ formId }"} -->
-<!-- wp:swiftforms/field-text {"label":"Name","name":"name"} /-->
-<!-- wp:swiftforms/field-email {"label":"Email","name":"email"} /-->
-<!-- wp:swiftforms/field-textarea {"label":"Message","name":"message"} /-->
-<!-- wp:swiftforms/submit /-->
-<!-- wp:swiftforms/confirmation --><!-- wp:paragraph --><p>Thanks!</p><!-- /wp:paragraph --><!-- /wp:swiftforms/confirmation -->
-<!-- /wp:swiftforms/form -->`;
+	const content = `<!-- wp:blockforms/form {"formId":"${ formId }"} -->
+<!-- wp:blockforms/field-text {"label":"Name","name":"name"} /-->
+<!-- wp:blockforms/field-email {"label":"Email","name":"email"} /-->
+<!-- wp:blockforms/field-textarea {"label":"Message","name":"message"} /-->
+<!-- wp:blockforms/submit /-->
+<!-- wp:blockforms/confirmation --><!-- wp:paragraph --><p>Thanks!</p><!-- /wp:paragraph --><!-- /wp:blockforms/confirmation -->
+<!-- /wp:blockforms/form -->`;
 	const page = await requestUtils.rest( {
 		method: 'POST',
 		path: '/wp/v2/pages',
@@ -60,7 +60,7 @@ async function submit( form, fields ) {
 	// The coarse per-visitor limiter (60 requests a minute) can trip when specs run back to back: wait it out.
 	let token;
 	for ( let attempt = 0; attempt < 3; attempt++ ) {
-		token = await api.get( `/?rest_route=/swiftforms/v1/token&${ query }` );
+		token = await api.get( `/?rest_route=/blockforms/v1/token&${ query }` );
 		if ( token.status() !== 429 ) {
 			break;
 		}
@@ -68,15 +68,15 @@ async function submit( form, fields ) {
 	}
 	expect( token.ok(), 'token route' ).toBe( true );
 	const { token: renderToken } = await token.json();
-	const response = await api.post( '/?rest_route=/swiftforms/v1/submit', {
+	const response = await api.post( '/?rest_route=/blockforms/v1/submit', {
 		data: {
-			_sf_form: form.formId,
-			_sf_source: form.source,
-			_sf_token: renderToken,
-			_sf_hp: '',
-			_sf_t: 'js.9000',
-			_sf_v: '1',
-			sf: fields,
+			_bf_form: form.formId,
+			_bf_source: form.source,
+			_bf_token: renderToken,
+			_bf_hp: '',
+			_bf_t: 'js.9000',
+			_bf_v: '1',
+			bf: fields,
 		},
 	} );
 	expect( response.ok(), await response.text() ).toBe( true );
@@ -91,13 +91,13 @@ async function submit( form, fields ) {
 async function clearEntries( requestUtils ) {
 	for ( const status of [ 'new', 'read', 'spam', 'trash' ] ) {
 		const items = await requestUtils.rest( {
-			path: '/swiftforms/v1/entries',
+			path: '/blockforms/v1/entries',
 			params: { status, per_page: 100 },
 		} );
 		for ( const item of items ) {
 			await requestUtils.rest( {
 				method: 'DELETE',
-				path: `/swiftforms/v1/entries/${ item.id }`,
+				path: `/blockforms/v1/entries/${ item.id }`,
 			} );
 		}
 	}
@@ -149,7 +149,7 @@ test.describe( 'Forms admin: Entries', () => {
 		try {
 			await requestUtils.rest( {
 				method: 'POST',
-				path: '/swiftforms/v1/settings',
+				path: '/blockforms/v1/settings',
 				data: { spam: { rate_limit_per_minute: 0, min_seconds: 0 } },
 			} );
 		} catch {
@@ -166,16 +166,16 @@ test.describe( 'Forms admin: Entries', () => {
 		admin,
 		page,
 	} ) => {
-		await admin.visitAdminPage( 'admin.php', 'page=swiftforms' );
+		await admin.visitAdminPage( 'admin.php', 'page=blockforms' );
 		await expect(
-			page.locator( '#toplevel_page_swiftforms' )
+			page.locator( '#toplevel_page_blockforms' )
 		).toBeVisible();
 		const submenu = page.locator(
-			'#toplevel_page_swiftforms .wp-submenu li:not(.wp-submenu-head) a'
+			'#toplevel_page_blockforms .wp-submenu li:not(.wp-submenu-head) a'
 		);
 		await expect( submenu.first() ).toHaveText( 'Entries' );
 		await expect(
-			page.locator( 'body.toplevel_page_swiftforms' )
+			page.locator( 'body.toplevel_page_blockforms' )
 		).toHaveCount( 1 );
 		await expect(
 			page.getByRole( 'heading', { name: 'Entries', level: 1 } )
@@ -186,7 +186,7 @@ test.describe( 'Forms admin: Entries', () => {
 
 	test( 'shows the empty state', async ( { page, admin, requestUtils } ) => {
 		await clearEntries( requestUtils );
-		await admin.visitAdminPage( 'admin.php', 'page=swiftforms' );
+		await admin.visitAdminPage( 'admin.php', 'page=blockforms' );
 		await expect(
 			page.getByText( 'No entries yet. Add a Form block to any page.' )
 		).toBeVisible();
@@ -200,7 +200,7 @@ test.describe( 'Forms admin: Entries', () => {
 		} );
 		await admin.visitAdminPage(
 			'admin.php',
-			'page=swiftforms&status=trash'
+			'page=blockforms&status=trash'
 		);
 		await expect( page.getByText( 'No entries found.' ) ).toBeVisible();
 	} );
@@ -218,7 +218,7 @@ test.describe( 'Forms admin: Entries', () => {
 			message: 'Hello from Ada',
 		} );
 
-		await admin.visitAdminPage( 'admin.php', 'page=swiftforms' );
+		await admin.visitAdminPage( 'admin.php', 'page=blockforms' );
 		const ada = row( page, 'Ada Lovelace' );
 		await expect( ada ).toHaveClass( /unread/ );
 
@@ -228,7 +228,7 @@ test.describe( 'Forms admin: Entries', () => {
 		await expect(
 			page.getByRole( 'heading', { name: /^Entry #\d+/, level: 1 } )
 		).toBeVisible();
-		const fields = page.locator( 'table.swiftforms-entry-fields' );
+		const fields = page.locator( 'table.blockforms-entry-fields' );
 		await expect( fields.getByText( 'Hello from Ada' ) ).toBeVisible();
 		await expect(
 			fields.getByText( 'Message', { exact: true } )
@@ -236,16 +236,16 @@ test.describe( 'Forms admin: Entries', () => {
 		await expect(
 			fields.getByRole( 'link', { name: 'ada@example.com' } )
 		).toHaveAttribute( 'href', 'mailto:ada@example.com' );
-		await expect( page.locator( '#swiftforms-entry-box' ) ).toContainText(
+		await expect( page.locator( '#blockforms-entry-box' ) ).toContainText(
 			'Contact'
 		);
 
 		// Opening marked it read.
-		const status = page.locator( '.swiftforms-entry-status' );
+		const status = page.locator( '.blockforms-entry-status' );
 		await expect( status ).toHaveText( 'Read' );
 
 		// Actions in the box, each with its notice, staying on the entry screen.
-		const box = page.locator( '#swiftforms-entry-box' );
+		const box = page.locator( '#blockforms-entry-box' );
 		await box.getByRole( 'link', { name: 'Mark as unread' } ).click();
 		await expect( notice( page ) ).toHaveText( /Entry marked as unread\./ );
 		await expect( status ).toHaveText( 'Unread' );
@@ -290,7 +290,7 @@ test.describe( 'Forms admin: Entries', () => {
 
 		// A deleted or unknown entry is a clear error, not a blank page.
 		await page.goto(
-			'/wp-admin/admin.php?page=swiftforms&action=view&entry=99999999'
+			'/wp-admin/admin.php?page=blockforms&action=view&entry=99999999'
 		);
 		await expect(
 			page.getByText( 'There is no such entry.' )
@@ -313,7 +313,7 @@ test.describe( 'Forms admin: Entries', () => {
 			message: 'Hello from Grace',
 		} );
 
-		await admin.visitAdminPage( 'admin.php', 'page=swiftforms' );
+		await admin.visitAdminPage( 'admin.php', 'page=blockforms' );
 		const grace = () => row( page, 'Grace Hopper' );
 		await expect( grace() ).toHaveClass( /unread/ );
 
@@ -329,13 +329,13 @@ test.describe( 'Forms admin: Entries', () => {
 
 		await rowAction( page, 'Grace Hopper', 'star' );
 		await expect( notice( page ) ).toContainText( 'Entry starred.' );
-		await expect( grace().locator( '.swiftforms-star' ) ).toBeVisible();
+		await expect( grace().locator( '.blockforms-star' ) ).toBeVisible();
 		await expect(
 			grace().locator( '.screen-reader-text', { hasText: 'Starred' } )
 		).toHaveCount( 1 );
 		await rowAction( page, 'Grace Hopper', 'unstar' );
 		await expect( notice( page ) ).toContainText( 'Star removed.' );
-		await expect( grace().locator( '.swiftforms-star' ) ).toHaveCount( 0 );
+		await expect( grace().locator( '.blockforms-star' ) ).toHaveCount( 0 );
 
 		// Spam leaves All and shows in the Spam view, where it can be restored.
 		await rowAction( page, 'Grace Hopper', 'spam' );
@@ -370,7 +370,7 @@ test.describe( 'Forms admin: Entries', () => {
 		);
 		await expect( grace() ).toHaveCount( 0 );
 		const left = await requestUtils.rest( {
-			path: '/swiftforms/v1/entries',
+			path: '/blockforms/v1/entries',
 			params: { status: 'trash' },
 		} );
 		expect( left ).toHaveLength( 0 );
@@ -397,24 +397,24 @@ test.describe( 'Forms admin: Entries', () => {
 			message: 'x',
 		} );
 		const all = await requestUtils.rest( {
-			path: '/swiftforms/v1/entries',
+			path: '/blockforms/v1/entries',
 			params: { per_page: 100 },
 		} );
 		const idOf = ( name ) =>
 			all.find( ( item ) => item.summary.startsWith( name ) ).id;
 		await requestUtils.rest( {
 			method: 'PATCH',
-			path: `/swiftforms/v1/entries/${ idOf( 'Ann One' ) }`,
+			path: `/blockforms/v1/entries/${ idOf( 'Ann One' ) }`,
 			data: { starred: true, status: 'read' },
 		} );
 		await requestUtils.rest( {
 			method: 'PATCH',
-			path: `/swiftforms/v1/entries/${ idOf( 'Bob Two' ) }`,
+			path: `/blockforms/v1/entries/${ idOf( 'Bob Two' ) }`,
 			data: { status: 'spam' },
 		} );
 
 		// Views with counts.
-		await admin.visitAdminPage( 'admin.php', 'page=swiftforms' );
+		await admin.visitAdminPage( 'admin.php', 'page=blockforms' );
 		const views = page.locator( '.subsubsub' );
 		await expect( views ).toContainText( 'All (3)' );
 		await expect( views ).toContainText( 'Unread (2)' );
@@ -432,16 +432,16 @@ test.describe( 'Forms admin: Entries', () => {
 		// Form filter.
 		await views.getByRole( 'link', { name: /^All/ } ).click();
 		await page
-			.locator( '#swiftforms-filter-form' )
+			.locator( '#blockforms-filter-form' )
 			.selectOption( { label: 'Beta form page' } );
-		await page.locator( '#swiftforms-filter-submit' ).click();
+		await page.locator( '#blockforms-filter-submit' ).click();
 		await expect( page ).toHaveURL( /form=/ );
 		await expect( page.locator( '#the-list tr' ) ).toHaveCount( 1 );
 		await expect( row( page, 'Dee Four' ) ).toBeVisible();
 		await page
-			.locator( '#swiftforms-filter-form' )
+			.locator( '#blockforms-filter-form' )
 			.selectOption( { label: 'All forms' } );
-		await page.locator( '#swiftforms-filter-submit' ).click();
+		await page.locator( '#blockforms-filter-submit' ).click();
 		await expect( page.locator( '#the-list tr' ) ).toHaveCount( 3 );
 
 		// Date sorting: newest first by default, oldest first after a click on the header.
@@ -453,7 +453,7 @@ test.describe( 'Forms admin: Entries', () => {
 
 		// Screen Options: two entries a page, then the pager.
 		await page.getByRole( 'button', { name: 'Screen Options' } ).click();
-		await page.locator( '#swiftforms_entries_per_page' ).fill( '2' );
+		await page.locator( '#blockforms_entries_per_page' ).fill( '2' );
 		await page.locator( '#screen-options-apply' ).click();
 		await expect( page.locator( '#the-list tr' ) ).toHaveCount( 2 );
 		await expect(
@@ -465,7 +465,7 @@ test.describe( 'Forms admin: Entries', () => {
 
 		// Put the page size back.
 		await page.getByRole( 'button', { name: 'Screen Options' } ).click();
-		await page.locator( '#swiftforms_entries_per_page' ).fill( '20' );
+		await page.locator( '#blockforms_entries_per_page' ).fill( '20' );
 		await page.locator( '#screen-options-apply' ).click();
 		await expect( page.locator( '#the-list tr' ) ).toHaveCount( 3 );
 	} );
@@ -518,7 +518,7 @@ test.describe( 'Forms admin: Entries', () => {
 			).toHaveCount( 0 );
 		};
 
-		await admin.visitAdminPage( 'admin.php', 'page=swiftforms' );
+		await admin.visitAdminPage( 'admin.php', 'page=blockforms' );
 		await expect( row( page, 'Link person' ) ).toBeVisible();
 		// Markup is stripped when the entry is saved (sanitize_text_field), so none of it reaches the list.
 		await expect( row( page, 'nasty@example.com' ) ).toBeVisible();
@@ -532,12 +532,12 @@ test.describe( 'Forms admin: Entries', () => {
 				.first()
 				.click();
 			await expect(
-				page.locator( 'table.swiftforms-entry-fields' )
+				page.locator( 'table.blockforms-entry-fields' )
 			).toBeVisible();
 			await assertClean();
 			await page.emulateMedia( { media: 'print' } );
 			await expect(
-				page.locator( 'table.swiftforms-entry-fields' )
+				page.locator( 'table.blockforms-entry-fields' )
 			).toBeVisible();
 			await assertClean();
 			await page.emulateMedia( { media: 'screen' } );
@@ -549,7 +549,7 @@ test.describe( 'Forms admin: Entries', () => {
 			.getByRole( 'link', { name: /nasty@example\.com/ } )
 			.first()
 			.click();
-		const fields = page.locator( 'table.swiftforms-entry-fields' );
+		const fields = page.locator( 'table.blockforms-entry-fields' );
 		await expect( fields.getByText( NASTY.javascript ) ).toBeVisible();
 		await expect(
 			fields.getByRole( 'link', { name: /javascript/ } )
@@ -576,7 +576,7 @@ test.describe( 'Forms admin: Entries', () => {
 			.first()
 			.click();
 		const link = page
-			.locator( 'table.swiftforms-entry-fields' )
+			.locator( 'table.blockforms-entry-fields' )
 			.getByRole( 'link', { name: 'https://example.com/path?a=b' } );
 		await expect( link ).toHaveAttribute( 'rel', 'noopener noreferrer' );
 		await expect( link ).toHaveAttribute(

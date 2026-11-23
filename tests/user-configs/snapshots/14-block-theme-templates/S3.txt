@@ -78,7 +78,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
     }
 }
 
-== S3 template:sf-test-block-files//sf-landing#1 ==
+== S3 template:bf-test-block-files//bf-landing#1 ==
 -- without name --
 status: 422
 cache-control: no-store, no-cache, must-revalidate, max-age=0

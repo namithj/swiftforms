@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Build the release ZIP: swiftforms.zip (no version in the file name, so that
+# Build the release ZIP: blockforms.zip (no version in the file name, so that
 # the "latest release" download URL stays stable).
 #
 #   bin/build-release.sh [output-dir]
@@ -11,7 +11,7 @@
 # zip it, then assert on the ZIP contents.
 set -euo pipefail
 
-PLUGIN_SLUG="swiftforms"
+PLUGIN_SLUG="blockforms"
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 OUT_DIR="${1:-${ROOT}/dist}"
 PHP="${PHP:-php}"
@@ -122,7 +122,7 @@ fi
 	define( "ABSPATH", "/" );
 	require $argv[1] . "/vendor-prefixed/autoload.php";
 	require $argv[1] . "/vendor/autoload.php";
-	if ( ! class_exists( "SwiftForms\\Vendor\\PedalCMS\\CassetteCMFBlocks\\CassetteCMFBlocks" ) || ! class_exists( "SwiftForms\\Plugin" ) ) {
+	if ( ! class_exists( "BlockForms\\Vendor\\PedalCMS\\CassetteCMFBlocks\\CassetteCMFBlocks" ) || ! class_exists( "BlockForms\\Plugin" ) ) {
 		fwrite( STDERR, "Packaged autoloaders do not resolve the plugin classes.\n" );
 		exit( 1 );
 	}

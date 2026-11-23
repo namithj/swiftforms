@@ -1,29 +1,29 @@
-<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper: the class name SF_Storage_Test_Case follows the SF_ helpers of the R00 harness.
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper: the class name BF_Storage_Test_Case follows the BF_ helpers of the R00 harness.
 /**
  * Base class for the storage tests (tables, options, migrations, log).
  *
  * The core test case turns CREATE TABLE into CREATE TEMPORARY TABLE and rolls
- * every option write back, but the six SwiftForms tables of the bootstrap site
+ * every option write back, but the six BlockForms tables of the bootstrap site
  * are real (the plugin installs itself on init, like on any site). So a test
  * that needs "a site without tables" switches $wpdb->prefix to a scratch prefix
  * for its own duration: dbDelta then creates temporary tables that are dropped
  * again in tear_down(), and the real tables are never touched. Options are not
  * affected by the switch ($wpdb->options keeps its table) and roll back as usual.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Backups;
-use SwiftForms\Clock;
-use SwiftForms\Database;
-use SwiftForms\Install_Marker;
-use SwiftForms\Migrations;
-use SwiftForms\Settings;
+use BlockForms\Backups;
+use BlockForms\Clock;
+use BlockForms\Database;
+use BlockForms\Install_Marker;
+use BlockForms\Migrations;
+use BlockForms\Settings;
 
 /**
- * Class SF_Storage_Test_Case
+ * Class BF_Storage_Test_Case
  */
-abstract class SF_Storage_Test_Case extends WP_UnitTestCase {
+abstract class BF_Storage_Test_Case extends WP_UnitTestCase {
 
 	/**
 	 * The real prefix while a scratch prefix is active, otherwise null.
@@ -64,7 +64,7 @@ abstract class SF_Storage_Test_Case extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Use a prefix under which no SwiftForms table exists yet.
+	 * Use a prefix under which no BlockForms table exists yet.
 	 *
 	 * @return void
 	 */
@@ -78,7 +78,7 @@ abstract class SF_Storage_Test_Case extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Delete every SwiftForms bookkeeping option, as on a site that never ran the plugin.
+	 * Delete every BlockForms bookkeeping option, as on a site that never ran the plugin.
 	 *
 	 * @return void
 	 */
@@ -93,7 +93,7 @@ abstract class SF_Storage_Test_Case extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Rows of a SwiftForms table.
+	 * Rows of a BlockForms table.
 	 *
 	 * @param string $name Table name without prefix.
 	 * @return array<int, array<string, string>>

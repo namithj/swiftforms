@@ -2,10 +2,10 @@
 /**
  * Schema resolver.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -66,7 +66,7 @@ class Schema_Resolver {
 	 *
 	 * Also used by the renderer: it has the same block and gets the same final field names.
 	 *
-	 * @param array<string, mixed> $form_block Parsed swiftforms/form block.
+	 * @param array<string, mixed> $form_block Parsed blockforms/form block.
 	 * @param string $form_id    Effective formId.
 	 * @param string $stored_id  formId as stored (empty when missing).
 	 * @param string $ref        Source reference.

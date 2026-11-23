@@ -8,29 +8,29 @@ import {
 } from '../../src/view/submit';
 
 describe( 'buildPayload', () => {
-	it( 'builds sf, lists and controls, and replaces _sf_t', () => {
+	it( 'builds bf, lists and controls, and replaces _bf_t', () => {
 		const payload = buildPayload(
 			[
-				[ 'sf[name]', 'Ann' ],
-				[ 'sf[tags][]', 'a' ],
-				[ 'sf[tags][]', 'b' ],
-				[ '_sf_form', 'F' ],
-				[ '_sf_t', '123.abc' ],
+				[ 'bf[name]', 'Ann' ],
+				[ 'bf[tags][]', 'a' ],
+				[ 'bf[tags][]', 'b' ],
+				[ '_bf_form', 'F' ],
+				[ '_bf_t', '123.abc' ],
 				[ '_wpnonce', 'n' ],
 				[ 'other', 'x' ],
-				[ 'sf[file]', { name: 'file' } ],
+				[ 'bf[file]', { name: 'file' } ],
 			],
 			1234.6
 		);
 		expect( payload ).toEqual( {
-			sf: { name: 'Ann', tags: [ 'a', 'b' ] },
-			_sf_form: 'F',
-			_sf_t: 'js.1235',
+			bf: { name: 'Ann', tags: [ 'a', 'b' ] },
+			_bf_form: 'F',
+			_bf_t: 'js.1235',
 		} );
 	} );
 
 	it( 'never sends a negative elapsed time', () => {
-		expect( buildPayload( [], -5 )._sf_t ).toBe( 'js.0' );
+		expect( buildPayload( [], -5 )._bf_t ).toBe( 'js.0' );
 	} );
 } );
 

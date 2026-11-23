@@ -246,7 +246,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
     }
 ]
 
-== S6 GET /entries?form=template:sf-test-block-files//sf-landing#1&status=new ==
+== S6 GET /entries?form=template:bf-test-block-files//bf-landing#1&status=new ==
 x-wp-total: 1
 x-wp-totalpages: 1
 status: 200
@@ -610,7 +610,7 @@ status: 400
 == S6 GET /entries/999999999 (no such entry) ==
 status: 404
 {
-    "code": "swiftforms_entry_not_found",
+    "code": "blockforms_entry_not_found",
     "message": "No such entry.",
     "data": {
         "status": 404

@@ -2,10 +2,10 @@
 /**
  * The Entries list table.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -172,10 +172,10 @@ class Entries_List_Table extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		return [
-			'starred' => '<span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="screen-reader-text">' . esc_html__( 'Starred', 'swiftforms' ) . '</span>',
-			'entry'   => esc_html__( 'Entry', 'swiftforms' ),
-			'form'    => esc_html__( 'Form', 'swiftforms' ),
-			'date'    => esc_html__( 'Date', 'swiftforms' ),
+			'starred' => '<span class="dashicons dashicons-star-filled" aria-hidden="true"></span><span class="screen-reader-text">' . esc_html__( 'Starred', 'blockforms' ) . '</span>',
+			'entry'   => esc_html__( 'Entry', 'blockforms' ),
+			'form'    => esc_html__( 'Form', 'blockforms' ),
+			'date'    => esc_html__( 'Date', 'blockforms' ),
 		];
 	}
 
@@ -186,7 +186,7 @@ class Entries_List_Table extends \WP_List_Table {
 	 */
 	protected function get_sortable_columns() {
 		return [
-			'date' => [ 'date', true, __( 'Date', 'swiftforms' ), __( 'Table ordered by Date.', 'swiftforms' ), 'desc' ],
+			'date' => [ 'date', true, __( 'Date', 'blockforms' ), __( 'Table ordered by Date.', 'blockforms' ), 'desc' ],
 		];
 	}
 
@@ -226,12 +226,12 @@ class Entries_List_Table extends \WP_List_Table {
 		}
 
 		$labels = [
-			'all'     => __( 'All', 'swiftforms' ),
-			'unread'  => __( 'Unread', 'swiftforms' ),
-			'read'    => __( 'Read', 'swiftforms' ),
-			'starred' => __( 'Starred', 'swiftforms' ),
-			'spam'    => __( 'Spam', 'swiftforms' ),
-			'trash'   => __( 'Trash', 'swiftforms' ),
+			'all'     => __( 'All', 'blockforms' ),
+			'unread'  => __( 'Unread', 'blockforms' ),
+			'read'    => __( 'Read', 'blockforms' ),
+			'starred' => __( 'Starred', 'blockforms' ),
+			'spam'    => __( 'Spam', 'blockforms' ),
+			'trash'   => __( 'Trash', 'blockforms' ),
 		];
 
 		$views = [];
@@ -257,14 +257,14 @@ class Entries_List_Table extends \WP_List_Table {
 		asort( $titles, SORT_NATURAL | SORT_FLAG_CASE );
 		?>
 		<div class="alignleft actions">
-			<label for="swiftforms-filter-form" class="screen-reader-text"><?php esc_html_e( 'Filter by form', 'swiftforms' ); ?></label>
-			<select name="form" id="swiftforms-filter-form">
-				<option value=""><?php esc_html_e( 'All forms', 'swiftforms' ); ?></option>
+			<label for="blockforms-filter-form" class="screen-reader-text"><?php esc_html_e( 'Filter by form', 'blockforms' ); ?></label>
+			<select name="form" id="blockforms-filter-form">
+				<option value=""><?php esc_html_e( 'All forms', 'blockforms' ); ?></option>
 				<?php foreach ( $titles as $form_id => $title ) : ?>
 					<option value="<?php echo esc_attr( $form_id ); ?>"<?php selected( $this->form, $form_id ); ?>><?php echo esc_html( self::form_label( $title ) ); ?></option>
 				<?php endforeach; ?>
 			</select>
-			<?php submit_button( __( 'Filter', 'swiftforms' ), '', 'filter_action', false, [ 'id' => 'swiftforms-filter-submit' ] ); ?>
+			<?php submit_button( __( 'Filter', 'blockforms' ), '', 'filter_action', false, [ 'id' => 'blockforms-filter-submit' ] ); ?>
 		</div>
 		<?php
 	}
@@ -304,10 +304,10 @@ class Entries_List_Table extends \WP_List_Table {
 			}
 		}
 		if ( ! $has_any ) {
-			esc_html_e( 'No entries yet. Add a Form block to any page.', 'swiftforms' );
+			esc_html_e( 'No entries yet. Add a Form block to any page.', 'blockforms' );
 			return;
 		}
-		esc_html_e( 'No entries found.', 'swiftforms' );
+		esc_html_e( 'No entries found.', 'blockforms' );
 	}
 
 	/**
@@ -317,7 +317,7 @@ class Entries_List_Table extends \WP_List_Table {
 	 * @return void
 	 */
 	public function single_row( $item ) {
-		$classes = [ 'swiftforms-entry-row', 'swiftforms-entry-' . $item['status'] ];
+		$classes = [ 'blockforms-entry-row', 'blockforms-entry-' . $item['status'] ];
 		if ( 'new' === $item['status'] ) {
 			$classes[] = 'unread';
 		}
@@ -339,7 +339,7 @@ class Entries_List_Table extends \WP_List_Table {
 		if ( ! $item['starred'] ) {
 			return '';
 		}
-		return '<span class="dashicons dashicons-star-filled swiftforms-star" aria-hidden="true"></span><span class="screen-reader-text">' . esc_html__( 'Starred', 'swiftforms' ) . '</span>';
+		return '<span class="dashicons dashicons-star-filled blockforms-star" aria-hidden="true"></span><span class="screen-reader-text">' . esc_html__( 'Starred', 'blockforms' ) . '</span>';
 	}
 
 	/**
@@ -351,10 +351,10 @@ class Entries_List_Table extends \WP_List_Table {
 	protected function column_entry( $item ) {
 		$id = (int) $item['id'];
 		/* translators: %d: entry number. */
-		$text = '' !== $item['summary'] ? Entry_Presenter::visible_text( $item['summary'] ) : sprintf( __( 'Entry #%d', 'swiftforms' ), $id );
+		$text = '' !== $item['summary'] ? Entry_Presenter::visible_text( $item['summary'] ) : sprintf( __( 'Entry #%d', 'blockforms' ), $id );
 		$out  = '<strong><a class="row-title" href="' . esc_url( Entries_Screen::view_url( $id ) ) . '">' . esc_html( $text ) . '</a>';
 		if ( 'new' === $item['status'] ) {
-			$out .= '<span class="screen-reader-text"> (' . esc_html__( 'unread', 'swiftforms' ) . ')</span>';
+			$out .= '<span class="screen-reader-text"> (' . esc_html__( 'unread', 'blockforms' ) . ')</span>';
 		}
 		return $out . '</strong>';
 	}
@@ -384,7 +384,7 @@ class Entries_List_Table extends \WP_List_Table {
 		$diff = $now - $time;
 		if ( $diff >= 0 && $diff < DAY_IN_SECONDS ) {
 			/* translators: %s: time since the entry, for example "5 hours". */
-			$text = sprintf( __( '%s ago', 'swiftforms' ), human_time_diff( $time, $now ) );
+			$text = sprintf( __( '%s ago', 'blockforms' ), human_time_diff( $time, $now ) );
 		} else {
 			$text = wp_date( (string) get_option( 'date_format' ), $time );
 		}
@@ -417,11 +417,11 @@ class Entries_List_Table extends \WP_List_Table {
 		}
 		$id      = (int) $item['id'];
 		$actions = [
-			'view' => '<a href="' . esc_url( Entries_Screen::view_url( $id ) ) . '" aria-label="' . esc_attr( sprintf( /* translators: %d: entry number. */ __( 'View entry #%d', 'swiftforms' ), $id ) ) . '">' . esc_html__( 'View', 'swiftforms' ) . '</a>',
+			'view' => '<a href="' . esc_url( Entries_Screen::view_url( $id ) ) . '" aria-label="' . esc_attr( sprintf( /* translators: %d: entry number. */ __( 'View entry #%d', 'blockforms' ), $id ) ) . '">' . esc_html__( 'View', 'blockforms' ) . '</a>',
 		];
 
 		foreach ( Entries_Screen::available_actions( (string) $item['status'], (bool) $item['starred'] ) as $key => $label ) {
-			$actions[ $key ] = '<a href="' . esc_url( Entries_Screen::action_url( $key, $id ) ) . '" aria-label="' . esc_attr( sprintf( /* translators: 1: action, 2: entry number. */ __( '%1$s entry #%2$d', 'swiftforms' ), $label, $id ) ) . '">' . esc_html( $label ) . '</a>';
+			$actions[ $key ] = '<a href="' . esc_url( Entries_Screen::action_url( $key, $id ) ) . '" aria-label="' . esc_attr( sprintf( /* translators: 1: action, 2: entry number. */ __( '%1$s entry #%2$d', 'blockforms' ), $label, $id ) ) . '">' . esc_html( $label ) . '</a>';
 		}
 		return $this->row_actions( $actions );
 	}
@@ -433,6 +433,6 @@ class Entries_List_Table extends \WP_List_Table {
 	 * @return string
 	 */
 	private static function form_label( $title ) {
-		return '' !== $title ? Entry_Presenter::visible_text( $title ) : __( '(no title)', 'swiftforms' );
+		return '' !== $title ? Entry_Presenter::visible_text( $title ) : __( '(no title)', 'blockforms' );
 	}
 }

@@ -1,10 +1,10 @@
 /**
- * Editor-only state of the SwiftForms blocks: which form blocks currently
+ * Editor-only state of the BlockForms blocks: which form blocks currently
  * preview their confirmation. Nothing here is saved with the post.
  */
 import { createReduxStore, register } from '@wordpress/data';
 
-export const STORE_NAME = 'swiftforms/editor';
+export const STORE_NAME = 'blockforms/editor';
 
 export const DEFAULT_STATE = { previewing: {} };
 

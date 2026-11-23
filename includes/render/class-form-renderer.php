@@ -2,10 +2,10 @@
 /**
  * Form block renderer.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Form_Renderer
  *
- * Renders swiftforms/form and keeps the stack of forms that are being rendered.
+ * Renders blockforms/form and keeps the stack of forms that are being rendered.
  *
  * WordPress renders a block's inner blocks before it calls the block's own render
  * callback, so the field blocks have to find their form somewhere else: this class
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * C-2.7, and builds the schema, C-3.9) and pops it on render_block. A field, submit or
  * confirmation block that renders with no form on the stack renders nothing.
  *
- * Output: a <form class="swiftforms-form" method="post" data-wp-interactive="swiftforms">
+ * Output: a <form class="blockforms-form" method="post" data-wp-interactive="blockforms">
  * with an empty errors summary (hidden until used), a notice, the inner content, and the
  * control inputs (Form_Controls). When Form_State says "success" the fields give way to
  * the confirmation. A draft or private preview renders like a published form; only the
@@ -171,7 +171,7 @@ class Form_Renderer {
 	}
 
 	/**
-	 * Render callback of swiftforms/form.
+	 * Render callback of blockforms/form.
 	 *
 	 * @param array<string, mixed> $attributes Attributes prepared by the block builder (the stored ones are read).
 	 * @param string               $content    Rendered inner blocks.
@@ -201,10 +201,10 @@ class Form_Renderer {
 	 */
 	public static function render( Form_Context $context, $content ) {
 		$state = $context->state();
-		$class = 'swiftforms-form swiftforms-form--labels-' . $context->label_position();
+		$class = 'blockforms-form blockforms-form--labels-' . $context->label_position();
 
 		if ( true === $state['success'] ) {
-			$html = '<div ' . get_block_wrapper_attributes( [ 'class' => $class . ' swiftforms-form--submitted' ] ) . '>'
+			$html = '<div ' . get_block_wrapper_attributes( [ 'class' => $class . ' blockforms-form--submitted' ] ) . '>'
 				. Confirmation_Renderer::render( $context, $state )
 				. '</div>';
 		} else {
@@ -223,7 +223,7 @@ class Form_Renderer {
 			$attributes = [
 				'class'               => $class,
 				'method'              => 'post',
-				'data-wp-interactive' => 'swiftforms',
+				'data-wp-interactive' => 'blockforms',
 				'data-wp-context'     => (string) $directive,
 			];
 			if ( $ajax ) {
@@ -257,7 +257,7 @@ class Form_Renderer {
 		 * @param int                  $instance   Position of this copy of the form on the page, 1 for the first.
 		 * @param array<string, mixed> $attributes The form block's attributes at their resolved value (C-2.3).
 		 */
-		$filtered = apply_filters( 'swiftforms_render_form', $html, $context->form_id, $context->instance, $context->schema->attributes );
+		$filtered = apply_filters( 'blockforms_render_form', $html, $context->form_id, $context->instance, $context->schema->attributes );
 
 		return is_string( $filtered ) ? $filtered : $html;
 	}
@@ -278,25 +278,25 @@ class Form_Renderer {
 
 		$state = [
 			'restUrl'   => esc_url_raw( rest_url() ),
-			'submitUrl' => esc_url_raw( rest_url( 'swiftforms/v1/submit' ) ),
-			'tokenUrl'  => esc_url_raw( rest_url( 'swiftforms/v1/token' ) ),
+			'submitUrl' => esc_url_raw( rest_url( 'blockforms/v1/submit' ) ),
+			'tokenUrl'  => esc_url_raw( rest_url( 'blockforms/v1/token' ) ),
 			'ajaxUrl'   => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
 			'messages'  => Validator::messages(),
 			'i18n'      => [
-				'summary'     => __( 'Please fix the following:', 'swiftforms' ),
+				'summary'     => __( 'Please fix the following:', 'blockforms' ),
 				/* translators: 1: field label, 2: error message. */
-				'summaryItem' => __( '%1$s: %2$s', 'swiftforms' ),
-				'network'     => __( 'The form could not be sent. Please check your connection and try again.', 'swiftforms' ),
-				'closed'      => __( 'This form is no longer accepting submissions.', 'swiftforms' ),
-				'rateLimited' => __( 'Too many attempts. Please wait a moment and try again.', 'swiftforms' ),
-				'blocked'     => __( 'Your submission could not be accepted. Please reload the page and try again.', 'swiftforms' ),
+				'summaryItem' => __( '%1$s: %2$s', 'blockforms' ),
+				'network'     => __( 'The form could not be sent. Please check your connection and try again.', 'blockforms' ),
+				'closed'      => __( 'This form is no longer accepting submissions.', 'blockforms' ),
+				'rateLimited' => __( 'Too many attempts. Please wait a moment and try again.', 'blockforms' ),
+				'blocked'     => __( 'Your submission could not be accepted. Please reload the page and try again.', 'blockforms' ),
 			],
 		];
 		if ( is_user_logged_in() ) {
 			$state['nonce'] = wp_create_nonce( 'wp_rest' );
 		}
 
-		wp_interactivity_state( 'swiftforms', $state );
+		wp_interactivity_state( 'blockforms', $state );
 	}
 
 	/**
@@ -317,17 +317,17 @@ class Form_Renderer {
 				// A consent label is a long sentence, so the message stands alone there.
 				if ( '' !== $label && ( ! isset( $field['type'] ) || 'consent' !== $field['type'] ) ) {
 					/* translators: 1: field label, 2: error message. */
-					$message = sprintf( __( '%1$s: %2$s', 'swiftforms' ), $label, $message );
+					$message = sprintf( __( '%1$s: %2$s', 'blockforms' ), $label, $message );
 				}
 				$items .= '<li><a href="#' . esc_attr( $context->element_id( $name ) ) . '">' . esc_html( $message ) . '</a></li>';
 			}
 		}
 
 		if ( '' === $items ) {
-			return '<div class="swiftforms-errors-summary" tabindex="-1" hidden></div>';
+			return '<div class="blockforms-errors-summary" tabindex="-1" hidden></div>';
 		}
 
-		return '<div class="swiftforms-errors-summary" tabindex="-1" role="alert"><p>' . esc_html__( 'Please fix the following:', 'swiftforms' ) . '</p><ul>' . $items . '</ul></div>';
+		return '<div class="blockforms-errors-summary" tabindex="-1" role="alert"><p>' . esc_html__( 'Please fix the following:', 'blockforms' ) . '</p><ul>' . $items . '</ul></div>';
 	}
 
 	/**
@@ -341,6 +341,6 @@ class Form_Renderer {
 			return '';
 		}
 		$type = 'info' === $state['notice_type'] ? 'info' : 'error';
-		return '<div class="swiftforms-notice swiftforms-notice--' . $type . '" role="' . ( 'info' === $type ? 'status' : 'alert' ) . '">' . esc_html( $state['notice'] ) . '</div>';
+		return '<div class="blockforms-notice blockforms-notice--' . $type . '" role="' . ( 'info' === $type ? 'status' : 'alert' ) . '">' . esc_html( $state['notice'] ) . '</div>';
 	}
 }

@@ -2,10 +2,10 @@
 /**
  * Install marker (C-1.4).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Install_Marker
  *
- * The option swiftforms_installed records which version a site first ran. It is
+ * The option blockforms_installed records which version a site first ran. It is
  * the only way code tells a new install from an existing one (a "new installs
  * only" default, C-5.3), so it is written once and never touched again.
  *
@@ -25,15 +25,15 @@ class Install_Marker {
 	/**
 	 * Option that holds the marker: { version, time }.
 	 */
-	const OPTION = 'swiftforms_installed';
+	const OPTION = 'blockforms_installed';
 
 	/**
-	 * Version assumed for a site that has swiftforms_db_version but no marker.
+	 * Version assumed for a site that has blockforms_db_version but no marker.
 	 */
 	const LEGACY_VERSION = '1.0.0';
 
 	/**
-	 * Write the marker when neither it nor swiftforms_db_version exists.
+	 * Write the marker when neither it nor blockforms_db_version exists.
 	 *
 	 * Never updates an existing marker, however old or damaged it is.
 	 *
@@ -48,7 +48,7 @@ class Install_Marker {
 		return add_option(
 			self::OPTION,
 			[
-				'version' => SWIFTFORMS_VERSION,
+				'version' => BLOCKFORMS_VERSION,
 				'time'    => Clock::now(),
 			],
 			'',
@@ -59,7 +59,7 @@ class Install_Marker {
 	/**
 	 * The version this site first ran.
 	 *
-	 * @return string The marker's version; "1.0.0" when swiftforms_db_version exists without a marker; otherwise the running version (a brand-new site that has not run yet).
+	 * @return string The marker's version; "1.0.0" when blockforms_db_version exists without a marker; otherwise the running version (a brand-new site that has not run yet).
 	 */
 	public static function installed_version() {
 		$marker = get_option( self::OPTION, null );
@@ -69,7 +69,7 @@ class Install_Marker {
 		if ( self::exists( Migrations::OPTION_DB_VERSION ) ) {
 			return self::LEGACY_VERSION;
 		}
-		return SWIFTFORMS_VERSION;
+		return BLOCKFORMS_VERSION;
 	}
 
 	/**

@@ -2,12 +2,12 @@
 /**
  * Email settings field.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
-use SwiftForms\Vendor\PedalCMS\CassetteCMF\Field\Fields\Text_Field;
+use BlockForms\Vendor\PedalCMS\CassetteCMF\Field\Fields\Text_Field;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -27,7 +27,7 @@ class Settings_Email_Field extends Text_Field {
 	/**
 	 * Field type the page registers this class under.
 	 */
-	const TYPE = 'swiftforms_email';
+	const TYPE = 'blockforms_email';
 
 	/**
 	 * The type the settings app sees.
@@ -57,8 +57,8 @@ class Settings_Email_Field extends Text_Field {
 			if ( '' === $address || sanitize_email( $address ) !== $address ) {
 				$result['valid']    = false;
 				$result['errors'][] = $single
-					? __( 'Enter a valid email address, or leave it empty.', 'swiftforms' )
-					: __( 'Enter valid email addresses separated by commas.', 'swiftforms' );
+					? __( 'Enter a valid email address, or leave it empty.', 'blockforms' )
+					: __( 'Enter valid email addresses separated by commas.', 'blockforms' );
 				break;
 			}
 		}

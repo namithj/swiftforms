@@ -2,14 +2,14 @@
 /**
  * Tests for the Entries REST routes.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-admin-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-admin-test-case.php';
 
-use SwiftForms\Database;
-use SwiftForms\Entries_Repository;
-use SwiftForms\Entry_Presenter;
+use BlockForms\Database;
+use BlockForms\Entries_Repository;
+use BlockForms\Entry_Presenter;
 
 /**
  * Class AdminEntriesRestTest
@@ -17,7 +17,7 @@ use SwiftForms\Entry_Presenter;
  * @group admin
  * @group security
  */
-class AdminEntriesRestTest extends SF_Admin_Test_Case {
+class AdminEntriesRestTest extends BF_Admin_Test_Case {
 
 	/**
 	 * Every route answers a guest with 401 and a user without the capability with 403.
@@ -49,7 +49,7 @@ class AdminEntriesRestTest extends SF_Admin_Test_Case {
 	 */
 	public function test_custom_role_through_capability_map() {
 		$id = $this->add_entry();
-		$this->map_caps( [ 'swiftforms_view_entries' => 'edit_posts' ] );
+		$this->map_caps( [ 'blockforms_view_entries' => 'edit_posts' ] );
 
 		$this->be_role( 'contributor' );
 		$this->assertSame( 200, $this->call( 'GET', '/entries' )->get_status() );
@@ -57,7 +57,7 @@ class AdminEntriesRestTest extends SF_Admin_Test_Case {
 		$this->assertSame( 200, $this->call( 'GET', '/forms' )->get_status() );
 		$this->assertSame( 403, $this->call( 'PATCH', '/entries/' . $id, [ 'starred' => true ] )->get_status(), 'edit_entries is still manage_options.' );
 		$this->assertSame( 403, $this->call( 'DELETE', '/entries/' . $id )->get_status() );
-		$this->assertSame( 403, rest_do_request( new WP_REST_Request( 'GET', '/swiftforms-cmf/v1/settings/swiftforms' ) )->get_status(), 'manage_settings is still manage_options (the settings route is cassette-cmf\'s).' );
+		$this->assertSame( 403, rest_do_request( new WP_REST_Request( 'GET', '/blockforms-cmf/v1/settings/blockforms' ) )->get_status(), 'manage_settings is still manage_options (the settings route is cassette-cmf\'s).' );
 	}
 
 	/**
@@ -182,15 +182,15 @@ class AdminEntriesRestTest extends SF_Admin_Test_Case {
 					'label' => 'Email',
 				]
 			)
-			. '<!-- wp:swiftforms/submit /-->';
+			. '<!-- wp:blockforms/submit /-->';
 		wp_update_post(
 			[
 				'ID'           => $post_id,
 				'post_content' => $this->form_markup( $this->form_id, $inner ),
 			]
 		);
-		\SwiftForms\Form_Index::flush_cache();
-		$this->assertNotSame( $this->schema()->hash, \SwiftForms\Entries_Repository::get( $id )['schema_hash'], 'The form really changed.' );
+		\BlockForms\Form_Index::flush_cache();
+		$this->assertNotSame( $this->schema()->hash, \BlockForms\Entries_Repository::get( $id )['schema_hash'], 'The form really changed.' );
 
 		$detail = $this->call( 'GET', '/entries/' . $id )->get_data();
 		$labels = wp_list_pluck( $detail['fields'], 'label', 'name' );
@@ -257,7 +257,7 @@ class AdminEntriesRestTest extends SF_Admin_Test_Case {
 				'post_status' => 'private',
 			]
 		);
-		$this->map_caps( [ 'swiftforms_view_entries' => 'edit_posts' ] );
+		$this->map_caps( [ 'blockforms_view_entries' => 'edit_posts' ] );
 		$this->be_role( 'contributor' );
 		$this->assertNull( $this->call( 'GET', '/entries/' . $none )->get_data()['source'] );
 		$this->be_admin();
@@ -314,9 +314,9 @@ class AdminEntriesRestTest extends SF_Admin_Test_Case {
 	 */
 	public function test_patch_without_view_returns_only_the_change() {
 		$id = $this->add_entry();
-		$this->map_caps( [ 'swiftforms_edit_entries' => 'edit_posts' ] );
+		$this->map_caps( [ 'blockforms_edit_entries' => 'edit_posts' ] );
 		$this->be_role( 'contributor' );
-		$this->assertFalse( SwiftForms\Access::can( 'swiftforms_view_entries' ), 'Precondition: no view capability.' );
+		$this->assertFalse( BlockForms\Access::can( 'blockforms_view_entries' ), 'Precondition: no view capability.' );
 
 		$response = $this->call( 'PATCH', '/entries/' . $id, [ 'starred' => true ] );
 		$this->assertSame( 200, $response->get_status() );
@@ -394,7 +394,7 @@ class AdminEntriesRestTest extends SF_Admin_Test_Case {
 
 		$queries = [];
 		$spy     = static function ( $query ) use ( &$queries ) {
-			if ( 0 === stripos( ltrim( $query ), 'SELECT' ) && false !== strpos( $query, 'swiftforms_' ) ) {
+			if ( 0 === stripos( ltrim( $query ), 'SELECT' ) && false !== strpos( $query, 'blockforms_' ) ) {
 				$queries[] = $query;
 			}
 			return $query;

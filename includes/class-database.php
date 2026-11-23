@@ -2,10 +2,10 @@
 /**
  * Custom tables.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -23,9 +23,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Database {
 
 	/**
-	 * Table name stem shared by every SwiftForms table.
+	 * Table name stem shared by every BlockForms table.
 	 */
-	const PREFIX = 'swiftforms_';
+	const PREFIX = 'blockforms_';
 
 	/**
 	 * Table names without the WordPress prefix, in creation order.
@@ -82,7 +82,7 @@ class Database {
 		$suppress = $wpdb->suppress_errors();
 		foreach ( self::tables() as $table ) {
 			$table = esc_sql( $table );
-			// DESCRIBE (not SHOW TABLES) so the check also sees the temporary tables the test suite creates (sf-allow-unprepared: a fixed list of table names).
+			// DESCRIBE (not SHOW TABLES) so the check also sees the temporary tables the test suite creates (bf-allow-unprepared: a fixed list of table names).
 			if ( ! $wpdb->get_results( 'DESCRIBE `' . $table . '`' ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Table name built from $wpdb->prefix and a fixed list.
 				$missing[] = $table;
 			}

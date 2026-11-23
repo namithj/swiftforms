@@ -1,4 +1,4 @@
-CREATE TABLE `{prefix}swiftforms_entries` (
+CREATE TABLE `{prefix}blockforms_entries` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `form_id` char(36) NOT NULL DEFAULT '',
   `schema_hash` char(64) NOT NULL DEFAULT '',
@@ -15,7 +15,7 @@ CREATE TABLE `{prefix}swiftforms_entries` (
   KEY `created_gmt` (`created_gmt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-CREATE TABLE `{prefix}swiftforms_entry_meta` (
+CREATE TABLE `{prefix}blockforms_entry_meta` (
   `meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `entry_id` bigint unsigned NOT NULL DEFAULT '0',
   `meta_key` varchar(64) NOT NULL DEFAULT '',
@@ -26,7 +26,7 @@ CREATE TABLE `{prefix}swiftforms_entry_meta` (
   KEY `entry_key` (`entry_id`,`meta_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-CREATE TABLE `{prefix}swiftforms_entry_values` (
+CREATE TABLE `{prefix}blockforms_entry_values` (
   `entry_id` bigint unsigned NOT NULL,
   `field` varchar(160) NOT NULL,
   `idx` smallint unsigned NOT NULL DEFAULT '0',
@@ -35,7 +35,7 @@ CREATE TABLE `{prefix}swiftforms_entry_values` (
   KEY `value_prefix` (`value`(150))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-CREATE TABLE `{prefix}swiftforms_forms` (
+CREATE TABLE `{prefix}blockforms_forms` (
   `form_id` char(36) NOT NULL,
   `stored_id` char(36) NOT NULL DEFAULT '',
   `source` varchar(191) NOT NULL DEFAULT '',
@@ -50,7 +50,7 @@ CREATE TABLE `{prefix}swiftforms_forms` (
   KEY `stored_id` (`stored_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-CREATE TABLE `{prefix}swiftforms_log` (
+CREATE TABLE `{prefix}blockforms_log` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(20) NOT NULL DEFAULT '',
   `ref` varchar(100) NOT NULL DEFAULT '',
@@ -62,7 +62,7 @@ CREATE TABLE `{prefix}swiftforms_log` (
   KEY `created_gmt` (`created_gmt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-CREATE TABLE `{prefix}swiftforms_schemas` (
+CREATE TABLE `{prefix}blockforms_schemas` (
   `schema_hash` char(64) NOT NULL,
   `form_id` char(36) NOT NULL DEFAULT '',
   `schema` longtext NOT NULL,

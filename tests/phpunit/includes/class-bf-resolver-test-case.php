@@ -1,25 +1,25 @@
-<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound, WordPress.WP.GlobalVariablesOverride.Prohibited -- Test helper: the class name follows SF_Storage_Test_Case, and tests reset core globals on purpose.
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound, WordPress.WP.GlobalVariablesOverride.Prohibited -- Test helper: the class name follows BF_Storage_Test_Case, and tests reset core globals on purpose.
 /**
  * Base class for the resolver, form index and source stack tests.
  *
  * Builds throwaway block themes in the system temp directory (templates, parts and
  * file patterns), creates pages and synced patterns, and clears the per-request state
- * of the index classes. The SwiftForms tables are the real ones of the test site; the
+ * of the index classes. The BlockForms tables are the real ones of the test site; the
  * core test case rolls their rows back.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once __DIR__ . '/class-sf-storage-test-case.php';
+require_once __DIR__ . '/class-bf-storage-test-case.php';
 
-use SwiftForms\Form_Index;
-use SwiftForms\Source_Edges;
-use SwiftForms\Source_Stack;
+use BlockForms\Form_Index;
+use BlockForms\Source_Edges;
+use BlockForms\Source_Stack;
 
 /**
- * Class SF_Resolver_Test_Case
+ * Class BF_Resolver_Test_Case
  */
-abstract class SF_Resolver_Test_Case extends SF_Storage_Test_Case {
+abstract class BF_Resolver_Test_Case extends BF_Storage_Test_Case {
 
 	/**
 	 * Theme root created by make_theme(), or an empty string.
@@ -112,7 +112,7 @@ abstract class SF_Resolver_Test_Case extends SF_Storage_Test_Case {
 	 */
 	protected function make_theme( $slug, array $files = [], $activate = true ) {
 		if ( '' === $this->theme_root ) {
-			$this->theme_root = sys_get_temp_dir() . '/sf-themes-' . getmypid() . '-' . wp_generate_password( 6, false );
+			$this->theme_root = sys_get_temp_dir() . '/bf-themes-' . getmypid() . '-' . wp_generate_password( 6, false );
 			mkdir( $this->theme_root, 0777, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
 		}
 		$files += [
@@ -219,7 +219,7 @@ abstract class SF_Resolver_Test_Case extends SF_Storage_Test_Case {
 	 * @param string $sidebar Sidebar ID, or wp_inactive_widgets.
 	 * @return void
 	 */
-	protected function place_widget( $number, $content, $sidebar = 'sf-sidebar' ) {
+	protected function place_widget( $number, $content, $sidebar = 'bf-sidebar' ) {
 		global $wp_registered_sidebars, $_wp_sidebars_widgets;
 
 		if ( ! $this->widgets_reset ) {
@@ -269,7 +269,7 @@ abstract class SF_Resolver_Test_Case extends SF_Storage_Test_Case {
 			$attrs = array_merge( [ 'formId' => $form_id ], $attrs );
 		}
 		$json = $attrs ? ' ' . wp_json_encode( $attrs, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) : '';
-		return '<!-- wp:swiftforms/form' . $json . ' -->' . $inner . '<!-- /wp:swiftforms/form -->';
+		return '<!-- wp:blockforms/form' . $json . ' -->' . $inner . '<!-- /wp:blockforms/form -->';
 	}
 
 	/**
@@ -281,7 +281,7 @@ abstract class SF_Resolver_Test_Case extends SF_Storage_Test_Case {
 	 */
 	protected function field_markup( $type, array $attrs = [] ) {
 		$json = $attrs ? ' ' . wp_json_encode( $attrs, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) : '';
-		return '<!-- wp:swiftforms/field-' . $type . $json . ' /-->';
+		return '<!-- wp:blockforms/field-' . $type . $json . ' /-->';
 	}
 
 	/**
@@ -303,7 +303,7 @@ abstract class SF_Resolver_Test_Case extends SF_Storage_Test_Case {
 	 */
 	protected function row( $form_id ) {
 		global $wpdb;
-		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM `' . SwiftForms\Database::table( 'forms' ) . '` WHERE form_id = %s', $form_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Test read.
+		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM `' . BlockForms\Database::table( 'forms' ) . '` WHERE form_id = %s', $form_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Test read.
 		return is_array( $row ) ? $row : null;
 	}
 

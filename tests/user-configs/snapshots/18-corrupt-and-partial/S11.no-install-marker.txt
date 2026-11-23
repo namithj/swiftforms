@@ -32,7 +32,7 @@ before:
     "migration log rows": 0,
     "migration lock row": false
 }
-first run returned true (swiftforms_db_version_changed fired 1 time(s))
+first run returned true (blockforms_db_version_changed fired 1 time(s))
 after the first run:
 {
     "db_version row": "1",
@@ -44,7 +44,7 @@ after the first run:
         "reason": "migration-1",
         "version": "{VERSION}",
         "options": {
-            "swiftforms_email_notification_to": "owner@broken-site.example"
+            "blockforms_email_notification_to": "owner@broken-site.example"
         }
     },
     "migration log rows": 1,
@@ -62,7 +62,7 @@ after the second run:
         "reason": "migration-1",
         "version": "{VERSION}",
         "options": {
-            "swiftforms_email_notification_to": "owner@broken-site.example"
+            "blockforms_email_notification_to": "owner@broken-site.example"
         }
     },
     "migration log rows": 1,

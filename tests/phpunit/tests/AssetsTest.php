@@ -1,18 +1,18 @@
 <?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, WordPress.WP.GlobalVariablesOverride.Prohibited -- Tests fire core's front-end hooks and reset core's style globals.
 /**
- * Tests for SwiftForms\Assets: where the stylesheet, the view module and the editor assets load.
+ * Tests for BlockForms\Assets: where the stylesheet, the view module and the editor assets load.
  *
  * Pages without a form carry nothing of ours (block and classic theme). A form page prints the
  * stylesheet in the head when the request is a singular view that holds the form (directly, through
  * a synced pattern, or in a block widget) and in the footer everywhere else. general.load_styles off
  * removes every front-end stylesheet and leaves the editor alone.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-render-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-render-test-case.php';
 
-use SwiftForms\Assets;
+use BlockForms\Assets;
 
 /**
  * Class AssetsTest
@@ -20,7 +20,7 @@ use SwiftForms\Assets;
  * @group blocks
  * @group assets
  */
-class AssetsTest extends SF_Render_Test_Case {
+class AssetsTest extends BF_Render_Test_Case {
 
 	/**
 	 * Theme directories before the test.
@@ -71,13 +71,13 @@ class AssetsTest extends SF_Render_Test_Case {
 	}
 
 	/**
-	 * Whether the SwiftForms stylesheet is in an output.
+	 * Whether the BlockForms stylesheet is in an output.
 	 *
 	 * @param string $html Output.
 	 * @return bool
 	 */
 	private function has_style( $html ) {
-		return false !== strpos( $html, "id='swiftforms-form-css'" ) || false !== strpos( $html, 'id="swiftforms-form-css"' );
+		return false !== strpos( $html, "id='blockforms-form-css'" ) || false !== strpos( $html, 'id="blockforms-form-css"' );
 	}
 
 	/**
@@ -87,13 +87,13 @@ class AssetsTest extends SF_Render_Test_Case {
 	 * @return bool
 	 */
 	private function has_any( $html ) {
-		return 1 === preg_match( '#(id=[\'"]swiftforms|@swiftforms/view|/swiftforms/build/)#', $html );
+		return 1 === preg_match( '#(id=[\'"]blockforms|@blockforms/view|/blockforms/build/)#', $html );
 	}
 
 	/**
 	 * Use the block fixture theme or the classic fixture theme.
 	 *
-	 * @param string $slug sf-test-block or sf-test-classic.
+	 * @param string $slug bf-test-block or bf-test-classic.
 	 * @return void
 	 */
 	private function use_theme( $slug ) {
@@ -119,7 +119,7 @@ class AssetsTest extends SF_Render_Test_Case {
 
 		ob_start();
 		wp_script_modules()->print_enqueued_script_modules();
-		$this->assertStringNotContainsString( 'swiftforms', (string) ob_get_clean(), 'Registering a module prints nothing.' );
+		$this->assertStringNotContainsString( 'blockforms', (string) ob_get_clean(), 'Registering a module prints nothing.' );
 	}
 
 	/**
@@ -128,7 +128,7 @@ class AssetsTest extends SF_Render_Test_Case {
 	 * @return void
 	 */
 	public function test_pages_without_a_form_load_nothing() {
-		foreach ( [ 'sf-test-block', 'sf-test-classic' ] as $theme ) {
+		foreach ( [ 'bf-test-block', 'bf-test-classic' ] as $theme ) {
 			$GLOBALS['wp_styles']  = new WP_Styles();
 			$GLOBALS['wp_scripts'] = new WP_Scripts();
 			Assets::register();
@@ -139,7 +139,7 @@ class AssetsTest extends SF_Render_Test_Case {
 			$this->render_current();
 
 			$out = $this->printed( 'wp_head' ) . $this->printed( 'wp_footer' );
-			$this->assertFalse( $this->has_any( $out ), $theme . ' prints no SwiftForms asset.' );
+			$this->assertFalse( $this->has_any( $out ), $theme . ' prints no BlockForms asset.' );
 			$this->assertSame( [], array_filter( wp_styles()->queue, [ $this, 'is_ours' ] ), $theme );
 			$this->assertSame( [], array_filter( wp_scripts()->queue, [ $this, 'is_ours' ] ), $theme );
 		}
@@ -177,7 +177,7 @@ class AssetsTest extends SF_Render_Test_Case {
 	 * @return bool
 	 */
 	public function is_ours( $handle ) {
-		return 0 === strpos( $handle, 'swiftforms' );
+		return 0 === strpos( $handle, 'blockforms' );
 	}
 
 	/**
@@ -186,7 +186,7 @@ class AssetsTest extends SF_Render_Test_Case {
 	 * @return void
 	 */
 	public function test_singular_view_prints_the_style_in_the_head() {
-		foreach ( [ 'sf-test-block', 'sf-test-classic' ] as $theme ) {
+		foreach ( [ 'bf-test-block', 'bf-test-classic' ] as $theme ) {
 			$GLOBALS['wp_styles']  = new WP_Styles();
 			$GLOBALS['wp_scripts'] = new WP_Scripts();
 			wp_dequeue_script_module( Assets::VIEW_MODULE );
@@ -201,7 +201,7 @@ class AssetsTest extends SF_Render_Test_Case {
 
 			$head = $this->printed( 'wp_head' );
 			$this->assertTrue( $this->has_style( $head ), $theme . ': the stylesheet is in the head.' );
-			$this->assertSame( 1, substr_count( $head, "id='swiftforms-form-css'" ), $theme . ': once.' );
+			$this->assertSame( 1, substr_count( $head, "id='blockforms-form-css'" ), $theme . ': once.' );
 
 			$this->assertStringContainsString( '<form', $this->render_current() );
 			$footer = $this->printed( 'wp_footer' );
@@ -288,7 +288,7 @@ class AssetsTest extends SF_Render_Test_Case {
 	 * @return void
 	 */
 	public function test_other_views_print_the_style_in_the_footer() {
-		$this->use_theme( 'sf-test-classic' );
+		$this->use_theme( 'bf-test-classic' );
 		$this->make_post( 'x', [ 'post_title' => 'Archive entry' ] );
 		$this->go_to( home_url( '/' ) );
 
@@ -303,12 +303,12 @@ class AssetsTest extends SF_Render_Test_Case {
 	}
 
 	/**
-	 * general.load_styles off: no SwiftForms front-end CSS in the head, in the footer or through the pre-scan.
+	 * general.load_styles off: no BlockForms front-end CSS in the head, in the footer or through the pre-scan.
 	 *
 	 * @return void
 	 */
 	public function test_load_styles_off() {
-		update_option( 'swiftforms_general_load_styles', '0' );
+		update_option( 'blockforms_general_load_styles', '0' );
 		$this->assertFalse( Assets::styles_enabled() );
 
 		$post_id = $this->make_post( $this->form_markup( self::ID_A, $this->field_markup( 'text', [ 'name' => 'a' ] ) ) );

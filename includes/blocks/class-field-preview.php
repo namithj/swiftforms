@@ -2,10 +2,10 @@
 /**
  * Editor canvas previews of the field blocks.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -36,7 +36,7 @@ class Field_Preview {
 	public static function markup( $type ) {
 		switch ( Field_Types::family( $type ) ) { // phpcs:ignore PHPCompatibility.Extensions.RemovedExtensions.famRemoved -- False positive: our own Field_Types::family().
 			case 'textarea':
-				return self::wrap( $type, 'div', self::label_nodes( 'label' ), [ self::control( 'textarea', 'swiftforms-textarea', self::textarea_attrs() ) ] );
+				return self::wrap( $type, 'div', self::label_nodes( 'label' ), [ self::control( 'textarea', 'blockforms-textarea', self::textarea_attrs() ) ] );
 			case 'select':
 				return self::wrap( $type, 'div', self::label_nodes( 'label' ), [ self::select_node() ] );
 			case 'choice':
@@ -46,11 +46,11 @@ class Field_Preview {
 			case 'hidden':
 				return [
 					'tag'      => 'div',
-					'class'    => 'swiftforms-field swiftforms-field--hidden-preview',
+					'class'    => 'blockforms-field blockforms-field--hidden-preview',
 					'children' => [
 						[
 							'tag'  => 'span',
-							'text' => __( 'Hidden field:', 'swiftforms' ) . ' {{ attributes.name | default:' . __( 'unnamed', 'swiftforms' ) . ' }} = {{ attributes.value }}',
+							'text' => __( 'Hidden field:', 'blockforms' ) . ' {{ attributes.name | default:' . __( 'unnamed', 'blockforms' ) . ' }} = {{ attributes.value }}',
 						],
 					],
 				];
@@ -63,7 +63,7 @@ class Field_Preview {
 			'value'       => '{{ attributes.defaultValue }}',
 			'aria-label'  => '{{ attributes.label }}',
 		];
-		return self::wrap( $type, 'div', self::label_nodes( 'label' ), [ self::control( 'input', 'swiftforms-input', $attrs ) ] );
+		return self::wrap( $type, 'div', self::label_nodes( 'label' ), [ self::control( 'input', 'blockforms-input', $attrs ) ] );
 	}
 
 	/**
@@ -78,14 +78,14 @@ class Field_Preview {
 	private static function wrap( $type, $tag, array $before, array $controls ) {
 		$help = [
 			'tag'   => 'p',
-			'class' => 'swiftforms-help',
+			'class' => 'blockforms-help',
 			'text'  => '{{ attributes.help }}',
 			'when'  => Block_Configs::when_all( [ Block_Configs::rule( 'help', 'not_empty' ) ] ),
 		];
 
 		return [
 			'tag'      => $tag,
-			'class'    => 'swiftforms-field swiftforms-field--' . $type . ' swiftforms-w-{{ attributes.width }}',
+			'class'    => 'blockforms-field blockforms-field--' . $type . ' blockforms-w-{{ attributes.width }}',
 			'attrs'    => [
 				'data-required' => '{{ attributes.required }}',
 			],
@@ -104,7 +104,7 @@ class Field_Preview {
 			[
 				[
 					'tag'  => 'span',
-					'text' => '{{ attributes.label | default:' . __( 'Field label', 'swiftforms' ) . ' }}',
+					'text' => '{{ attributes.label | default:' . __( 'Field label', 'blockforms' ) . ' }}',
 				],
 			],
 			self::indicator_nodes()
@@ -113,13 +113,13 @@ class Field_Preview {
 		return [
 			[
 				'tag'      => $tag,
-				'class'    => 'swiftforms-label',
+				'class'    => 'blockforms-label',
 				'when'     => Block_Configs::when_all( [ Block_Configs::rule( 'formLabelPosition', '!=', 'hidden' ) ] ),
 				'children' => $inner,
 			],
 			[
 				'tag'      => $tag,
-				'class'    => 'swiftforms-label swiftforms-sr-only',
+				'class'    => 'blockforms-label blockforms-sr-only',
 				'when'     => Block_Configs::when_all( [ Block_Configs::rule( 'formLabelPosition', '==', 'hidden' ) ] ),
 				'children' => $inner,
 			],
@@ -135,7 +135,7 @@ class Field_Preview {
 		return [
 			[
 				'tag'   => 'span',
-				'class' => 'swiftforms-required',
+				'class' => 'blockforms-required',
 				'attrs' => [
 					'aria-hidden' => 'true',
 				],
@@ -149,8 +149,8 @@ class Field_Preview {
 			],
 			[
 				'tag'   => 'span',
-				'class' => 'swiftforms-required',
-				'text'  => ' ' . __( '(required)', 'swiftforms' ),
+				'class' => 'blockforms-required',
+				'text'  => ' ' . __( '(required)', 'blockforms' ),
 				'when'  => Block_Configs::when_all(
 					[
 						Block_Configs::rule( 'required', '==', true ),
@@ -200,7 +200,7 @@ class Field_Preview {
 	private static function select_node() {
 		return [
 			'tag'      => 'select',
-			'class'    => 'swiftforms-select',
+			'class'    => 'blockforms-select',
 			'attrs'    => [
 				'disabled'   => 'disabled',
 				'aria-label' => '{{ attributes.label }}',
@@ -235,11 +235,11 @@ class Field_Preview {
 	private static function choices_node( $input_type ) {
 		return [
 			'tag'      => 'div',
-			'class'    => 'swiftforms-choices swiftforms-choices--{{ attributes.layout }}',
+			'class'    => 'blockforms-choices blockforms-choices--{{ attributes.layout }}',
 			'children' => [
 				[
 					'tag'      => 'label',
-					'class'    => 'swiftforms-choice',
+					'class'    => 'blockforms-choice',
 					'repeat'   => [
 						'over' => 'attributes.options',
 						'as'   => 'option',
@@ -271,7 +271,7 @@ class Field_Preview {
 	private static function consent_node() {
 		return [
 			'tag'      => 'label',
-			'class'    => 'swiftforms-choice swiftforms-label swiftforms-consent',
+			'class'    => 'blockforms-choice blockforms-label blockforms-consent',
 			'children' => [
 				[
 					'tag'   => 'input',
@@ -286,7 +286,7 @@ class Field_Preview {
 						[
 							[
 								'tag'  => 'span',
-								'html' => '{{ attributes.text | default:' . __( 'Consent text', 'swiftforms' ) . ' }}',
+								'html' => '{{ attributes.text | default:' . __( 'Consent text', 'blockforms' ) . ' }}',
 							],
 						],
 						self::indicator_nodes()

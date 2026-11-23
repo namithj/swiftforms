@@ -1,11 +1,11 @@
 <?php
 /**
- * Tests for SwiftForms\Hidden_Value.
+ * Tests for BlockForms\Hidden_Value.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Hidden_Value;
+use BlockForms\Hidden_Value;
 
 /**
  * Class HiddenValueTest
@@ -63,7 +63,7 @@ class HiddenValueTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_non_post_sources() {
-		foreach ( [ 'template:twentytwentyfive//home', 'template_part:twentytwentyfive//footer', 'pattern:swiftforms/contact', 'widget:block-3', '', 'garbage', 'post:999999' ] as $ref ) {
+		foreach ( [ 'template:twentytwentyfive//home', 'template_part:twentytwentyfive//footer', 'pattern:blockforms/contact', 'widget:block-3', '', 'garbage', 'post:999999' ] as $ref ) {
 			$this->assertSame( '[]', Hidden_Value::resolve( '[{post:id}{post:title}{post:url}]', $ref ), $ref );
 		}
 		$this->assertSame( '4', Hidden_Value::resolve( '{user:id}', 'widget:block-3', 4 ), 'The user token does not need a post.' );

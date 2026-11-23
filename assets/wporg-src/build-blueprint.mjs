@@ -11,7 +11,7 @@ const code = readFileSync( join( here, 'demo-setup.php' ), 'utf8' );
 const blueprint = {
 	$schema: 'https://playground.wordpress.net/blueprint-schema.json',
 	meta: {
-		title: 'SwiftForms demo',
+		title: 'BlockForms demo',
 		author: 'namithj',
 		description: 'A block-editor contact form on Twenty Twenty-Five, with sample entries.',
 		categories: [ 'Forms' ],
@@ -24,12 +24,12 @@ const blueprint = {
 			step: 'installPlugin',
 			pluginData: {
 				resource: 'url',
-				url: 'https://github.com/namithj/swiftforms/releases/latest/download/swiftforms.zip',
+				url: 'https://github.com/namithj/blockforms/releases/latest/download/blockforms.zip',
 			},
 			options: { activate: true },
 		},
 		{ step: 'activateTheme', themeFolderName: 'twentytwentyfive' },
-		{ step: 'setSiteOptions', options: { blogname: 'SwiftForms demo' } },
+		{ step: 'setSiteOptions', options: { blogname: 'BlockForms demo' } },
 		{ step: 'runPHP', code },
 	],
 };

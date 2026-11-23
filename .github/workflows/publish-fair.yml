@@ -48,7 +48,7 @@ jobs:
         with:
           version: ${{ inputs.tag }}
           # Matches the stable asset name produced by release.yml.
-          artifact-name: swiftforms.zip
+          artifact-name: blockforms.zip
           upload-metadata: 'true'
         env:
           FAIR_VERIFICATION_KEY_PRIVATE: ${{ secrets.FAIR_VERIFICATION_KEY_PRIVATE }}

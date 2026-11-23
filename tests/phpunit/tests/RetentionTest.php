@@ -2,16 +2,16 @@
 /**
  * Tests for the entry retention task.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-admin-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-admin-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Cron;
-use SwiftForms\Database;
-use SwiftForms\Entries_Repository;
-use SwiftForms\Retention;
+use BlockForms\Clock;
+use BlockForms\Cron;
+use BlockForms\Database;
+use BlockForms\Entries_Repository;
+use BlockForms\Retention;
 
 /**
  * Class RetentionTest
@@ -19,7 +19,7 @@ use SwiftForms\Retention;
  * @group admin
  * @group privacy
  */
-class RetentionTest extends SF_Admin_Test_Case {
+class RetentionTest extends BF_Admin_Test_Case {
 
 	const NOW = 1900000000;
 

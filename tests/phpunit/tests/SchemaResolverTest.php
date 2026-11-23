@@ -1,23 +1,23 @@
 <?php
 /**
- * Tests for SwiftForms\Schema_Resolver, Form_Schema and Schema_Store.
+ * Tests for BlockForms\Schema_Resolver, Form_Schema and Schema_Store.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-resolver-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-resolver-test-case.php';
 
-use SwiftForms\Database;
-use SwiftForms\Form_Schema;
-use SwiftForms\Schema_Resolver;
-use SwiftForms\Schema_Store;
+use BlockForms\Database;
+use BlockForms\Form_Schema;
+use BlockForms\Schema_Resolver;
+use BlockForms\Schema_Store;
 
 /**
  * Class SchemaResolverTest
  *
  * @group resolver
  */
-class SchemaResolverTest extends SF_Resolver_Test_Case {
+class SchemaResolverTest extends BF_Resolver_Test_Case {
 
 	/**
 	 * Build a schema straight from markup (no source, no index).
@@ -45,7 +45,7 @@ class SchemaResolverTest extends SF_Resolver_Test_Case {
 			. $this->field_markup( 'textarea', [ 'name' => 'third' ] )
 			. '<!-- /wp:column --><!-- /wp:columns --><!-- /wp:acme/future-wrapper -->'
 			. '</div><!-- /wp:group -->'
-			. '<!-- wp:swiftforms/submit /-->'
+			. '<!-- wp:blockforms/submit /-->'
 			. $this->field_markup(
 				'hidden',
 				[
@@ -86,7 +86,7 @@ class SchemaResolverTest extends SF_Resolver_Test_Case {
 		$this->assertArrayNotHasKey( 'futureKey', $field );
 		$this->assertSame( 0, $field['maxLength'] );
 		$this->assertFalse( $field['required'] );
-		$this->assertSame( array_merge( [ 'type' ], array_keys( SwiftForms\Field_Types::attributes( 'text' ) ) ), array_keys( $field ) );
+		$this->assertSame( array_merge( [ 'type' ], array_keys( BlockForms\Field_Types::attributes( 'text' ) ) ), array_keys( $field ) );
 	}
 
 	/**
@@ -121,7 +121,7 @@ class SchemaResolverTest extends SF_Resolver_Test_Case {
 		$this->assertSame( $name, $schema->fields[0]['name'] );
 		$this->assertSame( str_repeat( 'a', 62 ) . '-2', $schema->fields[1]['name'] );
 		foreach ( $schema->fields as $field ) {
-			$this->assertTrue( SwiftForms\Field_Types::is_valid_name( $field['name'] ) );
+			$this->assertTrue( BlockForms\Field_Types::is_valid_name( $field['name'] ) );
 		}
 	}
 
@@ -149,7 +149,7 @@ class SchemaResolverTest extends SF_Resolver_Test_Case {
 			$names
 		);
 		foreach ( $names as $name ) {
-			$this->assertTrue( SwiftForms\Field_Types::is_valid_name( $name ), $name );
+			$this->assertTrue( BlockForms\Field_Types::is_valid_name( $name ), $name );
 		}
 		$this->assertSame( 'name_derived', $schema->notices[0]['code'] );
 		$this->assertSame( 'Your Name', $schema->notices[0]['from'] );
@@ -239,7 +239,7 @@ class SchemaResolverTest extends SF_Resolver_Test_Case {
 	public function test_form_attributes_and_confirmation() {
 		$schema = $this->build(
 			$this->field_markup( 'text', [ 'name' => 'a' ] )
-			. '<!-- wp:swiftforms/confirmation --><!-- wp:paragraph --><p>Thanks</p><!-- /wp:paragraph --><!-- /wp:swiftforms/confirmation -->',
+			. '<!-- wp:blockforms/confirmation --><!-- wp:paragraph --><p>Thanks</p><!-- /wp:paragraph --><!-- /wp:blockforms/confirmation -->',
 			[
 				'title' => 'Contact',
 				'ajax'  => false,
@@ -550,7 +550,7 @@ class SchemaResolverTest extends SF_Resolver_Test_Case {
 		};
 
 		$this->make_theme(
-			'sf-r1',
+			'bf-r1',
 			[
 				'templates/single.html' => $form( self::ID_A, 'in-file-template' ),
 				'parts/footer.html'     => $form( self::ID_B, 'in-file-part' ),
@@ -558,17 +558,17 @@ class SchemaResolverTest extends SF_Resolver_Test_Case {
 		);
 		$page   = $this->make_post( $form( self::ID_C, 'in-page' ) );
 		$synced = $this->make_post( $form( '44444444-4444-4444-8444-444444444444', 'in-synced' ), [ 'post_type' => 'wp_block' ] );
-		$dbtpl  = $this->make_template_post( 'wp_template', 'sf-r1', 'page', $form( '55555555-5555-4555-8555-555555555555', 'in-db-template' ) );
-		$this->register_pattern( 'sf/p', $form( '66666666-6666-4666-8666-666666666666', 'in-pattern' ) );
+		$dbtpl  = $this->make_template_post( 'wp_template', 'bf-r1', 'page', $form( '55555555-5555-4555-8555-555555555555', 'in-db-template' ) );
+		$this->register_pattern( 'bf/p', $form( '66666666-6666-4666-8666-666666666666', 'in-pattern' ) );
 		$this->place_widget( 9, $form( '77777777-7777-4777-8777-777777777777', 'in-widget' ) );
 
 		$cases = [
-			[ self::ID_A, 'template:sf-r1//single', 'in-file-template' ],
-			[ self::ID_B, 'template_part:sf-r1//footer', 'in-file-part' ],
+			[ self::ID_A, 'template:bf-r1//single', 'in-file-template' ],
+			[ self::ID_B, 'template_part:bf-r1//footer', 'in-file-part' ],
 			[ self::ID_C, 'post:' . $page, 'in-page' ],
 			[ '44444444-4444-4444-8444-444444444444', 'post:' . $synced, 'in-synced' ],
-			[ '55555555-5555-4555-8555-555555555555', 'template:sf-r1//page', 'in-db-template' ],
-			[ '66666666-6666-4666-8666-666666666666', 'pattern:sf/p', 'in-pattern' ],
+			[ '55555555-5555-4555-8555-555555555555', 'template:bf-r1//page', 'in-db-template' ],
+			[ '66666666-6666-4666-8666-666666666666', 'pattern:bf/p', 'in-pattern' ],
 			[ '77777777-7777-4777-8777-777777777777', 'widget:block-9', 'in-widget' ],
 		];
 		foreach ( $cases as $case ) {
@@ -609,8 +609,8 @@ class SchemaResolverTest extends SF_Resolver_Test_Case {
 		$second = $this->make_post( $this->form_markup( self::ID_A, $this->field_markup( 'text', [ 'name' => 'copy' ] ) ) );
 		$third  = $this->make_post( $this->form_markup( '', $this->field_markup( 'text', [ 'name' => 'nameless' ] ) ) );
 
-		$copy_id    = SwiftForms\Form_Index::copy_id( self::ID_A, 'post:' . $second );
-		$missing_id = SwiftForms\Uuid::v5( 'missing|post:' . $third . '|1' );
+		$copy_id    = BlockForms\Form_Index::copy_id( self::ID_A, 'post:' . $second );
+		$missing_id = BlockForms\Uuid::v5( 'missing|post:' . $third . '|1' );
 
 		$this->assertSame( 'orig', Schema_Resolver::resolve( self::ID_A, 'post:' . $first )->fields[0]['name'] );
 		$this->assertNull( Schema_Resolver::resolve( self::ID_A, 'post:' . $second ), 'The stored ID is not the copy\'s effective ID.' );

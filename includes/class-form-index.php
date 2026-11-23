@@ -2,10 +2,10 @@
 /**
  * Form index.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Form_Index
  *
- * The swiftforms_forms table (ADR-003): one row per effective formId, with its
+ * The blockforms_forms table (ADR-003): one row per effective formId, with its
  * source, title, liveness, current schema hash and where it shows. It answers
  * "is this (formId, source) pair a live location?" with one indexed query
  * (C-3.11) and implements the effective formId rules of C-2.7.
@@ -60,7 +60,7 @@ class Form_Index {
 	/**
 	 * Object cache group. Keys include the group's last_changed value, bumped on every write.
 	 */
-	const CACHE_GROUP = 'swiftforms_forms';
+	const CACHE_GROUP = 'blockforms_forms';
 
 	const STATUS_LIVE     = 'live';
 	const STATUS_NOT_LIVE = 'not_live';
@@ -69,7 +69,7 @@ class Form_Index {
 	/**
 	 * Substrings that mark content worth parsing: a form, or a block that can pull one in.
 	 */
-	const MARKERS = [ '<!-- wp:swiftforms/form', '<!-- wp:block ', '<!-- wp:pattern', '<!-- wp:template-part' ];
+	const MARKERS = [ '<!-- wp:blockforms/form', '<!-- wp:block ', '<!-- wp:pattern', '<!-- wp:template-part' ];
 
 	/**
 	 * Most places listed per form.
@@ -130,7 +130,7 @@ class Form_Index {
 			add_action( 'add_option_' . $option, [ self::class, 'reindex_widgets' ] );
 			add_action( 'update_option_' . $option, [ self::class, 'reindex_widgets' ] );
 		}
-		add_action( 'swiftforms_db_version_changed', [ self::class, 'rebuild_when_ready' ] );
+		add_action( 'blockforms_db_version_changed', [ self::class, 'rebuild_when_ready' ] );
 	}
 
 	/**
@@ -300,7 +300,7 @@ class Form_Index {
 	}
 
 	/**
-	 * Effective ID of a copy: uuid_v5( "{stored}|{ref}" ) in the SwiftForms namespace (C-2.7).
+	 * Effective ID of a copy: uuid_v5( "{stored}|{ref}" ) in the BlockForms namespace (C-2.7).
 	 *
 	 * @param string $stored Stored formId.
 	 * @param string $ref    Source reference of the copy.

@@ -1,22 +1,22 @@
 <?php
 /**
- * Tests for SwiftForms\Form_Renderer and the form-level markup.
+ * Tests for BlockForms\Form_Renderer and the form-level markup.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-render-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-render-test-case.php';
 
-use SwiftForms\Form_Renderer;
-use SwiftForms\Form_State;
-use SwiftForms\Source_Stack;
+use BlockForms\Form_Renderer;
+use BlockForms\Form_State;
+use BlockForms\Source_Stack;
 
 /**
  * Class FormRendererTest
  *
  * @group blocks
  */
-class FormRendererTest extends SF_Render_Test_Case {
+class FormRendererTest extends BF_Render_Test_Case {
 
 	/**
 	 * The form element, its control fields and the data attributes.
@@ -30,23 +30,23 @@ class FormRendererTest extends SF_Render_Test_Case {
 			$post_id
 		);
 
-		$this->assertSame( 1, preg_match( '#^<form class="swiftforms-form swiftforms-form--labels-top wp-block-swiftforms-form" method="post" data-wp-interactive="swiftforms" data-wp-context="([^"]*)" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible">#', $html, $m ) );
+		$this->assertSame( 1, preg_match( '#^<form class="blockforms-form blockforms-form--labels-top wp-block-blockforms-form" method="post" data-wp-interactive="blockforms" data-wp-context="([^"]*)" data-wp-init="callbacks.init" data-wp-on--submit="actions.submit" data-wp-on--input="actions.input" data-wp-on--focusout="actions.focusout" data-wp-on-document--visibilitychange="callbacks.visible">#', $html, $m ) );
 		$this->assertSame(
 			[
 				'formId'   => self::ID_A,
 				'source'   => 'post:' . $post_id,
 				'instance' => 1,
 				'ajax'     => true,
-				'issued'   => intdiv( \SwiftForms\Clock::now(), HOUR_IN_SECONDS ),
+				'issued'   => intdiv( \BlockForms\Clock::now(), HOUR_IN_SECONDS ),
 			],
 			json_decode( html_entity_decode( $m[1], ENT_QUOTES ), true )
 		);
-		$this->assertStringContainsString( '<div class="swiftforms-errors-summary" tabindex="-1" hidden></div>', $html );
-		$this->assertStringContainsString( '<input type="hidden" name="_sf_form" value="' . self::ID_A . '">', $html );
-		$this->assertStringContainsString( '<input type="hidden" name="_sf_source" value="post:' . $post_id . '">', $html );
-		$this->assertStringContainsString( '<input type="hidden" name="_sf_v" value="' . SWIFTFORMS_VERSION . '">', $html );
-		$this->assertStringContainsString( '<div class="swiftforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_sf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>', $html );
-		$this->assertStringNotContainsString( 'name="sf[a]" value', $html );
+		$this->assertStringContainsString( '<div class="blockforms-errors-summary" tabindex="-1" hidden></div>', $html );
+		$this->assertStringContainsString( '<input type="hidden" name="_bf_form" value="' . self::ID_A . '">', $html );
+		$this->assertStringContainsString( '<input type="hidden" name="_bf_source" value="post:' . $post_id . '">', $html );
+		$this->assertStringContainsString( '<input type="hidden" name="_bf_v" value="' . BLOCKFORMS_VERSION . '">', $html );
+		$this->assertStringContainsString( '<div class="blockforms-hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_bf_hp" value="" tabindex="-1" autocomplete="off"></label></div></form>', $html );
+		$this->assertStringNotContainsString( 'name="bf[a]" value', $html );
 		$this->assertSame( 0, Form_Renderer::depth(), 'The form stack is empty after the render.' );
 		$this->assertSame( 0, Source_Stack::depth() );
 	}
@@ -57,19 +57,19 @@ class FormRendererTest extends SF_Render_Test_Case {
 	 * @return void
 	 */
 	public function test_default_template_form() {
-		$inner = '<!-- wp:swiftforms/field-text {"name":"name","label":"Name","autocomplete":"name"} /-->'
-			. '<!-- wp:swiftforms/field-email {"name":"email","label":"Email","required":true,"autocomplete":"email"} /-->'
-			. '<!-- wp:swiftforms/field-textarea {"name":"message","label":"Message","required":true} /-->'
-			. '<!-- wp:swiftforms/submit /-->'
-			. '<!-- wp:swiftforms/confirmation --><!-- wp:paragraph --><p>Thanks! We\'ll be in touch.</p><!-- /wp:paragraph --><!-- /wp:swiftforms/confirmation -->';
+		$inner = '<!-- wp:blockforms/field-text {"name":"name","label":"Name","autocomplete":"name"} /-->'
+			. '<!-- wp:blockforms/field-email {"name":"email","label":"Email","required":true,"autocomplete":"email"} /-->'
+			. '<!-- wp:blockforms/field-textarea {"name":"message","label":"Message","required":true} /-->'
+			. '<!-- wp:blockforms/submit /-->'
+			. '<!-- wp:blockforms/confirmation --><!-- wp:paragraph --><p>Thanks! We\'ll be in touch.</p><!-- /wp:paragraph --><!-- /wp:blockforms/confirmation -->';
 		$html  = $this->render_form( $inner );
 
-		$this->assertStringContainsString( 'name="sf[name]"', $html );
-		$this->assertStringContainsString( 'name="sf[email]"', $html );
-		$this->assertStringContainsString( 'name="sf[message]"', $html );
+		$this->assertStringContainsString( 'name="bf[name]"', $html );
+		$this->assertStringContainsString( 'name="bf[email]"', $html );
+		$this->assertStringContainsString( 'name="bf[message]"', $html );
 		$this->assertStringContainsString( '<button type="submit"', $html );
 		$this->assertStringNotContainsString( 'Thanks!', $html, 'The confirmation does not show until the form succeeds.' );
-		$this->assertStringNotContainsString( 'swiftforms-confirmation', $html );
+		$this->assertStringNotContainsString( 'blockforms-confirmation', $html );
 	}
 
 	/**
@@ -80,14 +80,14 @@ class FormRendererTest extends SF_Render_Test_Case {
 	public function test_success_shows_the_confirmation_blocks() {
 		Form_State::set( self::ID_A, [ 'success' => true ] );
 		$inner = $this->field_markup( 'text', [ 'name' => 'a' ] )
-			. '<!-- wp:swiftforms/confirmation --><!-- wp:paragraph --><p>All <em>done</em>.</p><!-- /wp:paragraph --><!-- /wp:swiftforms/confirmation -->';
+			. '<!-- wp:blockforms/confirmation --><!-- wp:paragraph --><p>All <em>done</em>.</p><!-- /wp:paragraph --><!-- /wp:blockforms/confirmation -->';
 		$html  = $this->render_form( $inner );
 
 		// Newer cores add a wp-block-paragraph class to the paragraph.
-		$this->assertMatchesRegularExpression( '#<div class="swiftforms-confirmation" role="status"><p( class="wp-block-paragraph")?>All <em>done</em>\.</p></div>#', $html );
+		$this->assertMatchesRegularExpression( '#<div class="blockforms-confirmation" role="status"><p( class="wp-block-paragraph")?>All <em>done</em>\.</p></div>#', $html );
 		$this->assertStringNotContainsString( '<form', $html );
-		$this->assertStringNotContainsString( 'sf[a]', $html );
-		$this->assertStringContainsString( 'swiftforms-form--submitted', $html );
+		$this->assertStringNotContainsString( 'bf[a]', $html );
+		$this->assertStringContainsString( 'blockforms-form--submitted', $html );
 	}
 
 	/**
@@ -98,7 +98,7 @@ class FormRendererTest extends SF_Render_Test_Case {
 	public function test_success_default_message() {
 		Form_State::set( self::ID_A, [ 'success' => true ] );
 		$html = $this->render_form( $this->field_markup( 'text', [ 'name' => 'a' ] ) );
-		$this->assertStringContainsString( '<div class="swiftforms-confirmation" role="status"><p>Thank you. Your message has been sent.</p></div>', $html );
+		$this->assertStringContainsString( '<div class="blockforms-confirmation" role="status"><p>Thank you. Your message has been sent.</p></div>', $html );
 	}
 
 	/**
@@ -114,9 +114,9 @@ class FormRendererTest extends SF_Render_Test_Case {
 				'confirmation_html' => '<p>Hello Ada</p>',
 			]
 		);
-		$inner = '<!-- wp:swiftforms/confirmation --><!-- wp:paragraph --><p>Block text</p><!-- /wp:paragraph --><!-- /wp:swiftforms/confirmation -->';
+		$inner = '<!-- wp:blockforms/confirmation --><!-- wp:paragraph --><p>Block text</p><!-- /wp:paragraph --><!-- /wp:blockforms/confirmation -->';
 		$html  = $this->render_form( $inner );
-		$this->assertStringContainsString( '<div class="swiftforms-confirmation" role="status"><p>Hello Ada</p></div>', $html );
+		$this->assertStringContainsString( '<div class="blockforms-confirmation" role="status"><p>Hello Ada</p></div>', $html );
 		$this->assertStringNotContainsString( 'Block text', $html );
 	}
 
@@ -134,7 +134,7 @@ class FormRendererTest extends SF_Render_Test_Case {
 			]
 		);
 		$html = $this->render_form( $this->field_markup( 'text', [ 'name' => 'a' ] ) );
-		$this->assertStringContainsString( '<div class="swiftforms-notice swiftforms-notice--info" role="status">Please submit again &lt;now&gt;.</div>', $html );
+		$this->assertStringContainsString( '<div class="blockforms-notice blockforms-notice--info" role="status">Please submit again &lt;now&gt;.</div>', $html );
 	}
 
 	/**
@@ -169,11 +169,11 @@ class FormRendererTest extends SF_Render_Test_Case {
 		preg_match_all( '/\bid="([^"]+)"/', $html, $ids );
 		$this->assertNotEmpty( $ids[1] );
 		$this->assertSame( $ids[1], array_values( array_unique( $ids[1] ) ), 'Every element ID is unique on the page.' );
-		$this->assertStringContainsString( 'id="sf-22222222-who-1"', $html );
-		$this->assertStringContainsString( 'id="sf-22222222-who-2"', $html );
-		$this->assertStringContainsString( 'id="sf-22222222-pick-2-1"', $html );
+		$this->assertStringContainsString( 'id="bf-22222222-who-1"', $html );
+		$this->assertStringContainsString( 'id="bf-22222222-who-2"', $html );
+		$this->assertStringContainsString( 'id="bf-22222222-pick-2-1"', $html );
 		$this->assertStringContainsString( '&quot;instance&quot;:2', $html );
-		$this->assertSame( 2, substr_count( $html, 'name="_sf_form" value="' . self::ID_B . '"' ) );
+		$this->assertSame( 2, substr_count( $html, 'name="_bf_form" value="' . self::ID_B . '"' ) );
 	}
 
 	/**
@@ -187,9 +187,9 @@ class FormRendererTest extends SF_Render_Test_Case {
 			. $this->form_markup( self::ID_B, $this->field_markup( 'text', [ 'name' => 'two' ] ) )
 		);
 
-		$this->assertStringContainsString( 'id="sf-11111111-one-1"', $html );
-		$this->assertStringContainsString( 'id="sf-22222222-two-1"', $html );
-		$this->assertStringNotContainsString( 'sf-11111111-two', $html );
+		$this->assertStringContainsString( 'id="bf-11111111-one-1"', $html );
+		$this->assertStringContainsString( 'id="bf-22222222-two-1"', $html );
+		$this->assertStringNotContainsString( 'bf-11111111-two', $html );
 		$this->assertSame( 0, Form_Renderer::depth() );
 	}
 
@@ -203,9 +203,9 @@ class FormRendererTest extends SF_Render_Test_Case {
 		$this->make_post( $markup, [ 'post_date' => '2020-01-01 00:00:00' ] );
 		$html = $this->render_page( $markup );
 
-		$this->assertSame( 1, preg_match( '/name="_sf_form" value="([0-9a-f-]{36})"/', $html, $m ) );
+		$this->assertSame( 1, preg_match( '/name="_bf_form" value="([0-9a-f-]{36})"/', $html, $m ) );
 		$this->assertNotSame( self::ID_A, $m[1], 'The later copy gets its own effective formId.' );
-		$this->assertStringContainsString( 'id="sf-' . substr( $m[1], 0, 8 ) . '-a-1"', $html );
+		$this->assertStringContainsString( 'id="bf-' . substr( $m[1], 0, 8 ) . '-a-1"', $html );
 	}
 
 	/**
@@ -216,9 +216,9 @@ class FormRendererTest extends SF_Render_Test_Case {
 	public function test_form_without_form_id() {
 		$markup = $this->form_markup( '', $this->field_markup( 'text', [ 'name' => 'a' ] ) );
 		$first  = $this->render_page( $markup );
-		preg_match( '/name="_sf_form" value="([0-9a-f-]{36})"/', $first, $m );
+		preg_match( '/name="_bf_form" value="([0-9a-f-]{36})"/', $first, $m );
 		$this->assertNotEmpty( $m );
-		$this->assertTrue( \SwiftForms\Uuid::is_valid( $m[1] ) );
+		$this->assertTrue( \BlockForms\Uuid::is_valid( $m[1] ) );
 	}
 
 	/**
@@ -229,7 +229,7 @@ class FormRendererTest extends SF_Render_Test_Case {
 	public function test_render_form_filter() {
 		$seen = [];
 		add_filter(
-			'swiftforms_render_form',
+			'blockforms_render_form',
 			static function ( $html, $form_id, $instance, $attributes ) use ( &$seen ) {
 				$seen = [ $form_id, $instance, $attributes['labelPosition'] ];
 				return '<!--before-->' . $html;
@@ -242,7 +242,7 @@ class FormRendererTest extends SF_Render_Test_Case {
 		$this->assertStringStartsWith( '<!--before--><form', $html );
 		$this->assertSame( [ self::ID_A, 1, 'inline' ], $seen );
 
-		add_filter( 'swiftforms_render_form', '__return_null', 20 );
+		add_filter( 'blockforms_render_form', '__return_null', 20 );
 		$this->assertStringStartsWith( '<form', $this->render_form( $this->field_markup( 'text', [ 'name' => 'a' ] ) ), 'A non-string result is ignored: the unfiltered form prints.' );
 	}
 
@@ -257,7 +257,7 @@ class FormRendererTest extends SF_Render_Test_Case {
 		$html = $this->render_current();
 
 		$this->assertStringContainsString( '<form', $html );
-		$this->assertStringContainsString( 'name="sf[a]"', $html );
+		$this->assertStringContainsString( 'name="bf[a]"', $html );
 		$this->assertSame( 0, Form_Renderer::depth() );
 	}
 
@@ -304,7 +304,7 @@ class FormRendererTest extends SF_Render_Test_Case {
 		$html   = $block->render();
 
 		$this->assertStringContainsString( '<form', $html );
-		$this->assertStringNotContainsString( 'sf[a]', $html );
+		$this->assertStringNotContainsString( 'bf[a]', $html );
 		$this->assertSame( 0, Form_Renderer::depth() );
 	}
 }

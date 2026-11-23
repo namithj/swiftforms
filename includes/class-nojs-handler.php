@@ -2,10 +2,10 @@
 /**
  * Form posts without JavaScript.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -17,15 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The form is a plain <form method="post"> to the same URL (ADR-002), so it works without JavaScript and
  * behind a page cache. On `template_redirect`:
  *
- * POST with `_sf_form` (nothing else makes this run, and never for REST, admin, AJAX, cron or CLI):
+ * POST with `_bf_form` (nothing else makes this run, and never for REST, admin, AJAX, cron or CLI):
  *   Gate (throttle, size, live location; a refusal is a plain wp_die() page, nothing is stored)
  *   -> `_wpnonce` for a logged-in user (an invalid one means a guest) -> Submission
- *   -> Post/Redirect/Get: a 303 to the same URL with `?sf_result={key}`. The key is 128 random bits and
+ *   -> Post/Redirect/Get: a 303 to the same URL with `?bf_result={key}`. The key is 128 random bits and
  *      points at a 10-minute transient that holds this visitor's result only: { form_id, source, instance,
  *      state: { values, errors, success, confirmation_html, notice, notice_type } }.
  *   A redirect confirmation skips that and sends a 303 straight to its target.
  *
- * GET with `sf_result`: read the transient and DELETE it (single read), fill Form_State for the form and
+ * GET with `bf_result`: read the transient and DELETE it (single read), fill Form_State for the form and
  * instance so the form renders with its errors, values or confirmation, and make the page uncacheable
  * (nocache_headers(), DONOTCACHEPAGE, Referrer-Policy: no-referrer). A stale, unknown or malformed key
  * renders the plain form (still uncacheable).
@@ -38,12 +38,12 @@ class Nojs_Handler {
 	/**
 	 * Query argument that carries the result key.
 	 */
-	const RESULT_PARAM = 'sf_result';
+	const RESULT_PARAM = 'bf_result';
 
 	/**
 	 * Transient name prefix.
 	 */
-	const TRANSIENT_PREFIX = 'swiftforms_result_';
+	const TRANSIENT_PREFIX = 'blockforms_result_';
 
 	/**
 	 * Seconds a result is kept.
@@ -85,7 +85,7 @@ class Nojs_Handler {
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended -- Public form post: no nonce exists for a guest; logged-in users are checked in handle_post().
 		$method = isset( $_SERVER['REQUEST_METHOD'] ) && is_string( $_SERVER['REQUEST_METHOD'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : '';
-		if ( 'POST' === $method && isset( $_POST['_sf_form'] ) ) {
+		if ( 'POST' === $method && isset( $_POST['_bf_form'] ) ) {
 			self::handle_post();
 			return;
 		}
@@ -116,9 +116,9 @@ class Nojs_Handler {
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- See maybe_handle(); a guest posts no nonce (the Gate, token, time trap and honeypot protect the route); the nonce of a logged-in user is verified below.
 		// Each control is read on its own and sanitised as it is read; the field values are read per field of the
 		// form's schema in posted_fields(), after the Gate has checked the size of the post.
-		$shape   = isset( $_POST['sf'] ) && is_array( $_POST['sf'] ) ? map_deep( wp_unslash( $_POST['sf'] ), 'absint' ) : []; // Structure only, for counting.
-		$form_id = self::posted_text( '_sf_form' );
-		$source  = self::posted_text( '_sf_source' );
+		$shape   = isset( $_POST['bf'] ) && is_array( $_POST['bf'] ) ? map_deep( wp_unslash( $_POST['bf'] ), 'absint' ) : []; // Structure only, for counting.
+		$form_id = self::posted_text( '_bf_form' );
+		$source  = self::posted_text( '_bf_source' );
 		$length  = isset( $_SERVER['CONTENT_LENGTH'] ) ? (int) $_SERVER['CONTENT_LENGTH'] : 0;
 		$count   = Gate::count_fields( $shape ) + max( 0, count( $_POST ) - 1 );
 
@@ -129,7 +129,7 @@ class Nojs_Handler {
 		}
 
 		$schema = Schema_Resolver::resolve( $form_id, $source );
-		$sf     = null === $schema ? [] : self::posted_fields( $schema );
+		$bf     = null === $schema ? [] : self::posted_fields( $schema );
 
 		$nonce = self::posted_text( '_wpnonce' );
 		$user  = null;
@@ -137,16 +137,16 @@ class Nojs_Handler {
 			$user = wp_get_current_user();
 		}
 
-		$instance_raw = self::posted_text( '_sf_i' );
+		$instance_raw = self::posted_text( '_bf_i' );
 		$instance     = 1 === preg_match( '/^[1-9][0-9]{0,2}$/D', $instance_raw ) ? absint( $instance_raw ) : 1;
 
 		// A honeypot value that is not a plain string, or that cleans to nothing, still counts as filled in.
-		$hp = isset( $_POST['_sf_hp'] ) ? self::posted_text( '_sf_hp' ) : '';
-		if ( isset( $_POST['_sf_hp'] ) && '' === $hp && ( ! is_string( $_POST['_sf_hp'] ) || '' !== $_POST['_sf_hp'] ) ) {
+		$hp = isset( $_POST['_bf_hp'] ) ? self::posted_text( '_bf_hp' ) : '';
+		if ( isset( $_POST['_bf_hp'] ) && '' === $hp && ( ! is_string( $_POST['_bf_hp'] ) || '' !== $_POST['_bf_hp'] ) ) {
 			$hp = '1';
 		}
-		$token = isset( $_POST['_sf_token'] ) ? self::posted_text( '_sf_token' ) : null;
-		$t     = isset( $_POST['_sf_t'] ) ? self::posted_text( '_sf_t' ) : null;
+		$token = isset( $_POST['_bf_token'] ) ? self::posted_text( '_bf_token' ) : null;
+		$t     = isset( $_POST['_bf_t'] ) ? self::posted_text( '_bf_t' ) : null;
 		// phpcs:enable
 
 		$result = Submission::handle(
@@ -156,7 +156,7 @@ class Nojs_Handler {
 				'token'     => $token,
 				'hp'        => $hp,
 				't'         => $t,
-				'sf'        => $sf,
+				'bf'        => $bf,
 				'page_hint' => self::request_url( false ),
 			],
 			'nojs',
@@ -176,52 +176,52 @@ class Nojs_Handler {
 	 */
 	private static function posted_fields( Form_Schema $schema ) {
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- See handle_post().
-		$sf = [];
-		if ( ! isset( $_POST['sf'] ) || ! is_array( $_POST['sf'] ) ) {
-			return $sf;
+		$bf = [];
+		if ( ! isset( $_POST['bf'] ) || ! is_array( $_POST['bf'] ) ) {
+			return $bf;
 		}
 		foreach ( $schema->fields as $field ) {
 			$name = (string) $field['name'];
-			if ( ! isset( $_POST['sf'][ $name ] ) ) {
+			if ( ! isset( $_POST['bf'][ $name ] ) ) {
 				continue;
 			}
 			$options   = Validator::option_values( $field ) ?? [];
 			$multiline = 'textarea' === (string) $field['type'];
 
-			if ( is_array( $_POST['sf'][ $name ] ) ) {
+			if ( is_array( $_POST['bf'][ $name ] ) ) {
 				$list = [];
-				$keys = array_keys( map_deep( wp_unslash( $_POST['sf'][ $name ] ), 'absint' ) ); // Structure only.
+				$keys = array_keys( map_deep( wp_unslash( $_POST['bf'][ $name ] ), 'absint' ) ); // Structure only.
 				foreach ( array_slice( $keys, 0, Validator::MAX_LIST ) as $key ) {
-					if ( ! isset( $_POST['sf'][ $name ][ $key ] ) || ! is_string( $_POST['sf'][ $name ][ $key ] ) ) {
+					if ( ! isset( $_POST['bf'][ $name ][ $key ] ) || ! is_string( $_POST['bf'][ $name ][ $key ] ) ) {
 						continue;
 					}
-					$item = sanitize_text_field( wp_unslash( $_POST['sf'][ $name ][ $key ] ) );
+					$item = sanitize_text_field( wp_unslash( $_POST['bf'][ $name ][ $key ] ) );
 					foreach ( $options as $option ) {
-						if ( in_array( $option, (array) wp_unslash( $_POST['sf'][ $name ][ $key ] ), true ) ) {
+						if ( in_array( $option, (array) wp_unslash( $_POST['bf'][ $name ][ $key ] ), true ) ) {
 							$item = $option;
 							break;
 						}
 					}
 					$list[] = $item;
 				}
-				$sf[ $name ] = $list;
+				$bf[ $name ] = $list;
 				continue;
 			}
 
-			if ( ! is_string( $_POST['sf'][ $name ] ) ) {
+			if ( ! is_string( $_POST['bf'][ $name ] ) ) {
 				continue;
 			}
-			$value = $multiline ? sanitize_textarea_field( wp_unslash( $_POST['sf'][ $name ] ) ) : sanitize_text_field( wp_unslash( $_POST['sf'][ $name ] ) );
+			$value = $multiline ? sanitize_textarea_field( wp_unslash( $_POST['bf'][ $name ] ) ) : sanitize_text_field( wp_unslash( $_POST['bf'][ $name ] ) );
 			foreach ( $options as $option ) {
-				if ( in_array( $option, (array) wp_unslash( $_POST['sf'][ $name ] ), true ) ) {
+				if ( in_array( $option, (array) wp_unslash( $_POST['bf'][ $name ] ), true ) ) {
 					$value = $option;
 					break;
 				}
 			}
-			$sf[ $name ] = $value;
+			$bf[ $name ] = $value;
 		}
 		// phpcs:enable
-		return $sf;
+		return $bf;
 	}
 
 	/**
@@ -244,11 +244,11 @@ class Nojs_Handler {
 	private static function refuse( Submission_Result $refused ) {
 		nocache_headers();
 		if ( Submission_Result::RATE_LIMITED === $refused->status ) {
-			$message = __( 'Too many requests. Please wait a minute and try again.', 'swiftforms' );
+			$message = __( 'Too many requests. Please wait a minute and try again.', 'blockforms' );
 		} elseif ( Submission_Result::CLOSED === $refused->status ) {
-			$message = __( 'This form is not accepting submissions.', 'swiftforms' );
+			$message = __( 'This form is not accepting submissions.', 'blockforms' );
 		} else {
-			$message = __( 'Your request could not be processed.', 'swiftforms' );
+			$message = __( 'Your request could not be processed.', 'blockforms' );
 		}
 		wp_die( esc_html( $message ), '', [ 'response' => (int) $refused->http ] );
 	}
@@ -284,17 +284,17 @@ class Nojs_Handler {
 				break;
 
 			case Submission_Result::EXPIRED:
-				$state['notice']      = __( 'Please submit again.', 'swiftforms' );
+				$state['notice']      = __( 'Please submit again.', 'blockforms' );
 				$state['notice_type'] = 'info';
 				break;
 
 			case Submission_Result::RATE_LIMITED:
-				$state['notice']      = __( 'Too many submissions. Please wait a minute and try again.', 'swiftforms' );
+				$state['notice']      = __( 'Too many submissions. Please wait a minute and try again.', 'blockforms' );
 				$state['notice_type'] = 'error';
 				break;
 
 			default:
-				$state['notice']      = __( 'This form is not accepting submissions.', 'swiftforms' );
+				$state['notice']      = __( 'This form is not accepting submissions.', 'blockforms' );
 				$state['notice_type'] = 'error';
 		}
 
@@ -316,7 +316,7 @@ class Nojs_Handler {
 	/**
 	 * Read a stored result (once) and prepare the page.
 	 *
-	 * @param mixed $key The sf_result query value.
+	 * @param mixed $key The bf_result query value.
 	 * @return void
 	 */
 	private static function show_result( $key ) {
@@ -393,14 +393,14 @@ class Nojs_Handler {
 				);
 			}
 		}
-		wp_safe_redirect( $url, 303, 'SwiftForms' );
+		wp_safe_redirect( $url, 303, 'BlockForms' );
 		exit;
 	}
 
 	/**
 	 * Absolute URL of the current request on this site.
 	 *
-	 * @param bool $without_result Whether to remove an existing sf_result argument.
+	 * @param bool $without_result Whether to remove an existing bf_result argument.
 	 * @return string
 	 */
 	private static function request_url( $without_result ) {

@@ -11,13 +11,13 @@
  * schema_hash has no snapshot row. The variants change the options: options holding garbage (an array, an object, an empty string), options of
  * the wrong type or outside the allowed values, one option only, and the install marker missing.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-$sf_c18_hash = '8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4';
-$sf_c18_lost = '1f2e3d4c5b6a79881f2e3d4c5b6a79881f2e3d4c5b6a79881f2e3d4c5b6a7988';
+$bf_c18_hash = '8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4';
+$bf_c18_lost = '1f2e3d4c5b6a79881f2e3d4c5b6a79881f2e3d4c5b6a79881f2e3d4c5b6a7988';
 
-$sf_c18_text_field = SF_FIELD(
+$bf_c18_text_field = BF_FIELD(
 	'text',
 	[
 		'label'        => 'Name',
@@ -26,7 +26,7 @@ $sf_c18_text_field = SF_FIELD(
 		'autocomplete' => 'name',
 	]
 );
-$sf_c18_email      = SF_FIELD(
+$bf_c18_email      = BF_FIELD(
 	'email',
 	[
 		'label'        => 'Email',
@@ -35,7 +35,7 @@ $sf_c18_email      = SF_FIELD(
 		'autocomplete' => 'email',
 	]
 );
-$sf_c18_message    = SF_FIELD(
+$bf_c18_message    = BF_FIELD(
 	'textarea',
 	[
 		'label'    => 'Message',
@@ -50,15 +50,15 @@ return [
 	'guards'        => [ 'C-1.4', 'C-2.7', 'C-2.8', 'C-3.9', 'C-4.4', 'C-5.2' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_email_notification_to' => 'owner@broken-site.example',
-		'swiftforms_db_version'            => 1,
-		'swiftforms_installed'             => [
+		'blockforms_email_notification_to' => 'owner@broken-site.example',
+		'blockforms_db_version'            => 1,
+		'blockforms_installed'             => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -66,33 +66,33 @@ return [
 	'variants'      => [
 		// Options holding something that is not a scalar of the right kind: an array, an object, an empty string, a huge number.
 		'garbage-options'   => [
-			'swiftforms_email_notification_to'           => [ 'owner@broken-site.example' ],
-			'swiftforms_spam_blocked_words'              => [ 'casino', 'viagra' ],
-			'swiftforms_general_default_success_message' => (object) [ 'text' => 'Thanks.' ],
-			'swiftforms_general_store_entries'           => '',
-			'swiftforms_general_retention_days'          => '99999999999999999999',
-			'swiftforms_spam_min_seconds'                => [ 3 ],
+			'blockforms_email_notification_to'           => [ 'owner@broken-site.example' ],
+			'blockforms_spam_blocked_words'              => [ 'casino', 'viagra' ],
+			'blockforms_general_default_success_message' => (object) [ 'text' => 'Thanks.' ],
+			'blockforms_general_store_entries'           => '',
+			'blockforms_general_retention_days'          => '99999999999999999999',
+			'blockforms_spam_min_seconds'                => [ 3 ],
 		],
 		// Individual options of the wrong type or outside the allowed values; the valid ones next to them still count.
 		'corrupt-options'   => [
-			'swiftforms_general_store_entries'      => 'yes',
-			'swiftforms_general_retention_days'     => 'thirty',
-			'swiftforms_general_load_styles'        => 'sometimes',
-			'swiftforms_spam_honeypot'              => 'no',
-			'swiftforms_spam_min_seconds'           => -5,
-			'swiftforms_spam_rate_limit_per_minute' => '2',
-			'swiftforms_spam_spam_action'           => 'delete',
-			'swiftforms_email_accent_color'         => 'blue',
-			'swiftforms_privacy_exporter'           => 5,
-			'swiftforms_advanced_debug_log'         => 'true',
+			'blockforms_general_store_entries'      => 'yes',
+			'blockforms_general_retention_days'     => 'thirty',
+			'blockforms_general_load_styles'        => 'sometimes',
+			'blockforms_spam_honeypot'              => 'no',
+			'blockforms_spam_min_seconds'           => -5,
+			'blockforms_spam_rate_limit_per_minute' => '2',
+			'blockforms_spam_spam_action'           => 'delete',
+			'blockforms_email_accent_color'         => 'blue',
+			'blockforms_privacy_exporter'           => 5,
+			'blockforms_advanced_debug_log'         => 'true',
 		],
 		// A site that saved one setting only (everything else is absent, also the notification address).
 		'partial-options'   => [
-			'swiftforms_email_notification_to' => null,
-			'swiftforms_email_from_name'       => 'Partial Site',
+			'blockforms_email_notification_to' => null,
+			'blockforms_email_from_name'       => 'Partial Site',
 		],
 		'no-install-marker' => [
-			'swiftforms_installed' => null,
+			'blockforms_installed' => null,
 		],
 	],
 	'posts'         => [
@@ -103,12 +103,12 @@ return [
 			'title'     => 'Control',
 			'slug'      => 'control',
 			'date'      => '2026-09-01 09:00:00',
-			'content'   => SF_FORM(
+			'content'   => BF_FORM(
 				[
 					'formId' => '5f180001-0000-4000-8000-000000000001',
 					'title'  => 'Control form',
 				],
-				[ $sf_c18_text_field, $sf_c18_email ],
+				[ $bf_c18_text_field, $bf_c18_email ],
 				'Send',
 				'Thanks.'
 			),
@@ -120,9 +120,9 @@ return [
 			'title'     => 'Nameless',
 			'slug'      => 'nameless',
 			'date'      => '2026-09-02 09:00:00',
-			'content'   => SF_FORM(
+			'content'   => BF_FORM(
 				[ 'title' => 'Form without an id' ],
-				[ $sf_c18_text_field, $sf_c18_email ],
+				[ $bf_c18_text_field, $bf_c18_email ],
 				'Send',
 				'Thanks.'
 			),
@@ -134,12 +134,12 @@ return [
 			'title'     => 'Original',
 			'slug'      => 'original',
 			'date'      => '2026-09-03 09:00:00',
-			'content'   => SF_FORM(
+			'content'   => BF_FORM(
 				[
 					'formId' => '5f180003-0000-4000-8000-000000000003',
 					'title'  => 'Shared id',
 				],
-				[ $sf_c18_text_field, $sf_c18_email, $sf_c18_message ],
+				[ $bf_c18_text_field, $bf_c18_email, $bf_c18_message ],
 				'Send',
 				'Thanks.'
 			),
@@ -151,12 +151,12 @@ return [
 			'title'     => 'Original (copy)',
 			'slug'      => 'original-copy',
 			'date'      => '2026-09-20 09:00:00',
-			'content'   => SF_FORM(
+			'content'   => BF_FORM(
 				[
 					'formId' => '5f180003-0000-4000-8000-000000000003',
 					'title'  => 'Shared id',
 				],
-				[ $sf_c18_text_field, $sf_c18_email, $sf_c18_message ],
+				[ $bf_c18_text_field, $bf_c18_email, $bf_c18_message ],
 				'Send',
 				'Thanks.'
 			),
@@ -168,15 +168,15 @@ return [
 			'title'     => 'Duplicate names',
 			'slug'      => 'duplicate-names',
 			'date'      => '2026-09-04 09:00:00',
-			'content'   => SF_FORM(
+			'content'   => BF_FORM(
 				[
 					'formId' => '5f180004-0000-4000-8000-000000000004',
 					'title'  => 'Duplicate field names',
 				],
 				[
-					$sf_c18_text_field,
-					$sf_c18_email,
-					SF_FIELD(
+					$bf_c18_text_field,
+					$bf_c18_email,
+					BF_FIELD(
 						'email',
 						[
 							'label'    => 'Confirm email',
@@ -184,7 +184,7 @@ return [
 							'required' => true,
 						]
 					),
-					$sf_c18_message,
+					$bf_c18_message,
 				],
 				'Send',
 				'Thanks.'
@@ -197,7 +197,7 @@ return [
 			'title'     => 'From the future',
 			'slug'      => 'from-the-future',
 			'date'      => '2026-09-05 09:00:00',
-			'content'   => SF_FORM(
+			'content'   => BF_FORM(
 				[
 					'formId'     => '5f180005-0000-4000-8000-000000000005',
 					'title'      => 'Written by a newer release',
@@ -207,13 +207,13 @@ return [
 					],
 				],
 				[
-					SF_BLOCK(
-						'swiftforms/step',
+					BF_BLOCK(
+						'blockforms/step',
 						[
 							'title' => 'Step one',
 							'index' => 1,
 						],
-						SF_FIELD(
+						BF_FIELD(
 							'text',
 							[
 								'label'      => 'Name',
@@ -223,7 +223,7 @@ return [
 							]
 						)
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'rating',
 						[
 							'label' => 'How did we do?',
@@ -231,7 +231,7 @@ return [
 							'max'   => 5,
 						]
 					),
-					$sf_c18_email,
+					$bf_c18_email,
 				],
 				'Send',
 				'Thanks.'
@@ -239,9 +239,9 @@ return [
 		],
 	],
 	'tables'        => [
-		'swiftforms_schemas'      => [
+		'blockforms_schemas'      => [
 			[
-				'schema_hash' => $sf_c18_hash,
+				'schema_hash' => $bf_c18_hash,
 				'form_id'     => '5f180003-0000-4000-8000-000000000003',
 				'schema'      => <<<'JSON'
 {"v":1,"hash":"8a04a7a022e7fbc49390b1cf54e01740632d96d6f2a680cfa6000271eefdcfe4","form_id":"5f180003-0000-4000-8000-000000000003","stored_id":"5f180003-0000-4000-8000-000000000003","source":"post:{{post:orig}}","title":"Shared id","fields":[{"type":"text","name":"name","label":"Name","help":"","placeholder":"","required":true,"defaultValue":"","width":"100","autocomplete":"name","minLength":0,"maxLength":0,"pattern":"","patternMessage":""},{"type":"email","name":"email","label":"Email","help":"","placeholder":"","required":true,"defaultValue":"","width":"100","autocomplete":"email"},{"type":"textarea","name":"message","label":"Message","help":"","placeholder":"","required":true,"defaultValue":"","width":"100","autocomplete":"","rows":4,"maxLength":0}]}
@@ -256,11 +256,11 @@ JSON
 				'created_gmt' => '2026-06-01 09:00:00',
 			],
 		],
-		'swiftforms_entries'      => [
+		'blockforms_entries'      => [
 			[
 				'id'          => 1,
 				'form_id'     => '5f180003-0000-4000-8000-000000000003',
-				'schema_hash' => $sf_c18_hash,
+				'schema_hash' => $bf_c18_hash,
 				'source'      => 'post:{{post:orig}}',
 				'status'      => 'new',
 				'starred'     => 0,
@@ -271,7 +271,7 @@ JSON
 			[
 				'id'          => 2,
 				'form_id'     => '5f180003-0000-4000-8000-000000000003',
-				'schema_hash' => $sf_c18_lost,
+				'schema_hash' => $bf_c18_lost,
 				'source'      => 'post:{{post:orig}}',
 				'status'      => 'read',
 				'starred'     => 1,
@@ -291,7 +291,7 @@ JSON
 				'updated_gmt' => '2026-08-01 09:00:00',
 			],
 		],
-		'swiftforms_entry_values' => [
+		'blockforms_entry_values' => [
 			[
 				'entry_id' => 1,
 				'field'    => 'name',

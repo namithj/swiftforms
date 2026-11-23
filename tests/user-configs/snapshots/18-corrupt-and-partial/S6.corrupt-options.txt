@@ -847,7 +847,7 @@ status: 400
 == S6 GET /entries/999999999 (no such entry) ==
 status: 404
 {
-    "code": "swiftforms_entry_not_found",
+    "code": "blockforms_entry_not_found",
     "message": "No such entry.",
     "data": {
         "status": 404

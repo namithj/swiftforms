@@ -2,10 +2,10 @@
 /**
  * The Settings screen: a cassette-cmf settings page.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -15,14 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Settings_Page
  *
  * Forms → Settings is a cassette-cmf settings page drawn by its React renderer and saved through its REST route
- * (swiftforms-cmf/v1/settings/swiftforms). This is the only class that touches cassette-cmf for the screen; the rest of
+ * (blockforms-cmf/v1/settings/blockforms). This is the only class that touches cassette-cmf for the screen; the rest of
  * the plugin reads the values through Settings.
  *
- * - Page id "swiftforms", so cassette-cmf stores one option per field, swiftforms_{section}_{key} (C-5). The page
+ * - Page id "blockforms", so cassette-cmf stores one option per field, blockforms_{section}_{key} (C-5). The page
  *   declares no schema_version, so cassette-cmf writes nothing besides those options.
- * - The page hangs under the Forms menu (slug "swiftforms", added by Admin_Menu, which must add the menu before
+ * - The page hangs under the Forms menu (slug "blockforms", added by Admin_Menu, which must add the menu before
  *   cassette-cmf's admin_menu callback runs: both use priority 10 and Admin_Menu hooks first).
- * - The capability is the meta capability swiftforms_manage_settings, mapped by Access. cassette-cmf checks it on the
+ * - The capability is the meta capability blockforms_manage_settings, mapped by Access. cassette-cmf checks it on the
  *   page and on the route.
  * - Saving a value that changes nothing writes nothing (C-5.4): skip_unchanged().
  */
@@ -31,30 +31,30 @@ class Settings_Page {
 	/**
 	 * Page id; also the option prefix without the trailing underscore.
 	 */
-	const PAGE_ID = 'swiftforms';
+	const PAGE_ID = 'blockforms';
 
 	/**
-	 * Menu slug (admin.php?page=swiftforms-settings).
+	 * Menu slug (admin.php?page=blockforms-settings).
 	 */
-	const MENU_SLUG = 'swiftforms-settings';
+	const MENU_SLUG = 'blockforms-settings';
 
 	/**
 	 * Slug of the Forms menu the page hangs under.
 	 */
-	const PARENT_SLUG = 'swiftforms';
+	const PARENT_SLUG = 'blockforms';
 
 	/**
 	 * Capability (a meta capability, mapped by Access).
 	 */
-	const CAPABILITY = 'swiftforms_manage_settings';
+	const CAPABILITY = 'blockforms_manage_settings';
 
 	/**
 	 * Boot options that keep cassette-cmf's identifiers apart from any other copy on the site.
 	 */
 	const BOOT = [
-		'asset_handle'   => 'swiftforms-cmf',
-		'js_global'      => 'SwiftFormsCMFFields',
-		'rest_namespace' => 'swiftforms-cmf/v1',
+		'asset_handle'   => 'blockforms-cmf',
+		'js_global'      => 'BlockFormsCMFFields',
+		'rest_namespace' => 'blockforms-cmf/v1',
 	];
 
 	/**
@@ -99,7 +99,7 @@ class Settings_Page {
 	 * @return string
 	 */
 	public static function app_url() {
-		return plugins_url( 'vendor-prefixed/pedalcms/cassette-cmf/build/', SWIFTFORMS_FILE );
+		return plugins_url( 'vendor-prefixed/pedalcms/cassette-cmf/build/', BLOCKFORMS_FILE );
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Settings_Page {
 	 * @return void
 	 */
 	public static function register() {
-		$cmf = '\\SwiftForms\\Vendor\\PedalCMS\\CassetteCMF\\CassetteCMF';
+		$cmf = '\\BlockForms\\Vendor\\PedalCMS\\CassetteCMF\\CassetteCMF';
 		if ( ! class_exists( $cmf ) ) {
 			return;
 		}
@@ -129,45 +129,45 @@ class Settings_Page {
 	public static function page() {
 		return [
 			'id'          => self::PAGE_ID,
-			'page_title'  => __( 'SwiftForms settings', 'swiftforms' ),
-			'menu_title'  => __( 'Settings', 'swiftforms' ),
+			'page_title'  => __( 'BlockForms settings', 'blockforms' ),
+			'menu_title'  => __( 'Settings', 'blockforms' ),
 			'capability'  => self::CAPABILITY,
 			'menu_slug'   => self::MENU_SLUG,
 			'parent_slug' => self::PARENT_SLUG,
 			'render_mode' => 'react',
 			'fields'      => [
 				[
-					'name'   => 'swiftforms_settings_box',
+					'name'   => 'blockforms_settings_box',
 					'type'   => 'metabox',
-					'label'  => __( 'Settings', 'swiftforms' ),
+					'label'  => __( 'Settings', 'blockforms' ),
 					'fields' => [
 						[
-							'name' => 'swiftforms_settings_tabs',
+							'name' => 'blockforms_settings_tabs',
 							'type' => 'tabs',
 							'tabs' => [
 								[
 									'id'     => 'general',
-									'label'  => __( 'General', 'swiftforms' ),
+									'label'  => __( 'General', 'blockforms' ),
 									'fields' => self::general_fields(),
 								],
 								[
 									'id'     => 'email',
-									'label'  => __( 'Email', 'swiftforms' ),
+									'label'  => __( 'Email', 'blockforms' ),
 									'fields' => self::email_fields(),
 								],
 								[
 									'id'     => 'spam',
-									'label'  => __( 'Spam', 'swiftforms' ),
+									'label'  => __( 'Spam', 'blockforms' ),
 									'fields' => self::spam_fields(),
 								],
 								[
 									'id'     => 'privacy',
-									'label'  => __( 'Privacy', 'swiftforms' ),
+									'label'  => __( 'Privacy', 'blockforms' ),
 									'fields' => self::privacy_fields(),
 								],
 								[
 									'id'     => 'advanced',
-									'label'  => __( 'Advanced', 'swiftforms' ),
+									'label'  => __( 'Advanced', 'blockforms' ),
 									'fields' => self::advanced_fields(),
 								],
 							],
@@ -185,11 +185,11 @@ class Settings_Page {
 	 */
 	private static function general_fields() {
 		return [
-			self::checkbox( 'general.store_entries', __( 'Save entries in the database', 'swiftforms' ), __( 'Turn this off if you only want the email.', 'swiftforms' ) ),
+			self::checkbox( 'general.store_entries', __( 'Save entries in the database', 'blockforms' ), __( 'Turn this off if you only want the email.', 'blockforms' ) ),
 			[
 				'name'        => 'general_store_entries_notice',
 				'type'        => 'custom_html',
-				'content'     => '<div class="notice notice-warning inline"><p>' . esc_html__( 'If an email fails, the submission is lost.', 'swiftforms' ) . '</p></div>',
+				'content'     => '<div class="notice notice-warning inline"><p>' . esc_html__( 'If an email fails, the submission is lost.', 'blockforms' ) . '</p></div>',
 				'conditional' => [
 					'relation' => 'AND',
 					'rules'    => [
@@ -201,8 +201,8 @@ class Settings_Page {
 					],
 				],
 			],
-			self::checkbox( 'general.load_styles', __( 'Load the form styles', 'swiftforms' ), __( 'Turn this off if your theme styles the forms itself.', 'swiftforms' ) ),
-			self::html_text( 'general.default_success_message', __( 'Default success message', 'swiftforms' ), __( 'Shown when a form has no confirmation of its own. Basic formatting is allowed.', 'swiftforms' ) ),
+			self::checkbox( 'general.load_styles', __( 'Load the form styles', 'blockforms' ), __( 'Turn this off if your theme styles the forms itself.', 'blockforms' ) ),
+			self::html_text( 'general.default_success_message', __( 'Default success message', 'blockforms' ), __( 'Shown when a form has no confirmation of its own. Basic formatting is allowed.', 'blockforms' ) ),
 		];
 	}
 
@@ -213,35 +213,35 @@ class Settings_Page {
 	 */
 	private static function email_fields() {
 		return [
-			self::text( 'email.from_name', __( 'From name', 'swiftforms' ) ),
-			self::emails( 'email.from_email', __( 'From email', 'swiftforms' ), __( 'Leave empty to use the site default.', 'swiftforms' ), true ),
-			self::emails( 'email.notification_to', __( 'Send notifications to', 'swiftforms' ), __( 'One or more addresses, separated by commas. Leave empty to use the site admin email.', 'swiftforms' ), false ),
-			self::checkbox( 'email.html_template', __( 'Use the HTML email template', 'swiftforms' ) ),
+			self::text( 'email.from_name', __( 'From name', 'blockforms' ) ),
+			self::emails( 'email.from_email', __( 'From email', 'blockforms' ), __( 'Leave empty to use the site default.', 'blockforms' ), true ),
+			self::emails( 'email.notification_to', __( 'Send notifications to', 'blockforms' ), __( 'One or more addresses, separated by commas. Leave empty to use the site admin email.', 'blockforms' ), false ),
+			self::checkbox( 'email.html_template', __( 'Use the HTML email template', 'blockforms' ) ),
 			self::field(
 				'email.logo_id',
 				Settings_Image_Field::TYPE,
-				__( 'Logo', 'swiftforms' ),
+				__( 'Logo', 'blockforms' ),
 				[
 					// The upload control treats anything but '' as "has a file"; 0 would show "Remove logo".
 					'default'      => '',
-					'description'  => __( 'Shown at the top of HTML emails.', 'swiftforms' ),
+					'description'  => __( 'Shown at the top of HTML emails.', 'blockforms' ),
 					'library_type' => 'image',
-					'button_text'  => __( 'Choose logo', 'swiftforms' ),
-					'remove_text'  => __( 'Remove logo', 'swiftforms' ),
+					'button_text'  => __( 'Choose logo', 'blockforms' ),
+					'remove_text'  => __( 'Remove logo', 'blockforms' ),
 				]
 			),
 			self::field(
 				'email.accent_color',
 				Settings_Color_Field::TYPE,
-				__( 'Accent colour', 'swiftforms' ),
+				__( 'Accent colour', 'blockforms' ),
 				[
-					'description' => __( 'Used for the button and links in HTML emails. Leave empty for the default.', 'swiftforms' ),
+					'description' => __( 'Used for the button and links in HTML emails. Leave empty for the default.', 'blockforms' ),
 					'default'     => '',
 				]
 			),
-			self::html_text( 'email.footer_text', __( 'Email footer', 'swiftforms' ), __( 'Basic formatting is allowed.', 'swiftforms' ) ),
-			self::number( 'email.visitor_mail_daily_cap', __( 'Emails to visitors per form, per day', 'swiftforms' ), __( 'A limit on mail sent to addresses visitors typed. The entry is always saved.', 'swiftforms' ) ),
-			self::number( 'email.visitor_mail_hourly_cap', __( 'Emails to visitors on the whole site, per hour', 'swiftforms' ) ),
+			self::html_text( 'email.footer_text', __( 'Email footer', 'blockforms' ), __( 'Basic formatting is allowed.', 'blockforms' ) ),
+			self::number( 'email.visitor_mail_daily_cap', __( 'Emails to visitors per form, per day', 'blockforms' ), __( 'A limit on mail sent to addresses visitors typed. The entry is always saved.', 'blockforms' ) ),
+			self::number( 'email.visitor_mail_hourly_cap', __( 'Emails to visitors on the whole site, per hour', 'blockforms' ) ),
 		];
 	}
 
@@ -252,16 +252,16 @@ class Settings_Page {
 	 */
 	private static function spam_fields() {
 		return [
-			self::checkbox( 'spam.honeypot', __( 'Hidden trap field', 'swiftforms' ), __( 'Adds a field that people cannot see. Bots that fill it in are treated as spam.', 'swiftforms' ) ),
-			self::checkbox( 'spam.js_token', __( 'Require JavaScript proof', 'swiftforms' ), __( 'Submissions sent without the browser script are treated as spam.', 'swiftforms' ) ),
-			self::number( 'spam.min_seconds', __( 'Fastest plausible submission (seconds)', 'swiftforms' ), __( 'Forms sent faster than this are treated as spam. 0 turns the check off.', 'swiftforms' ) ),
-			self::number( 'spam.rate_limit_per_minute', __( 'Submissions per minute, per form and visitor', 'swiftforms' ), __( '0 turns the limit off.', 'swiftforms' ) ),
+			self::checkbox( 'spam.honeypot', __( 'Hidden trap field', 'blockforms' ), __( 'Adds a field that people cannot see. Bots that fill it in are treated as spam.', 'blockforms' ) ),
+			self::checkbox( 'spam.js_token', __( 'Require JavaScript proof', 'blockforms' ), __( 'Submissions sent without the browser script are treated as spam.', 'blockforms' ) ),
+			self::number( 'spam.min_seconds', __( 'Fastest plausible submission (seconds)', 'blockforms' ), __( 'Forms sent faster than this are treated as spam. 0 turns the check off.', 'blockforms' ) ),
+			self::number( 'spam.rate_limit_per_minute', __( 'Submissions per minute, per form and visitor', 'blockforms' ), __( '0 turns the limit off.', 'blockforms' ) ),
 			self::field(
 				'spam.blocked_words',
 				'textarea',
-				__( 'Blocked words', 'swiftforms' ),
+				__( 'Blocked words', 'blockforms' ),
 				[
-					'description' => __( 'One word or phrase per line. Matched as plain text, ignoring case.', 'swiftforms' ),
+					'description' => __( 'One word or phrase per line. Matched as plain text, ignoring case.', 'blockforms' ),
 					'rows'        => 5,
 					'validation'  => [ 'max' => self::MAX_TEXT ],
 				]
@@ -269,11 +269,11 @@ class Settings_Page {
 			self::field(
 				'spam.spam_action',
 				'select',
-				__( 'What to do with spam', 'swiftforms' ),
+				__( 'What to do with spam', 'blockforms' ),
 				[
 					'options' => [
-						'store'   => __( 'Keep it in the Spam list', 'swiftforms' ),
-						'discard' => __( 'Throw it away', 'swiftforms' ),
+						'store'   => __( 'Keep it in the Spam list', 'blockforms' ),
+						'discard' => __( 'Throw it away', 'blockforms' ),
 					],
 				]
 			),
@@ -287,11 +287,11 @@ class Settings_Page {
 	 */
 	private static function privacy_fields() {
 		return [
-			self::checkbox( 'general.store_ip', __( 'Save the visitor IP address', 'swiftforms' ) ),
-			self::checkbox( 'general.store_user_agent', __( 'Save the visitor browser (user agent)', 'swiftforms' ) ),
-			self::number( 'general.retention_days', __( 'Delete entries after (days)', 'swiftforms' ), __( '0 keeps entries until you delete them.', 'swiftforms' ) ),
-			self::checkbox( 'privacy.exporter', __( 'Include entries in WordPress personal data exports', 'swiftforms' ) ),
-			self::checkbox( 'privacy.eraser', __( 'Include entries in WordPress personal data erasure', 'swiftforms' ) ),
+			self::checkbox( 'general.store_ip', __( 'Save the visitor IP address', 'blockforms' ) ),
+			self::checkbox( 'general.store_user_agent', __( 'Save the visitor browser (user agent)', 'blockforms' ) ),
+			self::number( 'general.retention_days', __( 'Delete entries after (days)', 'blockforms' ), __( '0 keeps entries until you delete them.', 'blockforms' ) ),
+			self::checkbox( 'privacy.exporter', __( 'Include entries in WordPress personal data exports', 'blockforms' ) ),
+			self::checkbox( 'privacy.eraser', __( 'Include entries in WordPress personal data erasure', 'blockforms' ) ),
 		];
 	}
 
@@ -302,7 +302,7 @@ class Settings_Page {
 	 */
 	private static function advanced_fields() {
 		return [
-			self::checkbox( 'advanced.debug_log', __( 'Write detailed diagnostics to the log', 'swiftforms' ), __( 'Only for troubleshooting. The log never holds what visitors typed.', 'swiftforms' ) ),
+			self::checkbox( 'advanced.debug_log', __( 'Write detailed diagnostics to the log', 'blockforms' ), __( 'Only for troubleshooting. The log never holds what visitors typed.', 'blockforms' ) ),
 		];
 	}
 

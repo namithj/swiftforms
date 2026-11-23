@@ -2,10 +2,10 @@
 /**
  * Capabilities and the one access check.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Access
  *
- * SwiftForms capabilities are meta capabilities (C-8.4): they exist only as a
+ * BlockForms capabilities are meta capabilities (C-8.4): they exist only as a
  * mapping to a primitive capability, `manage_options` unless the site changes
  * it. No role or user is ever modified in the database, so uninstalling leaves
  * nothing behind. Every surface (REST, export, files, resend, admin screens)
@@ -23,19 +23,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Access {
 
 	/**
-	 * The capabilities SwiftForms defines.
+	 * The capabilities BlockForms defines.
 	 */
 	const CAPS = [
-		'swiftforms_manage_settings',
-		'swiftforms_view_entries',
-		'swiftforms_edit_entries',
-		'swiftforms_delete_entries',
-		'swiftforms_export_entries',
-		'swiftforms_manage_integrations',
+		'blockforms_manage_settings',
+		'blockforms_view_entries',
+		'blockforms_edit_entries',
+		'blockforms_delete_entries',
+		'blockforms_export_entries',
+		'blockforms_manage_integrations',
 	];
 
 	/**
-	 * Primitive capability every SwiftForms capability maps to by default.
+	 * Primitive capability every BlockForms capability maps to by default.
 	 */
 	const DEFAULT_PRIMITIVE = 'manage_options';
 
@@ -49,7 +49,7 @@ class Access {
 	}
 
 	/**
-	 * The capability map: SwiftForms capability => primitive capability.
+	 * The capability map: BlockForms capability => primitive capability.
 	 *
 	 * @return array<string, string>
 	 */
@@ -57,25 +57,25 @@ class Access {
 		$default = array_fill_keys( self::CAPS, self::DEFAULT_PRIMITIVE );
 
 		/**
-		 * Filters which primitive capability each SwiftForms capability maps to.
+		 * Filters which primitive capability each BlockForms capability maps to.
 		 *
 		 * Use it to let a custom role, for example "support", view entries without
 		 * granting it `manage_options`. Return the array you received with the
 		 * values you want changed. A value must be a primitive capability name
 		 * (a non-empty string of letters, digits, underscores, hyphens or
-		 * colons) and not one of SwiftForms' own capabilities. Anything else, and
-		 * any capability you add that SwiftForms does not define, is ignored and
+		 * colons) and not one of BlockForms' own capabilities. Anything else, and
+		 * any capability you add that BlockForms does not define, is ignored and
 		 * the default `manage_options` is used instead. Roles are never modified.
 		 *
 		 * This is a public hook (C-8.3) and is never removed.
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array<string, string> $map SwiftForms capability => primitive capability. Keys: swiftforms_manage_settings,
-		 *                                   swiftforms_view_entries, swiftforms_edit_entries, swiftforms_delete_entries,
-		 *                                   swiftforms_export_entries, swiftforms_manage_integrations.
+		 * @param array<string, string> $map BlockForms capability => primitive capability. Keys: blockforms_manage_settings,
+		 *                                   blockforms_view_entries, blockforms_edit_entries, blockforms_delete_entries,
+		 *                                   blockforms_export_entries, blockforms_manage_integrations.
 		 */
-		$filtered = apply_filters( 'swiftforms_capability_map', $default );
+		$filtered = apply_filters( 'blockforms_capability_map', $default );
 		if ( ! is_array( $filtered ) ) {
 			return $default;
 		}
@@ -91,7 +91,7 @@ class Access {
 	}
 
 	/**
-	 * `map_meta_cap` callback: turn a SwiftForms capability into its primitive capability.
+	 * `map_meta_cap` callback: turn a BlockForms capability into its primitive capability.
 	 *
 	 * @param string[] $caps Primitive capabilities WordPress has worked out so far.
 	 * @param string   $cap  The capability being checked.
@@ -106,7 +106,7 @@ class Access {
 	}
 
 	/**
-	 * Whether a user holds a SwiftForms capability. The single access check.
+	 * Whether a user holds a BlockForms capability. The single access check.
 	 *
 	 * @param string   $cap     One of self::CAPS. Anything else is refused.
 	 * @param int|null $user_id User ID, or null for the current user.

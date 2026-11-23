@@ -6,11 +6,11 @@
  * on every front-end page once the builder has started. The adapter removes it
  * there and keeps it in the editor.
  *
- * @package SwiftForms
+ * @package BlockForms
  * @group assets
  */
 
-use SwiftForms\Plugin;
+use BlockForms\Plugin;
 
 /**
  * Class FrontEndAssetsTest
@@ -25,18 +25,18 @@ class FrontEndAssetsTest extends WP_UnitTestCase {
 	public function set_up() {
 		parent::set_up();
 
-		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/throwaway' ) ) {
-			unregister_block_type( 'swiftforms/throwaway' );
+		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'blockforms/throwaway' ) ) {
+			unregister_block_type( 'blockforms/throwaway' );
 		}
-		$manager = \SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::class;
+		$manager = \BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::class;
 		$manager::reset();
 		add_filter(
-			'swiftforms_block_configs',
+			'blockforms_block_configs',
 			static function () {
 				return [
 					'blocks' => [
 						[
-							'id'     => 'swiftforms/throwaway',
+							'id'     => 'blockforms/throwaway',
 							'fields' => [
 								[
 									'name'  => 'title',
@@ -49,7 +49,7 @@ class FrontEndAssetsTest extends WP_UnitTestCase {
 				];
 			}
 		);
-		$this->setExpectedIncorrectUsage( 'SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::register_blocks' );
+		$this->setExpectedIncorrectUsage( 'BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::register_blocks' );
 		Plugin::instance()->register_blocks();
 
 		$GLOBALS['wp_styles']  = new WP_Styles();
@@ -62,16 +62,16 @@ class FrontEndAssetsTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function tear_down() {
-		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/throwaway' ) ) {
-			unregister_block_type( 'swiftforms/throwaway' );
+		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'blockforms/throwaway' ) ) {
+			unregister_block_type( 'blockforms/throwaway' );
 		}
-		\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::reset();
+		\BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::reset();
 		unset( $GLOBALS['current_screen'] );
 		parent::tear_down();
 	}
 
 	/**
-	 * Handles of the queued styles and scripts that belong to SwiftForms or the builder.
+	 * Handles of the queued styles and scripts that belong to BlockForms or the builder.
 	 *
 	 * @return string[]
 	 */
@@ -81,7 +81,7 @@ class FrontEndAssetsTest extends WP_UnitTestCase {
 			array_filter(
 				$handles,
 				static function ( $handle ) {
-					return 0 === strpos( $handle, 'swiftforms' ) || 0 === strpos( $handle, 'cassette' );
+					return 0 === strpos( $handle, 'blockforms' ) || 0 === strpos( $handle, 'cassette' );
 				}
 			)
 		);
@@ -97,7 +97,7 @@ class FrontEndAssetsTest extends WP_UnitTestCase {
 		do_action( 'enqueue_block_assets' );
 
 		$this->assertSame( [], $this->own_handles() );
-		$this->assertFalse( wp_style_is( 'swiftforms-blocks-editor-style', 'registered' ) );
+		$this->assertFalse( wp_style_is( 'blockforms-blocks-editor-style', 'registered' ) );
 	}
 
 	/**
@@ -109,6 +109,6 @@ class FrontEndAssetsTest extends WP_UnitTestCase {
 		set_current_screen( 'edit-post' );
 		do_action( 'enqueue_block_assets' );
 
-		$this->assertContains( 'swiftforms-blocks-editor-style', $this->own_handles() );
+		$this->assertContains( 'blockforms-blocks-editor-style', $this->own_handles() );
 	}
 }

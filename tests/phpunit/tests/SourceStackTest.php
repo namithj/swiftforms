@@ -1,20 +1,20 @@
 <?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Tests apply core's the_content filter and set core's current-template globals.
 /**
- * Tests for SwiftForms\Source_Stack.
+ * Tests for BlockForms\Source_Stack.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-resolver-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-resolver-test-case.php';
 
-use SwiftForms\Source_Stack;
+use BlockForms\Source_Stack;
 
 /**
  * Class SourceStackTest
  *
  * @group resolver
  */
-class SourceStackTest extends SF_Resolver_Test_Case {
+class SourceStackTest extends BF_Resolver_Test_Case {
 
 	/**
 	 * Sources seen by the probe block, in render order.
@@ -119,12 +119,12 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_template_part_and_pattern() {
-		$this->make_theme( 'sf-s1', [ 'parts/header.html' => self::PROBE ] );
-		$this->register_pattern( 'sf/probe', self::PROBE );
-		$page = $this->make_post( '<!-- wp:template-part {"slug":"header","theme":"sf-s1"} /-->' . self::PROBE . '<!-- wp:pattern {"slug":"sf/probe"} /-->' );
+		$this->make_theme( 'bf-s1', [ 'parts/header.html' => self::PROBE ] );
+		$this->register_pattern( 'bf/probe', self::PROBE );
+		$page = $this->make_post( '<!-- wp:template-part {"slug":"header","theme":"bf-s1"} /-->' . self::PROBE . '<!-- wp:pattern {"slug":"bf/probe"} /-->' );
 		$this->show_post( $page );
 
-		$this->assertSame( [ 'template_part:sf-s1//header', 'post:' . $page, 'pattern:sf/probe' ], $this->seen );
+		$this->assertSame( [ 'template_part:bf-s1//header', 'post:' . $page, 'pattern:bf/probe' ], $this->seen );
 		$this->assertSame( 0, Source_Stack::depth() );
 	}
 
@@ -137,11 +137,11 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 		global $_wp_current_template_id, $_wp_current_template_content;
 
 		$template = self::PROBE
-			. '<!-- wp:template-part {"slug":"header","theme":"sf-s2"} /-->'
+			. '<!-- wp:template-part {"slug":"header","theme":"bf-s2"} /-->'
 			. '<!-- wp:post-content /-->'
 			. self::PROBE;
 		$this->make_theme(
-			'sf-s2',
+			'bf-s2',
 			[
 				'templates/single.html' => $template,
 				'parts/header.html'     => self::PROBE,
@@ -150,13 +150,13 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 		$page = $this->make_post( self::PROBE, [ 'post_type' => 'post' ] );
 
 		$this->go_to( get_permalink( $page ) );
-		$_wp_current_template_id      = 'sf-s2//single';
+		$_wp_current_template_id      = 'bf-s2//single';
 		$_wp_current_template_content = $template;
 		$html                         = get_the_block_template_html();
 
 		$this->assertStringContainsString( 'probe', $html );
 		$this->assertSame(
-			[ 'template:sf-s2//single', 'template_part:sf-s2//header', 'post:' . $page, 'template:sf-s2//single' ],
+			[ 'template:bf-s2//single', 'template_part:bf-s2//header', 'post:' . $page, 'template:bf-s2//single' ],
 			$this->seen
 		);
 		$this->assertSame( 0, Source_Stack::depth() );
@@ -174,8 +174,8 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 		$this->go_to( get_permalink( $page ) );
 		$this->assertSame( 'post:' . $page, Source_Stack::current(), 'Classic theme: the queried post.' );
 
-		$_wp_current_template_id = 'sf-s3//page';
-		$this->assertSame( 'template:sf-s3//page', Source_Stack::current() );
+		$_wp_current_template_id = 'bf-s3//page';
+		$this->assertSame( 'template:bf-s3//page', Source_Stack::current() );
 
 		$_wp_current_template_id = '../bad id';
 		$this->assertSame( 'post:' . $page, Source_Stack::current() );
@@ -191,10 +191,10 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 
 		$this->place_widget( 7, self::PROBE );
 		$wp_widget_factory->widgets['WP_Widget_Block']->_register(); // Registers block-7 next to the widgets core registered at init.
-		$this->assertTrue( is_registered_sidebar( 'sf-sidebar' ) );
+		$this->assertTrue( is_registered_sidebar( 'bf-sidebar' ) );
 
 		ob_start();
-		dynamic_sidebar( 'sf-sidebar' );
+		dynamic_sidebar( 'bf-sidebar' );
 		ob_end_clean();
 
 		$this->assertSame( [ 'widget:block-7' ], $this->seen );
@@ -234,7 +234,7 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 	 */
 	public function test_short_circuiting_pre_render_block_is_balanced() {
 		$synced = $this->make_post( self::PROBE, [ 'post_type' => 'wp_block' ] );
-		$page   = $this->make_post( '<!-- wp:block {"ref":' . $synced . '} /-->' . self::PROBE . '<!-- wp:pattern {"slug":"sf/none"} /-->' . self::PROBE );
+		$page   = $this->make_post( '<!-- wp:block {"ref":' . $synced . '} /-->' . self::PROBE . '<!-- wp:pattern {"slug":"bf/none"} /-->' . self::PROBE );
 
 		add_filter(
 			'pre_render_block',
@@ -257,7 +257,7 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_render_block_filters_that_render_blocks() {
-		$this->register_pattern( 'sf/probe', self::PROBE );
+		$this->register_pattern( 'bf/probe', self::PROBE );
 		$synced = $this->make_post( self::PROBE, [ 'post_type' => 'wp_block' ] );
 		$page   = $this->make_post( '<!-- wp:block {"ref":' . $synced . '} /-->' . self::PROBE );
 
@@ -267,7 +267,7 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 			static function ( $content, $block ) use ( &$during ) {
 				if ( 'core/block' === $block['blockName'] ) {
 					$during[] = Source_Stack::current();
-					$content .= do_blocks( '<!-- wp:pattern {"slug":"sf/probe"} /-->' );
+					$content .= do_blocks( '<!-- wp:pattern {"slug":"bf/probe"} /-->' );
 				}
 				return $content;
 			},
@@ -278,7 +278,7 @@ class SourceStackTest extends SF_Resolver_Test_Case {
 
 		$this->assertSame( 'post:' . $synced, $during[0], 'A later filter still sees the block\'s own source.' );
 		// Newer core fires render_block twice for a synced pattern, so the filter's own blocks may render twice.
-		$this->assertSame( [ 'post:' . $synced, 'pattern:sf/probe' ], array_slice( $this->seen, 0, 2 ) );
+		$this->assertSame( [ 'post:' . $synced, 'pattern:bf/probe' ], array_slice( $this->seen, 0, 2 ) );
 		$this->assertSame( 'post:' . $page, end( $this->seen ) );
 		$this->assertSame( 0, Source_Stack::depth() );
 	}

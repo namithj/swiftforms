@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
  * Budgets in gzipped bytes. `pattern` is matched against the path relative to
  * build/ (forward slashes). `required` budgets fail when no file matches.
  *
- * Only SwiftForms' own build/ files are counted. The block builder's own
+ * Only BlockForms' own build/ files are counted. The block builder's own
  * editor.css (about 389 bytes gzipped) lives in vendor-prefixed/ and is not
  * counted here: Builder_Adapter removes it from the front end, so it never adds
  * to a visitor's page weight.

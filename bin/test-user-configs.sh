@@ -6,7 +6,7 @@
 #
 #   bin/test-user-configs.sh            run everything
 #   bin/test-user-configs.sh 00 15      run only configs whose slug starts with 00 or 15 (no global snapshots)
-#   SF_UPDATE_SNAPSHOTS=1 bin/test-user-configs.sh   regenerate snapshots (never in CI)
+#   BF_UPDATE_SNAPSHOTS=1 bin/test-user-configs.sh   regenerate snapshots (never in CI)
 #
 # WordPress core: unless WP_TESTS_ABSPATH is already set (CI sets it), a
 # throwaway core is installed into .cache/wp-core/<version>/ (git-ignored) with
@@ -32,8 +32,8 @@ if [[ -z "${WP_TESTS_ABSPATH:-}" ]]; then
 	export WP_TESTS_ABSPATH
 fi
 
-if [[ "${SF_UPDATE_SNAPSHOTS:-0}" == "1" && ( -n "${CI:-}" || -n "${GITHUB_ACTIONS:-}" ) ]]; then
-	echo "SF_UPDATE_SNAPSHOTS=1 is forbidden in CI." >&2
+if [[ "${BF_UPDATE_SNAPSHOTS:-0}" == "1" && ( -n "${CI:-}" || -n "${GITHUB_ACTIONS:-}" ) ]]; then
+	echo "BF_UPDATE_SNAPSHOTS=1 is forbidden in CI." >&2
 	exit 1
 fi
 

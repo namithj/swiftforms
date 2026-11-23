@@ -4,41 +4,41 @@
  *
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag.
  *
- * A French shop in India: locale fr_FR (the fixture .mo for the "swiftforms" text domain is loaded by mu/13-french.php),
+ * A French shop in India: locale fr_FR (the fixture .mo for the "blockforms" text domain is loaded by mu/13-french.php),
  * timezone Asia/Kolkata (UTC+05:30), date format d/m/Y and time format H:i. French labels and messages are stored
  * block content. The entries are stored in UTC; three of them sit around local midnight so a date shown in the site
  * timezone falls on a different day than the stored UTC date.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-$sf_c13_hash   = '23504079905a698ecf81e28d5bb37b0e1e31c63211f9c43fdc68ac7201e044ec';
-$sf_c13_values = [
+$bf_c13_hash   = '23504079905a698ecf81e28d5bb37b0e1e31c63211f9c43fdc68ac7201e044ec';
+$bf_c13_values = [
 	[ 1, 'Camille Durand', 'camille@example.fr', '2026-12-05', 'matin', '1', 'Livraison avant Noël, merci.' ],
 	[ 2, 'Étienne Müller', 'etienne@example.fr', '2026-11-25', 'apres-midi', '1', 'Sonner deux fois.' ],
 	[ 3, 'Zoé Lefèvre', 'zoe@example.fr', '2027-01-15', 'matin', '1', '' ],
 ];
-$sf_c13_when   = [ '2026-11-18 20:30:00', '2026-11-17 18:29:59', '2026-11-18 18:30:00' ];
+$bf_c13_when   = [ '2026-11-18 20:30:00', '2026-11-17 18:29:59', '2026-11-18 18:30:00' ];
 
-$sf_c13_entries = [];
-$sf_c13_rows    = [];
-foreach ( $sf_c13_values as $i => $row ) {
-	$sf_c13_entries[] = [
+$bf_c13_entries = [];
+$bf_c13_rows    = [];
+foreach ( $bf_c13_values as $i => $row ) {
+	$bf_c13_entries[] = [
 		'id'          => $row[0],
 		'form_id'     => '5f130001-0000-4000-8000-000000000001',
-		'schema_hash' => $sf_c13_hash,
+		'schema_hash' => $bf_c13_hash,
 		'source'      => 'post:{{post:livraison}}',
 		'status'      => 1 === $row[0] ? 'new' : 'read',
 		'starred'     => 0,
 		'user_id'     => 0,
-		'created_gmt' => $sf_c13_when[ $i ],
-		'updated_gmt' => $sf_c13_when[ $i ],
+		'created_gmt' => $bf_c13_when[ $i ],
+		'updated_gmt' => $bf_c13_when[ $i ],
 	];
 	foreach ( [ 'nom', 'email', 'date_livraison', 'creneau', 'consentement', 'message' ] as $n => $field ) {
 		if ( '' === $row[ $n + 1 ] ) {
 			continue; // An empty optional value stores no row.
 		}
-		$sf_c13_rows[] = [
+		$bf_c13_rows[] = [
 			'entry_id' => $row[0],
 			'field'    => $field,
 			'idx'      => 0,
@@ -53,7 +53,7 @@ return [
 	'guards'        => [ 'i18n', 'C-4.2' ],
 	'site'          => [
 		'locale'      => 'fr_FR',
-		'theme'       => 'sf-test-block',
+		'theme'       => 'bf-test-block',
 		'multisite'   => false,
 		'timezone'    => 'Asia/Kolkata',
 		'date_format' => 'd/m/Y',
@@ -61,10 +61,10 @@ return [
 		'permalinks'  => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_email_from_name'       => 'Boutique Soleil',
-		'swiftforms_email_notification_to' => 'commandes@boutique-soleil.example',
-		'swiftforms_db_version'            => 1,
-		'swiftforms_installed'             => [
+		'blockforms_email_from_name'       => 'Boutique Soleil',
+		'blockforms_email_notification_to' => 'commandes@boutique-soleil.example',
+		'blockforms_db_version'            => 1,
+		'blockforms_installed'             => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -77,7 +77,7 @@ return [
 			'title'     => 'Demande de livraison',
 			'slug'      => 'livraison',
 			'date'      => '2026-10-01 09:00:00',
-			'content'   => SF_HEADING( 'Demande de livraison' ) . "\n\n" . SF_FORM(
+			'content'   => BF_HEADING( 'Demande de livraison' ) . "\n\n" . BF_FORM(
 				[
 					'formId'        => '5f130001-0000-4000-8000-000000000001',
 					'title'         => 'Demande de livraison',
@@ -95,7 +95,7 @@ return [
 					],
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Nom et prénom',
@@ -104,7 +104,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'        => 'Adresse e-mail',
@@ -113,7 +113,7 @@ return [
 							'autocomplete' => 'email',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'date',
 						[
 							'label'    => 'Date de livraison souhaitée',
@@ -124,7 +124,7 @@ return [
 							'max'      => '2027-03-31',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'select',
 						[
 							'label'             => 'Créneau',
@@ -143,7 +143,7 @@ return [
 							],
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'consent',
 						[
 							'label' => 'Consentement',
@@ -151,7 +151,7 @@ return [
 							'text'  => 'J’accepte que mes données servent à organiser la livraison.',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'textarea',
 						[
 							'label' => 'Précisions',
@@ -170,13 +170,13 @@ return [
 			'title'     => 'Lettre d’information',
 			'slug'      => 'lettre',
 			'date'      => '2026-10-02 09:00:00',
-			'content'   => SF_FORM(
+			'content'   => BF_FORM(
 				[
 					'formId' => '5f130002-0000-4000-8000-000000000002',
 					'title'  => 'Lettre d’information',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'    => 'Votre e-mail',
@@ -191,9 +191,9 @@ return [
 		],
 	],
 	'tables'        => [
-		'swiftforms_schemas'      => [
+		'blockforms_schemas'      => [
 			[
-				'schema_hash' => $sf_c13_hash,
+				'schema_hash' => $bf_c13_hash,
 				'form_id'     => '5f130001-0000-4000-8000-000000000001',
 				'schema'      => <<<'JSON'
 {"v":1,"hash":"23504079905a698ecf81e28d5bb37b0e1e31c63211f9c43fdc68ac7201e044ec","form_id":"5f130001-0000-4000-8000-000000000001","stored_id":"5f130001-0000-4000-8000-000000000001","source":"post:{{post:livraison}}","title":"Demande de livraison","fields":[{"type":"text","name":"nom","label":"Nom et prénom","help":"","placeholder":"","required":true,"defaultValue":"","width":"100","autocomplete":"name","minLength":0,"maxLength":0,"pattern":"","patternMessage":""},{"type":"email","name":"email","label":"Adresse e-mail","help":"","placeholder":"","required":true,"defaultValue":"","width":"100","autocomplete":"email"},{"type":"date","name":"date_livraison","label":"Date de livraison souhaitée","help":"Entre le 20 novembre 2026 et le 31 mars 2027.","placeholder":"","required":true,"defaultValue":"","width":"100","autocomplete":"","min":"2026-11-20","max":"2027-03-31"},{"type":"select","name":"creneau","label":"Créneau","help":"","placeholder":"","required":true,"defaultValue":"","width":"100","autocomplete":"","options":[{"value":"matin","label":"Matin (8 h – 12 h)"},{"value":"apres-midi","label":"Après-midi (14 h – 18 h)"}],"multiple":false,"placeholderOption":"Choisissez un créneau"},{"type":"consent","name":"consentement","label":"Consentement","help":"","placeholder":"","required":true,"defaultValue":"","width":"100","autocomplete":"","text":"J’accepte que mes données servent à organiser la livraison."},{"type":"textarea","name":"message","label":"Précisions","help":"","placeholder":"","required":false,"defaultValue":"","width":"100","autocomplete":"","rows":4,"maxLength":0}]}
@@ -202,8 +202,8 @@ JSON
 				'created_gmt' => '2026-10-01 09:00:00',
 			],
 		],
-		'swiftforms_entries'      => $sf_c13_entries,
-		'swiftforms_entry_values' => $sf_c13_rows,
+		'blockforms_entries'      => $bf_c13_entries,
+		'blockforms_entry_values' => $bf_c13_rows,
 	],
 	'users'         => [ 'admin' ],
 	'mu_plugins'    => [ '13-french.php' ],

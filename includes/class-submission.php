@@ -2,10 +2,10 @@
 /**
  * The submission pipeline.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -27,8 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *  5. the duplicate guard: the same payload from the same client within 10 seconds is answered as a success
  *     and stored once;
  *  6. validation against the validation schema -> invalid (spam skips it);
- *  7. storage (unless storage is off, or spam is discarded), THEN swiftforms_entry_saved, THEN the
- *     notification (a mail failure never loses the entry), THEN swiftforms_submission_complete;
+ *  7. storage (unless storage is off, or spam is discarded), THEN blockforms_entry_saved, THEN the
+ *     notification (a mail failure never loses the entry), THEN blockforms_submission_complete;
  *  8. the confirmation.
  *
  * A spam submission gets the identical success answer: the same status, the same body bytes, no signal about
@@ -46,7 +46,7 @@ class Submission {
 	/**
 	 * Run the pipeline.
 	 *
-	 * @param array<string, mixed>  $input     Keys: form_id, source, token, hp (`_sf_hp`), t (`_sf_t`), sf (the posted field array), page_hint (a URL the page may have been served from).
+	 * @param array<string, mixed>  $input     Keys: form_id, source, token, hp (`_bf_hp`), t (`_bf_t`), bf (the posted field array), page_hint (a URL the page may have been served from).
 	 * @param string                $transport rest or nojs.
 	 * @param \WP_User|null         $user      The authenticated user (valid cookie and nonce), or null for a guest.
 	 * @return Submission_Result
@@ -55,7 +55,7 @@ class Submission {
 		$transport = 'nojs' === $transport ? 'nojs' : 'rest';
 		$form_id   = isset( $input['form_id'] ) && is_string( $input['form_id'] ) ? $input['form_id'] : '';
 		$source    = isset( $input['source'] ) && is_string( $input['source'] ) ? $input['source'] : '';
-		$posted    = isset( $input['sf'] ) && is_array( $input['sf'] ) ? $input['sf'] : [];
+		$posted    = isset( $input['bf'] ) && is_array( $input['bf'] ) ? $input['bf'] : [];
 
 		// 1. The current form.
 		$schema = Schema_Resolver::resolve( $form_id, $source );
@@ -152,7 +152,7 @@ class Submission {
 				 * @param int                $entry_id The new entry's ID.
 				 * @param Submission_Context $context  The submission: the current form, the schema the fields were validated against, the plain-text values (field name => string, or list of strings), the user (or null), the page.
 				 */
-				do_action( 'swiftforms_entry_saved', $ctx->entry_id, $ctx );
+				do_action( 'blockforms_entry_saved', $ctx->entry_id, $ctx );
 			}
 
 			self::notify( $ctx );
@@ -171,10 +171,10 @@ class Submission {
 			 *
 			 * @since 1.0.0
 			 *
-			 * @param Submission_Context $context The submission (see swiftforms_entry_saved).
+			 * @param Submission_Context $context The submission (see blockforms_entry_saved).
 			 * @param Submission_Result  $result  What the visitor is about to receive: ->confirmation is { type: message, html } or { type: redirect, url }. Read it; changes are ignored.
 			 */
-			do_action( 'swiftforms_submission_complete', $ctx, $result );
+			do_action( 'blockforms_submission_complete', $ctx, $result );
 		}
 
 		return self::with_context( $result, $ctx );

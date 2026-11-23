@@ -3,16 +3,16 @@
  * The BB-18 leak test: the builder must not expose a bindings source that reads secrets.
  *
  * Permanent. Since the block builder 0.2.0 its bindings source is off unless
- * the host asks for it, and SwiftForms does not. No SwiftForms filter stands in
+ * the host asks for it, and BlockForms does not. No BlockForms filter stands in
  * the way any more, so this proves the builder's own default and fails if a
  * future change turns a source on or lets a binding read an option, post meta
  * or term meta by name.
  *
- * @package SwiftForms
+ * @package BlockForms
  * @group security
  */
 
-use SwiftForms\Plugin;
+use BlockForms\Plugin;
 
 /**
  * Class BindingsSourceTest
@@ -22,17 +22,17 @@ class BindingsSourceTest extends WP_UnitTestCase {
 	/**
 	 * Secret stored in a core option.
 	 */
-	const OPTION_SECRET = 'sf-secret-pass';
+	const OPTION_SECRET = 'bf-secret-pass';
 
 	/**
 	 * Secret stored in protected post meta.
 	 */
-	const META_SECRET = 'sf-secret-meta';
+	const META_SECRET = 'bf-secret-meta';
 
 	/**
 	 * Binding source names that must not exist.
 	 */
-	const SOURCES = [ 'cassette-cmf/field', 'swiftforms/field' ];
+	const SOURCES = [ 'cassette-cmf/field', 'blockforms/field' ];
 
 	/**
 	 * ID of the private post that holds the meta secret.
@@ -52,22 +52,22 @@ class BindingsSourceTest extends WP_UnitTestCase {
 		update_option( 'mailserver_pass', self::OPTION_SECRET );
 
 		$this->private_post_id = self::factory()->post->create( [ 'post_status' => 'private' ] );
-		update_post_meta( $this->private_post_id, '_sf_secret', self::META_SECRET );
+		update_post_meta( $this->private_post_id, '_bf_secret', self::META_SECRET );
 
-		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/throwaway' ) ) {
-			unregister_block_type( 'swiftforms/throwaway' );
+		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'blockforms/throwaway' ) ) {
+			unregister_block_type( 'blockforms/throwaway' );
 		}
 
-		// Start the builder the way SwiftForms does, with one throwaway block.
-		$manager = \SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::class;
+		// Start the builder the way BlockForms does, with one throwaway block.
+		$manager = \BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::class;
 		$manager::reset();
-		add_filter( 'swiftforms_block_configs', [ $this, 'throwaway_config' ] );
-		$this->setExpectedIncorrectUsage( 'SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::register_blocks' );
+		add_filter( 'blockforms_block_configs', [ $this, 'throwaway_config' ] );
+		$this->setExpectedIncorrectUsage( 'BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::register_blocks' );
 		Plugin::instance()->register_blocks();
 		// init has already run in the test process, so register the block types now.
 		$manager::init()->register_blocks();
-		// What the builder does on init, when the host asked for a source (SwiftForms does not).
-		\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Binding\Binding_Source_Registrar::register_source();
+		// What the builder does on init, when the host asked for a source (BlockForms does not).
+		\BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Binding\Binding_Source_Registrar::register_source();
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'contributor' ] ) );
 	}
@@ -78,10 +78,10 @@ class BindingsSourceTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function tear_down() {
-		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/throwaway' ) ) {
-			unregister_block_type( 'swiftforms/throwaway' );
+		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'blockforms/throwaway' ) ) {
+			unregister_block_type( 'blockforms/throwaway' );
 		}
-		\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::reset();
+		\BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::reset();
 		foreach ( self::SOURCES as $source ) {
 			if ( WP_Block_Bindings_Registry::get_instance()->is_registered( $source ) ) {
 				unregister_block_bindings_source( $source );
@@ -99,7 +99,7 @@ class BindingsSourceTest extends WP_UnitTestCase {
 		return [
 			'blocks' => [
 				[
-					'id'     => 'swiftforms/throwaway',
+					'id'     => 'blockforms/throwaway',
 					'fields' => [
 						[
 							'name'  => 'title',
@@ -154,7 +154,7 @@ class BindingsSourceTest extends WP_UnitTestCase {
 	 */
 	private function meta_args() {
 		return [
-			'field'        => '_sf_secret',
+			'field'        => '_bf_secret',
 			'context'      => $this->private_post_id,
 			'context_type' => 'post',
 		];
@@ -166,11 +166,11 @@ class BindingsSourceTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_builder_is_running() {
-		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/throwaway' ) );
+		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'blockforms/throwaway' ) );
 	}
 
 	/**
-	 * Neither cassette-cmf/field nor swiftforms/field is a registered bindings source.
+	 * Neither cassette-cmf/field nor blockforms/field is a registered bindings source.
 	 *
 	 * @return void
 	 */
@@ -197,11 +197,11 @@ class BindingsSourceTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * SwiftForms keeps no callback on block_bindings_source_value (BB-18 needs no fallback).
+	 * BlockForms keeps no callback on block_bindings_source_value (BB-18 needs no fallback).
 	 *
 	 * @return void
 	 */
-	public function test_no_swiftforms_bindings_callback() {
+	public function test_no_blockforms_bindings_callback() {
 		global $wp_filter;
 
 		if ( ! isset( $wp_filter['block_bindings_source_value'] ) ) {
@@ -218,7 +218,7 @@ class BindingsSourceTest extends WP_UnitTestCase {
 				} elseif ( is_object( $function ) && ! $function instanceof Closure ) {
 					$owner = get_class( $function );
 				}
-				$this->assertStringNotContainsString( 'SwiftForms', $owner, 'SwiftForms must not filter block bindings.' );
+				$this->assertStringNotContainsString( 'BlockForms', $owner, 'BlockForms must not filter block bindings.' );
 			}
 		}
 	}

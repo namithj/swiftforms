@@ -32,7 +32,7 @@ before:
     "migration log rows": 0,
     "migration lock row": false
 }
-first run returned true (swiftforms_db_version_changed fired 1 time(s))
+first run returned true (blockforms_db_version_changed fired 1 time(s))
 after the first run:
 {
     "db_version row": "1",
@@ -44,17 +44,17 @@ after the first run:
         "reason": "migration-1",
         "version": "{VERSION}",
         "options": {
-            "swiftforms_email_accent_color": "#1d4ed8",
-            "swiftforms_email_footer_text": "<p>Sent by Agency Ltd. <a href=\"https://agency.example/privacy\">Privacy</a></p>",
-            "swiftforms_email_from_email": "leads@agency.example",
-            "swiftforms_email_from_name": "Agency Leads",
-            "swiftforms_email_html_template": "1",
-            "swiftforms_email_logo_id": "900001",
-            "swiftforms_email_notification_to": "owner@agency.example",
-            "swiftforms_general_store_ip": "1",
-            "swiftforms_general_store_user_agent": "1",
-            "swiftforms_spam_blocked_words": "casino\nviagra",
-            "swiftforms_installed": {
+            "blockforms_email_accent_color": "#1d4ed8",
+            "blockforms_email_footer_text": "<p>Sent by Agency Ltd. <a href=\"https://agency.example/privacy\">Privacy</a></p>",
+            "blockforms_email_from_email": "leads@agency.example",
+            "blockforms_email_from_name": "Agency Leads",
+            "blockforms_email_html_template": "1",
+            "blockforms_email_logo_id": "900001",
+            "blockforms_email_notification_to": "owner@agency.example",
+            "blockforms_general_store_ip": "1",
+            "blockforms_general_store_user_agent": "1",
+            "blockforms_spam_blocked_words": "casino\nviagra",
+            "blockforms_installed": {
                 "version": "1.0.0",
                 "time": 1795082400
             }
@@ -75,17 +75,17 @@ after the second run:
         "reason": "migration-1",
         "version": "{VERSION}",
         "options": {
-            "swiftforms_email_accent_color": "#1d4ed8",
-            "swiftforms_email_footer_text": "<p>Sent by Agency Ltd. <a href=\"https://agency.example/privacy\">Privacy</a></p>",
-            "swiftforms_email_from_email": "leads@agency.example",
-            "swiftforms_email_from_name": "Agency Leads",
-            "swiftforms_email_html_template": "1",
-            "swiftforms_email_logo_id": "900001",
-            "swiftforms_email_notification_to": "owner@agency.example",
-            "swiftforms_general_store_ip": "1",
-            "swiftforms_general_store_user_agent": "1",
-            "swiftforms_spam_blocked_words": "casino\nviagra",
-            "swiftforms_installed": {
+            "blockforms_email_accent_color": "#1d4ed8",
+            "blockforms_email_footer_text": "<p>Sent by Agency Ltd. <a href=\"https://agency.example/privacy\">Privacy</a></p>",
+            "blockforms_email_from_email": "leads@agency.example",
+            "blockforms_email_from_name": "Agency Leads",
+            "blockforms_email_html_template": "1",
+            "blockforms_email_logo_id": "900001",
+            "blockforms_email_notification_to": "owner@agency.example",
+            "blockforms_general_store_ip": "1",
+            "blockforms_general_store_user_agent": "1",
+            "blockforms_spam_blocked_words": "casino\nviagra",
+            "blockforms_installed": {
                 "version": "1.0.0",
                 "time": 1795082400
             }

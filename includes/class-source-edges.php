@@ -2,10 +2,10 @@
 /**
  * Reference edges between sources.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * shows a template part or a file pattern). Liveness (C-3.11) needs the reverse
  * direction: a wp_block is live only while a live source shows it. The edges are
  * derived data, rebuilt from content by Form_Index::rebuild(), and are kept in the
- * option swiftforms_source_edges (autoload no): a map from source to the sorted
+ * option blockforms_source_edges (autoload no): a map from source to the sorted
  * list of sources it references. The option is created only when there is at least
  * one edge.
  */
@@ -27,7 +27,7 @@ class Source_Edges {
 	/**
 	 * Option that holds the edge map.
 	 */
-	const OPTION = 'swiftforms_source_edges';
+	const OPTION = 'blockforms_source_edges';
 
 	/**
 	 * Whether changes stay in memory until commit() (a rebuild writes the option once).

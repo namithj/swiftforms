@@ -11,7 +11,7 @@
  *   end, `style/editor` for the editor canvas). A stylesheet entry also gets
  *   its `-rtl.css` twin from the wp-scripts RTL plugin.
  * - Admin app (classic script): `admin/entries/index` (Forms → Entries). Forms → Settings
- *   is a cassette-cmf settings page with its own built app (no SwiftForms entry).
+ *   is a cassette-cmf settings page with its own built app (no BlockForms entry).
  * - Module build: the front-end view module (`view/index`).
  *
  * Output goes to build/ (git-ignored, shipped in the release ZIP).

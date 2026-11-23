@@ -1184,7 +1184,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
     },
     "user": null,
     "ip": "203.0.113.7",
-    "user_agent": "SwiftForms-Regression/1.0"
+    "user_agent": "BlockForms-Regression/1.0"
 }
 
 == S6 PATCH /entries/{E33} {"status":"read"} ==
@@ -1254,7 +1254,7 @@ cache-control: no-store, no-cache, must-revalidate, max-age=0
     },
     "user": null,
     "ip": "203.0.113.7",
-    "user_agent": "SwiftForms-Regression/1.0"
+    "user_agent": "BlockForms-Regression/1.0"
 }
 
 == S6 PATCH /entries/{E33} {"starred":true} ==
@@ -1285,7 +1285,7 @@ status: 400
 == S6 GET /entries/999999999 (no such entry) ==
 status: 404
 {
-    "code": "swiftforms_entry_not_found",
+    "code": "blockforms_entry_not_found",
     "message": "No such entry.",
     "data": {
         "status": 404

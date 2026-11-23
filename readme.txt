@@ -1,4 +1,4 @@
-=== SwiftForms – Contact Form Builder for the Block Editor ===
+=== BlockForms by Smartlogix – Contact Form Builder for the Block Editor ===
 Contributors: namithjawahar
 Tags: contact form, form builder, forms, gutenberg form, block editor
 Requires at least: 6.8
@@ -12,7 +12,7 @@ Build forms right in the block editor. Entries, email notifications and spam pro
 
 == Description ==
 
-SwiftForms adds a Form block to the block editor. Put it on any page or post, add field blocks inside it, publish, and the form works: it stores every submission as an entry in wp-admin, emails you, shows the visitor a confirmation and keeps spam out without a CAPTCHA.
+BlockForms adds a Form block to the block editor. Put it on any page or post, add field blocks inside it, publish, and the form works: it stores every submission as an entry in wp-admin, emails you, shows the visitor a confirmation and keeps spam out without a CAPTCHA.
 
 The form looks like the rest of your site. It uses your theme's fonts, colours and spacing, so there is no separate style to learn.
 
@@ -66,11 +66,11 @@ The form looks like the rest of your site. It uses your theme's fonts, colours a
 
 **For developers**
 
-* Actions: `swiftforms_entry_saved` (after an entry is stored) and `swiftforms_submission_complete`; filters such as `swiftforms_before_send_mail`, `swiftforms_merge_tags`, `swiftforms_validate_field`, `swiftforms_spam_check` and `swiftforms_client_ip` (for sites behind a proxy or CDN).
-* Entries have REST routes under `swiftforms/v1` and settings under `swiftforms-cmf/v1`, both protected by capabilities.
+* Actions: `blockforms_entry_saved` (after an entry is stored) and `blockforms_submission_complete`; filters such as `blockforms_before_send_mail`, `blockforms_merge_tags`, `blockforms_validate_field`, `blockforms_spam_check` and `blockforms_client_ip` (for sites behind a proxy or CDN).
+* Entries have REST routes under `blockforms/v1` and settings under `blockforms-cmf/v1`, both protected by capabilities.
 * Multisite aware: each site gets its own tables.
 
-SwiftForms 1.0 does not include file uploads, conditional logic, multi-step forms, exports, a shortcode or a forms library.
+BlockForms 1.0 does not include file uploads, conditional logic, multi-step forms, exports, a shortcode or a forms library.
 
 == Installation ==
 
@@ -79,17 +79,17 @@ SwiftForms 1.0 does not include file uploads, conditional logic, multi-step form
 3. Edit any page and add the Form block, or open the inserter, choose Patterns, then Forms, and pick a ready-made form.
 4. Publish the page. Entries appear under Forms, Entries.
 
-SwiftForms needs WordPress 6.8 or newer and PHP 7.4 or newer.
+BlockForms needs WordPress 6.8 or newer and PHP 7.4 or newer.
 
 == Frequently Asked Questions ==
 
-= Is SwiftForms free? =
+= Is BlockForms free? =
 
-Yes. SwiftForms is free software released under the GPL. The plugin on this page is the whole plugin: nothing in it is locked, time-limited or switched off until you pay.
+Yes. BlockForms is free software released under the GPL. The plugin on this page is the whole plugin: nothing in it is locked, time-limited or switched off until you pay.
 
 = Where are the entries stored? =
 
-In your own WordPress database, in six tables named `{prefix}swiftforms_forms`, `_schemas`, `_entries`, `_entry_values`, `_entry_meta` and `_log`. They are never sent anywhere. You read and manage them under Forms, Entries.
+In your own WordPress database, in six tables named `{prefix}blockforms_forms`, `_schemas`, `_entries`, `_entry_values`, `_entry_meta` and `_log`. They are never sent anywhere. You read and manage them under Forms, Entries.
 
 = Will updates break my site? =
 
@@ -97,23 +97,23 @@ Updates are not meant to. The stored data has a written format that releases mus
 
 = My form emails do not arrive. What should I do? =
 
-First check that the entry appears under Forms, Entries: if it does, the form works and the problem is mail delivery. By default WordPress sends mail through your host's PHP mail, which many hosts and mail providers filter. Install an SMTP or transactional email plugin so your site sends through a proper mail service, and check the recipient under Forms, Settings, Email. Also look in the spam folder. A mail log inside SwiftForms is planned for version 1.2.
+First check that the entry appears under Forms, Entries: if it does, the form works and the problem is mail delivery. By default WordPress sends mail through your host's PHP mail, which many hosts and mail providers filter. Install an SMTP or transactional email plugin so your site sends through a proper mail service, and check the recipient under Forms, Settings, Email. Also look in the spam folder. A mail log inside BlockForms is planned for version 1.2.
 
 = Does it work with page caching plugins and CDNs? =
 
-Yes. The token that proves a form came from your site is valid for seven days, and the form refreshes it in the background when needed, so a cached page keeps working. Without JavaScript, the confirmation comes back in the page URL; a cache that ignores query strings can hide that confirmation, but the entry is stored. If your site sits behind a CDN or proxy that does not pass on the visitor's real IP address, use the `swiftforms_client_ip` filter so the limits count visitors separately.
+Yes. The token that proves a form came from your site is valid for seven days, and the form refreshes it in the background when needed, so a cached page keeps working. Without JavaScript, the confirmation comes back in the page URL; a cache that ignores query strings can hide that confirmation, but the entry is stored. If your site sits behind a CDN or proxy that does not pass on the visitor's real IP address, use the `blockforms_client_ip` filter so the limits count visitors separately.
 
-= What happens if I deactivate SwiftForms? =
+= What happens if I deactivate BlockForms? =
 
 Your entries and settings stay in the database. While the plugin is off, WordPress shows only the static content saved inside the form blocks, that is your layout blocks (headings, paragraphs, columns and so on) and the confirmation text; the fields are not shown and nobody can submit. Activate it again and everything comes back. Deleting the plugin in 1.0 also leaves the data in place.
 
-= What data does SwiftForms store about visitors? =
+= What data does BlockForms store about visitors? =
 
 What they typed in each field, the date and time, the form and the page it was on, and their user account if they were logged in. The IP address and browser user agent are stored only if you turn those settings on. Settings let you delete old entries automatically after a number of days. Spam checks use a salted, hashed form of the IP address for a short time; it is not stored with the entry.
 
 = Can I answer a visitor's request to see or erase their data? =
 
-Yes. SwiftForms registers with the WordPress exporter and eraser under Tools, Export Personal Data and Erase Personal Data. They find entries by the visitor's email address and, for logged-in visitors, by their user account.
+Yes. BlockForms registers with the WordPress exporter and eraser under Tools, Export Personal Data and Erase Personal Data. They find entries by the visitor's email address and, for logged-in visitors, by their user account.
 
 = Does the plugin talk to other websites? =
 
@@ -125,11 +125,11 @@ The default protection is invisible: a honeypot field, a minimum fill-in time, a
 
 == External services ==
 
-SwiftForms does not connect to any external service. It does not send data to the plugin author or to any third party, loads no scripts, fonts or images from other sites, and has no tracking or analytics.
+BlockForms does not connect to any external service. It does not send data to the plugin author or to any third party, loads no scripts, fonts or images from other sites, and has no tracking or analytics.
 
 == Source code ==
 
-The full source, including the JavaScript sources of everything in the `build/` folder, is on GitHub: https://github.com/namithj/swiftforms
+The full source, including the JavaScript sources of everything in the `build/` folder, is on GitHub: https://github.com/namithj/blockforms
 
 To build the plugin from source:
 

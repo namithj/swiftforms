@@ -3,7 +3,7 @@ name: JavaScript
 # Builds the front-end assets, runs the JavaScript unit tests and enforces the
 # front-end size budget (view module <= 12 KB gzipped, front-end CSS <= 4 KB).
 #
-# The budget counts only SwiftForms' own build/ files. The block builder's
+# The budget counts only BlockForms' own build/ files. The block builder's
 # editor.css (about 389 bytes gzipped) loads on every front-end page once the
 # builder has started and lives in vendor-prefixed/, so it is not measured here.
 

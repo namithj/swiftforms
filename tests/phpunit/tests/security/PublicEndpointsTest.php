@@ -2,16 +2,16 @@
 /**
  * Tests for the pre-step, the token route and the other public endpoints.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__, 2 ) . '/includes/class-sf-submission-test-case.php';
+require_once dirname( __DIR__, 2 ) . '/includes/class-bf-submission-test-case.php';
 
-use SwiftForms\Form_Index;
-use SwiftForms\Gate;
-use SwiftForms\Rest_Public;
-use SwiftForms\Render_Token;
-use SwiftForms\Time_Trap;
+use BlockForms\Form_Index;
+use BlockForms\Gate;
+use BlockForms\Rest_Public;
+use BlockForms\Render_Token;
+use BlockForms\Time_Trap;
 
 /**
  * Class PublicEndpointsTest
@@ -19,7 +19,7 @@ use SwiftForms\Time_Trap;
  * @group submission
  * @group security
  */
-class PublicEndpointsTest extends SF_Submission_Test_Case {
+class PublicEndpointsTest extends BF_Submission_Test_Case {
 
 	/**
 	 * Per-form limit off.
@@ -39,7 +39,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 	 * @return WP_REST_Response
 	 */
 	private function token_request( $form_id, $source ) {
-		$request = new WP_REST_Request( 'GET', '/swiftforms/v1/token' );
+		$request = new WP_REST_Request( 'GET', '/blockforms/v1/token' );
 		$request->set_query_params(
 			[
 				'formId' => $form_id,
@@ -62,7 +62,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 			'other' => 0,
 			'all'   => 0,
 		];
-		$forms = $wpdb->prefix . 'swiftforms_forms';
+		$forms = $wpdb->prefix . 'blockforms_forms';
 		$spy   = static function ( $query ) use ( &$count, $forms, $wpdb ) {
 			++$count['all'];
 			if ( false !== strpos( $query, '`' . $forms . '`' ) || false !== strpos( $query, ' ' . $forms . ' ' ) ) {
@@ -99,7 +99,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 		$this->assertStringContainsString( 'no-cache', $headers['Cache-Control'] );
 		$this->assertArrayHasKey( 'Expires', $headers );
 
-		$this->assertSame( 404, rest_do_request( new WP_REST_Request( 'DELETE', '/swiftforms/v1/token' ) )->get_status() );
+		$this->assertSame( 404, rest_do_request( new WP_REST_Request( 'DELETE', '/blockforms/v1/token' ) )->get_status() );
 	}
 
 	/**
@@ -114,8 +114,8 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 		$res  = $this->submit(
 			$this->good(),
 			[
-				'_sf_token' => $data['token'],
-				'_sf_t'     => 'js.4000',
+				'_bf_token' => $data['token'],
+				'_bf_t'     => 'js.4000',
 			]
 		);
 		$this->assertSame( 200, $res->get_status() );
@@ -159,8 +159,8 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 
 		// A registered pattern nobody places is not a location (mutation 15).
 		$unplaced = wp_generate_uuid4();
-		$this->register_pattern( 'sf/unplaced', $this->form_markup( $unplaced, $this->default_inner() ) );
-		$cases['registered pattern'] = [ $unplaced, 'pattern:sf/unplaced' ];
+		$this->register_pattern( 'bf/unplaced', $this->form_markup( $unplaced, $this->default_inner() ) );
+		$cases['registered pattern'] = [ $unplaced, 'pattern:bf/unplaced' ];
 
 		// A synced pattern no live page shows.
 		$unplaced_block = wp_generate_uuid4();
@@ -171,10 +171,10 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 
 		// A template of a theme that is not active.
 		$other = wp_generate_uuid4();
-		$this->make_theme( 'sf-live', [], true );
-		$this->make_template_post( 'wp_template', 'sf-not-active', 'single', $this->form_markup( $other, $this->default_inner() ) );
+		$this->make_theme( 'bf-live', [], true );
+		$this->make_template_post( 'wp_template', 'bf-not-active', 'single', $this->form_markup( $other, $this->default_inner() ) );
 		wp_set_current_user( 0 );
-		$cases['inactive theme'] = [ $other, 'template:sf-not-active//single' ];
+		$cases['inactive theme'] = [ $other, 'template:bf-not-active//single' ];
 
 		// A widget in the inactive area.
 		$widget = wp_generate_uuid4();
@@ -198,15 +198,15 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 			$this->assertSame( 403, $res->get_status(), $label . ' (token)' );
 			$this->assertSame( [ 'status' => 'closed' ], $res->get_data(), $label . ' (token)' );
 
-			$request = new WP_REST_Request( 'POST', '/swiftforms/v1/submit' );
+			$request = new WP_REST_Request( 'POST', '/blockforms/v1/submit' );
 			$request->set_header( 'content-type', 'application/json' );
 			$request->set_body(
 				wp_json_encode(
 					[
-						'_sf_form'   => $pair[0],
-						'_sf_source' => $pair[1],
-						'_sf_token'  => 'v1.a.' . str_repeat( 'a', 32 ),
-						'sf'         => $this->good(),
+						'_bf_form'   => $pair[0],
+						'_bf_source' => $pair[1],
+						'_bf_token'  => 'v1.a.' . str_repeat( 'a', 32 ),
+						'bf'         => $this->good(),
 					]
 				)
 			);
@@ -256,17 +256,17 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 		$res = $this->submit(
 			$this->good(),
 			[
-				'_sf_form'   => $first_form,
-				'_sf_source' => $this->source,
+				'_bf_form'   => $first_form,
+				'_bf_source' => $this->source,
 			]
 		);
 		$this->assertSame( 'closed', $res->get_data()['status'] );
 		$res = $this->submit(
 			$this->good(),
 			[
-				'_sf_form'   => $first_form,
-				'_sf_source' => $first_source,
-				'_sf_token'  => Render_Token::issue( $first_form, $first_source, $this->schema_of( $first_form, $first_source )->hash ),
+				'_bf_form'   => $first_form,
+				'_bf_source' => $first_source,
+				'_bf_token'  => Render_Token::issue( $first_form, $first_source, $this->schema_of( $first_form, $first_source )->hash ),
 			]
 		);
 		$this->assertSame( 'success', $res->get_data()['status'] );
@@ -277,10 +277,10 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 	 *
 	 * @param string $form_id Form.
 	 * @param string $source  Source.
-	 * @return \SwiftForms\Form_Schema
+	 * @return \BlockForms\Form_Schema
 	 */
 	private function schema_of( $form_id, $source ) {
-		$schema = \SwiftForms\Schema_Resolver::resolve( $form_id, $source );
+		$schema = \BlockForms\Schema_Resolver::resolve( $form_id, $source );
 		$this->assertNotNull( $schema );
 		return $schema;
 	}
@@ -294,7 +294,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 		$this->make_form();
 		Form_Index::flush_cache();
 		add_filter(
-			'swiftforms_throttle_limit',
+			'blockforms_throttle_limit',
 			static function () {
 				return 10000;
 			}
@@ -317,12 +317,12 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 		for ( $i = 0; $i < 25; $i++ ) {
 			$ids[] = wp_generate_uuid4();
 		}
-		$body     = array_merge( $this->controls(), [ 'sf' => $this->good() ] );
+		$body     = array_merge( $this->controls(), [ 'bf' => $this->good() ] );
 		$requests = [];
 		foreach ( $ids as $id ) {
-			$request = new WP_REST_Request( 'POST', '/swiftforms/v1/submit' );
+			$request = new WP_REST_Request( 'POST', '/blockforms/v1/submit' );
 			$request->set_header( 'content-type', 'application/json' );
-			$request->set_body( wp_json_encode( array_merge( $body, [ '_sf_form' => $id ] ) ) );
+			$request->set_body( wp_json_encode( array_merge( $body, [ '_bf_form' => $id ] ) ) );
 			$requests[] = $request;
 		}
 		$counts = $this->count_queries(
@@ -355,7 +355,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 	public function test_coarse_throttle() {
 		$this->make_form();
 		add_filter(
-			'swiftforms_throttle_limit',
+			'blockforms_throttle_limit',
 			static function () {
 				return 4;
 			}
@@ -363,7 +363,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 
 		$this->assertSame( 200, $this->token_request( $this->form_id, $this->source )->get_status() );
 		$this->assertSame( 200, $this->token_request( $this->form_id, $this->source )->get_status() );
-		$this->assertSame( 403, $this->submit( $this->good(), [ '_sf_form' => wp_generate_uuid4() ] )->get_status() );
+		$this->assertSame( 403, $this->submit( $this->good(), [ '_bf_form' => wp_generate_uuid4() ] )->get_status() );
 		$this->assertSame( 200, $this->submit( $this->good() )->get_status() );
 
 		// The fifth request, whatever it is, is turned away.
@@ -373,7 +373,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 		$this->assertArrayHasKey( 'Retry-After', $res->get_headers() );
 
 		// ... before WordPress parses the body: broken JSON still gets 429, not a JSON error.
-		$request = new WP_REST_Request( 'POST', '/swiftforms/v1/submit' );
+		$request = new WP_REST_Request( 'POST', '/blockforms/v1/submit' );
 		$request->set_header( 'content-type', 'application/json' );
 		$request->set_body( '{not json' );
 		$res = rest_do_request( $request );
@@ -403,7 +403,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 	public function test_spoofed_headers_do_not_dodge_the_throttle() {
 		$this->make_form();
 		add_filter(
-			'swiftforms_throttle_limit',
+			'blockforms_throttle_limit',
 			static function () {
 				return 2;
 			}
@@ -426,7 +426,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 		$this->make_form();
 
 		// Declared too large: refused before the (broken) body is parsed.
-		$request = new WP_REST_Request( 'POST', '/swiftforms/v1/submit' );
+		$request = new WP_REST_Request( 'POST', '/blockforms/v1/submit' );
 		$request->set_header( 'content-type', 'application/json' );
 		$request->set_header( 'content-length', (string) ( Gate::MAX_BODY + 1 ) );
 		$request->set_body( '{not json' );
@@ -479,14 +479,14 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 					'email' => $payload,
 				]
 			),
-			$this->submit( $this->good(), [ '_sf_form' => $payload ] ),
-			$this->submit( $this->good(), [ '_sf_source' => $payload ] ),
-			$this->submit( $this->good(), [ '_sf_token' => $payload ] ),
+			$this->submit( $this->good(), [ '_bf_form' => $payload ] ),
+			$this->submit( $this->good(), [ '_bf_source' => $payload ] ),
+			$this->submit( $this->good(), [ '_bf_token' => $payload ] ),
 			$this->submit(
 				$this->good(),
 				[
-					'_sf_t'  => $payload,
-					'_sf_hp' => $payload,
+					'_bf_t'  => $payload,
+					'_bf_hp' => $payload,
 				]
 			),
 			$this->token_request( $payload, $payload ),
@@ -505,21 +505,21 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 	 * @return void
 	 */
 	public function test_route_inventory() {
-		$routes = rest_get_server()->get_routes( 'swiftforms/v1' );
+		$routes = rest_get_server()->get_routes( 'blockforms/v1' );
 		$public = [];
 		foreach ( $routes as $route => $handlers ) {
 			foreach ( $handlers as $handler ) {
-				if ( '/swiftforms/v1' !== $route && SF_User_Config_Runner::is_public( $handler ) ) { // The namespace index is core's own.
-					$public[] = substr( $route, strlen( '/swiftforms/v1' ) );
+				if ( '/blockforms/v1' !== $route && BF_User_Config_Runner::is_public( $handler ) ) { // The namespace index is core's own.
+					$public[] = substr( $route, strlen( '/blockforms/v1' ) );
 				}
 			}
 		}
 		sort( $public );
 		$this->assertSame( Rest_Public::ROUTES, $public, 'Only the allow-listed routes are public.' );
-		$this->assertArrayHasKey( '/swiftforms/v1/submit', $routes );
-		$this->assertArrayHasKey( '/swiftforms/v1/token', $routes );
-		$this->assertSame( [ 'POST' ], array_keys( $routes['/swiftforms/v1/submit'][0]['methods'] ) );
-		$this->assertSame( [ 'GET' ], array_keys( $routes['/swiftforms/v1/token'][0]['methods'] ) );
+		$this->assertArrayHasKey( '/blockforms/v1/submit', $routes );
+		$this->assertArrayHasKey( '/blockforms/v1/token', $routes );
+		$this->assertSame( [ 'POST' ], array_keys( $routes['/blockforms/v1/submit'][0]['methods'] ) );
+		$this->assertSame( [ 'GET' ], array_keys( $routes['/blockforms/v1/token'][0]['methods'] ) );
 	}
 
 	/**
@@ -528,7 +528,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 	 * @return void
 	 */
 	public function test_unlisted_route_is_refused() {
-		$this->setExpectedIncorrectUsage( 'SwiftForms\Rest_Public::register' );
+		$this->setExpectedIncorrectUsage( 'BlockForms\Rest_Public::register' );
 		$this->assertFalse(
 			Rest_Public::register(
 				'/secret',
@@ -570,8 +570,8 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 	 * @return void
 	 */
 	public function test_nonce_refresh_is_for_logged_in_users_only() {
-		$this->assertFalse( has_action( 'wp_ajax_nopriv_swiftforms_rest_nonce' ), 'No guest handler.' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- The action is ours.
-		$this->assertNotFalse( has_action( 'wp_ajax_swiftforms_rest_nonce' ) );
+		$this->assertFalse( has_action( 'wp_ajax_nopriv_blockforms_rest_nonce' ), 'No guest handler.' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- The action is ours.
+		$this->assertNotFalse( has_action( 'wp_ajax_blockforms_rest_nonce' ) );
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'subscriber' ] ) );
 		add_filter( 'wp_doing_ajax', '__return_true' );
@@ -585,7 +585,7 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 		);
 		ob_start();
 		try {
-			do_action( 'wp_ajax_swiftforms_rest_nonce' );
+			do_action( 'wp_ajax_blockforms_rest_nonce' );
 		} catch ( RuntimeException $e ) {
 			unset( $e );
 		}
@@ -603,9 +603,9 @@ class PublicEndpointsTest extends SF_Submission_Test_Case {
 	 * @return void
 	 */
 	public function test_hooks_are_wired() {
-		$this->assertNotFalse( has_action( 'rest_api_init', [ 'SwiftForms\Rest_Submit', 'register' ] ) );
-		$this->assertNotFalse( has_action( 'rest_api_init', [ 'SwiftForms\Rest_Token', 'register' ] ) );
-		$this->assertNotFalse( has_filter( 'rest_pre_dispatch', [ 'SwiftForms\Rest_Public', 'pre_dispatch' ] ) );
-		$this->assertNotFalse( has_action( 'template_redirect', [ 'SwiftForms\Nojs_Handler', 'maybe_handle' ] ) );
+		$this->assertNotFalse( has_action( 'rest_api_init', [ 'BlockForms\Rest_Submit', 'register' ] ) );
+		$this->assertNotFalse( has_action( 'rest_api_init', [ 'BlockForms\Rest_Token', 'register' ] ) );
+		$this->assertNotFalse( has_filter( 'rest_pre_dispatch', [ 'BlockForms\Rest_Public', 'pre_dispatch' ] ) );
+		$this->assertNotFalse( has_action( 'template_redirect', [ 'BlockForms\Nojs_Handler', 'maybe_handle' ] ) );
 	}
 }

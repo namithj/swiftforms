@@ -1,11 +1,11 @@
 <?php
 /**
- * Tests for SwiftForms\Random.
+ * Tests for BlockForms\Random.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Random;
+use BlockForms\Random;
 
 /**
  * Class RandomTest

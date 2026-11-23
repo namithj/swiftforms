@@ -1,15 +1,15 @@
 <?php
 /**
- * Tests for SwiftForms\Form_Index: effective IDs, liveness and refresh.
+ * Tests for BlockForms\Form_Index: effective IDs, liveness and refresh.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-resolver-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-resolver-test-case.php';
 
-use SwiftForms\Form_Index;
-use SwiftForms\Source_Edges;
-use SwiftForms\Uuid;
+use BlockForms\Form_Index;
+use BlockForms\Source_Edges;
+use BlockForms\Uuid;
 
 /**
  * Class FormIndexTest
@@ -17,7 +17,7 @@ use SwiftForms\Uuid;
  * @group index
  * @group resolver
  */
-class FormIndexTest extends SF_Resolver_Test_Case {
+class FormIndexTest extends BF_Resolver_Test_Case {
 
 	/**
 	 * A form block with one field, for content that only needs to hold a form.
@@ -84,7 +84,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	 */
 	private function empty_index() {
 		global $wpdb;
-		$wpdb->query( 'DELETE FROM `' . SwiftForms\Database::table( 'forms' ) . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
+		$wpdb->query( 'DELETE FROM `' . BlockForms\Database::table( 'forms' ) . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
 		Source_Edges::reset();
 		Form_Index::flush_cache();
 	}
@@ -118,7 +118,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 		);
 		$this->assertTrue( Form_Index::is_live( self::ID_A, 'post:' . $page ) );
 		$this->assertSame( self::ID_A, Form_Index::ensure( self::ID_A, 'post:' . $page, 1 ) );
-		$this->assertNotNull( SwiftForms\Schema_Store::get( $row['schema_hash'] ) );
+		$this->assertNotNull( BlockForms\Schema_Store::get( $row['schema_hash'] ) );
 	}
 
 	/**
@@ -350,7 +350,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	public function test_rebuild_ranks_owners() {
 		$late = null;
 		$soon = null;
-		$this->make_theme( 'sf-i1', [ 'templates/single.html' => $this->form( self::ID_A ) ] );
+		$this->make_theme( 'bf-i1', [ 'templates/single.html' => $this->form( self::ID_A ) ] );
 		$this->empty_index(); // Switching theme indexed the template already; start from nothing.
 		$this->without_index_hooks(
 			function () use ( &$late, &$soon ) {
@@ -376,8 +376,8 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 
 		$this->assertSame( 'post:' . $soon, $this->row( self::ID_A )['source'], 'Earliest post_date_gmt wins.' );
 		$this->assertSame( 'post:' . $late, $this->row( Form_Index::copy_id( self::ID_A, 'post:' . $late ) )['source'] );
-		$template_copy = Form_Index::copy_id( self::ID_A, 'template:sf-i1//single' );
-		$this->assertSame( 'template:sf-i1//single', $this->row( $template_copy )['source'], 'Posts rank before templates.' );
+		$template_copy = Form_Index::copy_id( self::ID_A, 'template:bf-i1//single' );
+		$this->assertSame( 'template:bf-i1//single', $this->row( $template_copy )['source'], 'Posts rank before templates.' );
 	}
 
 	/**
@@ -491,11 +491,11 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 		$index_writes = array_filter(
 			$writes,
 			static function ( $sql ) {
-				return false !== strpos( $sql, 'swiftforms_' );
+				return false !== strpos( $sql, 'blockforms_' );
 			}
 		);
 		$this->assertSame( [], array_values( $index_writes ), 'An unchanged form, and a page with no form, write nothing to the index.' );
-		$this->assertSame( 0, (int) $wpdb->get_var( 'SELECT COUNT(*) FROM `' . SwiftForms\Database::table( 'forms' ) . '` WHERE source = "post:' . $plain . '"' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
+		$this->assertSame( 0, (int) $wpdb->get_var( 'SELECT COUNT(*) FROM `' . BlockForms\Database::table( 'forms' ) . '` WHERE source = "post:' . $plain . '"' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	/**
@@ -516,7 +516,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 			)
 		);
 
-		$this->assertSame( 1, (int) $wpdb->get_var( 'SELECT COUNT(*) FROM `' . SwiftForms\Database::table( 'forms' ) . '`' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
+		$this->assertSame( 1, (int) $wpdb->get_var( 'SELECT COUNT(*) FROM `' . BlockForms\Database::table( 'forms' ) . '`' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	// ---------------------------------------------------------------------
@@ -607,7 +607,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 		wp_delete_post( $page, true );
 		$this->assertFalse( Form_Index::is_live( self::ID_A, $ref ) );
 		$this->assertSame( 'deleted', $this->status( self::ID_A ), 'The row stays, marked deleted.' );
-		$this->assertSame( 1, (int) $wpdb->get_var( 'SELECT COUNT(*) FROM `' . SwiftForms\Database::table( 'forms' ) . '`' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
+		$this->assertSame( 1, (int) $wpdb->get_var( 'SELECT COUNT(*) FROM `' . BlockForms\Database::table( 'forms' ) . '`' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	/**
@@ -744,7 +744,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	 */
 	public function test_templates_and_parts() {
 		$this->make_theme(
-			'sf-i2',
+			'bf-i2',
 			[
 				'templates/single.html' => $this->form( self::ID_A ),
 				'parts/footer.html'     => $this->form( self::ID_B ),
@@ -752,16 +752,16 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 		);
 		Form_Index::rebuild();
 
-		$this->assertTrue( Form_Index::is_live( self::ID_A, 'template:sf-i2//single' ) );
-		$this->assertTrue( Form_Index::is_live( self::ID_B, 'template_part:sf-i2//footer' ) );
+		$this->assertTrue( Form_Index::is_live( self::ID_A, 'template:bf-i2//single' ) );
+		$this->assertTrue( Form_Index::is_live( self::ID_B, 'template_part:bf-i2//footer' ) );
 
 		// A database customisation of the template replaces the file for rendering; its form is live too.
-		$this->make_template_post( 'wp_template', 'sf-i2', 'page', $this->form( self::ID_C ) );
-		$this->assertTrue( Form_Index::is_live( self::ID_C, 'template:sf-i2//page' ) );
+		$this->make_template_post( 'wp_template', 'bf-i2', 'page', $this->form( self::ID_C ) );
+		$this->assertTrue( Form_Index::is_live( self::ID_C, 'template:bf-i2//page' ) );
 
 		// Another theme's template is never a source.
-		$this->make_template_post( 'wp_template', 'sf-old', 'single', $this->form( '88888888-8888-4888-8888-888888888888' ) );
-		$this->assertFalse( Form_Index::is_live( '88888888-8888-4888-8888-888888888888', 'template:sf-old//single' ) );
+		$this->make_template_post( 'wp_template', 'bf-old', 'single', $this->form( '88888888-8888-4888-8888-888888888888' ) );
+		$this->assertFalse( Form_Index::is_live( '88888888-8888-4888-8888-888888888888', 'template:bf-old//single' ) );
 		$this->assertNull( $this->row( '88888888-8888-4888-8888-888888888888' ) );
 	}
 
@@ -771,21 +771,21 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_switch_theme() {
-		$this->make_theme( 'sf-i3a', [ 'templates/single.html' => $this->form( self::ID_A ) ] );
-		$this->make_theme( 'sf-i3b', [ 'templates/single.html' => $this->form( self::ID_B ) ], false );
+		$this->make_theme( 'bf-i3a', [ 'templates/single.html' => $this->form( self::ID_A ) ] );
+		$this->make_theme( 'bf-i3b', [ 'templates/single.html' => $this->form( self::ID_B ) ], false );
 		Form_Index::rebuild();
-		$this->assertTrue( Form_Index::is_live( self::ID_A, 'template:sf-i3a//single' ) );
+		$this->assertTrue( Form_Index::is_live( self::ID_A, 'template:bf-i3a//single' ) );
 		$this->assertNull( $this->row( self::ID_B ) );
 
-		switch_theme( 'sf-i3b' );
+		switch_theme( 'bf-i3b' );
 
-		$this->assertFalse( Form_Index::is_live( self::ID_A, 'template:sf-i3a//single' ) );
+		$this->assertFalse( Form_Index::is_live( self::ID_A, 'template:bf-i3a//single' ) );
 		$this->assertSame( 'not_live', $this->status( self::ID_A ), 'Kept, not deleted: the theme may come back.' );
-		$this->assertTrue( Form_Index::is_live( self::ID_B, 'template:sf-i3b//single' ) );
+		$this->assertTrue( Form_Index::is_live( self::ID_B, 'template:bf-i3b//single' ) );
 
-		switch_theme( 'sf-i3a' );
-		$this->assertTrue( Form_Index::is_live( self::ID_A, 'template:sf-i3a//single' ) );
-		$this->assertFalse( Form_Index::is_live( self::ID_B, 'template:sf-i3b//single' ) );
+		switch_theme( 'bf-i3a' );
+		$this->assertTrue( Form_Index::is_live( self::ID_A, 'template:bf-i3a//single' ) );
+		$this->assertFalse( Form_Index::is_live( self::ID_B, 'template:bf-i3b//single' ) );
 	}
 
 	/**
@@ -794,25 +794,25 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_pattern_liveness() {
-		$this->register_pattern( 'sf/contact', $this->form( self::ID_A ) );
-		$this->make_theme( 'sf-i4', [ 'templates/single.html' => '<!-- wp:paragraph --><p>nothing</p><!-- /wp:paragraph -->' ] );
+		$this->register_pattern( 'bf/contact', $this->form( self::ID_A ) );
+		$this->make_theme( 'bf-i4', [ 'templates/single.html' => '<!-- wp:paragraph --><p>nothing</p><!-- /wp:paragraph -->' ] );
 		Form_Index::rebuild();
 
 		// Merely registered: no row at all.
 		$this->assertNull( $this->row( self::ID_A ) );
-		$this->assertFalse( Form_Index::is_live( self::ID_A, 'pattern:sf/contact' ) );
+		$this->assertFalse( Form_Index::is_live( self::ID_A, 'pattern:bf/contact' ) );
 
 		// Rendered inside a page (core/pattern in a post): indexed lazily, still not live.
-		$this->assertSame( self::ID_A, Form_Index::ensure( self::ID_A, 'pattern:sf/contact', 1 ) );
+		$this->assertSame( self::ID_A, Form_Index::ensure( self::ID_A, 'pattern:bf/contact', 1 ) );
 		$this->assertSame( 'not_live', $this->status( self::ID_A ) );
-		$this->assertFalse( Form_Index::is_live( self::ID_A, 'pattern:sf/contact' ) );
-		$page = $this->make_post( '<!-- wp:pattern {"slug":"sf/contact"} /-->' );
-		$this->assertFalse( Form_Index::is_live( self::ID_A, 'pattern:sf/contact' ), 'A post showing a pattern does not make it a location.' );
+		$this->assertFalse( Form_Index::is_live( self::ID_A, 'pattern:bf/contact' ) );
+		$page = $this->make_post( '<!-- wp:pattern {"slug":"bf/contact"} /-->' );
+		$this->assertFalse( Form_Index::is_live( self::ID_A, 'pattern:bf/contact' ), 'A post showing a pattern does not make it a location.' );
 
 		// An active template that references it does.
-		$this->make_template_post( 'wp_template', 'sf-i4', 'single', '<!-- wp:pattern {"slug":"sf/contact"} /-->' );
-		$this->assertTrue( Form_Index::is_live( self::ID_A, 'pattern:sf/contact' ) );
-		$this->assertSame( [ 'template:sf-i4//single' ], json_decode( $this->row( self::ID_A )['locations'], true )['places'] );
+		$this->make_template_post( 'wp_template', 'bf-i4', 'single', '<!-- wp:pattern {"slug":"bf/contact"} /-->' );
+		$this->assertTrue( Form_Index::is_live( self::ID_A, 'pattern:bf/contact' ) );
+		$this->assertSame( [ 'template:bf-i4//single' ], json_decode( $this->row( self::ID_A )['locations'], true )['places'] );
 		$this->assertNotNull( $page );
 
 		// The template stops referencing it.
@@ -831,7 +831,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 				]
 			)
 		);
-		$this->assertFalse( Form_Index::is_live( self::ID_A, 'pattern:sf/contact' ) );
+		$this->assertFalse( Form_Index::is_live( self::ID_A, 'pattern:bf/contact' ) );
 	}
 
 	/**
@@ -840,12 +840,12 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_pattern_referenced_from_a_file_part() {
-		$this->register_pattern( 'sf/inpart', $this->form( self::ID_A ) );
-		$this->make_theme( 'sf-i5', [ 'parts/header.html' => '<!-- wp:pattern {"slug":"sf/inpart"} /-->' ] );
+		$this->register_pattern( 'bf/inpart', $this->form( self::ID_A ) );
+		$this->make_theme( 'bf-i5', [ 'parts/header.html' => '<!-- wp:pattern {"slug":"bf/inpart"} /-->' ] );
 		Form_Index::rebuild();
 
-		$this->assertTrue( Form_Index::is_live( self::ID_A, 'pattern:sf/inpart' ) );
-		$this->assertFalse( Form_Index::is_live( self::ID_A, 'template_part:sf-i5//header' ), 'The form lives in the pattern, not in the part.' );
+		$this->assertTrue( Form_Index::is_live( self::ID_A, 'pattern:bf/inpart' ) );
+		$this->assertFalse( Form_Index::is_live( self::ID_A, 'template_part:bf-i5//header' ), 'The form lives in the pattern, not in the part.' );
 	}
 
 	/**
@@ -854,7 +854,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_widgets() {
-		$this->place_widget( 5, $this->form( self::ID_A ), 'sf-sidebar' );
+		$this->place_widget( 5, $this->form( self::ID_A ), 'bf-sidebar' );
 		$this->place_widget( 6, $this->form( self::ID_B ), 'wp_inactive_widgets' );
 
 		$this->assertTrue( Form_Index::is_live( self::ID_A, 'widget:block-5' ) );
@@ -864,7 +864,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 		update_option(
 			'sidebars_widgets',
 			[
-				'sf-sidebar'          => [ 'block-5', 'block-6' ],
+				'bf-sidebar'          => [ 'block-5', 'block-6' ],
 				'wp_inactive_widgets' => [],
 				'array_version'       => 3,
 			]
@@ -927,7 +927,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_rebuild_from_raw_content() {
-		$this->make_theme( 'sf-i6', [ 'templates/single.html' => $this->form( self::ID_C ) ] );
+		$this->make_theme( 'bf-i6', [ 'templates/single.html' => $this->form( self::ID_C ) ] );
 		$synced = null;
 		$page   = null;
 		$copy   = null;
@@ -961,7 +961,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 				array_filter(
 					$writes,
 					static function ( $sql ) {
-						return false !== strpos( $sql, 'swiftforms_forms' ) || false !== strpos( $sql, 'swiftforms_schemas' );
+						return false !== strpos( $sql, 'blockforms_forms' ) || false !== strpos( $sql, 'blockforms_schemas' );
 					}
 				)
 			),
@@ -995,7 +995,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_triggers_are_wired() {
-		$this->assertSame( 10, has_action( 'swiftforms_db_version_changed', [ Form_Index::class, 'rebuild_when_ready' ] ) );
+		$this->assertSame( 10, has_action( 'blockforms_db_version_changed', [ Form_Index::class, 'rebuild_when_ready' ] ) );
 		$this->assertSame( 20, has_action( 'wp_after_insert_post', [ Form_Index::class, 'on_after_insert_post' ] ) );
 		$this->assertSame( 20, has_action( 'transition_post_status', [ Form_Index::class, 'on_transition_post_status' ] ) );
 		$this->assertSame( 10, has_action( 'deleted_post', [ Form_Index::class, 'on_deleted_post' ] ) );
@@ -1009,7 +1009,7 @@ class FormIndexTest extends SF_Resolver_Test_Case {
 				return $this->make_post( $this->form( self::ID_A ) );
 			}
 		);
-		do_action( 'swiftforms_db_version_changed', 0, 1 );
+		do_action( 'blockforms_db_version_changed', 0, 1 );
 		$this->assertTrue( Form_Index::is_live( self::ID_A, 'post:' . $page ) );
 	}
 

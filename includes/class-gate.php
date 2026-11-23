@@ -2,10 +2,10 @@
 /**
  * The pre-step of every public route.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -102,22 +102,22 @@ class Gate {
 	}
 
 	/**
-	 * Number of values in a posted `sf` array, nested lists included.
+	 * Number of values in a posted `bf` array, nested lists included.
 	 *
-	 * @param mixed $sf The posted `sf` value.
+	 * @param mixed $bf The posted `bf` value.
 	 * @return int
 	 */
-	public static function count_fields( $sf ) {
-		if ( ! is_array( $sf ) ) {
+	public static function count_fields( $bf ) {
+		if ( ! is_array( $bf ) ) {
 			return 0;
 		}
 		$count = 0;
 		array_walk_recursive(
-			$sf,
+			$bf,
 			static function () use ( &$count ) {
 				++$count;
 			}
 		);
-		return max( $count, count( $sf ) );
+		return max( $count, count( $bf ) );
 	}
 }

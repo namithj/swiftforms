@@ -1,11 +1,11 @@
 <?php // phpcs:disable PHPCompatibility.Extensions.RemovedExtensions.famRemoved -- False positive: Field_Types::family() is not the FAM extension.
 /**
- * Tests for SwiftForms\Field_Types, checked against the contract text.
+ * Tests for BlockForms\Field_Types, checked against the contract text.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Field_Types;
+use BlockForms\Field_Types;
 
 /**
  * Class FieldTypesTest
@@ -37,7 +37,8 @@ class FieldTypesTest extends WP_UnitTestCase {
 	 */
 	public function test_types_match_c_2_1() {
 		$contract = $this->contract();
-		$this->assertSame( 1, preg_match( '/`swiftforms\/field-\{([a-z,]+)\}`/', $contract, $m ) );
+		// The contract is a historical document that predates the rename, so accept any block namespace.
+		$this->assertSame( 1, preg_match( '/`[a-z]+\/field-\{([a-z,]+)\}`/', $contract, $m ) );
 		$expected = explode( ',', $m[1] );
 
 		$types = Field_Types::types();
@@ -47,12 +48,12 @@ class FieldTypesTest extends WP_UnitTestCase {
 
 		foreach ( $types as $type ) {
 			$this->assertTrue( Field_Types::is_type( $type ) );
-			$this->assertSame( 'swiftforms/field-' . $type, Field_Types::block_name( $type ) );
-			$this->assertSame( $type, Field_Types::type_from_block_name( 'swiftforms/field-' . $type ) );
+			$this->assertSame( 'blockforms/field-' . $type, Field_Types::block_name( $type ) );
+			$this->assertSame( $type, Field_Types::type_from_block_name( 'blockforms/field-' . $type ) );
 		}
 		$this->assertFalse( Field_Types::is_type( 'password' ) );
-		$this->assertNull( Field_Types::type_from_block_name( 'swiftforms/field-password' ) );
-		$this->assertNull( Field_Types::type_from_block_name( 'swiftforms/form' ) );
+		$this->assertNull( Field_Types::type_from_block_name( 'blockforms/field-password' ) );
+		$this->assertNull( Field_Types::type_from_block_name( 'blockforms/form' ) );
 		$this->assertNull( Field_Types::type_from_block_name( null ) );
 		$this->assertSame( '', Field_Types::block_name( 'nope' ) );
 	}
@@ -64,7 +65,7 @@ class FieldTypesTest extends WP_UnitTestCase {
 	 */
 	public function test_form_attributes_match_c_2_3() {
 		$contract = $this->contract();
-		$start    = strpos( $contract, '3. `swiftforms/form` attributes' );
+		$start    = strpos( $contract, '3. `blockforms/form` attributes' );
 		$end      = strpos( $contract, 'block supports', $start );
 		$names    = [];
 		preg_match_all( '/^\s+- (?:Since [0-9.]+: )?`([A-Za-z]+)`:/m', substr( $contract, $start, strpos( $contract, '4. Common field attributes' ) - $start ), $m );
@@ -113,7 +114,7 @@ class FieldTypesTest extends WP_UnitTestCase {
 	public function test_field_attributes_match_c_2_4() {
 		$contract = $this->contract();
 		$start    = strpos( $contract, '4. Common field attributes' );
-		$end      = strpos( $contract, '5. `swiftforms/submit`' );
+		$end      = strpos( $contract, '5. `blockforms/submit`' );
 		$section  = substr( $contract, $start, $end - $start );
 
 		// Common list: the bullets before "Type-specific attributes".

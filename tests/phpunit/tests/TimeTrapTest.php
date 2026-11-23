@@ -1,14 +1,14 @@
 <?php
 /**
- * Tests for SwiftForms\Time_Trap.
+ * Tests for BlockForms\Time_Trap.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Time_Trap;
+use BlockForms\Clock;
+use BlockForms\Time_Trap;
 
 /**
  * Class TimeTrapTest
@@ -16,7 +16,7 @@ use SwiftForms\Time_Trap;
  * @group submission
  * @group security
  */
-class TimeTrapTest extends SF_Storage_Test_Case {
+class TimeTrapTest extends BF_Storage_Test_Case {
 
 	const FORM   = '11111111-1111-4111-8111-111111111111';
 	const SOURCE = 'post:42';

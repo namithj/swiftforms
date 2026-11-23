@@ -1,22 +1,22 @@
 <?php
 /**
- * Tests for SwiftForms\Install_Marker (C-1.4).
+ * Tests for BlockForms\Install_Marker (C-1.4).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Install_Marker;
-use SwiftForms\Migrations;
+use BlockForms\Clock;
+use BlockForms\Install_Marker;
+use BlockForms\Migrations;
 
 /**
  * Class InstallMarkerTest
  *
  * @group install-marker
  */
-class InstallMarkerTest extends SF_Storage_Test_Case {
+class InstallMarkerTest extends BF_Storage_Test_Case {
 
 	/**
 	 * A site that never ran the plugin gets the marker once, and later calls change nothing.
@@ -31,7 +31,7 @@ class InstallMarkerTest extends SF_Storage_Test_Case {
 		$bytes = $this->raw_option( Install_Marker::OPTION );
 		$this->assertSame(
 			[
-				'version' => SWIFTFORMS_VERSION,
+				'version' => BLOCKFORMS_VERSION,
 				'time'    => 1795082400,
 			],
 			get_option( Install_Marker::OPTION )
@@ -91,7 +91,7 @@ class InstallMarkerTest extends SF_Storage_Test_Case {
 
 		$this->assertFalse( Install_Marker::maybe_write() );
 		$this->assertSame( 'garbage', get_option( Install_Marker::OPTION ) );
-		$this->assertSame( SWIFTFORMS_VERSION, Install_Marker::installed_version() );
+		$this->assertSame( BLOCKFORMS_VERSION, Install_Marker::installed_version() );
 	}
 
 	/**
@@ -115,6 +115,6 @@ class InstallMarkerTest extends SF_Storage_Test_Case {
 	 */
 	public function test_new_site_reports_running_version() {
 		$this->clear_options();
-		$this->assertSame( SWIFTFORMS_VERSION, Install_Marker::installed_version() );
+		$this->assertSame( BLOCKFORMS_VERSION, Install_Marker::installed_version() );
 	}
 }

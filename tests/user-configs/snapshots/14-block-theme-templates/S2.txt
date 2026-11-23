@@ -1,14 +1,14 @@
 == S2 about#1 / c14-ask (guest) ==
 request:
 {
-    "_sf_form": "5f140003-0000-4000-8000-000000000003",
-    "_sf_source": "post:about",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f140003-0000-4000-8000-000000000003",
+    "_bf_source": "post:about",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "email": "ada@example.com",
         "question": "Do you cater for twenty people?"
     }
@@ -44,24 +44,24 @@ log mail/info 5f140003-0000-4000-8000-000000000003: Notification sent. {"entry":
 -- mail 1 (wp_mail arguments) --
 to: editor@fse-site.example
 subject: New submission: Ask us
-header: From: SwiftForms Test Suite <wordpress@example.org>
+header: From: BlockForms Test Suite <wordpress@example.org>
 header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Question</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you cater for twenty people?</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Question</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you cater for twenty people?</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 footer-part#1 / c14-news (guest) ==
 request:
 {
-    "_sf_form": "5f140001-0000-4000-8000-000000000001",
-    "_sf_source": "template_part:sf-test-block-files//footer",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f140001-0000-4000-8000-000000000001",
+    "_bf_source": "template_part:bf-test-block-files//footer",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "email": "ada@example.com"
     }
 }
@@ -81,7 +81,7 @@ entry:
     "id": "{E2}",
     "form_id": "5f140001-0000-4000-8000-000000000001",
     "schema_hash": "3318e4a0fa617118e8441c5283a417c78eeb6a291a6122e9cf429372f66c6eb5",
-    "source": "template_part:sf-test-block-files//footer",
+    "source": "template_part:bf-test-block-files//footer",
     "status": "new",
     "starred": "0",
     "user_id": 0,
@@ -95,24 +95,24 @@ log mail/info 5f140001-0000-4000-8000-000000000001: Notification sent. {"entry":
 -- mail 1 (wp_mail arguments) --
 to: editor@fse-site.example
 subject: New submission: Footer newsletter
-header: From: SwiftForms Test Suite <wordpress@example.org>
+header: From: BlockForms Test Suite <wordpress@example.org>
 header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 single-template#1 / c14-feedback (guest) ==
 request:
 {
-    "_sf_form": "5f140002-0000-4000-8000-000000000002",
-    "_sf_source": "template:sf-test-block-files//single",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f140002-0000-4000-8000-000000000002",
+    "_bf_source": "template:bf-test-block-files//single",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "feedback": "Loved the article on analytical engines."
     }
@@ -133,7 +133,7 @@ entry:
     "id": "{E3}",
     "form_id": "5f140002-0000-4000-8000-000000000002",
     "schema_hash": "29e248540ac71e86ad6469ab475efc22e45f83a7a03548b2a409faa5848c0fa5",
-    "source": "template:sf-test-block-files//single",
+    "source": "template:bf-test-block-files//single",
     "status": "new",
     "starred": "0",
     "user_id": 0,
@@ -148,24 +148,24 @@ log mail/info 5f140002-0000-4000-8000-000000000002: Notification sent. {"entry":
 -- mail 1 (wp_mail arguments) --
 to: editor@fse-site.example
 subject: New submission: Reader feedback
-header: From: SwiftForms Test Suite <wordpress@example.org>
+header: From: BlockForms Test Suite <wordpress@example.org>
 header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Your name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Feedback</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Loved the article on analytical engines.</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Your name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Feedback</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Loved the article on analytical engines.</td></tr></table></td></tr></table></td></tr></table></body></html>
 
-== S2 template:sf-test-block-files//sf-landing#1 / c14-table (guest) ==
+== S2 template:bf-test-block-files//bf-landing#1 / c14-table (guest) ==
 request:
 {
-    "_sf_form": "5f140004-0000-4000-8000-000000000004",
-    "_sf_source": "template:sf-test-block-files//sf-landing",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f140004-0000-4000-8000-000000000004",
+    "_bf_source": "template:bf-test-block-files//bf-landing",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "guests": "4"
     }
@@ -186,7 +186,7 @@ entry:
     "id": "{E4}",
     "form_id": "5f140004-0000-4000-8000-000000000004",
     "schema_hash": "c423d1f89e42c85fa466edbb6bcca70cab52cf114ced644710640edecf70d5a4",
-    "source": "template:sf-test-block-files//sf-landing",
+    "source": "template:bf-test-block-files//bf-landing",
     "status": "new",
     "starred": "0",
     "user_id": 0,
@@ -201,12 +201,12 @@ log mail/info 5f140004-0000-4000-8000-000000000004: Notification sent. {"entry":
 -- mail 1 (wp_mail arguments) --
 to: editor@fse-site.example
 subject: New submission: Table reservation
-header: From: SwiftForms Test Suite <wordpress@example.org>
+header: From: BlockForms Test Suite <wordpress@example.org>
 header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Guests</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">4</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Guests</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">4</td></tr></table></td></tr></table></td></tr></table></body></html>
 
 == S2 about#1 / c14-ask (administrator) ==
 response:
@@ -241,10 +241,10 @@ log mail/info 5f140003-0000-4000-8000-000000000003: Notification sent. {"entry":
 -- mail 1 (wp_mail arguments) --
 to: editor@fse-site.example
 subject: New submission: Ask us
-header: From: SwiftForms Test Suite <wordpress@example.org>
+header: From: BlockForms Test Suite <wordpress@example.org>
 header: Content-Type: text/html; charset=UTF-8
 attachments: (none)
 -- body --
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SwiftForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">SwiftForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Question</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you cater for twenty people?</td></tr></table></td></tr></table></td></tr></table></body></html>
+<html lang="en-US" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BlockForms Test Suite</title></head><body style="margin:0;padding:0;background:#f0f0f1"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f0f0f1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border-collapse:collapse;border-top:4px solid #3c434a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d2327;text-align:left"><tr><td style="padding:20px 24px 8px"><div style="font-size:18px;font-weight:600;line-height:1.3;color:#3c434a">BlockForms Test Suite</div></td></tr><tr><td style="padding:8px 24px 24px"><table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Question</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you cater for twenty people?</td></tr></table></td></tr></table></td></tr></table></body></html>
 

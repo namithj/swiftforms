@@ -2,24 +2,24 @@
 /**
  * Tests for the notification mail, the HTML template and the visitor-mail limits.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-submission-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-submission-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Mail_Limits;
-use SwiftForms\Mail_Notice;
-use SwiftForms\Mailer;
-use SwiftForms\Submission;
-use SwiftForms\Submission_Context;
+use BlockForms\Clock;
+use BlockForms\Mail_Limits;
+use BlockForms\Mail_Notice;
+use BlockForms\Mailer;
+use BlockForms\Submission;
+use BlockForms\Submission_Context;
 
 /**
  * Class MailTest
  *
  * @group mail
  */
-class MailTest extends SF_Submission_Test_Case {
+class MailTest extends BF_Submission_Test_Case {
 
 	/**
 	 * Hash of the attributes of the form ctx() made last (the same form is reused for the same attributes).
@@ -116,7 +116,7 @@ class MailTest extends SF_Submission_Test_Case {
 	 */
 	private function mail_log() {
 		global $wpdb;
-		return (array) $wpdb->get_results( 'SELECT * FROM `' . SwiftForms\Database::table( 'log' ) . "` WHERE type = 'mail' ORDER BY id", ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Test read.
+		return (array) $wpdb->get_results( 'SELECT * FROM `' . BlockForms\Database::table( 'log' ) . "` WHERE type = 'mail' ORDER BY id", ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- Test read.
 	}
 
 	/**
@@ -399,7 +399,7 @@ class MailTest extends SF_Submission_Test_Case {
 		$this->assertStringNotContainsString( '<!DOCTYPE', $this->sent()[0]['body'] );
 		$this->assertStringContainsString( 'Ada Lovelace', $this->sent()[0]['body'] );
 
-		$this->assertStringContainsString( SwiftForms\Mail_Template::DEFAULT_ACCENT, SwiftForms\Mail_Template::wrap( 'x' ) );
+		$this->assertStringContainsString( BlockForms\Mail_Template::DEFAULT_ACCENT, BlockForms\Mail_Template::wrap( 'x' ) );
 	}
 
 	/**
@@ -437,7 +437,7 @@ class MailTest extends SF_Submission_Test_Case {
 	public function test_filter_and_action() {
 		$seen = [];
 		add_filter(
-			'swiftforms_before_send_mail',
+			'blockforms_before_send_mail',
 			static function ( $mail, $ctx, $notification ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Documents the filter signature.
 				$mail['subject'] = 'Changed';
 				return $mail;
@@ -446,7 +446,7 @@ class MailTest extends SF_Submission_Test_Case {
 			3
 		);
 		add_action(
-			'swiftforms_mail_sent',
+			'blockforms_mail_sent',
 			static function ( $sent, $mail, $ctx ) use ( &$seen ) {
 				$seen[] = [ $sent, $mail['subject'], $ctx instanceof Submission_Context ];
 			},
@@ -457,8 +457,8 @@ class MailTest extends SF_Submission_Test_Case {
 		$this->assertSame( 'Changed', $this->sent()[0]['subject'] );
 		$this->assertSame( [ [ true, 'Changed', true ] ], $seen );
 
-		remove_all_filters( 'swiftforms_before_send_mail' );
-		add_filter( 'swiftforms_before_send_mail', '__return_false' );
+		remove_all_filters( 'blockforms_before_send_mail' );
+		add_filter( 'blockforms_before_send_mail', '__return_false' );
 		reset_phpmailer_instance();
 		$seen = [];
 		Mailer::notify( $this->ctx() );
@@ -475,7 +475,7 @@ class MailTest extends SF_Submission_Test_Case {
 		add_filter( 'pre_wp_mail', '__return_false' );
 		$sent = null;
 		add_action(
-			'swiftforms_mail_sent',
+			'blockforms_mail_sent',
 			static function ( $ok ) use ( &$sent ) {
 				$sent = $ok;
 			}
@@ -520,7 +520,7 @@ class MailTest extends SF_Submission_Test_Case {
 	public function test_address_is_hashed() {
 		Mailer::notify( $this->ctx( $this->visitor_attrs() ) );
 		global $wpdb;
-		$names = $wpdb->get_col( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE '%swiftforms_ml%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$names = $wpdb->get_col( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE '%blockforms_ml%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$this->assertNotEmpty( $names );
 		foreach ( $names as $name ) {
 			$this->assertStringNotContainsString( 'ada', $name );
@@ -594,7 +594,7 @@ class MailTest extends SF_Submission_Test_Case {
 	}
 
 	/**
-	 * The banner shows on SwiftForms screens after a cap hit and can be dismissed.
+	 * The banner shows on BlockForms screens after a cap hit and can be dismissed.
 	 *
 	 * @return void
 	 */
@@ -607,7 +607,7 @@ class MailTest extends SF_Submission_Test_Case {
 		$admin = self::factory()->user->create( [ 'role' => 'administrator' ] );
 		wp_set_current_user( $admin );
 
-		set_current_screen( 'toplevel_page_swiftforms' );
+		set_current_screen( 'toplevel_page_blockforms' );
 		$this->assertSame( '', $out(), 'No cap was hit.' );
 
 		update_option(
@@ -621,12 +621,12 @@ class MailTest extends SF_Submission_Test_Case {
 			false
 		);
 		$this->assertStringContainsString( '100 mails per day', $out() );
-		$this->assertContains( $GLOBALS['wpdb']->get_var( "SELECT autoload FROM {$GLOBALS['wpdb']->options} WHERE option_name = 'swiftforms_mail_cap_notice'" ), [ 'no', 'off' ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$this->assertContains( $GLOBALS['wpdb']->get_var( "SELECT autoload FROM {$GLOBALS['wpdb']->options} WHERE option_name = 'blockforms_mail_cap_notice'" ), [ 'no', 'off' ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 
 		set_current_screen( 'dashboard' );
 		$this->assertSame( '', $out(), 'Other screens show nothing.' );
 
-		set_current_screen( 'toplevel_page_swiftforms' );
+		set_current_screen( 'toplevel_page_blockforms' );
 		update_user_meta( $admin, Mail_Notice::META, Clock::now() );
 		$this->assertSame( '', $out(), 'Dismissed.' );
 
@@ -645,7 +645,7 @@ class MailTest extends SF_Submission_Test_Case {
 		$this->assertSame( '', $out(), 'Older than 24 hours.' );
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'editor' ] ) );
-		$this->assertSame( '', $out(), 'Needs swiftforms_manage_settings.' );
+		$this->assertSame( '', $out(), 'Needs blockforms_manage_settings.' );
 	}
 
 	/**
@@ -656,7 +656,7 @@ class MailTest extends SF_Submission_Test_Case {
 	public function test_dismiss_needs_nonce() {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 		$this->capture_exits();
-		$this->expectException( SF_Test_Die::class );
+		$this->expectException( BF_Test_Die::class );
 		Mail_Notice::dismiss();
 	}
 
@@ -707,6 +707,6 @@ class MailTest extends SF_Submission_Test_Case {
 	 * @return void
 	 */
 	public function test_plain_text_keeps_single_line_breaks() {
-		$this->assertSame( "Message: one\ntwo", \SwiftForms\Mail_Template::plain_text( "<p>Message: one<br>\ntwo</p>" ) );
+		$this->assertSame( "Message: one\ntwo", \BlockForms\Mail_Template::plain_text( "<p>Message: one<br>\ntwo</p>" ) );
 	}
 }

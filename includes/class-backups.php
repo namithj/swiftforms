@@ -1,11 +1,11 @@
 <?php
 /**
- * Backups of SwiftForms' options.
+ * Backups of BlockForms' options.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -19,9 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * checks belong to whoever offers a restore.
  *
  * The settings are one option per key (Settings::stored_options()): every
- * swiftforms_{section}_* option that exists is copied, raw.
+ * blockforms_{section}_* option that exists is copied, raw.
  *
- * swiftforms_secrets (from R06, C-5.5) is deliberately not in OPTIONS: secrets
+ * blockforms_secrets (from R06, C-5.5) is deliberately not in OPTIONS: secrets
  * are never copied into a second option, an export or a restore file.
  */
 class Backups {
@@ -29,7 +29,7 @@ class Backups {
 	/**
 	 * Option that holds the ring, oldest first. Autoload "no".
 	 */
-	const OPTION = 'swiftforms_backups';
+	const OPTION = 'blockforms_backups';
 
 	/**
 	 * Number of backups kept.
@@ -39,7 +39,7 @@ class Backups {
 	/**
 	 * Single options copied into every backup, besides the settings options.
 	 */
-	const OPTIONS = [ 'swiftforms_db_version', 'swiftforms_installed' ];
+	const OPTIONS = [ 'blockforms_db_version', 'blockforms_installed' ];
 
 	/**
 	 * Take a backup of the current options.
@@ -68,7 +68,7 @@ class Backups {
 		$entry = [
 			'time'    => Clock::now(),
 			'reason'  => $reason,
-			'version' => SWIFTFORMS_VERSION,
+			'version' => BLOCKFORMS_VERSION,
 			'options' => $options,
 		];
 

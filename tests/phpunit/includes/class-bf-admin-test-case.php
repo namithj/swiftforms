@@ -1,25 +1,25 @@
-<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper: the class name follows SF_Submission_Test_Case.
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper: the class name follows BF_Submission_Test_Case.
 /**
  * Base class for the admin tests (Entries and Settings REST, privacy, retention).
  *
  * Builds on the submission case: a published page with the default form (name, email, message), entries
  * written through Entries_Repository with the form's real snapshot, and REST calls made in-process.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once __DIR__ . '/class-sf-submission-test-case.php';
+require_once __DIR__ . '/class-bf-submission-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Entries_Repository;
-use SwiftForms\Entry_Presenter;
-use SwiftForms\Schema_Store;
-use SwiftForms\Submission_Context;
+use BlockForms\Clock;
+use BlockForms\Entries_Repository;
+use BlockForms\Entry_Presenter;
+use BlockForms\Schema_Store;
+use BlockForms\Submission_Context;
 
 /**
- * Class SF_Admin_Test_Case
+ * Class BF_Admin_Test_Case
  */
-abstract class SF_Admin_Test_Case extends SF_Submission_Test_Case {
+abstract class BF_Admin_Test_Case extends BF_Submission_Test_Case {
 
 	/**
 	 * Start with a form and no user.
@@ -54,15 +54,15 @@ abstract class SF_Admin_Test_Case extends SF_Submission_Test_Case {
 	}
 
 	/**
-	 * Call a SwiftForms REST route in-process.
+	 * Call a BlockForms REST route in-process.
 	 *
 	 * @param string               $method HTTP method.
-	 * @param string               $route  Route below swiftforms/v1, starting with a slash.
+	 * @param string               $route  Route below blockforms/v1, starting with a slash.
 	 * @param array<string, mixed> $params Query (GET) or JSON body (others).
 	 * @return WP_REST_Response
 	 */
 	protected function call( $method, $route, array $params = [] ) {
-		$request = new WP_REST_Request( $method, '/swiftforms/v1' . $route );
+		$request = new WP_REST_Request( $method, '/blockforms/v1' . $route );
 		if ( 'GET' === $method ) {
 			$request->set_query_params( $params );
 		} else {
@@ -96,14 +96,14 @@ abstract class SF_Admin_Test_Case extends SF_Submission_Test_Case {
 	}
 
 	/**
-	 * Map the SwiftForms capabilities to primitive capabilities for the rest of the test.
+	 * Map the BlockForms capabilities to primitive capabilities for the rest of the test.
 	 *
-	 * @param array<string, string> $map SwiftForms capability => primitive capability.
+	 * @param array<string, string> $map BlockForms capability => primitive capability.
 	 * @return void
 	 */
 	protected function map_caps( array $map ) {
 		add_filter(
-			'swiftforms_capability_map',
+			'blockforms_capability_map',
 			static function ( $default ) use ( $map ) {
 				return array_merge( $default, $map );
 			}

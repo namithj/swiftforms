@@ -1,5 +1,5 @@
 /**
- * SwiftForms editor script.
+ * BlockForms editor script.
  *
  * Adds three things to the blocks that the block builder registers (the
  * builder's own editor bundle is not touched):
@@ -21,9 +21,9 @@ import { __ } from '@wordpress/i18n';
 import { STORE_NAME, registerEditorStore } from './store';
 import { repairName } from './field-name';
 
-const FORM_BLOCK = 'swiftforms/form';
-const FIELD_PREFIX = 'swiftforms/field-';
-const PREVIEW_CLASS = 'swiftforms-is-previewing-confirmation';
+const FORM_BLOCK = 'blockforms/form';
+const FIELD_PREFIX = 'blockforms/field-';
+const PREVIEW_CLASS = 'blockforms-is-previewing-confirmation';
 
 // Post types that have no publish status a visitor cares about.
 const STATUSLESS_TYPES = [
@@ -55,7 +55,7 @@ function PreviewConfirmationToggle( { clientId } ) {
 				isPressed={ isOn }
 				onClick={ () => toggleConfirmationPreview( clientId ) }
 			>
-				{ __( 'Preview confirmation', 'swiftforms' ) }
+				{ __( 'Preview confirmation', 'blockforms' ) }
 			</ToolbarButton>
 		</BlockControls>
 	);
@@ -90,7 +90,7 @@ function UnpublishedNotice() {
 				<Notice status="warning" isDismissible={ false }>
 					{ __(
 						"Previews of unpublished content can't receive submissions.",
-						'swiftforms'
+						'blockforms'
 					) }
 				</Notice>
 			</PanelBody>
@@ -128,7 +128,7 @@ function FieldNameRepair( { attributes, setAttributes, isSelected } ) {
 
 addFilter(
 	'editor.BlockEdit',
-	'swiftforms/block-edit',
+	'blockforms/block-edit',
 	createHigherOrderComponent(
 		( BlockEdit ) => ( props ) => {
 			if ( FORM_BLOCK === props.name ) {
@@ -157,13 +157,13 @@ addFilter(
 			}
 			return <BlockEdit { ...props } />;
 		},
-		'withSwiftFormsControls'
+		'withBlockFormsControls'
 	)
 );
 
 addFilter(
 	'editor.BlockListBlock',
-	'swiftforms/block-list-block',
+	'blockforms/block-list-block',
 	createHigherOrderComponent(
 		( BlockListBlock ) => ( props ) => {
 			const isOn = useSelect(
@@ -186,6 +186,6 @@ addFilter(
 				/>
 			);
 		},
-		'withSwiftFormsPreviewClass'
+		'withBlockFormsPreviewClass'
 	)
 );

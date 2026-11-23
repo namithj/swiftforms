@@ -1,14 +1,14 @@
 == S2 shop#1 / c07-ada (guest) ==
 request:
 {
-    "_sf_form": "5f070001-0000-4000-8000-000000000001",
-    "_sf_source": "post:shop",
-    "_sf_token": "{TOKEN}",
-    "_sf_hp": "",
-    "_sf_t": "js.10000",
-    "_sf_v": "{VERSION}",
-    "_sf_i": "1",
-    "sf": {
+    "_bf_form": "5f070001-0000-4000-8000-000000000001",
+    "_bf_source": "post:shop",
+    "_bf_token": "{TOKEN}",
+    "_bf_hp": "",
+    "_bf_t": "js.10000",
+    "_bf_v": "{VERSION}",
+    "_bf_i": "1",
+    "bf": {
         "name": "Ada Lovelace",
         "email": "ada@example.com",
         "message": "Do you stock vinyl?\nI am after a first pressing."
@@ -56,7 +56,7 @@ subject: New submission: Shop enquiry
 content-type: text/html; charset=UTF-8
 header: X-Mailer-Sim: smtp-plugin
 -- body --
-<table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you stock vinyl?<br>
+<table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you stock vinyl?<br>
 I am after a first pressing.</td></tr></table>
 -- alt body --
 Name: Ada Lovelace
@@ -127,7 +127,7 @@ subject: New submission: Shop enquiry
 content-type: text/html; charset=UTF-8
 header: X-Mailer-Sim: smtp-plugin
 -- body --
-<table class="swiftforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you stock vinyl?<br>
+<table class="blockforms-fields" role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse"><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Name</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Ada Lovelace</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Email</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">ada@example.com</td></tr><tr><th align="left" valign="top" style="padding:8px 12px 8px 0;border-bottom:1px solid #e2e4e7;font-weight:600">Message</th><td valign="top" style="padding:8px 0;border-bottom:1px solid #e2e4e7">Do you stock vinyl?<br>
 I am after a first pressing.</td></tr></table>
 -- alt body --
 Name: Ada Lovelace

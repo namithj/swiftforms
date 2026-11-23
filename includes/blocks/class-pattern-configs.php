@@ -2,10 +2,10 @@
 /**
  * The six form patterns.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -51,7 +51,7 @@ class Pattern_Configs {
 				'text',
 				[
 					'name'         => 'name',
-					'label'        => __( 'Name', 'swiftforms' ),
+					'label'        => __( 'Name', 'blockforms' ),
 					'required'     => true,
 					'width'        => '50',
 					'autocomplete' => 'name',
@@ -61,7 +61,7 @@ class Pattern_Configs {
 				'email',
 				[
 					'name'         => 'email',
-					'label'        => __( 'Email', 'swiftforms' ),
+					'label'        => __( 'Email', 'blockforms' ),
 					'required'     => true,
 					'width'        => '50',
 					'autocomplete' => 'email',
@@ -71,28 +71,28 @@ class Pattern_Configs {
 				'text',
 				[
 					'name'  => 'subject',
-					'label' => __( 'Subject', 'swiftforms' ),
+					'label' => __( 'Subject', 'blockforms' ),
 				]
 			)
 			. self::field(
 				'textarea',
 				[
 					'name'     => 'message',
-					'label'    => __( 'Message', 'swiftforms' ),
+					'label'    => __( 'Message', 'blockforms' ),
 					'required' => true,
 					'rows'     => 6,
 				]
 			)
-			. self::submit( __( 'Send message', 'swiftforms' ) )
-			. self::confirmation( __( "Thanks! We'll be in touch.", 'swiftforms' ) )
+			. self::submit( __( 'Send message', 'blockforms' ) )
+			. self::confirmation( __( "Thanks! We'll be in touch.", 'blockforms' ) )
 		);
 
 		return self::pattern(
 			'contact',
-			__( 'Contact form', 'swiftforms' ),
-			__( 'Name, email, subject and message.', 'swiftforms' ),
-			[ __( 'contact', 'swiftforms' ), __( 'message', 'swiftforms' ) ],
-			self::heading( __( 'Get in touch', 'swiftforms' ) ) . $form
+			__( 'Contact form', 'blockforms' ),
+			__( 'Name, email, subject and message.', 'blockforms' ),
+			[ __( 'contact', 'blockforms' ), __( 'message', 'blockforms' ) ],
+			self::heading( __( 'Get in touch', 'blockforms' ) ) . $form
 		);
 	}
 
@@ -107,7 +107,7 @@ class Pattern_Configs {
 				'text',
 				[
 					'name'         => 'name',
-					'label'        => __( 'Name', 'swiftforms' ),
+					'label'        => __( 'Name', 'blockforms' ),
 					'required'     => true,
 					'width'        => '50',
 					'autocomplete' => 'name',
@@ -117,7 +117,7 @@ class Pattern_Configs {
 				'email',
 				[
 					'name'         => 'email',
-					'label'        => __( 'Email', 'swiftforms' ),
+					'label'        => __( 'Email', 'blockforms' ),
 					'required'     => true,
 					'width'        => '50',
 					'autocomplete' => 'email',
@@ -127,7 +127,7 @@ class Pattern_Configs {
 				'tel',
 				[
 					'name'         => 'phone',
-					'label'        => __( 'Phone', 'swiftforms' ),
+					'label'        => __( 'Phone', 'blockforms' ),
 					'width'        => '50',
 					'autocomplete' => 'tel',
 				]
@@ -136,7 +136,7 @@ class Pattern_Configs {
 				'text',
 				[
 					'name'         => 'company',
-					'label'        => __( 'Company', 'swiftforms' ),
+					'label'        => __( 'Company', 'blockforms' ),
 					'width'        => '50',
 					'autocomplete' => 'organization',
 				]
@@ -145,40 +145,40 @@ class Pattern_Configs {
 				'select',
 				[
 					'name'              => 'service',
-					'label'             => __( 'What do you need?', 'swiftforms' ),
+					'label'             => __( 'What do you need?', 'blockforms' ),
 					'required'          => true,
-					'placeholderOption' => __( 'Choose one', 'swiftforms' ),
-					'options'           => self::options( [ __( 'Design', 'swiftforms' ), __( 'Development', 'swiftforms' ), __( 'Consulting', 'swiftforms' ), __( 'Something else', 'swiftforms' ) ] ),
+					'placeholderOption' => __( 'Choose one', 'blockforms' ),
+					'options'           => self::options( [ __( 'Design', 'blockforms' ), __( 'Development', 'blockforms' ), __( 'Consulting', 'blockforms' ), __( 'Something else', 'blockforms' ) ] ),
 				]
 			)
 			. self::field(
 				'radio',
 				[
 					'name'    => 'timeline',
-					'label'   => __( 'When do you need it?', 'swiftforms' ),
+					'label'   => __( 'When do you need it?', 'blockforms' ),
 					'layout'  => 'inline',
-					'options' => self::options( [ __( 'As soon as possible', 'swiftforms' ), __( 'Within a month', 'swiftforms' ), __( 'No rush', 'swiftforms' ) ] ),
+					'options' => self::options( [ __( 'As soon as possible', 'blockforms' ), __( 'Within a month', 'blockforms' ), __( 'No rush', 'blockforms' ) ] ),
 				]
 			)
 			. self::field(
 				'textarea',
 				[
 					'name'     => 'details',
-					'label'    => __( 'Project details', 'swiftforms' ),
+					'label'    => __( 'Project details', 'blockforms' ),
 					'required' => true,
 					'rows'     => 6,
 				]
 			)
-			. self::submit( __( 'Request a quote', 'swiftforms' ) )
-			. self::confirmation( __( 'Thanks! We will send you a quote soon.', 'swiftforms' ) )
+			. self::submit( __( 'Request a quote', 'blockforms' ) )
+			. self::confirmation( __( 'Thanks! We will send you a quote soon.', 'blockforms' ) )
 		);
 
 		return self::pattern(
 			'quote-request',
-			__( 'Quote request', 'swiftforms' ),
-			__( 'Contact details, what you need, when, and the details.', 'swiftforms' ),
-			[ __( 'quote', 'swiftforms' ), __( 'estimate', 'swiftforms' ) ],
-			self::heading( __( 'Request a quote', 'swiftforms' ) ) . $form
+			__( 'Quote request', 'blockforms' ),
+			__( 'Contact details, what you need, when, and the details.', 'blockforms' ),
+			[ __( 'quote', 'blockforms' ), __( 'estimate', 'blockforms' ) ],
+			self::heading( __( 'Request a quote', 'blockforms' ) ) . $form
 		);
 	}
 
@@ -193,7 +193,7 @@ class Pattern_Configs {
 				'text',
 				[
 					'name'         => 'name',
-					'label'        => __( 'Name', 'swiftforms' ),
+					'label'        => __( 'Name', 'blockforms' ),
 					'required'     => true,
 					'autocomplete' => 'name',
 				]
@@ -202,7 +202,7 @@ class Pattern_Configs {
 				'tel',
 				[
 					'name'         => 'phone',
-					'label'        => __( 'Phone number', 'swiftforms' ),
+					'label'        => __( 'Phone number', 'blockforms' ),
 					'required'     => true,
 					'autocomplete' => 'tel',
 				]
@@ -211,16 +211,16 @@ class Pattern_Configs {
 				'select',
 				[
 					'name'              => 'best_time',
-					'label'             => __( 'Best time to call', 'swiftforms' ),
-					'placeholderOption' => __( 'Any time', 'swiftforms' ),
-					'options'           => self::options( [ __( 'Morning', 'swiftforms' ), __( 'Afternoon', 'swiftforms' ), __( 'Evening', 'swiftforms' ) ] ),
+					'label'             => __( 'Best time to call', 'blockforms' ),
+					'placeholderOption' => __( 'Any time', 'blockforms' ),
+					'options'           => self::options( [ __( 'Morning', 'blockforms' ), __( 'Afternoon', 'blockforms' ), __( 'Evening', 'blockforms' ) ] ),
 				]
 			)
 			. self::field(
 				'textarea',
 				[
 					'name'  => 'topic',
-					'label' => __( 'What is it about?', 'swiftforms' ),
+					'label' => __( 'What is it about?', 'blockforms' ),
 					'rows'  => 3,
 				]
 			)
@@ -228,19 +228,19 @@ class Pattern_Configs {
 				'consent',
 				[
 					'name' => 'consent',
-					'text' => __( 'I agree to be called back on this number.', 'swiftforms' ),
+					'text' => __( 'I agree to be called back on this number.', 'blockforms' ),
 				]
 			)
-			. self::submit( __( 'Call me back', 'swiftforms' ) )
-			. self::confirmation( __( 'Thanks! We will call you back soon.', 'swiftforms' ) )
+			. self::submit( __( 'Call me back', 'blockforms' ) )
+			. self::confirmation( __( 'Thanks! We will call you back soon.', 'blockforms' ) )
 		);
 
 		return self::pattern(
 			'callback-request',
-			__( 'Callback request', 'swiftforms' ),
-			__( 'A name, a phone number and the best time to call.', 'swiftforms' ),
-			[ __( 'callback', 'swiftforms' ), __( 'phone', 'swiftforms' ) ],
-			self::heading( __( 'Request a callback', 'swiftforms' ) ) . $form
+			__( 'Callback request', 'blockforms' ),
+			__( 'A name, a phone number and the best time to call.', 'blockforms' ),
+			[ __( 'callback', 'blockforms' ), __( 'phone', 'blockforms' ) ],
+			self::heading( __( 'Request a callback', 'blockforms' ) ) . $form
 		);
 	}
 
@@ -255,9 +255,9 @@ class Pattern_Configs {
 				'email',
 				[
 					'name'         => 'email',
-					'label'        => __( 'Email address', 'swiftforms' ),
+					'label'        => __( 'Email address', 'blockforms' ),
 					'required'     => true,
-					'placeholder'  => __( 'Your email address', 'swiftforms' ),
+					'placeholder'  => __( 'Your email address', 'blockforms' ),
 					'autocomplete' => 'email',
 				]
 			)
@@ -265,20 +265,20 @@ class Pattern_Configs {
 				'consent',
 				[
 					'name' => 'consent',
-					'text' => __( 'I agree to receive the newsletter.', 'swiftforms' ),
+					'text' => __( 'I agree to receive the newsletter.', 'blockforms' ),
 				]
 			)
-			. self::submit( __( 'Subscribe', 'swiftforms' ) )
-			. self::confirmation( __( 'Thanks for subscribing!', 'swiftforms' ) ),
+			. self::submit( __( 'Subscribe', 'blockforms' ) )
+			. self::confirmation( __( 'Thanks for subscribing!', 'blockforms' ) ),
 			[ 'labelPosition' => 'hidden' ]
 		);
 
 		return self::pattern(
 			'newsletter-signup',
-			__( 'Newsletter signup', 'swiftforms' ),
-			__( 'An email address, consent and a subscribe button.', 'swiftforms' ),
-			[ __( 'newsletter', 'swiftforms' ), __( 'subscribe', 'swiftforms' ) ],
-			self::heading( __( 'Stay in the loop', 'swiftforms' ) ) . $form
+			__( 'Newsletter signup', 'blockforms' ),
+			__( 'An email address, consent and a subscribe button.', 'blockforms' ),
+			[ __( 'newsletter', 'blockforms' ), __( 'subscribe', 'blockforms' ) ],
+			self::heading( __( 'Stay in the loop', 'blockforms' ) ) . $form
 		);
 	}
 
@@ -293,7 +293,7 @@ class Pattern_Configs {
 				'text',
 				[
 					'name'         => 'name',
-					'label'        => __( 'Name', 'swiftforms' ),
+					'label'        => __( 'Name', 'blockforms' ),
 					'required'     => true,
 					'width'        => '50',
 					'autocomplete' => 'name',
@@ -303,7 +303,7 @@ class Pattern_Configs {
 				'email',
 				[
 					'name'         => 'email',
-					'label'        => __( 'Email', 'swiftforms' ),
+					'label'        => __( 'Email', 'blockforms' ),
 					'required'     => true,
 					'width'        => '50',
 					'autocomplete' => 'email',
@@ -313,17 +313,17 @@ class Pattern_Configs {
 				'radio',
 				[
 					'name'     => 'attending',
-					'label'    => __( 'Will you be there?', 'swiftforms' ),
+					'label'    => __( 'Will you be there?', 'blockforms' ),
 					'required' => true,
 					'layout'   => 'inline',
-					'options'  => self::options( [ __( 'Yes', 'swiftforms' ), __( 'No', 'swiftforms' ), __( 'Maybe', 'swiftforms' ) ] ),
+					'options'  => self::options( [ __( 'Yes', 'blockforms' ), __( 'No', 'blockforms' ), __( 'Maybe', 'blockforms' ) ] ),
 				]
 			)
 			. self::field(
 				'number',
 				[
 					'name'         => 'guests',
-					'label'        => __( 'Number of guests', 'swiftforms' ),
+					'label'        => __( 'Number of guests', 'blockforms' ),
 					'width'        => '50',
 					'min'          => '0',
 					'max'          => '10',
@@ -335,20 +335,20 @@ class Pattern_Configs {
 				'textarea',
 				[
 					'name'  => 'dietary',
-					'label' => __( 'Dietary needs', 'swiftforms' ),
+					'label' => __( 'Dietary needs', 'blockforms' ),
 					'rows'  => 3,
 				]
 			)
-			. self::submit( __( 'Send RSVP', 'swiftforms' ) )
-			. self::confirmation( __( 'Thanks for letting us know!', 'swiftforms' ) )
+			. self::submit( __( 'Send RSVP', 'blockforms' ) )
+			. self::confirmation( __( 'Thanks for letting us know!', 'blockforms' ) )
 		);
 
 		return self::pattern(
 			'event-rsvp',
-			__( 'Event RSVP', 'swiftforms' ),
-			__( 'Who is coming, how many, and any dietary needs.', 'swiftforms' ),
-			[ __( 'event', 'swiftforms' ), __( 'rsvp', 'swiftforms' ) ],
-			self::heading( __( 'RSVP', 'swiftforms' ) ) . $form
+			__( 'Event RSVP', 'blockforms' ),
+			__( 'Who is coming, how many, and any dietary needs.', 'blockforms' ),
+			[ __( 'event', 'blockforms' ), __( 'rsvp', 'blockforms' ) ],
+			self::heading( __( 'RSVP', 'blockforms' ) ) . $form
 		);
 	}
 
@@ -363,17 +363,17 @@ class Pattern_Configs {
 				'radio',
 				[
 					'name'     => 'rating',
-					'label'    => __( 'How would you rate your experience?', 'swiftforms' ),
+					'label'    => __( 'How would you rate your experience?', 'blockforms' ),
 					'required' => true,
 					'layout'   => 'inline',
-					'options'  => self::options( [ __( 'Excellent', 'swiftforms' ), __( 'Good', 'swiftforms' ), __( 'Fair', 'swiftforms' ), __( 'Poor', 'swiftforms' ) ] ),
+					'options'  => self::options( [ __( 'Excellent', 'blockforms' ), __( 'Good', 'blockforms' ), __( 'Fair', 'blockforms' ), __( 'Poor', 'blockforms' ) ] ),
 				]
 			)
 			. self::field(
 				'textarea',
 				[
 					'name'  => 'comments',
-					'label' => __( 'Tell us more', 'swiftforms' ),
+					'label' => __( 'Tell us more', 'blockforms' ),
 					'rows'  => 5,
 				]
 			)
@@ -381,21 +381,21 @@ class Pattern_Configs {
 				'email',
 				[
 					'name'         => 'email',
-					'label'        => __( 'Email (optional)', 'swiftforms' ),
-					'help'         => __( 'Only if you would like a reply.', 'swiftforms' ),
+					'label'        => __( 'Email (optional)', 'blockforms' ),
+					'help'         => __( 'Only if you would like a reply.', 'blockforms' ),
 					'autocomplete' => 'email',
 				]
 			)
-			. self::submit( __( 'Send feedback', 'swiftforms' ) )
-			. self::confirmation( __( 'Thank you for your feedback!', 'swiftforms' ) )
+			. self::submit( __( 'Send feedback', 'blockforms' ) )
+			. self::confirmation( __( 'Thank you for your feedback!', 'blockforms' ) )
 		);
 
 		return self::pattern(
 			'feedback',
-			__( 'Feedback form', 'swiftforms' ),
-			__( 'A rating, comments and an optional email.', 'swiftforms' ),
-			[ __( 'feedback', 'swiftforms' ), __( 'survey', 'swiftforms' ) ],
-			self::heading( __( 'Share your feedback', 'swiftforms' ) ) . $form
+			__( 'Feedback form', 'blockforms' ),
+			__( 'A rating, comments and an optional email.', 'blockforms' ),
+			[ __( 'feedback', 'blockforms' ), __( 'survey', 'blockforms' ) ],
+			self::heading( __( 'Share your feedback', 'blockforms' ) ) . $form
 		);
 	}
 
@@ -406,7 +406,7 @@ class Pattern_Configs {
 	/**
 	 * A pattern in the builder's format.
 	 *
-	 * @param string   $slug        Slug below "swiftforms/".
+	 * @param string   $slug        Slug below "blockforms/".
 	 * @param string   $title       Title.
 	 * @param string   $description Description.
 	 * @param string[] $keywords    Search keywords.
@@ -415,7 +415,7 @@ class Pattern_Configs {
 	 */
 	private static function pattern( $slug, $title, $description, array $keywords, $content ) {
 		return [
-			'slug'        => 'swiftforms/' . $slug,
+			'slug'        => 'blockforms/' . $slug,
 			'title'       => $title,
 			'description' => $description,
 			'categories'  => [ Block_Configs::CATEGORY ],
@@ -432,7 +432,7 @@ class Pattern_Configs {
 	 * @return string
 	 */
 	private static function form( $inner, array $attrs = [] ) {
-		return '<!-- wp:swiftforms/form' . self::attrs( $attrs ) . ' -->' . $inner . '<!-- /wp:swiftforms/form -->';
+		return '<!-- wp:blockforms/form' . self::attrs( $attrs ) . ' -->' . $inner . '<!-- /wp:blockforms/form -->';
 	}
 
 	/**
@@ -443,7 +443,7 @@ class Pattern_Configs {
 	 * @return string
 	 */
 	private static function field( $type, array $attrs ) {
-		return '<!-- wp:swiftforms/field-' . $type . self::attrs( $attrs ) . ' /-->';
+		return '<!-- wp:blockforms/field-' . $type . self::attrs( $attrs ) . ' /-->';
 	}
 
 	/**
@@ -453,7 +453,7 @@ class Pattern_Configs {
 	 * @return string
 	 */
 	private static function submit( $label ) {
-		return '<!-- wp:swiftforms/submit' . self::attrs( [ 'label' => $label ] ) . ' /-->';
+		return '<!-- wp:blockforms/submit' . self::attrs( [ 'label' => $label ] ) . ' /-->';
 	}
 
 	/**
@@ -463,7 +463,7 @@ class Pattern_Configs {
 	 * @return string
 	 */
 	private static function confirmation( $text ) {
-		return '<!-- wp:swiftforms/confirmation -->' . self::paragraph( $text ) . '<!-- /wp:swiftforms/confirmation -->';
+		return '<!-- wp:blockforms/confirmation -->' . self::paragraph( $text ) . '<!-- /wp:blockforms/confirmation -->';
 	}
 
 	/**

@@ -2,10 +2,10 @@
 /**
  * REST route: submit.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Rest_Submit
  *
- * POST swiftforms/v1/submit (C-3.4). Public; guarded by the Gate (Rest_Public) and the pipeline (Submission).
+ * POST blockforms/v1/submit (C-3.4). Public; guarded by the Gate (Rest_Public) and the pipeline (Submission).
  * Accepts JSON or a form-encoded body:
  *
- *   { _sf_form, _sf_source, _sf_token, _sf_hp, _sf_t, _sf_v, sf: { name: value | [values] } }
+ *   { _bf_form, _bf_source, _bf_token, _bf_hp, _bf_t, _bf_v, bf: { name: value | [values] } }
  *
  * Answers exactly the C-3.4 shapes. "entryId" is added only for an authenticated caller who may view entries;
  * a guest never gets it, and a spam submission is answered like a clean one. Logged-in visitors authenticate
@@ -60,13 +60,13 @@ class Rest_Submit {
 	public static function handle( \WP_REST_Request $request ) {
 		$params = $request->is_json_content_type() ? $request->get_json_params() : $request->get_body_params();
 		$params = is_array( $params ) ? $params : [];
-		$sf     = isset( $params['sf'] ) && is_array( $params['sf'] ) ? $params['sf'] : [];
+		$bf     = isset( $params['bf'] ) && is_array( $params['bf'] ) ? $params['bf'] : [];
 
-		$form_id = self::text( $params, '_sf_form' );
-		$source  = self::text( $params, '_sf_source' );
+		$form_id = self::text( $params, '_bf_form' );
+		$source  = self::text( $params, '_bf_source' );
 
 		$length  = max( (int) $request->get_header( 'content_length' ), strlen( (string) $request->get_body() ) );
-		$refused = Gate::check( $form_id, $source, Gate::count_fields( $sf ), $length, $request );
+		$refused = Gate::check( $form_id, $source, Gate::count_fields( $bf ), $length, $request );
 		if ( null !== $refused ) {
 			return Rest_Public::response( $refused );
 		}
@@ -76,17 +76,17 @@ class Rest_Submit {
 			[
 				'form_id'   => $form_id,
 				'source'    => $source,
-				'token'     => $params['_sf_token'] ?? null,
-				'hp'        => $params['_sf_hp'] ?? '',
-				't'         => $params['_sf_t'] ?? null,
-				'sf'        => $sf,
+				'token'     => $params['_bf_token'] ?? null,
+				'hp'        => $params['_bf_hp'] ?? '',
+				't'         => $params['_bf_t'] ?? null,
+				'bf'        => $bf,
 				'page_hint' => (string) $request->get_header( 'referer' ),
 			],
 			'rest',
 			$user
 		);
 
-		return Rest_Public::response( $result, null !== $user && Access::can( 'swiftforms_view_entries' ) );
+		return Rest_Public::response( $result, null !== $user && Access::can( 'blockforms_view_entries' ) );
 	}
 
 	/**

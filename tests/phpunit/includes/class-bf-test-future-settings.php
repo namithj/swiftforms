@@ -1,18 +1,18 @@
-<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper, named like the SF_ helpers of the R00 harness.
+<?php // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- Test helper, named like the BF_ helpers of the R00 harness.
 /**
  * Test double for Settings (C-5.3).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Settings;
+use BlockForms\Settings;
 
 /**
  * Stand-in for a future release: one key whose default differs for new installs.
  *
  * Proves the C-5.3 mechanism, which has no real key in 1.0.
  */
-class Sf_Test_Future_Settings extends Settings {
+class Bf_Test_Future_Settings extends Settings {
 
 	/**
 	 * The base defaults plus a key that existing sites keep as false.

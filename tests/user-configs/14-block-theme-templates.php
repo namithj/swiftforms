@@ -4,12 +4,12 @@
  *
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag.
  *
- * A block theme (sf-test-block-files: sf-test-block plus one extra template file) with forms in four places:
+ * A block theme (bf-test-block-files: bf-test-block plus one extra template file) with forms in four places:
  * a footer template part and a custom single template saved to the database (wp_template_part and wp_template
- * posts tagged with the theme), a page, and a theme-file template (templates/sf-landing.html) that was never saved
+ * posts tagged with the theme), a page, and a theme-file template (templates/bf-landing.html) that was never saved
  * to the database. The footer part replaces the theme's footer wherever the theme's templates use it.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 return [
@@ -18,15 +18,15 @@ return [
 	'guards'        => [ 'ADR-001', 'C-3.11', 'C-2.6' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block-files',
+		'theme'      => 'bf-test-block-files',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_email_notification_to' => 'editor@fse-site.example',
-		'swiftforms_db_version'            => 1,
-		'swiftforms_installed'             => [
+		'blockforms_email_notification_to' => 'editor@fse-site.example',
+		'blockforms_db_version'            => 1,
+		'blockforms_installed'             => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -39,18 +39,18 @@ return [
 			'title'     => 'Footer',
 			'slug'      => 'footer',
 			'date'      => '2026-10-01 09:00:00',
-			'terms'     => [ 'wp_theme' => [ 'sf-test-block-files' ] ],
+			'terms'     => [ 'wp_theme' => [ 'bf-test-block-files' ] ],
 			'meta'      => [ 'origin' => 'theme' ],
-			'content'   => SF_BLOCK(
+			'content'   => BF_BLOCK(
 				'group',
 				[ 'tagName' => 'footer' ],
-				'<footer class="wp-block-group">' . SF_PARAGRAPH( 'Stay in touch.' ) . "\n\n" . SF_FORM(
+				'<footer class="wp-block-group">' . BF_PARAGRAPH( 'Stay in touch.' ) . "\n\n" . BF_FORM(
 					[
 						'formId' => '5f140001-0000-4000-8000-000000000001',
 						'title'  => 'Footer newsletter',
 					],
 					[
-						SF_FIELD(
+						BF_FIELD(
 							'email',
 							[
 								'label'        => 'Email',
@@ -72,24 +72,24 @@ return [
 			'title'     => 'Single Post',
 			'slug'      => 'single',
 			'date'      => '2026-10-01 10:00:00',
-			'terms'     => [ 'wp_theme' => [ 'sf-test-block-files' ] ],
+			'terms'     => [ 'wp_theme' => [ 'bf-test-block-files' ] ],
 			'meta'      => [ 'origin' => 'theme' ],
-			'content'   => SF_BLOCK(
+			'content'   => BF_BLOCK(
 				'template-part',
 				[
 					'slug'    => 'header',
 					'tagName' => 'header',
 				]
-			) . "\n\n" . SF_BLOCK(
+			) . "\n\n" . BF_BLOCK(
 				'group',
 				[ 'tagName' => 'main' ],
-				'<main class="wp-block-group">' . SF_BLOCK( 'post-title' ) . "\n\n" . SF_BLOCK( 'post-content' ) . "\n\n" . SF_FORM(
+				'<main class="wp-block-group">' . BF_BLOCK( 'post-title' ) . "\n\n" . BF_BLOCK( 'post-content' ) . "\n\n" . BF_FORM(
 					[
 						'formId' => '5f140002-0000-4000-8000-000000000002',
 						'title'  => 'Reader feedback',
 					],
 					[
-						SF_FIELD(
+						BF_FIELD(
 							'text',
 							[
 								'label'    => 'Your name',
@@ -97,7 +97,7 @@ return [
 								'required' => true,
 							]
 						),
-						SF_FIELD(
+						BF_FIELD(
 							'textarea',
 							[
 								'label'    => 'Feedback',
@@ -109,7 +109,7 @@ return [
 					'Send feedback',
 					'Thank you for your feedback.'
 				) . '</main>'
-			) . "\n\n" . SF_BLOCK(
+			) . "\n\n" . BF_BLOCK(
 				'template-part',
 				[
 					'slug'    => 'footer',
@@ -124,13 +124,13 @@ return [
 			'title'     => 'About',
 			'slug'      => 'about',
 			'date'      => '2026-10-02 09:00:00',
-			'content'   => SF_PARAGRAPH( 'We are a small restaurant.' ) . "\n\n" . SF_FORM(
+			'content'   => BF_PARAGRAPH( 'We are a small restaurant.' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f140003-0000-4000-8000-000000000003',
 					'title'  => 'Ask us',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'    => 'Email',
@@ -138,7 +138,7 @@ return [
 							'required' => true,
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'textarea',
 						[
 							'label'    => 'Question',
@@ -158,15 +158,15 @@ return [
 			'title'     => 'Hello world',
 			'slug'      => 'hello-world',
 			'date'      => '2026-10-03 09:00:00',
-			'content'   => SF_PARAGRAPH( 'A post without a form of its own; its single template carries one.' ),
+			'content'   => BF_PARAGRAPH( 'A post without a form of its own; its single template carries one.' ),
 		],
 	],
 	'users'         => [ 'admin' ],
 	'renders'       => [
 		[
-			'name' => 'theme file template sf-landing',
+			'name' => 'theme file template bf-landing',
 			'type' => 'template',
-			'id'   => 'sf-landing',
+			'id'   => 'bf-landing',
 		],
 		[
 			'name' => 'theme file template part header',
@@ -187,7 +187,7 @@ return [
 			'valid'   => [ 'c14-ask' ],
 			'invalid' => [ 'c14-ask-bad' ],
 		],
-		'template:sf-test-block-files//sf-landing#1' => [
+		'template:bf-test-block-files//bf-landing#1' => [
 			'valid'   => [ 'c14-table' ],
 			'invalid' => [ 'c14-table-bad' ],
 		],

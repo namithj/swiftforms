@@ -2,10 +2,10 @@
 /**
  * REST nonce refresh.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Rest_Nonce
  *
- * admin-ajax.php?action=swiftforms_rest_nonce . A logged-in visitor's page may be older than the nonce it
+ * admin-ajax.php?action=blockforms_rest_nonce . A logged-in visitor's page may be older than the nonce it
  * carries; when core answers rest_cookie_invalid_nonce the view module fetches a fresh `wp_rest` nonce here
  * and retries once (ADR-002). The cookie authenticates the request, so no nonce is needed to ask. There is
  * NO wp_ajax_nopriv_ hook: a guest gets nothing. The answer is never cached.
@@ -29,7 +29,7 @@ class Rest_Nonce {
 	 * @return void
 	 */
 	public static function init() {
-		add_action( 'wp_ajax_swiftforms_rest_nonce', [ self::class, 'respond' ] );
+		add_action( 'wp_ajax_blockforms_rest_nonce', [ self::class, 'respond' ] );
 	}
 
 	/**

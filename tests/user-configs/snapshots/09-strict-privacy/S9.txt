@@ -1,15 +1,15 @@
 == S9 registered ==
-exporter: SwiftForms entries
-eraser: SwiftForms entries
+exporter: BlockForms entries
+eraser: BlockForms entries
 
 == S9 export for person25@eu-example.org ==
 [
     {
         "data": [
             {
-                "group_id": "swiftforms-entries",
-                "group_label": "SwiftForms entries",
-                "item_id": "swiftforms-entry-25",
+                "group_id": "blockforms-entries",
+                "group_label": "BlockForms entries",
+                "item_id": "blockforms-entry-25",
                 "data": [
                     {
                         "name": "Form",
@@ -56,7 +56,7 @@ eraser: SwiftForms entries
         "items_removed": true,
         "items_retained": false,
         "messages": [
-            "Removed 1 SwiftForms entry."
+            "Removed 1 BlockForms entry."
         ],
         "done": true
     }

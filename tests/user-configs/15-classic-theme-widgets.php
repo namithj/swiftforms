@@ -4,20 +4,20 @@
  *
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag.
  *
- * sf-test-classic (no theme.json, one sidebar "sf-sidebar"). A form lives in a block widget in that sidebar
+ * bf-test-classic (no theme.json, one sidebar "bf-sidebar"). A form lives in a block widget in that sidebar
  * (widget_block + sidebars_widgets), another sits in the sidebar of inactive widgets, one is inside core/columns on a page, and a post
  * holds a form that shows in full on the blog index and on its own page: both are the same source, post:ID.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-$sf_c15_sidebar_form = SF_FORM(
+$bf_c15_sidebar_form = BF_FORM(
 	[
 		'formId' => '5f150001-0000-4000-8000-000000000001',
 		'title'  => 'Sidebar signup',
 	],
 	[
-		SF_FIELD(
+		BF_FIELD(
 			'email',
 			[
 				'label'        => 'Email',
@@ -31,13 +31,13 @@ $sf_c15_sidebar_form = SF_FORM(
 	'Welcome aboard.'
 );
 
-$sf_c15_inactive_form = SF_FORM(
+$bf_c15_inactive_form = BF_FORM(
 	[
 		'formId' => '5f150002-0000-4000-8000-000000000002',
 		'title'  => 'Retired widget form',
 	],
 	[
-		SF_FIELD(
+		BF_FIELD(
 			'text',
 			[
 				'label'    => 'Name',
@@ -56,27 +56,27 @@ return [
 	'guards'        => [ 'ADR-001', 'C-2.6', 'C-3.11', 'C-7.3' ],
 	'site'          => [
 		'locale'        => 'en_US',
-		'theme'         => 'sf-test-classic',
+		'theme'         => 'bf-test-classic',
 		'multisite'     => false,
 		'timezone'      => 'America/New_York',
 		'permalinks'    => '/%postname%/',
 		'show_on_front' => 'posts',
 	],
 	'options'       => [
-		'swiftforms_email_notification_to' => 'webmaster@classic-site.example',
-		'swiftforms_db_version'            => 1,
-		'swiftforms_installed'             => [
+		'blockforms_email_notification_to' => 'webmaster@classic-site.example',
+		'blockforms_db_version'            => 1,
+		'blockforms_installed'             => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
 		'widget_block'                     => [
-			2              => [ 'content' => $sf_c15_sidebar_form ],
-			3              => [ 'content' => $sf_c15_inactive_form ],
+			2              => [ 'content' => $bf_c15_sidebar_form ],
+			3              => [ 'content' => $bf_c15_inactive_form ],
 			'_multiwidget' => 1,
 		],
 		'sidebars_widgets'                 => [
 			'wp_inactive_widgets' => [ 'block-3' ],
-			'sf-sidebar'          => [ 'block-2' ],
+			'bf-sidebar'          => [ 'block-2' ],
 			'array_version'       => 3,
 		],
 	],
@@ -88,19 +88,19 @@ return [
 			'title'     => 'Visit us',
 			'slug'      => 'visit',
 			'date'      => '2026-10-01 09:00:00',
-			'content'   => SF_BLOCK(
+			'content'   => BF_BLOCK(
 				'columns',
 				[],
-				'<div class="wp-block-columns">' . SF_BLOCK( 'column', [], '<div class="wp-block-column">' . SF_PARAGRAPH( 'Opening hours: every day, 9 to 5.' ) . '</div>' ) . SF_BLOCK(
+				'<div class="wp-block-columns">' . BF_BLOCK( 'column', [], '<div class="wp-block-column">' . BF_PARAGRAPH( 'Opening hours: every day, 9 to 5.' ) . '</div>' ) . BF_BLOCK(
 					'column',
 					[],
-					'<div class="wp-block-column">' . SF_FORM(
+					'<div class="wp-block-column">' . BF_FORM(
 						[
 							'formId' => '5f150003-0000-4000-8000-000000000003',
 							'title'  => 'Book a visit',
 						],
 						[
-							SF_FIELD(
+							BF_FIELD(
 								'text',
 								[
 									'label'        => 'Name',
@@ -109,7 +109,7 @@ return [
 									'autocomplete' => 'name',
 								]
 							),
-							SF_FIELD(
+							BF_FIELD(
 								'date',
 								[
 									'label' => 'Day',
@@ -131,13 +131,13 @@ return [
 			'title'     => 'Join the club',
 			'slug'      => 'join-the-club',
 			'date'      => '2026-10-10 09:00:00',
-			'content'   => SF_PARAGRAPH( 'Tell us who you are and we will keep you posted.' ) . "\n\n" . SF_FORM(
+			'content'   => BF_PARAGRAPH( 'Tell us who you are and we will keep you posted.' ) . "\n\n" . BF_FORM(
 				[
 					'formId' => '5f150004-0000-4000-8000-000000000004',
 					'title'  => 'Club membership',
 				],
 				[
-					SF_FIELD(
+					BF_FIELD(
 						'text',
 						[
 							'label'        => 'Name',
@@ -146,7 +146,7 @@ return [
 							'autocomplete' => 'name',
 						]
 					),
-					SF_FIELD(
+					BF_FIELD(
 						'email',
 						[
 							'label'    => 'Email',
@@ -166,16 +166,16 @@ return [
 			'title'     => 'Just news',
 			'slug'      => 'just-news',
 			'date'      => '2026-10-05 09:00:00',
-			'content'   => SF_PARAGRAPH( 'A post with no form.' ),
+			'content'   => BF_PARAGRAPH( 'A post with no form.' ),
 		],
 	],
 	'users'         => [ 'admin' ],
 	'mu_plugins'    => [ '15-classic-sidebar.php' ],
 	'renders'       => [
 		[
-			'name'    => 'sidebar sf-sidebar',
+			'name'    => 'sidebar bf-sidebar',
 			'type'    => 'widget_area',
-			'sidebar' => 'sf-sidebar',
+			'sidebar' => 'bf-sidebar',
 		],
 		[
 			'name' => 'blog index',

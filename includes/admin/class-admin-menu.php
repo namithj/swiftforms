@@ -2,10 +2,10 @@
 /**
  * The Forms menu and the Entries screen.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,14 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Top-level "Forms" with Entries, a PHP screen (Entries_Screen: a WP_List_Table and a single-entry screen).
  * The Settings submenu is registered by Settings_Page (cassette-cmf) after this menu. Nothing is shown outside these screens: no redirect on activation, no wizard, no notice. The screen IDs
- * contain "swiftforms", which is how other code recognises a SwiftForms screen.
+ * contain "blockforms", which is how other code recognises a BlockForms screen.
  */
 class Admin_Menu {
 
 	/**
 	 * Menu slug of the Entries screen (also the top-level slug).
 	 */
-	const SLUG_ENTRIES = 'swiftforms';
+	const SLUG_ENTRIES = 'blockforms';
 
 	/**
 	 * Hook suffixes of the screens, set while the menu is added.
@@ -67,9 +67,9 @@ class Admin_Menu {
 		self::$screens = [];
 
 		$entries = add_menu_page(
-			__( 'Entries', 'swiftforms' ),
-			__( 'Forms', 'swiftforms' ),
-			'swiftforms_view_entries',
+			__( 'Entries', 'blockforms' ),
+			__( 'Forms', 'blockforms' ),
+			'blockforms_view_entries',
 			self::SLUG_ENTRIES,
 			[ Entries_Screen::class, 'render' ],
 			'dashicons-feedback',
@@ -81,7 +81,7 @@ class Admin_Menu {
 		}
 
 		// The first submenu item replaces the duplicate top-level entry.
-		add_submenu_page( self::SLUG_ENTRIES, __( 'Entries', 'swiftforms' ), __( 'Entries', 'swiftforms' ), 'swiftforms_view_entries', self::SLUG_ENTRIES, [ Entries_Screen::class, 'render' ] );
+		add_submenu_page( self::SLUG_ENTRIES, __( 'Entries', 'blockforms' ), __( 'Entries', 'blockforms' ), 'blockforms_view_entries', self::SLUG_ENTRIES, [ Entries_Screen::class, 'render' ] );
 	}
 
 	/**
@@ -95,8 +95,8 @@ class Admin_Menu {
 			Entries_Screen::enqueue();
 		}
 		if ( get_plugin_page_hookname( Settings_Page::MENU_SLUG, Settings_Page::PARENT_SLUG ) === $hook_suffix ) {
-			$path = plugin_dir_path( SWIFTFORMS_FILE ) . 'includes/admin/settings.css';
-			wp_enqueue_style( 'swiftforms-admin-settings', plugins_url( 'includes/admin/settings.css', SWIFTFORMS_FILE ), [], is_readable( $path ) ? (string) filemtime( $path ) : SWIFTFORMS_VERSION );
+			$path = plugin_dir_path( BLOCKFORMS_FILE ) . 'includes/admin/settings.css';
+			wp_enqueue_style( 'blockforms-admin-settings', plugins_url( 'includes/admin/settings.css', BLOCKFORMS_FILE ), [], is_readable( $path ) ? (string) filemtime( $path ) : BLOCKFORMS_VERSION );
 		}
 	}
 }

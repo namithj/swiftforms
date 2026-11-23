@@ -2,10 +2,10 @@
 /**
  * Scheduled tasks.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -23,7 +23,7 @@ class Cron {
 	/**
 	 * Event name.
 	 */
-	const DAILY = 'swiftforms_daily';
+	const DAILY = 'blockforms_daily';
 
 	/**
 	 * Hook the event and its lazy scheduling.

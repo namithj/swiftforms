@@ -2,10 +2,10 @@
 /**
  * REST routes of the Entries screen.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Rest_Entries
  *
- * swiftforms/v1/entries (list), entries/{id} (read, change, delete) and forms (counts for the filters). Every
+ * blockforms/v1/entries (list), entries/{id} (read, change, delete) and forms (counts for the filters). Every
  * permission callback asks Access::can() for the capability the action needs: a guest gets 401, a logged-in
  * user without the capability 403. Responses are never cached.
  */
@@ -118,7 +118,7 @@ class Rest_Entries {
 	 * @return true|\WP_Error
 	 */
 	public static function can_view() {
-		return self::require_cap( 'swiftforms_view_entries' );
+		return self::require_cap( 'blockforms_view_entries' );
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Rest_Entries {
 	 * @return true|\WP_Error
 	 */
 	public static function can_edit() {
-		return self::require_cap( 'swiftforms_edit_entries' );
+		return self::require_cap( 'blockforms_edit_entries' );
 	}
 
 	/**
@@ -136,13 +136,13 @@ class Rest_Entries {
 	 * @return true|\WP_Error
 	 */
 	public static function can_delete() {
-		return self::require_cap( 'swiftforms_delete_entries' );
+		return self::require_cap( 'blockforms_delete_entries' );
 	}
 
 	/**
 	 * The permission answer for a capability: true, or 401 for a guest and 403 for a user without it.
 	 *
-	 * @param string $cap SwiftForms capability.
+	 * @param string $cap BlockForms capability.
 	 * @return true|\WP_Error
 	 */
 	public static function require_cap( $cap ) {
@@ -151,7 +151,7 @@ class Rest_Entries {
 		}
 		return new \WP_Error(
 			'rest_forbidden',
-			__( 'Sorry, you are not allowed to do that.', 'swiftforms' ),
+			__( 'Sorry, you are not allowed to do that.', 'blockforms' ),
 			[ 'status' => rest_authorization_required_code() ]
 		);
 	}
@@ -222,12 +222,12 @@ class Rest_Entries {
 			$changes['starred'] = filter_var( $request->get_param( 'starred' ), FILTER_VALIDATE_BOOLEAN );
 		}
 		if ( ! $changes ) {
-			return new \WP_Error( 'rest_missing_callback_param', __( 'Send a status or starred.', 'swiftforms' ), [ 'status' => 400 ] );
+			return new \WP_Error( 'rest_missing_callback_param', __( 'Send a status or starred.', 'blockforms' ), [ 'status' => 400 ] );
 		}
 		if ( ! Entries_Repository::update( $id, $changes ) ) {
 			return self::not_found();
 		}
-		if ( Access::can( 'swiftforms_view_entries' ) ) {
+		if ( Access::can( 'blockforms_view_entries' ) ) {
 			return self::read_entry( $request );
 		}
 
@@ -278,7 +278,7 @@ class Rest_Entries {
 
 		$counts = Entries_Repository::counts_by_form();
 		$table  = esc_sql( Database::table( 'forms' ) );
-		// sf-allow-unprepared: no input.
+		// bf-allow-unprepared: no input.
 		$rows = $wpdb->get_results( "SELECT form_id, title FROM {$table} ORDER BY title ASC, form_id ASC", ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Own table; no variable input.
 
 		$items = [];
@@ -324,6 +324,6 @@ class Rest_Entries {
 	 * @return \WP_Error
 	 */
 	private static function not_found() {
-		return new \WP_Error( 'swiftforms_entry_not_found', __( 'No such entry.', 'swiftforms' ), [ 'status' => 404 ] );
+		return new \WP_Error( 'blockforms_entry_not_found', __( 'No such entry.', 'blockforms' ), [ 'status' => 404 ] );
 	}
 }

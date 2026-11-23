@@ -1,14 +1,14 @@
 <?php
 /**
- * Route inventory: every swiftforms/v1 route is either on the public allow-list or guarded by Access::can().
+ * Route inventory: every blockforms/v1 route is either on the public allow-list or guarded by Access::can().
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__, 2 ) . '/includes/class-sf-admin-test-case.php';
+require_once dirname( __DIR__, 2 ) . '/includes/class-bf-admin-test-case.php';
 
-use SwiftForms\Access;
-use SwiftForms\Rest_Public;
+use BlockForms\Access;
+use BlockForms\Rest_Public;
 
 /**
  * Class RouteInventoryTest
@@ -16,7 +16,7 @@ use SwiftForms\Rest_Public;
  * @group security
  * @group admin
  */
-class RouteInventoryTest extends SF_Admin_Test_Case {
+class RouteInventoryTest extends BF_Admin_Test_Case {
 
 	/**
 	 * The route entries of the namespace: [ route, method(s), handler ].
@@ -43,12 +43,12 @@ class RouteInventoryTest extends SF_Admin_Test_Case {
 		sort( $routes );
 		$this->assertSame(
 			[
-				'/swiftforms/v1',
-				'/swiftforms/v1/entries',
-				'/swiftforms/v1/entries/(?P<id>\d+)',
-				'/swiftforms/v1/forms',
-				'/swiftforms/v1/submit',
-				'/swiftforms/v1/token',
+				'/blockforms/v1',
+				'/blockforms/v1/entries',
+				'/blockforms/v1/entries/(?P<id>\d+)',
+				'/blockforms/v1/forms',
+				'/blockforms/v1/submit',
+				'/blockforms/v1/token',
 			],
 			$routes
 		);
@@ -66,7 +66,7 @@ class RouteInventoryTest extends SF_Admin_Test_Case {
 			},
 			Rest_Public::ROUTES
 		);
-		$public[] = '/swiftforms/v1'; // The namespace index core adds.
+		$public[] = '/blockforms/v1'; // The namespace index core adds.
 
 		$checked = 0;
 		foreach ( $this->inventory() as $entry ) {
@@ -101,12 +101,12 @@ class RouteInventoryTest extends SF_Admin_Test_Case {
 	 * @return void
 	 */
 	public function test_permission_callbacks_use_access_can() {
-		$this->map_caps( [ 'swiftforms_delete_entries' => 'edit_posts' ] );
+		$this->map_caps( [ 'blockforms_delete_entries' => 'edit_posts' ] );
 		$this->be_role( 'contributor' );
-		$this->assertTrue( Access::can( 'swiftforms_delete_entries' ) );
-		$this->assertTrue( \SwiftForms\Rest_Entries::can_delete() );
-		$this->assertWPError( \SwiftForms\Rest_Entries::can_view() );
-		$this->assertWPError( \SwiftForms\Rest_Entries::can_edit() );
+		$this->assertTrue( Access::can( 'blockforms_delete_entries' ) );
+		$this->assertTrue( \BlockForms\Rest_Entries::can_delete() );
+		$this->assertWPError( \BlockForms\Rest_Entries::can_view() );
+		$this->assertWPError( \BlockForms\Rest_Entries::can_edit() );
 	}
 
 	/**
@@ -146,6 +146,6 @@ class RouteInventoryTest extends SF_Admin_Test_Case {
 			}
 		}
 		sort( $public );
-		$this->assertSame( [ '/swiftforms/v1/submit', '/swiftforms/v1/token' ], $public );
+		$this->assertSame( [ '/blockforms/v1/submit', '/blockforms/v1/token' ], $public );
 	}
 }

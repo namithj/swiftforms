@@ -2,10 +2,10 @@
 /**
  * Rate limiters and the duplicate guard.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -50,7 +50,7 @@ class Throttle {
 	/**
 	 * Object cache group of the counters.
 	 */
-	const CACHE_GROUP = 'swiftforms_throttle';
+	const CACHE_GROUP = 'blockforms_throttle';
 
 	/**
 	 * The coarse limit.
@@ -59,19 +59,19 @@ class Throttle {
 	 */
 	public static function limit() {
 		/**
-		 * Filters how many requests one client may make to SwiftForms' public routes per minute.
+		 * Filters how many requests one client may make to BlockForms' public routes per minute.
 		 *
 		 * The coarse limiter runs before any other work on every public route (submit, token), counts
 		 * per client key (a salted hash of the address, IPv6 by its /64 prefix) and answers 429
 		 * rate_limited when the count passes this number. Raise it for sites where many visitors share
-		 * one address (a school, an office, a proxy without swiftforms_client_ip), lower it under attack.
+		 * one address (a school, an office, a proxy without blockforms_client_ip), lower it under attack.
 		 * Values below 1 are ignored.
 		 *
 		 * @since 1.0.0
 		 *
 		 * @param int $limit Requests per client key per minute. Default 60.
 		 */
-		$limit = apply_filters( 'swiftforms_throttle_limit', self::DEFAULT_LIMIT );
+		$limit = apply_filters( 'blockforms_throttle_limit', self::DEFAULT_LIMIT );
 		return ( is_numeric( $limit ) && (int) $limit >= 1 ) ? (int) $limit : self::DEFAULT_LIMIT;
 	}
 
@@ -144,7 +144,7 @@ class Throttle {
 	 * @return int The new count.
 	 */
 	private static function bump( $kind, $key ) {
-		$name = 'swiftforms_' . $kind . '_' . (int) floor( Clock::now() / self::WINDOW ) . '_' . $key;
+		$name = 'blockforms_' . $kind . '_' . (int) floor( Clock::now() / self::WINDOW ) . '_' . $key;
 
 		if ( wp_using_ext_object_cache() ) {
 			wp_cache_add( $name, 0, self::CACHE_GROUP, self::WINDOW * 2 );
@@ -166,7 +166,7 @@ class Throttle {
 	 * @return string
 	 */
 	private static function duplicate_name( $form_id, $client_key, $payload ) {
-		return 'swiftforms_d_' . md5( $form_id . '|' . $client_key . '|' . $payload );
+		return 'blockforms_d_' . md5( $form_id . '|' . $client_key . '|' . $payload );
 	}
 
 	/**

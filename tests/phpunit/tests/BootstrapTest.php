@@ -2,11 +2,11 @@
 /**
  * Tests that the plugin loads and boots cleanly.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Builder_Adapter;
-use SwiftForms\Plugin;
+use BlockForms\Builder_Adapter;
+use BlockForms\Plugin;
 
 /**
  * Class BootstrapTest
@@ -19,9 +19,9 @@ class BootstrapTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_plugin_is_loaded() {
-		$this->assertTrue( defined( 'SWIFTFORMS_VERSION' ) );
+		$this->assertTrue( defined( 'BLOCKFORMS_VERSION' ) );
 		$this->assertTrue( class_exists( Plugin::class ) );
-		$this->assertSame( 'SwiftForms\\Plugin', get_class( Plugin::instance() ) );
+		$this->assertSame( 'BlockForms\\Plugin', get_class( Plugin::instance() ) );
 	}
 
 	/**
@@ -30,8 +30,8 @@ class BootstrapTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_version_matches_header() {
-		$data = get_file_data( SWIFTFORMS_FILE, [ 'Version' => 'Version' ] );
-		$this->assertSame( $data['Version'], SWIFTFORMS_VERSION );
+		$data = get_file_data( BLOCKFORMS_FILE, [ 'Version' => 'Version' ] );
+		$this->assertSame( $data['Version'], BLOCKFORMS_VERSION );
 	}
 
 	/**
@@ -41,13 +41,13 @@ class BootstrapTest extends WP_UnitTestCase {
 	 */
 	public function test_header_floors() {
 		$data = get_file_data(
-			SWIFTFORMS_FILE,
+			BLOCKFORMS_FILE,
 			[
 				'WP'  => 'Requires at least',
 				'PHP' => 'Requires PHP',
 			]
 		);
-		$this->assertSame( SWIFTFORMS_MIN_WP, $data['WP'] );
+		$this->assertSame( BLOCKFORMS_MIN_WP, $data['WP'] );
 		$this->assertSame( '7.4', $data['PHP'] );
 	}
 
@@ -63,18 +63,18 @@ class BootstrapTest extends WP_UnitTestCase {
 	/**
 	 * With no block configs, the adapter registers nothing and does not start the builder.
 	 *
-	 * SwiftForms itself always has blocks (they are registered on init in the bootstrap), so this is a
+	 * BlockForms itself always has blocks (they are registered on init in the bootstrap), so this is a
 	 * property of the adapter: an empty configuration never creates the builder's block manager.
 	 *
 	 * @return void
 	 */
 	public function test_empty_config_does_not_start_the_builder() {
-		\SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::reset();
+		\BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::reset();
 
 		Builder_Adapter::instance()->register_blocks( [] );
 		Builder_Adapter::instance()->register_blocks( [ 'blocks' => [] ] );
 
-		$this->assertNull( \SwiftForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::get_instance(), 'The builder must not start without blocks.' );
+		$this->assertNull( \BlockForms\Vendor\PedalCMS\CassetteCMFBlocks\Core\Block_Manager::get_instance(), 'The builder must not start without blocks.' );
 	}
 
 	/**
@@ -83,8 +83,8 @@ class BootstrapTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_blocks_are_registered_on_init() {
-		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/form' ) );
-		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'swiftforms/field-text' ) );
+		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'blockforms/form' ) );
+		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'blockforms/field-text' ) );
 		$this->assertTrue( has_action( 'enqueue_block_assets', [ Builder_Adapter::instance(), 'strip_front_end_style' ] ) !== false );
 	}
 
@@ -97,7 +97,7 @@ class BootstrapTest extends WP_UnitTestCase {
 		global $wp_filter;
 		$saved = $wp_filter['admin_notices'] ?? null;
 		remove_all_actions( 'admin_notices' );
-		swiftforms_bootstrap_notice( 'Plugin is off.' );
+		blockforms_bootstrap_notice( 'Plugin is off.' );
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'subscriber' ] ) );
 		ob_start();

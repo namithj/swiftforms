@@ -2,21 +2,21 @@
 /**
  * Tests for what the form hands the view module: context, directives and Interactivity state.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-submission-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-submission-test-case.php';
 
-use SwiftForms\Clock;
-use SwiftForms\Form_Renderer;
-use SwiftForms\Validator;
+use BlockForms\Clock;
+use BlockForms\Form_Renderer;
+use BlockForms\Validator;
 
 /**
  * Class FrontEndStateTest
  *
  * @group frontend
  */
-class FrontEndStateTest extends SF_Submission_Test_Case {
+class FrontEndStateTest extends BF_Submission_Test_Case {
 
 	/**
 	 * Page ID.
@@ -48,7 +48,7 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 	}
 
 	/**
-	 * Forget the "swiftforms" store of the Interactivity API (it lives for the process).
+	 * Forget the "blockforms" store of the Interactivity API (it lives for the process).
 	 *
 	 * @return void
 	 */
@@ -59,7 +59,7 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 			$prop->setAccessible( true );
 		}
 		$data = $prop->getValue( $api );
-		unset( $data['swiftforms'] );
+		unset( $data['blockforms'] );
 		$prop->setValue( $api, $data );
 	}
 
@@ -107,9 +107,9 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 			$this->context_of( $html )
 		);
 
-		$state = wp_interactivity_state( 'swiftforms' );
-		$this->assertSame( rest_url( 'swiftforms/v1/submit' ), $state['submitUrl'] );
-		$this->assertSame( rest_url( 'swiftforms/v1/token' ), $state['tokenUrl'] );
+		$state = wp_interactivity_state( 'blockforms' );
+		$this->assertSame( rest_url( 'blockforms/v1/submit' ), $state['submitUrl'] );
+		$this->assertSame( rest_url( 'blockforms/v1/token' ), $state['tokenUrl'] );
 		$this->assertSame( admin_url( 'admin-ajax.php' ), $state['ajaxUrl'] );
 		$this->assertSame( Validator::messages(), $state['messages'] );
 		$this->assertArrayHasKey( 'network', $state['i18n'] );
@@ -127,7 +127,7 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'subscriber' ] ) );
 		$html  = $this->render();
-		$state = wp_interactivity_state( 'swiftforms' );
+		$state = wp_interactivity_state( 'blockforms' );
 
 		$this->assertSame( wp_create_nonce( 'wp_rest' ), $state['nonce'] );
 		$this->assertSame( $this->context_of( $guest ), $this->context_of( $html ) );
@@ -153,14 +153,14 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 	 */
 	public function test_guest_bytes_and_state_are_identical() {
 		$first       = $this->render();
-		$first_state = wp_interactivity_state( 'swiftforms' );
+		$first_state = wp_interactivity_state( 'blockforms' );
 		$this->reset_store();
 
 		$_SERVER['REMOTE_ADDR'] = '198.51.100.9';
 		$second                 = $this->render();
 
 		$this->assertSame( $first, $second );
-		$this->assertSame( $first_state, wp_interactivity_state( 'swiftforms' ) );
+		$this->assertSame( $first_state, wp_interactivity_state( 'blockforms' ) );
 	}
 
 	/**
@@ -176,7 +176,7 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 		$this->assertStringNotContainsString( 'data-wp-on--submit', $html );
 		$this->assertStringNotContainsString( 'data-wp-init', $html );
 		$this->assertStringContainsString( 'method="post"', $html );
-		$this->assertArrayNotHasKey( 'restUrl', wp_interactivity_state( 'swiftforms' ) );
+		$this->assertArrayNotHasKey( 'restUrl', wp_interactivity_state( 'blockforms' ) );
 	}
 
 	/**
@@ -186,14 +186,14 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 	 */
 	public function test_second_form_has_its_own_context() {
 		$one       = $this->render();
-		$one_state = wp_interactivity_state( 'swiftforms' );
+		$one_state = wp_interactivity_state( 'blockforms' );
 
 		Form_Renderer::reset();
 		$this->go_to( get_permalink( $this->page ) );
 		$post  = get_queried_object();
 		$twice = apply_filters( 'the_content', $post->post_content . $post->post_content );
 
-		$this->assertSame( 2, substr_count( $twice, 'data-wp-interactive="swiftforms"' ) );
+		$this->assertSame( 2, substr_count( $twice, 'data-wp-interactive="blockforms"' ) );
 		preg_match_all( '/data-wp-context="([^"]*)"/', $twice, $m );
 		$instances = array_map(
 			static function ( $raw ) {
@@ -202,7 +202,7 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 			$m[1]
 		);
 		$this->assertSame( [ 1, 2 ], $instances );
-		$this->assertSame( $one_state, wp_interactivity_state( 'swiftforms' ) );
+		$this->assertSame( $one_state, wp_interactivity_state( 'blockforms' ) );
 		$this->assertNotSame( '', $one );
 	}
 
@@ -241,7 +241,7 @@ class FrontEndStateTest extends SF_Submission_Test_Case {
 		$this->page = $this->make_form( $limits . $plain );
 		$html       = $this->render();
 
-		$this->assertSame( 1, substr_count( $html, 'data-sf-min-choices="1"' ) );
-		$this->assertSame( 1, substr_count( $html, 'data-sf-max-choices="2"' ) );
+		$this->assertSame( 1, substr_count( $html, 'data-bf-min-choices="1"' ) );
+		$this->assertSame( 1, substr_count( $html, 'data-bf-max-choices="2"' ) );
 	}
 }

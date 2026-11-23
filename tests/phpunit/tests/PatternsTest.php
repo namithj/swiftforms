@@ -2,11 +2,11 @@
 /**
  * Tests for the six form patterns.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Block_Configs;
-use SwiftForms\Pattern_Configs;
+use BlockForms\Block_Configs;
+use BlockForms\Pattern_Configs;
 
 /**
  * Class PatternsTest
@@ -22,12 +22,12 @@ class PatternsTest extends WP_UnitTestCase {
 	 */
 	private function slugs() {
 		return [
-			'swiftforms/contact',
-			'swiftforms/quote-request',
-			'swiftforms/callback-request',
-			'swiftforms/newsletter-signup',
-			'swiftforms/event-rsvp',
-			'swiftforms/feedback',
+			'blockforms/contact',
+			'blockforms/quote-request',
+			'blockforms/callback-request',
+			'blockforms/newsletter-signup',
+			'blockforms/event-rsvp',
+			'blockforms/feedback',
 		];
 	}
 
@@ -59,7 +59,7 @@ class PatternsTest extends WP_UnitTestCase {
 		$this->assertSame( $this->slugs(), array_column( $patterns, 'slug' ) );
 
 		foreach ( $patterns as $pattern ) {
-			$this->assertSame( [ 'swiftforms' ], $pattern['categories'], $pattern['slug'] );
+			$this->assertSame( [ 'blockforms' ], $pattern['categories'], $pattern['slug'] );
 			$this->assertNotSame( '', $pattern['title'] );
 			$this->assertNotSame( '', $pattern['description'] );
 		}
@@ -75,10 +75,10 @@ class PatternsTest extends WP_UnitTestCase {
 		$registry = WP_Block_Patterns_Registry::get_instance();
 		foreach ( $this->slugs() as $slug ) {
 			$this->assertTrue( $registry->is_registered( $slug ), $slug . ' is registered.' );
-			$this->assertSame( [ 'swiftforms' ], $registry->get_registered( $slug )['categories'] );
+			$this->assertSame( [ 'blockforms' ], $registry->get_registered( $slug )['categories'] );
 		}
-		$this->assertTrue( WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( 'swiftforms' ) );
-		$this->assertSame( 'Forms', WP_Block_Pattern_Categories_Registry::get_instance()->get_registered( 'swiftforms' )['label'] );
+		$this->assertTrue( WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( 'blockforms' ) );
+		$this->assertSame( 'Forms', WP_Block_Pattern_Categories_Registry::get_instance()->get_registered( 'blockforms' )['label'] );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class PatternsTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_pattern_content() {
-		$allowed = array_merge( Block_Configs::form_children(), [ 'swiftforms/form' ] );
+		$allowed = array_merge( Block_Configs::form_children(), [ 'blockforms/form' ] );
 
 		foreach ( Pattern_Configs::all() as $pattern ) {
 			$slug = $pattern['slug'];
@@ -97,7 +97,7 @@ class PatternsTest extends WP_UnitTestCase {
 			$forms  = array_filter(
 				$blocks,
 				static function ( $block ) {
-					return 'swiftforms/form' === $block['blockName'];
+					return 'blockforms/form' === $block['blockName'];
 				}
 			);
 			$this->assertCount( 1, $forms, $slug . ' has one form.' );
@@ -106,20 +106,20 @@ class PatternsTest extends WP_UnitTestCase {
 			foreach ( $blocks as $block ) {
 				$name = $block['blockName'];
 				$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( $name ), "$slug uses $name, which is registered." );
-				if ( 0 === strpos( $name, 'swiftforms/field-' ) ) {
+				if ( 0 === strpos( $name, 'blockforms/field-' ) ) {
 					$names[] = $block['attrs']['name'] ?? '';
 				}
-				if ( 0 !== strpos( $name, 'swiftforms/' ) ) {
+				if ( 0 !== strpos( $name, 'blockforms/' ) ) {
 					$this->assertContains( $name, array_merge( $allowed, [ 'core/heading' ] ), "$slug uses $name." );
 				}
 			}
 			$this->assertNotContains( '', $names, $slug . ': every field has a name.' );
 			$this->assertSame( $names, array_values( array_unique( $names ) ), $slug . ': field names are unique.' );
 			foreach ( $names as $field_name ) {
-				$this->assertTrue( \SwiftForms\Field_Types::is_valid_name( $field_name ), $slug . ' ' . $field_name );
+				$this->assertTrue( \BlockForms\Field_Types::is_valid_name( $field_name ), $slug . ' ' . $field_name );
 			}
-			$this->assertContains( 'swiftforms/submit', array_column( $blocks, 'blockName' ), $slug );
-			$this->assertContains( 'swiftforms/confirmation', array_column( $blocks, 'blockName' ), $slug );
+			$this->assertContains( 'blockforms/submit', array_column( $blocks, 'blockName' ), $slug );
+			$this->assertContains( 'blockforms/confirmation', array_column( $blocks, 'blockName' ), $slug );
 		}
 	}
 
@@ -149,7 +149,7 @@ class PatternsTest extends WP_UnitTestCase {
 	 */
 	private function give_form_id( array &$blocks ) {
 		foreach ( $blocks as &$block ) {
-			if ( 'swiftforms/form' === $block['blockName'] ) {
+			if ( 'blockforms/form' === $block['blockName'] ) {
 				$block['attrs']['formId'] = '33333333-3333-4333-8333-333333333333';
 			}
 			$this->give_form_id( $block['innerBlocks'] );

@@ -2,7 +2,7 @@
 /**
  * Fixture classic theme: one template for everything.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 ?>
@@ -22,7 +22,7 @@ while ( have_posts() ) {
 }
 ?>
 </main>
-<?php dynamic_sidebar( 'sf-sidebar' ); ?>
+<?php dynamic_sidebar( 'bf-sidebar' ); ?>
 <?php wp_footer(); ?>
 </body>
 </html>

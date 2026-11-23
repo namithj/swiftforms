@@ -16,34 +16,34 @@ wp_set_current_user( 1 );
 kses_remove_filters();
 
 /**
- * Content of a registered SwiftForms pattern.
+ * Content of a registered BlockForms pattern.
  *
- * @param string $slug Pattern slug, for example swiftforms/contact.
+ * @param string $slug Pattern slug, for example blockforms/contact.
  * @return string
  */
-function sfd_pattern( $slug ) {
+function bfd_pattern( $slug ) {
 	$pattern = WP_Block_Patterns_Registry::get_instance()->get_registered( $slug );
 	$content = is_array( $pattern ) ? (string) $pattern['content'] : '';
 	// What the editor does on insert: the Form block gets its own formId.
 	$form_id = wp_generate_uuid4();
-	if ( false !== strpos( $content, '<!-- wp:swiftforms/form {' ) ) {
-		return str_replace( '<!-- wp:swiftforms/form {', '<!-- wp:swiftforms/form {"formId":"' . $form_id . '",', $content );
+	if ( false !== strpos( $content, '<!-- wp:blockforms/form {' ) ) {
+		return str_replace( '<!-- wp:blockforms/form {', '<!-- wp:blockforms/form {"formId":"' . $form_id . '",', $content );
 	}
-	return str_replace( '<!-- wp:swiftforms/form -->', '<!-- wp:swiftforms/form {"formId":"' . $form_id . '"} -->', $content );
+	return str_replace( '<!-- wp:blockforms/form -->', '<!-- wp:blockforms/form {"formId":"' . $form_id . '"} -->', $content );
 }
 
 /**
- * The formId of the first swiftforms/form block in some content (written on save).
+ * The formId of the first blockforms/form block in some content (written on save).
  *
  * @param array $blocks Parsed blocks.
  * @return string
  */
-function sfd_form_id( array $blocks ) {
+function bfd_form_id( array $blocks ) {
 	foreach ( $blocks as $block ) {
-		if ( 'swiftforms/form' === $block['blockName'] && ! empty( $block['attrs']['formId'] ) ) {
+		if ( 'blockforms/form' === $block['blockName'] && ! empty( $block['attrs']['formId'] ) ) {
 			return (string) $block['attrs']['formId'];
 		}
-		$found = sfd_form_id( $block['innerBlocks'] );
+		$found = bfd_form_id( $block['innerBlocks'] );
 		if ( '' !== $found ) {
 			return $found;
 		}
@@ -58,8 +58,8 @@ update_option( 'page_on_front', 100 );
 
 // Contact and Get a quote pages, from the patterns.
 $pages = array(
-	100 => array( 'Contact', 'contact', 'swiftforms/contact' ),
-	101 => array( 'Get a quote', 'get-a-quote', 'swiftforms/quote-request' ),
+	100 => array( 'Contact', 'contact', 'blockforms/contact' ),
+	101 => array( 'Get a quote', 'get-a-quote', 'blockforms/quote-request' ),
 );
 foreach ( $pages as $id => $page ) {
 	wp_insert_post(
@@ -69,7 +69,7 @@ foreach ( $pages as $id => $page ) {
 			'post_status'  => 'publish',
 			'post_title'   => $page[0],
 			'post_name'    => $page[1],
-			'post_content' => sfd_pattern( $page[2] ),
+			'post_content' => bfd_pattern( $page[2] ),
 		)
 	);
 }
@@ -79,7 +79,7 @@ $theme  = get_stylesheet();
 $footer = get_block_file_template( $theme . '//footer', 'wp_template_part' );
 $part   = '<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->'
 	. '<div class="wp-block-group alignfull" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)">'
-	. sfd_pattern( 'swiftforms/newsletter-signup' )
+	. bfd_pattern( 'blockforms/newsletter-signup' )
 	. '</div><!-- /wp:group -->'
 	. ( $footer ? $footer->content : '' );
 $part_id = wp_insert_post(
@@ -101,9 +101,9 @@ wp_update_post(
 	)
 );
 
-$contact_id = sfd_form_id( parse_blocks( get_post_field( 'post_content', 100 ) ) );
-$quote_id   = sfd_form_id( parse_blocks( get_post_field( 'post_content', 101 ) ) );
-$news_id    = sfd_form_id( parse_blocks( get_post_field( 'post_content', $part_id ) ) );
+$contact_id = bfd_form_id( parse_blocks( get_post_field( 'post_content', 100 ) ) );
+$quote_id   = bfd_form_id( parse_blocks( get_post_field( 'post_content', 101 ) ) );
+$news_id    = bfd_form_id( parse_blocks( get_post_field( 'post_content', $part_id ) ) );
 
 // Eight sample entries through the plugin's own classes: [ form, source, days ago, values, read, starred ].
 $samples = array(
@@ -118,20 +118,20 @@ $samples = array(
 );
 
 foreach ( $samples as $sample ) {
-	$schema = \SwiftForms\Schema_Resolver::resolve( $sample[0], $sample[1] );
+	$schema = \BlockForms\Schema_Resolver::resolve( $sample[0], $sample[1] );
 	if ( null === $schema ) {
 		continue;
 	}
-	$ctx         = new \SwiftForms\Submission_Context( $schema );
-	$ctx->values = \SwiftForms\Validator::collect( $schema, $sample[3], $ctx );
-	if ( array() !== \SwiftForms\Validator::validate( $schema, $ctx->values, $ctx ) ) {
+	$ctx         = new \BlockForms\Submission_Context( $schema );
+	$ctx->values = \BlockForms\Validator::collect( $schema, $sample[3], $ctx );
+	if ( array() !== \BlockForms\Validator::validate( $schema, $ctx->values, $ctx ) ) {
 		continue;
 	}
 	$ctx->created_gmt = gmdate( 'Y-m-d H:i:s', time() - $sample[2] * DAY_IN_SECONDS - 3600 );
-	\SwiftForms\Schema_Store::save( $schema );
-	$entry_id = \SwiftForms\Entries_Repository::insert( $ctx );
+	\BlockForms\Schema_Store::save( $schema );
+	$entry_id = \BlockForms\Entries_Repository::insert( $ctx );
 	if ( $entry_id > 0 ) {
-		\SwiftForms\Entries_Repository::update(
+		\BlockForms\Entries_Repository::update(
 			$entry_id,
 			array(
 				'status'  => $sample[4] ? 'read' : 'new',

@@ -2,10 +2,10 @@
 /**
  * Block configurations for the block builder.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Block_Configs
  *
- * The one place where the SwiftForms blocks are described to the block builder:
+ * The one place where the BlockForms blocks are described to the block builder:
  * the form, the twelve field blocks, the submit button and the confirmation, the
  * "Forms" block category and the six patterns.
  *
@@ -34,7 +34,7 @@ class Block_Configs {
 	/**
 	 * Slug of the block category and of the pattern category.
 	 */
-	const CATEGORY = 'swiftforms';
+	const CATEGORY = 'blockforms';
 
 	/**
 	 * Dashicon per block.
@@ -73,14 +73,14 @@ class Block_Configs {
 			'block_categories'   => [
 				[
 					'slug'  => self::CATEGORY,
-					'title' => __( 'Forms', 'swiftforms' ),
+					'title' => __( 'Forms', 'blockforms' ),
 					'icon'  => 'feedback',
 				],
 			],
 			'pattern_categories' => [
 				[
 					'slug'  => self::CATEGORY,
-					'label' => __( 'Forms', 'swiftforms' ),
+					'label' => __( 'Forms', 'blockforms' ),
 				],
 			],
 			'patterns'           => Pattern_Configs::all(),
@@ -130,16 +130,16 @@ class Block_Configs {
 		return [
 			'id'           => Field_Types::FORM_BLOCK,
 			'args'         => [
-				'title'            => __( 'Form', 'swiftforms' ),
+				'title'            => __( 'Form', 'blockforms' ),
 				'category'         => self::CATEGORY,
-				'description'      => __( 'A contact form with fields, a submit button and a confirmation message.', 'swiftforms' ),
+				'description'      => __( 'A contact form with fields, a submit button and a confirmation message.', 'blockforms' ),
 				'icon'             => self::ICONS['form'],
-				'keywords'         => [ __( 'contact', 'swiftforms' ), __( 'email', 'swiftforms' ), __( 'form', 'swiftforms' ) ],
-				'textdomain'       => 'swiftforms',
+				'keywords'         => [ __( 'contact', 'blockforms' ), __( 'email', 'blockforms' ), __( 'form', 'blockforms' ) ],
+				'textdomain'       => 'blockforms',
 				'providesContext'  => [
-					'swiftforms/formId'            => 'formId',
-					'swiftforms/labelPosition'     => 'labelPosition',
-					'swiftforms/requiredIndicator' => 'requiredIndicator',
+					'blockforms/formId'            => 'formId',
+					'blockforms/labelPosition'     => 'labelPosition',
+					'blockforms/requiredIndicator' => 'requiredIndicator',
 				],
 				'supports'         => [
 					'anchor'        => true,
@@ -177,35 +177,35 @@ class Block_Configs {
 				[
 					'name'         => 'panel_form',
 					'type'         => 'panel',
-					'title'        => __( 'Form', 'swiftforms' ),
+					'title'        => __( 'Form', 'blockforms' ),
 					'initial_open' => true,
 					'fields'       => [
 						[
 							'name'        => 'title',
 							'type'        => 'text',
-							'label'       => __( 'Form title', 'swiftforms' ),
-							'description' => __( 'Shown in entries and emails. It is not displayed on the page.', 'swiftforms' ),
+							'label'       => __( 'Form title', 'blockforms' ),
+							'description' => __( 'Shown in entries and emails. It is not displayed on the page.', 'blockforms' ),
 						],
 						[
 							'name'    => 'confirmationType',
 							'type'    => 'select',
-							'label'   => __( 'After submitting', 'swiftforms' ),
+							'label'   => __( 'After submitting', 'blockforms' ),
 							'default' => $attributes['confirmationType']['default'],
 							'options' => [
 								[
 									'value' => 'message',
-									'label' => __( 'Show the confirmation message', 'swiftforms' ),
+									'label' => __( 'Show the confirmation message', 'blockforms' ),
 								],
 								[
 									'value' => 'redirect',
-									'label' => __( 'Go to a page or address', 'swiftforms' ),
+									'label' => __( 'Go to a page or address', 'blockforms' ),
 								],
 							],
 						],
 						[
 							'name'        => 'redirectPageId',
 							'type'        => 'post_select',
-							'label'       => __( 'Page to go to', 'swiftforms' ),
+							'label'       => __( 'Page to go to', 'blockforms' ),
 							'post_type'   => 'page',
 							'default'     => 0,
 							'conditional' => self::when_all( [ self::rule( 'confirmationType', '==', 'redirect' ) ] ),
@@ -213,46 +213,46 @@ class Block_Configs {
 						[
 							'name'        => 'redirectUrl',
 							'type'        => 'url',
-							'label'       => __( 'Or an address (http or https)', 'swiftforms' ),
+							'label'       => __( 'Or an address (http or https)', 'blockforms' ),
 							'conditional' => self::when_all( [ self::rule( 'confirmationType', '==', 'redirect' ) ] ),
 						],
 						[
 							'name'    => 'labelPosition',
 							'type'    => 'select',
-							'label'   => __( 'Label position', 'swiftforms' ),
+							'label'   => __( 'Label position', 'blockforms' ),
 							'default' => $attributes['labelPosition']['default'],
 							'options' => [
 								[
 									'value' => 'top',
-									'label' => __( 'Above the field', 'swiftforms' ),
+									'label' => __( 'Above the field', 'blockforms' ),
 								],
 								[
 									'value' => 'inline',
-									'label' => __( 'Beside the field', 'swiftforms' ),
+									'label' => __( 'Beside the field', 'blockforms' ),
 								],
 								[
 									'value' => 'hidden',
-									'label' => __( 'Hidden (still read by screen readers)', 'swiftforms' ),
+									'label' => __( 'Hidden (still read by screen readers)', 'blockforms' ),
 								],
 							],
 						],
 						[
 							'name'    => 'requiredIndicator',
 							'type'    => 'select',
-							'label'   => __( 'Required indicator', 'swiftforms' ),
+							'label'   => __( 'Required indicator', 'blockforms' ),
 							'default' => $attributes['requiredIndicator']['default'],
 							'options' => [
 								[
 									'value' => 'asterisk',
-									'label' => __( 'Asterisk (*)', 'swiftforms' ),
+									'label' => __( 'Asterisk (*)', 'blockforms' ),
 								],
 								[
 									'value' => 'text',
-									'label' => __( 'The word "(required)"', 'swiftforms' ),
+									'label' => __( 'The word "(required)"', 'blockforms' ),
 								],
 								[
 									'value' => 'none',
-									'label' => __( 'None', 'swiftforms' ),
+									'label' => __( 'None', 'blockforms' ),
 								],
 							],
 						],
@@ -261,20 +261,20 @@ class Block_Configs {
 				[
 					'name'         => 'panel_notifications',
 					'type'         => 'panel',
-					'title'        => __( 'Notifications', 'swiftforms' ),
+					'title'        => __( 'Notifications', 'blockforms' ),
 					'initial_open' => true,
 					'fields'       => [
 						[
 							'name'        => 'useDefaultNotification',
 							'type'        => 'toggle',
-							'label'       => __( 'Email the site default recipient', 'swiftforms' ),
-							'description' => __( 'The recipient set under Forms, Settings, Email.', 'swiftforms' ),
+							'label'       => __( 'Email the site default recipient', 'blockforms' ),
+							'description' => __( 'The recipient set under Forms, Settings, Email.', 'blockforms' ),
 							'default'     => true,
 						],
 						[
 							'name'    => 'notifications',
 							'type'    => 'repeater',
-							'label'   => __( 'More notifications', 'swiftforms' ),
+							'label'   => __( 'More notifications', 'blockforms' ),
 							'default' => [],
 							'fields'  => self::notification_fields(),
 						],
@@ -283,50 +283,50 @@ class Block_Configs {
 				[
 					'name'         => 'panel_advanced',
 					'type'         => 'panel',
-					'title'        => __( 'Submission', 'swiftforms' ),
+					'title'        => __( 'Submission', 'blockforms' ),
 					'initial_open' => false,
 					'fields'       => [
 						[
 							'name'        => 'storeEntries',
 							'type'        => 'select',
-							'label'       => __( 'Store entries', 'swiftforms' ),
-							'description' => __( 'With "Never", submissions are only emailed and cannot be recovered later.', 'swiftforms' ),
+							'label'       => __( 'Store entries', 'blockforms' ),
+							'description' => __( 'With "Never", submissions are only emailed and cannot be recovered later.', 'blockforms' ),
 							'default'     => $attributes['storeEntries']['default'],
 							'options'     => [
 								[
 									'value' => 'default',
-									'label' => __( 'Use the site setting', 'swiftforms' ),
+									'label' => __( 'Use the site setting', 'blockforms' ),
 								],
 								[
 									'value' => 'yes',
-									'label' => __( 'Always', 'swiftforms' ),
+									'label' => __( 'Always', 'blockforms' ),
 								],
 								[
 									'value' => 'no',
-									'label' => __( 'Never', 'swiftforms' ),
+									'label' => __( 'Never', 'blockforms' ),
 								],
 							],
 						],
 						[
 							'name'    => 'spamProtection',
 							'type'    => 'select',
-							'label'   => __( 'Spam protection', 'swiftforms' ),
+							'label'   => __( 'Spam protection', 'blockforms' ),
 							'default' => $attributes['spamProtection']['default'],
 							'options' => [
 								[
 									'value' => 'default',
-									'label' => __( 'On', 'swiftforms' ),
+									'label' => __( 'On', 'blockforms' ),
 								],
 								[
 									'value' => 'off',
-									'label' => __( 'Off', 'swiftforms' ),
+									'label' => __( 'Off', 'blockforms' ),
 								],
 							],
 						],
 						[
 							'name'    => 'ajax',
 							'type'    => 'toggle',
-							'label'   => __( 'Send without reloading the page', 'swiftforms' ),
+							'label'   => __( 'Send without reloading the page', 'blockforms' ),
 							'default' => true,
 						],
 					],
@@ -344,7 +344,7 @@ class Block_Configs {
 				'mode'   => 'markup',
 				'markup' => [
 					'tag'   => 'div',
-					'class' => 'swiftforms-form swiftforms-form--labels-{{ attributes.labelPosition }}',
+					'class' => 'blockforms-form blockforms-form--labels-{{ attributes.labelPosition }}',
 					'slot'  => 'inner_blocks',
 				],
 			],
@@ -369,7 +369,7 @@ class Block_Configs {
 				Field_Types::block_name( 'text' ),
 				[
 					'name'         => 'name',
-					'label'        => __( 'Name', 'swiftforms' ),
+					'label'        => __( 'Name', 'blockforms' ),
 					'autocomplete' => 'name',
 				],
 			],
@@ -377,7 +377,7 @@ class Block_Configs {
 				Field_Types::block_name( 'email' ),
 				[
 					'name'         => 'email',
-					'label'        => __( 'Email', 'swiftforms' ),
+					'label'        => __( 'Email', 'blockforms' ),
 					'required'     => true,
 					'autocomplete' => 'email',
 				],
@@ -386,7 +386,7 @@ class Block_Configs {
 				Field_Types::block_name( 'textarea' ),
 				[
 					'name'     => 'message',
-					'label'    => __( 'Message', 'swiftforms' ),
+					'label'    => __( 'Message', 'blockforms' ),
 					'required' => true,
 				],
 			],
@@ -397,7 +397,7 @@ class Block_Configs {
 				[
 					[
 						'core/paragraph',
-						[ 'content' => __( "Thanks! We'll be in touch.", 'swiftforms' ) ],
+						[ 'content' => __( "Thanks! We'll be in touch.", 'blockforms' ) ],
 					],
 				],
 			],
@@ -414,53 +414,53 @@ class Block_Configs {
 			[
 				'name'    => 'enabled',
 				'type'    => 'toggle',
-				'label'   => __( 'Send this notification', 'swiftforms' ),
+				'label'   => __( 'Send this notification', 'blockforms' ),
 				'default' => true,
 			],
 			[
 				'name'        => 'to',
 				'type'        => 'text',
-				'label'       => __( 'To', 'swiftforms' ),
-				'description' => __( 'One or more email addresses, separated by commas.', 'swiftforms' ),
+				'label'       => __( 'To', 'blockforms' ),
+				'description' => __( 'One or more email addresses, separated by commas.', 'blockforms' ),
 			],
 			[
 				'name'  => 'cc',
 				'type'  => 'text',
-				'label' => __( 'Cc', 'swiftforms' ),
+				'label' => __( 'Cc', 'blockforms' ),
 			],
 			[
 				'name'  => 'bcc',
 				'type'  => 'text',
-				'label' => __( 'Bcc', 'swiftforms' ),
+				'label' => __( 'Bcc', 'blockforms' ),
 			],
 			[
 				'name'  => 'subject',
 				'type'  => 'text',
-				'label' => __( 'Subject', 'swiftforms' ),
+				'label' => __( 'Subject', 'blockforms' ),
 			],
 			[
 				'name'  => 'replyTo',
 				'type'  => 'text',
-				'label' => __( 'Reply to', 'swiftforms' ),
+				'label' => __( 'Reply to', 'blockforms' ),
 			],
 			[
 				'name'  => 'body',
 				'type'  => 'textarea',
-				'label' => __( 'Message', 'swiftforms' ),
+				'label' => __( 'Message', 'blockforms' ),
 			],
 			[
 				'name'    => 'format',
 				'type'    => 'select',
-				'label'   => __( 'Format', 'swiftforms' ),
+				'label'   => __( 'Format', 'blockforms' ),
 				'default' => 'html',
 				'options' => [
 					[
 						'value' => 'html',
-						'label' => __( 'HTML', 'swiftforms' ),
+						'label' => __( 'HTML', 'blockforms' ),
 					],
 					[
 						'value' => 'plain',
-						'label' => __( 'Plain text', 'swiftforms' ),
+						'label' => __( 'Plain text', 'blockforms' ),
 					],
 				],
 			],
@@ -480,12 +480,12 @@ class Block_Configs {
 		return [
 			'id'      => Field_Types::SUBMIT_BLOCK,
 			'args'    => [
-				'title'       => __( 'Submit button', 'swiftforms' ),
+				'title'       => __( 'Submit button', 'blockforms' ),
 				'category'    => self::CATEGORY,
-				'description' => __( 'The button that sends the form.', 'swiftforms' ),
+				'description' => __( 'The button that sends the form.', 'blockforms' ),
 				'icon'        => self::ICONS['submit'],
-				'keywords'    => [ __( 'button', 'swiftforms' ), __( 'send', 'swiftforms' ) ],
-				'textdomain'  => 'swiftforms',
+				'keywords'    => [ __( 'button', 'blockforms' ), __( 'send', 'blockforms' ) ],
+				'textdomain'  => 'blockforms',
 				'ancestor'    => [ Field_Types::FORM_BLOCK ],
 				'supports'    => self::field_supports( true ),
 			],
@@ -493,7 +493,7 @@ class Block_Configs {
 				[
 					'name'    => 'label',
 					'type'    => 'text',
-					'label'   => __( 'Button text', 'swiftforms' ),
+					'label'   => __( 'Button text', 'blockforms' ),
 					'default' => Field_Types::submit_attributes()['label']['default'],
 				],
 			],
@@ -505,16 +505,16 @@ class Block_Configs {
 				'mode'   => 'markup',
 				'markup' => [
 					'tag'      => 'div',
-					'class'    => 'swiftforms-submit',
+					'class'    => 'blockforms-submit',
 					'children' => [
 						[
 							'tag'   => 'button',
-							'class' => 'swiftforms-submit__button wp-element-button',
+							'class' => 'blockforms-submit__button wp-element-button',
 							'attrs' => [
 								'type'     => 'button',
 								'disabled' => 'disabled',
 							],
-							'text'  => '{{ attributes.label | default:' . __( 'Submit', 'swiftforms' ) . ' }}',
+							'text'  => '{{ attributes.label | default:' . __( 'Submit', 'blockforms' ) . ' }}',
 						],
 					],
 				],
@@ -535,11 +535,11 @@ class Block_Configs {
 		return [
 			'id'           => Field_Types::CONFIRMATION_BLOCK,
 			'args'         => [
-				'title'       => __( 'Confirmation', 'swiftforms' ),
+				'title'       => __( 'Confirmation', 'blockforms' ),
 				'category'    => self::CATEGORY,
-				'description' => __( 'What the visitor sees after sending the form. Use the toolbar button of the form to preview it.', 'swiftforms' ),
+				'description' => __( 'What the visitor sees after sending the form. Use the toolbar button of the form to preview it.', 'blockforms' ),
 				'icon'        => self::ICONS['confirmation'],
-				'textdomain'  => 'swiftforms',
+				'textdomain'  => 'blockforms',
 				'parent'      => [ Field_Types::FORM_BLOCK ],
 				'supports'    => [
 					'className' => true,
@@ -561,12 +561,12 @@ class Block_Configs {
 				'mode'   => 'markup',
 				'markup' => [
 					'tag'      => 'div',
-					'class'    => 'swiftforms-confirmation',
+					'class'    => 'blockforms-confirmation',
 					'children' => [
 						[
 							'tag'   => 'p',
-							'class' => 'swiftforms-confirmation__label',
-							'text'  => __( 'Confirmation message', 'swiftforms' ),
+							'class' => 'blockforms-confirmation__label',
+							'text'  => __( 'Confirmation message', 'blockforms' ),
 						],
 						[
 							'tag'  => 'div',
@@ -646,24 +646,24 @@ class Block_Configs {
 				'name'    => 'formId',
 				'type'    => 'text',
 				'source'  => 'context',
-				'context' => 'swiftforms/formId',
+				'context' => 'blockforms/formId',
 			],
 			[
 				'name'    => 'formLabelPosition',
 				'type'    => 'text',
 				'source'  => 'context',
-				'context' => 'swiftforms/labelPosition',
+				'context' => 'blockforms/labelPosition',
 			],
 			[
 				'name'    => 'formRequiredIndicator',
 				'type'    => 'text',
 				'source'  => 'context',
-				'context' => 'swiftforms/requiredIndicator',
+				'context' => 'blockforms/requiredIndicator',
 			],
 			[
 				'name'         => 'panel_field',
 				'type'         => 'panel',
-				'title'        => __( 'Field', 'swiftforms' ),
+				'title'        => __( 'Field', 'blockforms' ),
 				'initial_open' => true,
 				'fields'       => $panels['field'],
 			],
@@ -672,7 +672,7 @@ class Block_Configs {
 			$fields[] = [
 				'name'         => 'panel_options',
 				'type'         => 'panel',
-				'title'        => __( 'Options', 'swiftforms' ),
+				'title'        => __( 'Options', 'blockforms' ),
 				'initial_open' => true,
 				'fields'       => $panels['options'],
 			];
@@ -681,7 +681,7 @@ class Block_Configs {
 			$fields[] = [
 				'name'         => 'panel_advanced',
 				'type'         => 'panel',
-				'title'        => __( 'More options', 'swiftforms' ),
+				'title'        => __( 'More options', 'blockforms' ),
 				'initial_open' => false,
 				'fields'       => $panels['advanced'],
 			];
@@ -702,8 +702,8 @@ class Block_Configs {
 				'category'    => self::CATEGORY,
 				'description' => $titles[ $type ]['description'],
 				'icon'        => self::ICONS[ $type ],
-				'keywords'    => [ __( 'form', 'swiftforms' ), __( 'field', 'swiftforms' ), $titles[ $type ]['title'] ],
-				'textdomain'  => 'swiftforms',
+				'keywords'    => [ __( 'form', 'blockforms' ), __( 'field', 'blockforms' ), $titles[ $type ]['title'] ],
+				'textdomain'  => 'blockforms',
 				'ancestor'    => [ Field_Types::FORM_BLOCK ],
 				'supports'    => self::field_supports(),
 			],
@@ -728,52 +728,52 @@ class Block_Configs {
 	private static function field_titles() {
 		return [
 			'text'       => [
-				'title'       => __( 'Text field', 'swiftforms' ),
-				'description' => __( 'A single line of text.', 'swiftforms' ),
+				'title'       => __( 'Text field', 'blockforms' ),
+				'description' => __( 'A single line of text.', 'blockforms' ),
 			],
 			'email'      => [
-				'title'       => __( 'Email field', 'swiftforms' ),
-				'description' => __( 'An email address.', 'swiftforms' ),
+				'title'       => __( 'Email field', 'blockforms' ),
+				'description' => __( 'An email address.', 'blockforms' ),
 			],
 			'textarea'   => [
-				'title'       => __( 'Message field', 'swiftforms' ),
-				'description' => __( 'Several lines of text.', 'swiftforms' ),
+				'title'       => __( 'Message field', 'blockforms' ),
+				'description' => __( 'Several lines of text.', 'blockforms' ),
 			],
 			'number'     => [
-				'title'       => __( 'Number field', 'swiftforms' ),
-				'description' => __( 'A number, with optional limits.', 'swiftforms' ),
+				'title'       => __( 'Number field', 'blockforms' ),
+				'description' => __( 'A number, with optional limits.', 'blockforms' ),
 			],
 			'url'        => [
-				'title'       => __( 'Website field', 'swiftforms' ),
-				'description' => __( 'A web address.', 'swiftforms' ),
+				'title'       => __( 'Website field', 'blockforms' ),
+				'description' => __( 'A web address.', 'blockforms' ),
 			],
 			'tel'        => [
-				'title'       => __( 'Phone field', 'swiftforms' ),
-				'description' => __( 'A telephone number.', 'swiftforms' ),
+				'title'       => __( 'Phone field', 'blockforms' ),
+				'description' => __( 'A telephone number.', 'blockforms' ),
 			],
 			'date'       => [
-				'title'       => __( 'Date field', 'swiftforms' ),
-				'description' => __( 'A date.', 'swiftforms' ),
+				'title'       => __( 'Date field', 'blockforms' ),
+				'description' => __( 'A date.', 'blockforms' ),
 			],
 			'select'     => [
-				'title'       => __( 'Dropdown field', 'swiftforms' ),
-				'description' => __( 'Choose from a list.', 'swiftforms' ),
+				'title'       => __( 'Dropdown field', 'blockforms' ),
+				'description' => __( 'Choose from a list.', 'blockforms' ),
 			],
 			'radio'      => [
-				'title'       => __( 'Radio buttons field', 'swiftforms' ),
-				'description' => __( 'Choose one of a few options.', 'swiftforms' ),
+				'title'       => __( 'Radio buttons field', 'blockforms' ),
+				'description' => __( 'Choose one of a few options.', 'blockforms' ),
 			],
 			'checkboxes' => [
-				'title'       => __( 'Checkboxes field', 'swiftforms' ),
-				'description' => __( 'Choose any number of options.', 'swiftforms' ),
+				'title'       => __( 'Checkboxes field', 'blockforms' ),
+				'description' => __( 'Choose any number of options.', 'blockforms' ),
 			],
 			'consent'    => [
-				'title'       => __( 'Consent checkbox', 'swiftforms' ),
-				'description' => __( 'A box the visitor ticks to agree to something.', 'swiftforms' ),
+				'title'       => __( 'Consent checkbox', 'blockforms' ),
+				'description' => __( 'A box the visitor ticks to agree to something.', 'blockforms' ),
 			],
 			'hidden'     => [
-				'title'       => __( 'Hidden field', 'swiftforms' ),
-				'description' => __( 'A value sent with the form that visitors do not see.', 'swiftforms' ),
+				'title'       => __( 'Hidden field', 'blockforms' ),
+				'description' => __( 'A value sent with the form that visitors do not see.', 'blockforms' ),
 			],
 		];
 	}
@@ -882,43 +882,43 @@ class Block_Configs {
 			'label'             => [
 				'name'  => 'label',
 				'type'  => 'text',
-				'label' => 'hidden' === $type ? __( 'Label (for you)', 'swiftforms' ) : __( 'Label', 'swiftforms' ),
+				'label' => 'hidden' === $type ? __( 'Label (for you)', 'blockforms' ) : __( 'Label', 'blockforms' ),
 			],
 			'name'              => [
 				'name'        => 'name',
 				'type'        => 'text',
-				'label'       => __( 'Field name', 'swiftforms' ),
-				'description' => __( 'Identifies the value in entries and emails. Made from the label; letters, numbers, dashes and underscores.', 'swiftforms' ),
+				'label'       => __( 'Field name', 'blockforms' ),
+				'description' => __( 'Identifies the value in entries and emails. Made from the label; letters, numbers, dashes and underscores.', 'blockforms' ),
 				'derive_from' => 'label',
 				'format'      => 'slug',
 				'unique'      => [
 					'scope' => 'ancestor',
 					'block' => Field_Types::FORM_BLOCK,
-					'key'   => 'swiftforms-name',
+					'key'   => 'blockforms-name',
 				],
 			],
 			'required'          => [
 				'name'    => 'required',
 				'type'    => 'toggle',
-				'label'   => __( 'Required', 'swiftforms' ),
+				'label'   => __( 'Required', 'blockforms' ),
 				'default' => $default( 'required' ),
 			],
 			'help'              => [
 				'name'  => 'help',
 				'type'  => 'text',
-				'label' => __( 'Help text', 'swiftforms' ),
+				'label' => __( 'Help text', 'blockforms' ),
 			],
 			'placeholder'       => [
 				'name'  => 'placeholder',
 				'type'  => 'text',
-				'label' => __( 'Placeholder', 'swiftforms' ),
+				'label' => __( 'Placeholder', 'blockforms' ),
 			],
 			'defaultValue'      => self::default_value_control( $type, $multi_default ),
 			'minLength'         => [
 				'name'        => 'minLength',
 				'type'        => 'number',
-				'label'       => __( 'Shortest answer (characters)', 'swiftforms' ),
-				'description' => __( '0 means no minimum.', 'swiftforms' ),
+				'label'       => __( 'Shortest answer (characters)', 'blockforms' ),
+				'description' => __( '0 means no minimum.', 'blockforms' ),
 				'value_type'  => 'integer',
 				'default'     => 0,
 				'min'         => 0,
@@ -926,8 +926,8 @@ class Block_Configs {
 			'maxLength'         => [
 				'name'        => 'maxLength',
 				'type'        => 'number',
-				'label'       => __( 'Longest answer (characters)', 'swiftforms' ),
-				'description' => __( '0 means no maximum.', 'swiftforms' ),
+				'label'       => __( 'Longest answer (characters)', 'blockforms' ),
+				'description' => __( '0 means no maximum.', 'blockforms' ),
 				'value_type'  => 'integer',
 				'default'     => 0,
 				'min'         => 0,
@@ -935,22 +935,22 @@ class Block_Configs {
 			'min'               => [
 				'name'  => 'min',
 				'type'  => 'date' === $type ? 'date' : 'text',
-				'label' => 'date' === $type ? __( 'Earliest date', 'swiftforms' ) : __( 'Smallest number', 'swiftforms' ),
+				'label' => 'date' === $type ? __( 'Earliest date', 'blockforms' ) : __( 'Smallest number', 'blockforms' ),
 			],
 			'max'               => [
 				'name'  => 'max',
 				'type'  => 'date' === $type ? 'date' : 'text',
-				'label' => 'date' === $type ? __( 'Latest date', 'swiftforms' ) : __( 'Largest number', 'swiftforms' ),
+				'label' => 'date' === $type ? __( 'Latest date', 'blockforms' ) : __( 'Largest number', 'blockforms' ),
 			],
 			'step'              => [
 				'name'  => 'step',
 				'type'  => 'text',
-				'label' => __( 'Step', 'swiftforms' ),
+				'label' => __( 'Step', 'blockforms' ),
 			],
 			'rows'              => [
 				'name'       => 'rows',
 				'type'       => 'number',
-				'label'      => __( 'Visible lines', 'swiftforms' ),
+				'label'      => __( 'Visible lines', 'blockforms' ),
 				'value_type' => 'integer',
 				'default'    => $default( 'rows' ),
 				'min'        => 1,
@@ -958,66 +958,66 @@ class Block_Configs {
 			'width'             => [
 				'name'    => 'width',
 				'type'    => 'select',
-				'label'   => __( 'Width', 'swiftforms' ),
+				'label'   => __( 'Width', 'blockforms' ),
 				'default' => $default( 'width' ),
 				'options' => $widths,
 			],
 			'autocomplete'      => [
 				'name'        => 'autocomplete',
 				'type'        => 'text',
-				'label'       => __( 'Autocomplete', 'swiftforms' ),
-				'description' => __( 'A browser hint such as "name", "email" or "tel".', 'swiftforms' ),
+				'label'       => __( 'Autocomplete', 'blockforms' ),
+				'description' => __( 'A browser hint such as "name", "email" or "tel".', 'blockforms' ),
 			],
 			'pattern'           => [
 				'name'        => 'pattern',
 				'type'        => 'text',
-				'label'       => __( 'Pattern', 'swiftforms' ),
-				'description' => __( 'A regular expression the answer must match.', 'swiftforms' ),
+				'label'       => __( 'Pattern', 'blockforms' ),
+				'description' => __( 'A regular expression the answer must match.', 'blockforms' ),
 			],
 			'patternMessage'    => [
 				'name'  => 'patternMessage',
 				'type'  => 'text',
-				'label' => __( 'Message when the pattern does not match', 'swiftforms' ),
+				'label' => __( 'Message when the pattern does not match', 'blockforms' ),
 			],
 			'options'           => [
 				'name'    => 'options',
 				'type'    => 'options_list',
-				'label'   => __( 'Options', 'swiftforms' ),
+				'label'   => __( 'Options', 'blockforms' ),
 				'default' => [],
 			],
 			'multiple'          => [
 				'name'    => 'multiple',
 				'type'    => 'toggle',
-				'label'   => __( 'Allow several answers', 'swiftforms' ),
+				'label'   => __( 'Allow several answers', 'blockforms' ),
 				'default' => false,
 			],
 			'placeholderOption' => [
 				'name'        => 'placeholderOption',
 				'type'        => 'text',
-				'label'       => __( 'First option text', 'swiftforms' ),
-				'description' => __( 'An empty first option such as "Choose one". Leave empty for none.', 'swiftforms' ),
+				'label'       => __( 'First option text', 'blockforms' ),
+				'description' => __( 'An empty first option such as "Choose one". Leave empty for none.', 'blockforms' ),
 			],
 			'layout'            => [
 				'name'    => 'layout',
 				'type'    => 'select',
-				'label'   => __( 'Layout', 'swiftforms' ),
+				'label'   => __( 'Layout', 'blockforms' ),
 				'default' => $default( 'layout' ),
 				'options' => [
 					[
 						'value' => 'stack',
-						'label' => __( 'One under the other', 'swiftforms' ),
+						'label' => __( 'One under the other', 'blockforms' ),
 					],
 					[
 						'value' => 'inline',
-						'label' => __( 'Side by side', 'swiftforms' ),
+						'label' => __( 'Side by side', 'blockforms' ),
 					],
 				],
 			],
 			'minChoices'        => [
 				'name'        => 'minChoices',
 				'type'        => 'number',
-				'label'       => __( 'Fewest choices', 'swiftforms' ),
-				'description' => __( '0 means no minimum.', 'swiftforms' ),
+				'label'       => __( 'Fewest choices', 'blockforms' ),
+				'description' => __( '0 means no minimum.', 'blockforms' ),
 				'value_type'  => 'integer',
 				'default'     => 0,
 				'min'         => 0,
@@ -1025,8 +1025,8 @@ class Block_Configs {
 			'maxChoices'        => [
 				'name'        => 'maxChoices',
 				'type'        => 'number',
-				'label'       => __( 'Most choices', 'swiftforms' ),
-				'description' => __( '0 means no maximum.', 'swiftforms' ),
+				'label'       => __( 'Most choices', 'blockforms' ),
+				'description' => __( '0 means no maximum.', 'blockforms' ),
 				'value_type'  => 'integer',
 				'default'     => 0,
 				'min'         => 0,
@@ -1034,14 +1034,14 @@ class Block_Configs {
 			'text'              => [
 				'name'        => 'text',
 				'type'        => 'textarea',
-				'label'       => __( 'Consent text', 'swiftforms' ),
-				'description' => __( 'Shown next to the box. Links are allowed.', 'swiftforms' ),
+				'label'       => __( 'Consent text', 'blockforms' ),
+				'description' => __( 'Shown next to the box. Links are allowed.', 'blockforms' ),
 			],
 			'value'             => [
 				'name'        => 'value',
 				'type'        => 'text',
-				'label'       => __( 'Value', 'swiftforms' ),
-				'description' => __( 'Text, or {post:id}, {post:title}, {post:url}, {user:id}. Visitors cannot change it.', 'swiftforms' ),
+				'label'       => __( 'Value', 'blockforms' ),
+				'description' => __( 'Text, or {post:id}, {post:title}, {post:url}, {user:id}. Visitors cannot change it.', 'blockforms' ),
 			],
 		];
 	}
@@ -1057,18 +1057,18 @@ class Block_Configs {
 		$control = [
 			'name'  => 'defaultValue',
 			'type'  => 'text',
-			'label' => __( 'Default value', 'swiftforms' ),
+			'label' => __( 'Default value', 'blockforms' ),
 		];
 
 		if ( $one_per_line ) {
 			$control['type']        = 'textarea';
-			$control['description'] = __( 'The option values to tick, one per line.', 'swiftforms' );
+			$control['description'] = __( 'The option values to tick, one per line.', 'blockforms' );
 		} elseif ( 'textarea' === $type ) {
 			$control['type'] = 'textarea';
 		} elseif ( 'date' === $type ) {
 			$control['type'] = 'date';
 		} elseif ( in_array( $type, [ 'select', 'radio' ], true ) ) {
-			$control['description'] = __( 'The value of the option to pick first. With several answers allowed: one value per line.', 'swiftforms' );
+			$control['description'] = __( 'The value of the option to pick first. With several answers allowed: one value per line.', 'blockforms' );
 		}
 		return $control;
 	}

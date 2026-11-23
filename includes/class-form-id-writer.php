@@ -2,10 +2,10 @@
 /**
  * Writes effective formIds into saved content.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * - `"formId":"<old>"` is replaced when it occurs exactly once in the delimiter. When the
  *   attribute is absent, `"formId":"<new>"` is added as the first attribute (also to
- *   `<!-- wp:swiftforms/form -->` and the self-closing form). Anything else (two matches,
+ *   `<!-- wp:blockforms/form -->` and the self-closing form). Anything else (two matches,
  *   a non-string value, a delimiter that cannot be located) leaves the content untouched
  *   and writes one error row to the log.
  * - An owner's stored ID is never rewritten.
@@ -35,7 +35,7 @@ class Form_Id_Writer {
 	/**
 	 * Opening delimiter of a form block: optional JSON attributes, optional self-closing slash.
 	 */
-	const DELIMITER = '/<!--\s+wp:swiftforms\/form(?:\s+(\{(?:(?!-->).)*?\}))?\s*(\/)?-->/s';
+	const DELIMITER = '/<!--\s+wp:blockforms\/form(?:\s+(\{(?:(?!-->).)*?\}))?\s*(\/)?-->/s';
 
 	/**
 	 * Hook the filter, late so other callbacks have finished with the content.
@@ -57,7 +57,7 @@ class Form_Id_Writer {
 		if ( ! is_array( $data ) || ! isset( $data['post_content'] ) || ! is_string( $data['post_content'] ) ) {
 			return $data;
 		}
-		if ( false === strpos( $data['post_content'], '<!-- wp:swiftforms/form' ) ) {
+		if ( false === strpos( $data['post_content'], '<!-- wp:blockforms/form' ) ) {
 			return $data;
 		}
 
@@ -177,12 +177,12 @@ class Form_Id_Writer {
 		$attributes   = isset( $match[1] ) && -1 !== $match[1][1] ? $match[1][0] : '';
 
 		if ( '' === $attributes ) {
-			return '<!-- wp:swiftforms/form {' . $new_pair . '}' . ( $self_closing ? ' /-->' : ' -->' );
+			return '<!-- wp:blockforms/form {' . $new_pair . '}' . ( $self_closing ? ' /-->' : ' -->' );
 		}
 
 		$inner = trim( substr( $attributes, 1, -1 ) );
 		$json  = '{' . $new_pair . ( '' === $inner ? '' : ',' . $inner ) . '}';
-		return '<!-- wp:swiftforms/form ' . $json . ( $self_closing ? ' /-->' : ' -->' );
+		return '<!-- wp:blockforms/form ' . $json . ( $self_closing ? ' /-->' : ' -->' );
 	}
 
 	/**

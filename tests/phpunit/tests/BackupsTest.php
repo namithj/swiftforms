@@ -1,24 +1,24 @@
 <?php
 /**
- * Tests for SwiftForms\Backups.
+ * Tests for BlockForms\Backups.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Backups;
-use SwiftForms\Clock;
-use SwiftForms\Install_Marker;
-use SwiftForms\Migrations;
-use SwiftForms\Settings;
+use BlockForms\Backups;
+use BlockForms\Clock;
+use BlockForms\Install_Marker;
+use BlockForms\Migrations;
+use BlockForms\Settings;
 
 /**
  * Class BackupsTest
  *
  * @group backups
  */
-class BackupsTest extends SF_Storage_Test_Case {
+class BackupsTest extends BF_Storage_Test_Case {
 
 	/**
 	 * Raw values are copied and absent options are left out, not recorded as defaults.
@@ -28,20 +28,20 @@ class BackupsTest extends SF_Storage_Test_Case {
 	public function test_records_raw_values_and_absent_options() {
 		$this->clear_options();
 		Clock::freeze( 1795082400 );
-		add_option( 'swiftforms_spam_honeypot', '0' );
-		add_option( 'swiftforms_email_notification_to', [ 'garbage' ] ); // Raw: a corrupt value is copied as it is.
-		add_option( 'swiftforms_something_else', 'not a settings option' );
+		add_option( 'blockforms_spam_honeypot', '0' );
+		add_option( 'blockforms_email_notification_to', [ 'garbage' ] ); // Raw: a corrupt value is copied as it is.
+		add_option( 'blockforms_something_else', 'not a settings option' );
 		add_option( Migrations::OPTION_DB_VERSION, 0 );
 
 		$entry = Backups::create( 'Migration 1!' );
 
 		$this->assertSame( 'migration1', $entry['reason'], 'The reason is normalised to [a-z0-9._-].' );
 		$this->assertSame( 1795082400, $entry['time'] );
-		$this->assertSame( SWIFTFORMS_VERSION, $entry['version'] );
+		$this->assertSame( BLOCKFORMS_VERSION, $entry['version'] );
 		$this->assertSame(
 			[
-				'swiftforms_email_notification_to' => [ 'garbage' ],
-				'swiftforms_spam_honeypot'         => '0',
+				'blockforms_email_notification_to' => [ 'garbage' ],
+				'blockforms_spam_honeypot'         => '0',
 				Migrations::OPTION_DB_VERSION      => 0,
 			],
 			$entry['options']
@@ -79,7 +79,7 @@ class BackupsTest extends SF_Storage_Test_Case {
 	 */
 	public function test_secrets_are_never_copied_and_identical_entries_store() {
 		$this->clear_options();
-		add_option( 'swiftforms_secrets', [ 'captcha' => 'top-secret' ], '', false );
+		add_option( 'blockforms_secrets', [ 'captcha' => 'top-secret' ], '', false );
 		Clock::freeze( 1795082400 );
 
 		for ( $i = 0; $i < 7; $i++ ) {

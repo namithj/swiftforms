@@ -2,10 +2,10 @@
 /**
  * Activation, deactivation and per-site installs.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -26,7 +26,7 @@ class Activator {
 	/**
 	 * Hook the lazy install, the new-site install and the table cleanup.
 	 *
-	 * The activation and deactivation hooks are registered in swiftforms.php
+	 * The activation and deactivation hooks are registered in blockforms.php
 	 * (activation runs before plugins_loaded, so Plugin::boot() is too late).
 	 *
 	 * @return void
@@ -133,6 +133,6 @@ class Activator {
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
-		return is_plugin_active_for_network( plugin_basename( SWIFTFORMS_FILE ) );
+		return is_plugin_active_for_network( plugin_basename( BLOCKFORMS_FILE ) );
 	}
 }

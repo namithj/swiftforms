@@ -1,20 +1,20 @@
 <?php
 /**
- * Tests for SwiftForms\Block_Walker.
+ * Tests for BlockForms\Block_Walker.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-resolver-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-resolver-test-case.php';
 
-use SwiftForms\Block_Walker;
+use BlockForms\Block_Walker;
 
 /**
  * Class BlockWalkerTest
  *
  * @group resolver
  */
-class BlockWalkerTest extends SF_Resolver_Test_Case {
+class BlockWalkerTest extends BF_Resolver_Test_Case {
 
 	/**
 	 * Sources and ordinals of the forms a walk found, as "source#ordinal".
@@ -79,7 +79,7 @@ class BlockWalkerTest extends SF_Resolver_Test_Case {
 				$seen[] = $block['blockName'];
 			}
 		);
-		$this->assertSame( [ 'acme/future-wrapper', 'acme/inner', 'swiftforms/form', 'swiftforms/field-text' ], array_values( array_filter( $seen ) ) );
+		$this->assertSame( [ 'acme/future-wrapper', 'acme/inner', 'blockforms/form', 'blockforms/field-text' ], array_values( array_filter( $seen ) ) );
 	}
 
 	/**
@@ -88,7 +88,7 @@ class BlockWalkerTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_reference_of() {
-		$this->make_theme( 'sf-w1' );
+		$this->make_theme( 'bf-w1' );
 		$ref = static function ( $markup ) {
 			return Block_Walker::reference_of( parse_blocks( $markup )[0] );
 		};
@@ -98,12 +98,12 @@ class BlockWalkerTest extends SF_Resolver_Test_Case {
 		$this->assertNull( $ref( '<!-- wp:block {"ref":"seven"} /-->' ) );
 		$this->assertNull( $ref( '<!-- wp:block {"ref":0} /-->' ) );
 		$this->assertNull( $ref( '<!-- wp:block /-->' ) );
-		$this->assertSame( 'template_part:sf-w1//header', $ref( '<!-- wp:template-part {"slug":"header"} /-->' ) );
+		$this->assertSame( 'template_part:bf-w1//header', $ref( '<!-- wp:template-part {"slug":"header"} /-->' ) );
 		$this->assertSame( 'template_part:other//header', $ref( '<!-- wp:template-part {"slug":"header","theme":"other"} /-->' ) );
 		$this->assertNull( $ref( '<!-- wp:template-part /-->' ) );
 		$this->assertNull( $ref( '<!-- wp:template-part {"slug":"bad slug"} /-->' ) );
-		$this->assertSame( 'pattern:sf/hero', $ref( '<!-- wp:pattern {"slug":"sf/hero"} /-->' ) );
-		$this->assertNull( $ref( '<!-- wp:pattern {"slug":"sf hero"} /-->' ) );
+		$this->assertSame( 'pattern:bf/hero', $ref( '<!-- wp:pattern {"slug":"bf/hero"} /-->' ) );
+		$this->assertNull( $ref( '<!-- wp:pattern {"slug":"bf hero"} /-->' ) );
 		$this->assertNull( $ref( '<!-- wp:paragraph --><p>x</p><!-- /wp:paragraph -->' ) );
 		$this->assertNull( $ref( '<!-- wp:post-content /-->' ) );
 	}
@@ -230,16 +230,16 @@ class BlockWalkerTest extends SF_Resolver_Test_Case {
 	 * @return void
 	 */
 	public function test_template_parts_and_patterns() {
-		$this->make_theme( 'sf-w2', [ 'parts/footer.html' => $this->form_markup( self::ID_A ) ] );
-		$this->register_pattern( 'sf/contact', $this->form_markup( self::ID_B ) );
+		$this->make_theme( 'bf-w2', [ 'parts/footer.html' => $this->form_markup( self::ID_A ) ] );
+		$this->register_pattern( 'bf/contact', $this->form_markup( self::ID_B ) );
 
-		$markup = '<!-- wp:template-part {"slug":"footer","theme":"sf-w2"} /-->'
+		$markup = '<!-- wp:template-part {"slug":"footer","theme":"bf-w2"} /-->'
 			. '<!-- wp:template-part {"slug":"footer","theme":"other-theme"} /-->'
-			. '<!-- wp:pattern {"slug":"sf/contact"} /-->'
-			. '<!-- wp:pattern {"slug":"sf/unknown"} /-->';
-		$walk   = Block_Walker::walk( 'template:sf-w2//index', parse_blocks( $markup ), true );
+			. '<!-- wp:pattern {"slug":"bf/contact"} /-->'
+			. '<!-- wp:pattern {"slug":"bf/unknown"} /-->';
+		$walk   = Block_Walker::walk( 'template:bf-w2//index', parse_blocks( $markup ), true );
 
-		$this->assertSame( [ 'pattern:sf/contact#1', 'template_part:sf-w2//footer#1' ], $this->found( $walk ) );
+		$this->assertSame( [ 'pattern:bf/contact#1', 'template_part:bf-w2//footer#1' ], $this->found( $walk ) );
 		$this->assertCount( 4, $walk['edges'] );
 	}
 

@@ -1,20 +1,20 @@
-<?php // phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound, WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid -- Short fixture helper SF_VALUES() used inside config files.
+<?php // phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound, WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid -- Short fixture helper BF_VALUES() used inside config files.
 /**
  * Named submission payloads (valid, invalid, spammy, nasty) for the user configs.
  *
- * Payloads are field values (the "sf" object of a submission), named "cNN-..." after the config that uses them.
+ * Payloads are field values (the "bf" object of a submission), named "cNN-..." after the config that uses them.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-if ( ! function_exists( 'SF_VALUES' ) ) {
+if ( ! function_exists( 'BF_VALUES' ) ) {
 	/**
 	 * Return a named submission payload.
 	 *
 	 * @param string $name Payload name, for example "selftest".
 	 * @return array<string, mixed>
 	 */
-	function SF_VALUES( $name ) {
+	function BF_VALUES( $name ) {
 		static $values = null;
 		if ( null === $values ) {
 			$values = [

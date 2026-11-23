@@ -2,10 +2,10 @@
 /**
  * Settings reader (C-5).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Settings
  *
- * One option per setting, swiftforms_{section}_{key} (for example swiftforms_spam_honeypot), written by the cassette-cmf
+ * One option per setting, blockforms_{section}_{key} (for example blockforms_spam_honeypot), written by the cassette-cmf
  * settings page (Settings_Page). This class rebuilds the logical C-5 array from them, so every caller of get() and
  * get_value() sees the same shape as before. The rules (C-5.2 to C-5.4):
  *
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - Nothing here writes: the plugin never creates a settings option on activation or on read, and there is no
  *   array writer. Tests and importers write the per-key options directly.
  *
- * Secrets (C-5.5) are not settings: they live in swiftforms_secrets (from R06).
+ * Secrets (C-5.5) are not settings: they live in blockforms_secrets (from R06).
  *
  * Output escaping is the caller's job: footer_text and default_success_message may hold HTML (cleaned with
  * wp_kses_post() on write by the settings page) and are escaped or filtered again where they are printed.
@@ -34,10 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Settings {
 
 	/**
-	 * Prefix of every settings option. The settings page has the id "swiftforms", so cassette-cmf names a field
-	 * "{section}_{key}" as "swiftforms_{section}_{key}".
+	 * Prefix of every settings option. The settings page has the id "blockforms", so cassette-cmf names a field
+	 * "{section}_{key}" as "blockforms_{section}_{key}".
 	 */
-	const PREFIX = 'swiftforms_';
+	const PREFIX = 'blockforms_';
 
 	/**
 	 * Schema version in the returned array's "_v". Never stored: the page declares no schema_version until a release needs an upgrade.
@@ -145,7 +145,7 @@ class Settings {
 	/**
 	 * The C-5 defaults.
 	 *
-	 * @param string|null $installed_version swiftforms_installed.version, or null when it is not known. A default that
+	 * @param string|null $installed_version blockforms_installed.version, or null when it is not known. A default that
 	 *                                       applies to new installs only (C-5.3) takes its new value when this is at
 	 *                                       least the release that introduced it; the absence of a settings option
 	 *                                       means nothing about install age.
@@ -179,7 +179,7 @@ class Settings {
 				'retention_days'          => 0,
 				'load_styles'             => true,
 				// The confirmation block in the editor uses its own text (R01 2.1); this is the fallback when a form has none.
-				'default_success_message' => __( 'Thank you. Your message has been sent.', 'swiftforms' ),
+				'default_success_message' => __( 'Thank you. Your message has been sent.', 'blockforms' ),
 			],
 			'email'    => [
 				'from_name'               => '',
@@ -242,7 +242,7 @@ class Settings {
 	 * The option that holds a setting.
 	 *
 	 * @param string $path "section.key", for example "spam.honeypot".
-	 * @return string For example "swiftforms_spam_honeypot".
+	 * @return string For example "blockforms_spam_honeypot".
 	 */
 	public static function option_name( $path ) {
 		return self::PREFIX . str_replace( '.', '_', (string) $path );

@@ -1,6 +1,6 @@
 <?php
 // expect: R4
-add_action( "wp_ajax_swiftforms_thing", "f" );
+add_action( "wp_ajax_blockforms_thing", "f" );
 function f() {
 	if ( current_user_can( "manage_options" ) ) {
 		do_it();

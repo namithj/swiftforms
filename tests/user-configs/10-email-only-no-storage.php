@@ -4,7 +4,7 @@
  *
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 return [
@@ -13,16 +13,16 @@ return [
 	'guards'        => [ 'C-3.3', 'C-5.3' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_general_store_entries' => '0',
-		'swiftforms_email_notification_to' => 'inbox@mailonly.example',
-		'swiftforms_db_version'            => 1,
-		'swiftforms_installed'             => [
+		'blockforms_general_store_entries' => '0',
+		'blockforms_email_notification_to' => 'inbox@mailonly.example',
+		'blockforms_db_version'            => 1,
+		'blockforms_installed'             => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -34,7 +34,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'Stored',
 			'slug'      => 'stored',
-			'content'   => SF_FX( 'page-storage-a' ),
+			'content'   => BF_FX( 'page-storage-a' ),
 		],
 		[
 			'key'       => 'never',
@@ -42,7 +42,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'Never',
 			'slug'      => 'never',
-			'content'   => SF_FX( 'page-storage-b' ),
+			'content'   => BF_FX( 'page-storage-b' ),
 		],
 	],
 	'users'         => [ 'admin' ],

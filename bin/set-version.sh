@@ -2,9 +2,9 @@
 #
 # Writes a single version number into every version-bearing published file.
 #
-# SwiftForms carries its version in three places that must never drift apart:
-#   1. the plugin header in swiftforms.php  (what WordPress shows)
-#   2. the SWIFTFORMS_VERSION constant        (asset cache-busting)
+# BlockForms carries its version in three places that must never drift apart:
+#   1. the plugin header in blockforms.php  (what WordPress shows)
+#   2. the BLOCKFORMS_VERSION constant        (asset cache-busting)
 #   3. Stable tag in readme.txt                (what WordPress.org serves)
 #
 # package.json carries no version on purpose: it is private and never published.
@@ -66,23 +66,23 @@ check_synced_versions() {
 	local header constant readme
 
 	header="$( grep -oP '^\s*\*\s*Version:\s*\K\S+' "${PLUGIN_MAIN}" | head -n 1 || true )"
-	constant="$( grep -oP "define\( 'SWIFTFORMS_VERSION', '\K[^']+" "${PLUGIN_MAIN}" | head -n 1 || true )"
+	constant="$( grep -oP "define\( 'BLOCKFORMS_VERSION', '\K[^']+" "${PLUGIN_MAIN}" | head -n 1 || true )"
 	readme="$( grep -oP '^Stable tag:\s*\K\S+' readme.txt | head -n 1 || true )"
 
 	if [[ -z "${header}" || -z "${constant}" || -z "${readme}" ]]; then
-		printf 'Could not read a version from every file: plugin header=%s, SWIFTFORMS_VERSION=%s, readme stable tag=%s\n' \
+		printf 'Could not read a version from every file: plugin header=%s, BLOCKFORMS_VERSION=%s, readme stable tag=%s\n' \
 			"${header:-<missing>}" "${constant:-<missing>}" "${readme:-<missing>}" >&2
 		exit 1
 	fi
 
 	if [[ "${header}" != "${constant}" || "${header}" != "${readme}" ]]; then
-		printf 'Version mismatch: plugin header=%s, SWIFTFORMS_VERSION=%s, readme stable tag=%s\n' \
+		printf 'Version mismatch: plugin header=%s, BLOCKFORMS_VERSION=%s, readme stable tag=%s\n' \
 			"${header}" "${constant}" "${readme}" >&2
 		exit 1
 	fi
 
 	if [[ -n "${expected}" && "${expected}" != "${header}" ]]; then
-		printf 'Version mismatch: expected=%s, plugin header=%s, SWIFTFORMS_VERSION=%s, readme stable tag=%s\n' \
+		printf 'Version mismatch: expected=%s, plugin header=%s, BLOCKFORMS_VERSION=%s, readme stable tag=%s\n' \
 			"${expected}" "${header}" "${constant}" "${readme}" >&2
 		exit 1
 	fi
@@ -125,10 +125,10 @@ apply "${PLUGIN_MAIN}" \
 	"s/^([[:space:]]*\*[[:space:]]*Version:[[:space:]]*).*/\1${VERSION}/" \
 	"^[[:space:]]*\*[[:space:]]*Version:[[:space:]]*${VERSION}[[:space:]]*$"
 
-# Runtime constant:  define( 'SWIFTFORMS_VERSION', '1.0.0' );
+# Runtime constant:  define( 'BLOCKFORMS_VERSION', '1.0.0' );
 apply "${PLUGIN_MAIN}" \
-	"s/(define\\( 'SWIFTFORMS_VERSION', ')[^']*('[[:space:]]*\\);)/\\1${VERSION}\\2/" \
-	"define\\( 'SWIFTFORMS_VERSION', '${VERSION}' \\);"
+	"s/(define\\( 'BLOCKFORMS_VERSION', ')[^']*('[[:space:]]*\\);)/\\1${VERSION}\\2/" \
+	"define\\( 'BLOCKFORMS_VERSION', '${VERSION}' \\);"
 
 # WordPress readme:  Stable tag: 1.0.0
 apply "readme.txt" \

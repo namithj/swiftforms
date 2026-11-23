@@ -1,11 +1,11 @@
 <?php
 /**
- * Tests for SwiftForms\Access (C-8.4).
+ * Tests for BlockForms\Access (C-8.4).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-use SwiftForms\Access;
+use BlockForms\Access;
 
 /**
  * Class AccessTest
@@ -32,7 +32,7 @@ class AccessTest extends WP_UnitTestCase {
 	public function test_default_map() {
 		$this->assertCount( 6, Access::CAPS );
 		$this->assertSame( array_fill_keys( Access::CAPS, 'manage_options' ), Access::map() );
-		$this->assertContains( 'swiftforms_manage_integrations', Access::CAPS );
+		$this->assertContains( 'blockforms_manage_integrations', Access::CAPS );
 	}
 
 	/**
@@ -51,13 +51,13 @@ class AccessTest extends WP_UnitTestCase {
 		}
 
 		wp_set_current_user( $admin );
-		$this->assertTrue( Access::can( 'swiftforms_view_entries' ), 'null means the current user.' );
-		$this->assertTrue( user_can( $admin, 'swiftforms_view_entries' ), 'The meta capability works through core as well.' ); // phpcs:ignore WordPress.WP.Capabilities.Unknown -- A meta capability, mapped by Access::map_meta_cap().
+		$this->assertTrue( Access::can( 'blockforms_view_entries' ), 'null means the current user.' );
+		$this->assertTrue( user_can( $admin, 'blockforms_view_entries' ), 'The meta capability works through core as well.' ); // phpcs:ignore WordPress.WP.Capabilities.Unknown -- A meta capability, mapped by Access::map_meta_cap().
 
-		$this->assertFalse( Access::can( 'manage_options', $admin ), 'Only SwiftForms capabilities go through can().' );
-		$this->assertFalse( Access::can( 'swiftforms_bogus', $admin ) );
+		$this->assertFalse( Access::can( 'manage_options', $admin ), 'Only BlockForms capabilities go through can().' );
+		$this->assertFalse( Access::can( 'blockforms_bogus', $admin ) );
 		wp_set_current_user( 0 );
-		$this->assertFalse( Access::can( 'swiftforms_view_entries' ) );
+		$this->assertFalse( Access::can( 'blockforms_view_entries' ) );
 	}
 
 	/**
@@ -72,20 +72,20 @@ class AccessTest extends WP_UnitTestCase {
 		$before = $this->roles_bytes();
 
 		add_filter(
-			'swiftforms_capability_map',
+			'blockforms_capability_map',
 			static function ( $map ) {
-				$map['swiftforms_view_entries'] = 'edit_others_posts';
+				$map['blockforms_view_entries'] = 'edit_others_posts';
 				return $map;
 			}
 		);
 
-		$this->assertTrue( Access::can( 'swiftforms_view_entries', $editor ) );
-		$this->assertTrue( Access::can( 'swiftforms_view_entries', $admin ), 'Administrators hold edit_others_posts too.' );
-		$this->assertFalse( Access::can( 'swiftforms_view_entries', $author ) );
-		$this->assertFalse( Access::can( 'swiftforms_manage_settings', $editor ), 'Only the mapped capability changed.' );
+		$this->assertTrue( Access::can( 'blockforms_view_entries', $editor ) );
+		$this->assertTrue( Access::can( 'blockforms_view_entries', $admin ), 'Administrators hold edit_others_posts too.' );
+		$this->assertFalse( Access::can( 'blockforms_view_entries', $author ) );
+		$this->assertFalse( Access::can( 'blockforms_manage_settings', $editor ), 'Only the mapped capability changed.' );
 
 		$this->assertSame( $before, $this->roles_bytes(), 'wp_user_roles is byte-identical.' );
-		$this->assertFalse( get_role( 'editor' )->has_cap( 'swiftforms_view_entries' ), 'No role gained the meta capability.' );
+		$this->assertFalse( get_role( 'editor' )->has_cap( 'blockforms_view_entries' ), 'No role gained the meta capability.' );
 	}
 
 	/**
@@ -97,15 +97,15 @@ class AccessTest extends WP_UnitTestCase {
 		$editor = self::factory()->user->create( [ 'role' => 'editor' ] );
 
 		add_filter(
-			'swiftforms_capability_map',
+			'blockforms_capability_map',
 			static function ( $map ) {
-				$map['swiftforms_manage_settings']     = 123;
-				$map['swiftforms_view_entries']        = '';
-				$map['swiftforms_edit_entries']        = [ 'read' ];
-				$map['swiftforms_delete_entries']      = 'not a cap!';
-				$map['swiftforms_export_entries']      = 'swiftforms_view_entries'; // Would loop through map_meta_cap.
-				$map['swiftforms_manage_integrations'] = true;
-				$map['swiftforms_bogus']               = 'read';
+				$map['blockforms_manage_settings']     = 123;
+				$map['blockforms_view_entries']        = '';
+				$map['blockforms_edit_entries']        = [ 'read' ];
+				$map['blockforms_delete_entries']      = 'not a cap!';
+				$map['blockforms_export_entries']      = 'blockforms_view_entries'; // Would loop through map_meta_cap.
+				$map['blockforms_manage_integrations'] = true;
+				$map['blockforms_bogus']               = 'read';
 				return $map;
 			}
 		);
@@ -114,7 +114,7 @@ class AccessTest extends WP_UnitTestCase {
 		foreach ( Access::CAPS as $cap ) {
 			$this->assertFalse( Access::can( $cap, $editor ), $cap );
 		}
-		$this->assertFalse( Access::can( 'swiftforms_bogus', $editor ), 'A capability SwiftForms does not define stays unknown.' );
+		$this->assertFalse( Access::can( 'blockforms_bogus', $editor ), 'A capability BlockForms does not define stays unknown.' );
 	}
 
 	/**
@@ -123,7 +123,7 @@ class AccessTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_non_array_filter_result_is_ignored() {
-		add_filter( 'swiftforms_capability_map', '__return_false' );
+		add_filter( 'blockforms_capability_map', '__return_false' );
 		$this->assertSame( array_fill_keys( Access::CAPS, 'manage_options' ), Access::map() );
 	}
 

@@ -6,20 +6,20 @@
  * tests/js/validation.test.js against the view module's rules. A case marked with a
  * "clientExpect" is a rule the browser does not check (option membership).
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-require_once dirname( __DIR__ ) . '/includes/class-sf-storage-test-case.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-storage-test-case.php';
 
-use SwiftForms\Field_Types;
-use SwiftForms\Validator;
+use BlockForms\Field_Types;
+use BlockForms\Validator;
 
 /**
  * Class ValidationParityTest
  *
  * @group frontend
  */
-class ValidationParityTest extends SF_Storage_Test_Case {
+class ValidationParityTest extends BF_Storage_Test_Case {
 
 	/**
 	 * The shared cases as a data provider.

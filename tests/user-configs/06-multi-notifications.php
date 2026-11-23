@@ -4,7 +4,7 @@
  *
  * Raw stored data of a site, written exactly as 1.0.0 stores it. Frozen at the v1.0.0 tag.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
 return [
@@ -13,24 +13,24 @@ return [
 	'guards'        => [ 'C-6', 'C-6.1', 'C-6.2', 'C-6.3' ],
 	'site'          => [
 		'locale'     => 'en_US',
-		'theme'      => 'sf-test-block',
+		'theme'      => 'bf-test-block',
 		'multisite'  => false,
 		'timezone'   => 'Europe/London',
 		'permalinks' => '/%postname%/',
 	],
 	'options'       => [
-		'swiftforms_general_store_ip'         => '1',
-		'swiftforms_general_store_user_agent' => '1',
-		'swiftforms_email_from_name'          => 'Agency Leads',
-		'swiftforms_email_from_email'         => 'leads@agency.example',
-		'swiftforms_email_notification_to'    => 'owner@agency.example',
-		'swiftforms_email_html_template'      => '1',
-		'swiftforms_email_logo_id'            => '{{post:logo}}',
-		'swiftforms_email_accent_color'       => '#1d4ed8',
-		'swiftforms_email_footer_text'        => '<p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p>',
-		'swiftforms_spam_blocked_words'       => "casino\nviagra",
-		'swiftforms_db_version'               => 1,
-		'swiftforms_installed'                => [
+		'blockforms_general_store_ip'         => '1',
+		'blockforms_general_store_user_agent' => '1',
+		'blockforms_email_from_name'          => 'Agency Leads',
+		'blockforms_email_from_email'         => 'leads@agency.example',
+		'blockforms_email_notification_to'    => 'owner@agency.example',
+		'blockforms_email_html_template'      => '1',
+		'blockforms_email_logo_id'            => '{{post:logo}}',
+		'blockforms_email_accent_color'       => '#1d4ed8',
+		'blockforms_email_footer_text'        => '<p>Sent by Agency Ltd. <a href="https://agency.example/privacy">Privacy</a></p>',
+		'blockforms_spam_blocked_words'       => "casino\nviagra",
+		'blockforms_db_version'               => 1,
+		'blockforms_installed'                => [
 			'version' => '1.0.0',
 			'time'    => 1795082400,
 		],
@@ -54,7 +54,7 @@ return [
 			'status'    => 'publish',
 			'title'     => 'Start a project',
 			'slug'      => 'start',
-			'content'   => SF_FX( 'page-agency-lead' ),
+			'content'   => BF_FX( 'page-agency-lead' ),
 		],
 	],
 	'users'         => [ 'admin' ],

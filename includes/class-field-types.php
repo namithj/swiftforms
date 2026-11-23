@@ -2,10 +2,10 @@
 /**
  * Field type registry.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -32,14 +32,14 @@ class Field_Types {
 	/**
 	 * Block names.
 	 */
-	const FORM_BLOCK         = 'swiftforms/form';
-	const SUBMIT_BLOCK       = 'swiftforms/submit';
-	const CONFIRMATION_BLOCK = 'swiftforms/confirmation';
+	const FORM_BLOCK         = 'blockforms/form';
+	const SUBMIT_BLOCK       = 'blockforms/submit';
+	const CONFIRMATION_BLOCK = 'blockforms/confirmation';
 
 	/**
-	 * Prefix of the field block names ("swiftforms/field-text").
+	 * Prefix of the field block names ("blockforms/field-text").
 	 */
-	const FIELD_BLOCK_PREFIX = 'swiftforms/field-';
+	const FIELD_BLOCK_PREFIX = 'blockforms/field-';
 
 	/**
 	 * A field name (C-2.4). No dots: dots are reserved for sub-values (C-4.3).
@@ -253,7 +253,7 @@ class Field_Types {
 	 * Block name of a field type.
 	 *
 	 * @param string $type Field type, for example "text".
-	 * @return string "swiftforms/field-text", or an empty string for an unknown type.
+	 * @return string "blockforms/field-text", or an empty string for an unknown type.
 	 */
 	public static function block_name( $type ) {
 		return self::is_type( $type ) ? self::FIELD_BLOCK_PREFIX . $type : '';
@@ -262,7 +262,7 @@ class Field_Types {
 	/**
 	 * Field type of a block name.
 	 *
-	 * @param mixed $block_name For example "swiftforms/field-text".
+	 * @param mixed $block_name For example "blockforms/field-text".
 	 * @return string|null Null for anything that is not one of the twelve field blocks.
 	 */
 	public static function type_from_block_name( $block_name ) {

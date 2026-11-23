@@ -2,10 +2,10 @@
 /**
  * Core privacy tools: exporter, eraser and policy text.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -24,7 +24,7 @@ class Privacy {
 	/**
 	 * Exporter and eraser ID.
 	 */
-	const ID = 'swiftforms-entries';
+	const ID = 'blockforms-entries';
 
 	/**
 	 * Entries exported or erased per call.
@@ -51,7 +51,7 @@ class Privacy {
 	public static function register_exporter( $exporters ) {
 		if ( true === Settings::get_value( 'privacy.exporter', true ) && is_array( $exporters ) ) {
 			$exporters[ self::ID ] = [
-				'exporter_friendly_name' => __( 'SwiftForms entries', 'swiftforms' ),
+				'exporter_friendly_name' => __( 'BlockForms entries', 'blockforms' ),
 				'callback'               => [ self::class, 'export' ],
 			];
 		}
@@ -67,7 +67,7 @@ class Privacy {
 	public static function register_eraser( $erasers ) {
 		if ( true === Settings::get_value( 'privacy.eraser', true ) && is_array( $erasers ) ) {
 			$erasers[ self::ID ] = [
-				'eraser_friendly_name' => __( 'SwiftForms entries', 'swiftforms' ),
+				'eraser_friendly_name' => __( 'BlockForms entries', 'blockforms' ),
 				'callback'             => [ self::class, 'erase' ],
 			];
 		}
@@ -94,8 +94,8 @@ class Privacy {
 			}
 			$data[] = [
 				'group_id'    => self::ID,
-				'group_label' => __( 'SwiftForms entries', 'swiftforms' ),
-				'item_id'     => 'swiftforms-entry-' . $id,
+				'group_label' => __( 'BlockForms entries', 'blockforms' ),
+				'item_id'     => 'blockforms-entry-' . $id,
 				'data'        => self::export_rows( $entry ),
 			];
 		}
@@ -128,11 +128,11 @@ class Privacy {
 		$messages = [];
 		if ( $removed > 0 ) {
 			/* translators: %d: number of entries. */
-			$messages[] = sprintf( _n( 'Removed %d SwiftForms entry.', 'Removed %d SwiftForms entries.', $removed, 'swiftforms' ), $removed );
+			$messages[] = sprintf( _n( 'Removed %d BlockForms entry.', 'Removed %d BlockForms entries.', $removed, 'blockforms' ), $removed );
 		}
 		if ( $log_rows > 0 ) {
 			/* translators: %d: number of rows. */
-			$messages[] = sprintf( _n( 'Removed %d row from the SwiftForms mail log.', 'Removed %d rows from the SwiftForms mail log.', $log_rows, 'swiftforms' ), $log_rows );
+			$messages[] = sprintf( _n( 'Removed %d row from the BlockForms mail log.', 'Removed %d rows from the BlockForms mail log.', $log_rows, 'blockforms' ), $log_rows );
 		}
 
 		return [
@@ -262,11 +262,11 @@ class Privacy {
 
 		$rows = [
 			[
-				'name'  => __( 'Form', 'swiftforms' ),
+				'name'  => __( 'Form', 'blockforms' ),
 				'value' => is_array( $form ) ? (string) $form['title'] : '',
 			],
 			[
-				'name'  => __( 'Submitted (UTC)', 'swiftforms' ),
+				'name'  => __( 'Submitted (UTC)', 'blockforms' ),
 				'value' => (string) $entry['created_gmt'],
 			],
 		];
@@ -278,13 +278,13 @@ class Privacy {
 		}
 		if ( ! empty( $entry['ip'] ) ) {
 			$rows[] = [
-				'name'  => __( 'IP address', 'swiftforms' ),
+				'name'  => __( 'IP address', 'blockforms' ),
 				'value' => (string) $entry['ip'],
 			];
 		}
 		if ( ! empty( $entry['user_agent'] ) ) {
 			$rows[] = [
-				'name'  => __( 'User agent', 'swiftforms' ),
+				'name'  => __( 'User agent', 'blockforms' ),
 				'value' => (string) $entry['user_agent'],
 			];
 		}
@@ -300,7 +300,7 @@ class Privacy {
 		if ( ! function_exists( 'wp_add_privacy_policy_content' ) ) {
 			return;
 		}
-		wp_add_privacy_policy_content( 'SwiftForms', wp_kses_post( wpautop( self::policy_text() ) ) );
+		wp_add_privacy_policy_content( 'BlockForms', wp_kses_post( wpautop( self::policy_text() ) ) );
 	}
 
 	/**
@@ -311,18 +311,18 @@ class Privacy {
 	public static function policy_text() {
 		$days = Settings::get_value( 'general.retention_days', 0 );
 
-		$text  = '<h2>' . __( 'Contact forms (SwiftForms)', 'swiftforms' ) . '</h2>';
-		$text .= '<p class="privacy-policy-tutorial">' . __( 'Suggested text. Review it and adjust it to how you use your forms.', 'swiftforms' ) . '</p>';
-		$text .= '<p>' . __( 'When you send a form on this site, we store what you typed in each field together with the date and time and the page the form was on. If you are logged in, your user account is stored with it. Your IP address and your browser\'s user agent are not stored unless the site owner has turned that on.', 'swiftforms' ) . '</p>';
+		$text  = '<h2>' . __( 'Contact forms (BlockForms)', 'blockforms' ) . '</h2>';
+		$text .= '<p class="privacy-policy-tutorial">' . __( 'Suggested text. Review it and adjust it to how you use your forms.', 'blockforms' ) . '</p>';
+		$text .= '<p>' . __( 'When you send a form on this site, we store what you typed in each field together with the date and time and the page the form was on. If you are logged in, your user account is stored with it. Your IP address and your browser\'s user agent are not stored unless the site owner has turned that on.', 'blockforms' ) . '</p>';
 		if ( is_int( $days ) && $days > 0 ) {
 			/* translators: %d: number of days. */
-			$text .= '<p>' . sprintf( _n( 'Entries are deleted automatically %d day after they are received.', 'Entries are deleted automatically %d days after they are received.', $days, 'swiftforms' ), $days ) . '</p>';
+			$text .= '<p>' . sprintf( _n( 'Entries are deleted automatically %d day after they are received.', 'Entries are deleted automatically %d days after they are received.', $days, 'blockforms' ), $days ) . '</p>';
 		} else {
-			$text .= '<p>' . __( 'Entries are kept until the site owner deletes them.', 'swiftforms' ) . '</p>';
+			$text .= '<p>' . __( 'Entries are kept until the site owner deletes them.', 'blockforms' ) . '</p>';
 		}
-		$text .= '<p>' . __( 'The form can email a notification of your message to the site owner. Delivery records (the time and the recipients, never your message) are kept for 30 days.', 'swiftforms' ) . '</p>';
-		$text .= '<p>' . __( 'To protect the form against spam, the form uses a hidden field and a timing check, and your requests are counted for a short time using a hashed form of your IP address. No data is sent to an external service.', 'swiftforms' ) . '</p>';
-		$text .= '<p>' . __( 'You can ask the site owner for a copy of the entries that contain your email address, or to erase them.', 'swiftforms' ) . '</p>';
+		$text .= '<p>' . __( 'The form can email a notification of your message to the site owner. Delivery records (the time and the recipients, never your message) are kept for 30 days.', 'blockforms' ) . '</p>';
+		$text .= '<p>' . __( 'To protect the form against spam, the form uses a hidden field and a timing check, and your requests are counted for a short time using a hashed form of your IP address. No data is sent to an external service.', 'blockforms' ) . '</p>';
+		$text .= '<p>' . __( 'You can ask the site owner for a copy of the entries that contain your email address, or to erase them.', 'blockforms' ) . '</p>';
 		return $text;
 	}
 }

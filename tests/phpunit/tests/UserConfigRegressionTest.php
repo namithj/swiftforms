@@ -1,6 +1,6 @@
 <?php
-require_once dirname( __DIR__ ) . '/includes/class-sf-snapshot-store.php';
-require_once dirname( __DIR__ ) . '/includes/class-sf-user-config-runner.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-snapshot-store.php';
+require_once dirname( __DIR__ ) . '/includes/class-bf-user-config-runner.php';
 require_once dirname( __DIR__, 2 ) . '/user-configs/loader.php';
 require_once dirname( __DIR__, 2 ) . '/user-configs/normaliser.php';
 
@@ -19,7 +19,7 @@ require_once dirname( __DIR__, 2 ) . '/user-configs/normaliser.php';
  *
  * @group user-configs
  */
-class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
+class BlockForms_User_Config_Regression_Test extends WP_UnitTestCase {
 
 	/**
 	 * Saved global state, restored after every test.
@@ -32,7 +32,7 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	 * Skip unless the guarded user-config bootstrap is in use.
 	 */
 	public static function set_up_before_class() {
-		if ( ! defined( 'SWIFTFORMS_USER_CONFIGS_BOOTSTRAP' ) ) {
+		if ( ! defined( 'BLOCKFORMS_USER_CONFIGS_BOOTSTRAP' ) ) {
 			self::markTestSkipped( 'Run the user-config group with bin/test-user-configs.sh (composer test:configs); it needs the guarded bootstrap.' );
 		}
 		parent::set_up_before_class();
@@ -43,7 +43,7 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	 *
 	 * @return WP_UnitTest_Factory
 	 */
-	public function sf_factory() {
+	public function bf_factory() {
 		return self::factory();
 	}
 
@@ -52,7 +52,7 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	 *
 	 * @param string $url URL.
 	 */
-	public function sf_go_to( $url ) {
+	public function bf_go_to( $url ) {
 		$this->go_to( $url );
 	}
 
@@ -64,7 +64,7 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	}
 
 	public function tear_down() {
-		SF_User_Config_Loader::reset();
+		BF_User_Config_Loader::reset();
 		foreach ( $this->globals_backup as $name => $entry ) {
 			if ( $entry[0] ) {
 				$GLOBALS[ $name ] = $entry[1]; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
@@ -82,7 +82,7 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	 */
 	public function config_provider() {
 		$rows = [];
-		foreach ( SF_User_Config_Loader::list() as $slug ) {
+		foreach ( BF_User_Config_Loader::list() as $slug ) {
 			$rows[ $slug ] = [ $slug ];
 		}
 		return $rows;
@@ -96,9 +96,9 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	 * @param string $slug Config slug.
 	 */
 	public function test_user_config( $slug ) {
-		$store  = new SF_Snapshot_Store( SF_User_Config_Loader::dir() . '/snapshots' );
-		$runner = new SF_User_Config_Runner( $this );
-		$result = $runner->run( SF_User_Config_Loader::load( $slug ) );
+		$store  = new BF_Snapshot_Store( BF_User_Config_Loader::dir() . '/snapshots' );
+		$runner = new BF_User_Config_Runner( $this );
+		$result = $runner->run( BF_User_Config_Loader::load( $slug ) );
 
 		$problems = $result['failures'];
 		foreach ( $result['outputs'] as $relative => $text ) {
@@ -123,16 +123,16 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	 *
 	 * Run once by bin/test-user-configs.sh after the configs. They are the same
 	 * on every PHP version: nothing here reads from the block builder
-	 * (hooks leave out SwiftForms\Vendor\, routes list
-	 * only swiftforms/v1, blocks come from SwiftForms' own configs).
+	 * (hooks leave out BlockForms\Vendor\, routes list
+	 * only blockforms/v1, blocks come from BlockForms' own configs).
 	 */
 	public function test_global_snapshots() {
-		$store   = new SF_Snapshot_Store( SF_User_Config_Loader::dir() . '/snapshots' );
+		$store   = new BF_Snapshot_Store( BF_User_Config_Loader::dir() . '/snapshots' );
 		$outputs = [
-			'_global/hooks.txt'       => SF_User_Config_Runner::hooks_text(),
-			'_global/rest-routes.txt' => SF_User_Config_Runner::rest_routes_text(),
-			'_global/db-schema.txt'   => SF_User_Config_Runner::db_schema_text(),
-			'_global/blocks.txt'      => SF_User_Config_Runner::blocks_text(),
+			'_global/hooks.txt'       => BF_User_Config_Runner::hooks_text(),
+			'_global/rest-routes.txt' => BF_User_Config_Runner::rest_routes_text(),
+			'_global/db-schema.txt'   => BF_User_Config_Runner::db_schema_text(),
+			'_global/blocks.txt'      => BF_User_Config_Runner::blocks_text(),
 		];
 
 		$problems = [];
@@ -155,28 +155,28 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 	 * Not snapshotted: the builder's config route is never public.
 	 */
 	private function assert_builder_config_route_is_not_public() {
-		$handlers = rest_get_server()->get_routes( 'swiftforms-blocks/v1' );
+		$handlers = rest_get_server()->get_routes( 'blockforms-blocks/v1' );
 		if ( ! $handlers ) {
 			// The builder has not started (no blocks configured): nothing to check.
 			$this->addToAssertionCount( 1 );
 			return;
 		}
 		foreach ( $handlers as $route => $route_handlers ) {
-			if ( '/swiftforms-blocks/v1' === $route ) {
+			if ( '/blockforms-blocks/v1' === $route ) {
 				// The namespace index WordPress adds itself: it lists routes and shows no data.
 				continue;
 			}
 			foreach ( $route_handlers as $handler ) {
-				$this->assertFalse( SF_User_Config_Runner::is_public( $handler ), "The builder route {$route} is public." );
+				$this->assertFalse( BF_User_Config_Runner::is_public( $handler ), "The builder route {$route} is public." );
 			}
 		}
 	}
 
 	/**
-	 * Every swiftforms/* block SwiftForms configures is registered.
+	 * Every blockforms/* block BlockForms configures is registered.
 	 */
 	private function assert_configured_blocks_are_registered() {
-		foreach ( explode( "\n", trim( SF_User_Config_Runner::blocks_text() ) ) as $line ) {
+		foreach ( explode( "\n", trim( BF_User_Config_Runner::blocks_text() ) ) as $line ) {
 			if ( '(none)' === $line || '' === $line ) {
 				continue;
 			}
@@ -197,14 +197,14 @@ class SwiftForms_User_Config_Regression_Test extends WP_UnitTestCase {
 			$this->assertSame( [], $problems );
 			return;
 		}
-		// SF_FULL_REPORT=1 lists every problem instead of the first eight.
-		$shown = '1' === getenv( 'SF_FULL_REPORT' ) ? $problems : array_slice( $problems, 0, 8 );
+		// BF_FULL_REPORT=1 lists every problem instead of the first eight.
+		$shown = '1' === getenv( 'BF_FULL_REPORT' ) ? $problems : array_slice( $problems, 0, 8 );
 		$more  = count( $problems ) - count( $shown );
 		$this->fail(
 			$label . ': ' . count( $problems ) . " regression(s) against the snapshots.\n\n"
 			. implode( "\n\n", $shown )
 			. ( $more > 0 ? "\n\n... and " . $more . ' more.' : '' )
-			. "\n\nIf the change is intended, it must be listed under \"Intended snapshot changes\" in the release plan; then regenerate with SF_UPDATE_SNAPSHOTS=1."
+			. "\n\nIf the change is intended, it must be listed under \"Intended snapshot changes\" in the release plan; then regenerate with BF_UPDATE_SNAPSHOTS=1."
 		);
 	}
 }

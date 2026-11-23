@@ -32,7 +32,7 @@ before:
     "migration log rows": 0,
     "migration lock row": false
 }
-first run returned true (swiftforms_db_version_changed fired 1 time(s))
+first run returned true (blockforms_db_version_changed fired 1 time(s))
 after the first run:
 {
     "db_version row": "1",
@@ -44,22 +44,22 @@ after the first run:
         "reason": "migration-1",
         "version": "{VERSION}",
         "options": {
-            "swiftforms_email_notification_to": [
+            "blockforms_email_notification_to": [
                 "owner@broken-site.example"
             ],
-            "swiftforms_general_default_success_message": {
+            "blockforms_general_default_success_message": {
                 "text": "Thanks."
             },
-            "swiftforms_general_retention_days": "99999999999999999999",
-            "swiftforms_general_store_entries": "",
-            "swiftforms_spam_blocked_words": [
+            "blockforms_general_retention_days": "99999999999999999999",
+            "blockforms_general_store_entries": "",
+            "blockforms_spam_blocked_words": [
                 "casino",
                 "viagra"
             ],
-            "swiftforms_spam_min_seconds": [
+            "blockforms_spam_min_seconds": [
                 3
             ],
-            "swiftforms_installed": {
+            "blockforms_installed": {
                 "version": "1.0.0",
                 "time": 1795082400
             }
@@ -80,22 +80,22 @@ after the second run:
         "reason": "migration-1",
         "version": "{VERSION}",
         "options": {
-            "swiftforms_email_notification_to": [
+            "blockforms_email_notification_to": [
                 "owner@broken-site.example"
             ],
-            "swiftforms_general_default_success_message": {
+            "blockforms_general_default_success_message": {
                 "text": "Thanks."
             },
-            "swiftforms_general_retention_days": "99999999999999999999",
-            "swiftforms_general_store_entries": "",
-            "swiftforms_spam_blocked_words": [
+            "blockforms_general_retention_days": "99999999999999999999",
+            "blockforms_general_store_entries": "",
+            "blockforms_spam_blocked_words": [
                 "casino",
                 "viagra"
             ],
-            "swiftforms_spam_min_seconds": [
+            "blockforms_spam_min_seconds": [
                 3
             ],
-            "swiftforms_installed": {
+            "blockforms_installed": {
                 "version": "1.0.0",
                 "time": 1795082400
             }

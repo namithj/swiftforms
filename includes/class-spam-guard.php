@@ -2,10 +2,10 @@
 /**
  * Spam guard.
  *
- * @package SwiftForms
+ * @package BlockForms
  */
 
-namespace SwiftForms;
+namespace BlockForms;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,16 +16,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * The invisible checks, in this order, when the form's spamProtection is "default":
  *
- * 1. honeypot (spam.honeypot): the hidden `_sf_hp` input must be empty.
- * 2. time trap (spam.min_seconds): `_sf_t` must show at least that many seconds (Time_Trap).
+ * 1. honeypot (spam.honeypot): the hidden `_bf_hp` input must be empty.
+ * 2. time trap (spam.min_seconds): `_bf_t` must show at least that many seconds (Time_Trap).
  * 3. render token: a token that does not verify (forged or malformed) is spam. This rule runs even when
  *    spamProtection is "off": a forged token is never a clean submission (C-3.4).
- * 4. JS token (spam.js_token): a REST submission must carry `_sf_t` in its `js.{elapsed ms}` form, which
+ * 4. JS token (spam.js_token): a REST submission must carry `_bf_t` in its `js.{elapsed ms}` form, which
  *    only the view module writes; a form post without JavaScript carries the signed render time instead
  *    (C-3.1).
  * 5. blocked words (spam.blocked_words): a literal, case-insensitive substring match over every visitor
  *    value. Never a regular expression.
- * 6. the swiftforms_spam_check filter.
+ * 6. the blockforms_spam_check filter.
  *
  * "off" skips 1, 2, 4, 5 and 6. The result is a verdict with a machine reason that only goes to the
  * debug log; the visitor gets the same success answer either way.
@@ -41,7 +41,7 @@ class Spam_Guard {
 	 * Check a submission.
 	 *
 	 * @param Submission_Context $ctx      Context with values, transport and both schemas set.
-	 * @param array<string, mixed> $controls Posted control fields: "hp" (`_sf_hp`) and "t" (`_sf_t`).
+	 * @param array<string, mixed> $controls Posted control fields: "hp" (`_bf_hp`) and "t" (`_bf_t`).
 	 * @param array<string, string> $token   Result of Render_Token::verify().
 	 * @return array{spam:bool, reason:string}
 	 */
@@ -86,7 +86,7 @@ class Spam_Guard {
 		/**
 		 * Filters the spam verdict of a submission.
 		 *
-		 * Runs last, only for forms with spam protection on, and only for submissions SwiftForms has
+		 * Runs last, only for forms with spam protection on, and only for submissions BlockForms has
 		 * not already judged to be spam. Return true to mark the submission as spam, or a non-empty
 		 * string to mark it as spam with that reason (the reason goes to the debug log, never to the
 		 * visitor). Return false to leave it clean. A spam submission is stored with status "spam" or
@@ -97,7 +97,7 @@ class Spam_Guard {
 		 * @param bool|string        $verdict False for clean, true or a reason string for spam.
 		 * @param Submission_Context $context The submission. Values are plain text; $context->is_spam is not set yet.
 		 */
-		$verdict = apply_filters( 'swiftforms_spam_check', false, $ctx );
+		$verdict = apply_filters( 'blockforms_spam_check', false, $ctx );
 		if ( true === $verdict ) {
 			return self::spam( 'filter' );
 		}
@@ -114,7 +114,7 @@ class Spam_Guard {
 	/**
 	 * Why the time control fails, or null when it passes.
 	 *
-	 * @param array{format:string, seconds:float} $t         Parsed `_sf_t`.
+	 * @param array{format:string, seconds:float} $t         Parsed `_bf_t`.
 	 * @param string                              $transport rest or nojs.
 	 * @param int                                 $min       Minimum seconds.
 	 * @return string|null
