@@ -28,6 +28,11 @@ class AdminEntriesScreenTest extends BF_Admin_Test_Case {
 	const ATTRIBUTE  = '"><svg onload="window.__sfxss=\'svg\'">';
 
 	/**
+	 * An onload attribute inside a start tag, which is what would make the payload run.
+	 */
+	const HANDLER_ATTRIBUTE = '/<[a-z][^<>]*\sonload\s*=/i';
+
+	/**
 	 * Capture redirects and dies.
 	 *
 	 * @return void
@@ -727,9 +732,11 @@ class AdminEntriesScreenTest extends BF_Admin_Test_Case {
 		$this->be_admin();
 
 		$list = $this->screen();
-		foreach ( [ '<script>', 'onload="', '<svg' ] as $markup ) {
+		foreach ( [ '<script>', '<svg' ] as $markup ) {
 			$this->assertStringNotContainsString( $markup, $list, 'List: ' . $markup );
 		}
+		// No element carries the handler. Text may hold a bare `onload="`: WP 7.2's wp_kses_post() leaves quotes unencoded in text.
+		$this->assertDoesNotMatchRegularExpression( self::HANDLER_ATTRIBUTE, $list, 'List: onload attribute' );
 		$this->assertStringContainsString( '&lt;script&gt;window.__sfxss = &quot;script&quot;&lt;/script&gt;', $list );
 		$this->assertStringNotContainsString( "\u{202E}", $list );
 
@@ -740,9 +747,10 @@ class AdminEntriesScreenTest extends BF_Admin_Test_Case {
 					'entry'  => $id,
 				]
 			);
-			foreach ( [ '<script>', '<svg', 'onload="' ] as $markup ) {
+			foreach ( [ '<script>', '<svg' ] as $markup ) {
 				$this->assertStringNotContainsString( $markup, $view, 'Entry ' . $id . ': ' . $markup );
 			}
+			$this->assertDoesNotMatchRegularExpression( self::HANDLER_ATTRIBUTE, $view, 'Entry ' . $id . ': onload attribute' );
 			$this->assertStringNotContainsString( "\u{202E}", $view );
 			$this->assertDoesNotMatchRegularExpression( '/href=["\']javascript:/i', $view );
 		}
@@ -754,7 +762,7 @@ class AdminEntriesScreenTest extends BF_Admin_Test_Case {
 				'entry'  => $script,
 			]
 		);
-		$this->assertMatchesRegularExpression( '/<th scope="row">Message<\/th>\s*<td>javascript:window\.__sfxss=&quot;url&quot;<\/td>/', $view );
+		$this->assertMatchesRegularExpression( '/<th scope="row">Message<\/th>\s*<td>javascript:window\.__sfxss=(?:&quot;|")url(?:&quot;|")<\/td>/', $view );
 		$view = $this->screen(
 			[
 				'action' => 'view',
@@ -770,7 +778,8 @@ class AdminEntriesScreenTest extends BF_Admin_Test_Case {
 				'entry'  => $link,
 			]
 		);
-		$this->assertStringContainsString( '<a href="https://example.com/path?a=b&amp;c=d" rel="noopener noreferrer" target="_blank">https://example.com/path?a=b&amp;c=d</a>', $view, 'wp_kses_post() normalises the escaped ampersand.' );
+		// esc_url() writes `&#038;`; whether wp_kses_post() normalises it to `&amp;` depends on the WP version (7.1 does, 6.8 doesn't).
+		$this->assertMatchesRegularExpression( '#<a href="https://example\.com/path\?a=b&(?:amp|\#038);c=d" rel="noopener noreferrer" target="_blank">https://example\.com/path\?a=b&amp;c=d</a>#', $view );
 		$this->assertStringContainsString( '<a href="mailto:link@example.com">link@example.com</a>', $view );
 	}
 
